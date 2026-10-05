@@ -1,0 +1,30 @@
+# VS Code history and temp
+.history/
+.vscode/
+
+# Python Virtual Environments & Cache
+backend/venv/
+backend/.venv/
+backend/env/
+backend/__pycache__/
+backend/*/__pycache__/
+backend/*/*/__pycache__/
+backend/*/*/*/__pycache__/
+*.pyc
+*.pyo
+
+# Flutter / Dart
+english_ai/.dart_tool/
+english_ai/.flutter-plugins
+english_ai/.flutter-plugins-dependencies
+english_ai/.idea/
+english_ai/build/
+english_ai/english_ai.iml
+
+# Secrets
+backend/.env
+.env
+
+# System files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,12 @@
+{
+  "venvPath": "f:/AI ENGLISH/backend",
+  "venv": "venv",
+  "executionEnvironments": [
+    {
+      "root": "backend",
+      "extraPaths": [
+        "backend"
+      ]
+    }
+  ]
+}

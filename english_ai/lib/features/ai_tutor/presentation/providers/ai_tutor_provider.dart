@@ -1,0 +1,192 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/network/api_client.dart';
+import '../../data/models/ai_tutor_models.dart';
+
+class AiTutorState {
+  final bool isLoading;
+  final String? errorMessage;
+  final String currentPersona; // 'sarah', 'harrison', 'emma'
+  final String? sessionId;
+  final List<ChatMessageModel> messages;
+  final List<String> currentSuggestions;
+
+  const AiTutorState({
+    this.isLoading = false,
+    this.errorMessage,
+    this.currentPersona = 'sarah',
+    this.sessionId,
+    this.messages = const [],
+    this.currentSuggestions = const [],
+  });
+
+  AiTutorState copyWith({
+    bool? isLoading,
+    String? errorMessage,
+    String? currentPersona,
+    String? sessionId,
+    List<ChatMessageModel>? messages,
+    List<String>? currentSuggestions,
+  }) {
+    return AiTutorState(
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage,
+      currentPersona: currentPersona ?? this.currentPersona,
+      sessionId: sessionId ?? this.sessionId,
+      messages: messages ?? this.messages,
+      currentSuggestions: currentSuggestions ?? this.currentSuggestions,
+    );
+  }
+}
+
+final aiTutorProvider =
+    StateNotifierProvider<AiTutorNotifier, AiTutorState>((ref) {
+  return AiTutorNotifier(ref.watch(dioProvider));
+});
+
+class AiTutorNotifier extends StateNotifier<AiTutorState> {
+  final dynamic _dio;
+
+  AiTutorNotifier(this._dio) : super(const AiTutorState()) {
+    _sendWelcomeMessage('sarah');
+  }
+
+  void _sendWelcomeMessage(String persona) {
+    String welcome;
+    List<String> suggestions;
+
+    if (persona == 'harrison') {
+      welcome =
+          'Good day! I am Mr. Harrison, your Business English Coach. How can I assist you with your professional communications today?';
+      suggestions = [
+        'How can I prepare for an executive presentation?',
+        'Teach me phrases for formal email negotiations.',
+        'Review my business elevator pitch.',
+      ];
+    } else if (persona == 'emma') {
+      welcome =
+          'Hello! I am Emma, your IELTS Academic Examiner. Let us work on expanding your vocabulary and grammatical complexity.';
+      suggestions = [
+        'Let us practice an IELTS Part 2 speaking topic.',
+        'How can I use more idiomatic expressions?',
+        'Test my academic vocabulary.',
+      ];
+    } else {
+      welcome =
+          'Hi there! I am Sarah, your AI English Tutor 👋 Let us chat and practice speaking English naturally. What is on your mind today?';
+      suggestions = [
+        'Tell me about your favorite travel destination.',
+        'I want to practice ordering food at a restaurant.',
+        'Can you check my sentence grammar?',
+      ];
+    }
+
+    state = state.copyWith(
+      currentPersona: persona,
+      messages: [
+        ChatMessageModel(
+          id: 'welcome',
+          role: 'assistant',
+          content: welcome,
+          suggestedReplies: suggestions,
+          createdAt: DateTime.now(),
+        ),
+      ],
+      currentSuggestions: suggestions,
+    );
+  }
+
+  void setPersona(String persona) {
+    if (state.currentPersona == persona) return;
+    state = state.copyWith(sessionId: null);
+    _sendWelcomeMessage(persona);
+  }
+
+  Future<void> sendMessage(String text) async {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return;
+
+    final userMsg = ChatMessageModel(
+      id: UniqueKey().toString(),
+      role: 'user',
+      content: trimmed,
+      createdAt: DateTime.now(),
+    );
+
+    // Optimistically add user message to list
+    final updated = List<ChatMessageModel>.from(state.messages)..add(userMsg);
+    state = state.copyWith(
+      messages: updated,
+      isLoading: true,
+      errorMessage: null,
+      currentSuggestions: [],
+    );
+
+    try {
+      final response = await _dio.post(
+        '/ai/chat',
+        data: {
+          'session_id': state.sessionId,
+          'persona': state.currentPersona,
+          'message': trimmed,
+          'topic': 'General Conversation',
+        },
+      );
+
+      final data = response.data as Map<String, dynamic>;
+      final sessionId = data['session_id'] as String?;
+      final replyText = data['reply'] as String? ?? '';
+      final rawCorrections = data['corrections'] as List<dynamic>? ?? [];
+      final rawSuggestions = data['suggested_replies'] as List<dynamic>? ?? [];
+
+      final corrections = rawCorrections
+          .map((c) => AICorrectionModel.fromJson(c as Map<String, dynamic>))
+          .toList();
+      final suggestions = rawSuggestions.map((s) => s.toString()).toList();
+
+      final assistantMsg = ChatMessageModel(
+        id: UniqueKey().toString(),
+        role: 'assistant',
+        content: replyText,
+        corrections: corrections,
+        suggestedReplies: suggestions,
+        createdAt: DateTime.now(),
+      );
+
+      final newMessages = List<ChatMessageModel>.from(state.messages)..add(assistantMsg);
+
+      state = state.copyWith(
+        isLoading: false,
+        sessionId: sessionId,
+        messages: newMessages,
+        currentSuggestions: suggestions,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'Không thể kết nối với AI Tutor. Vui lòng thử lại.',
+      );
+    }
+  }
+
+  Future<String?> getAudioUrlForText(String text, String persona) async {
+    try {
+      final response = await _dio.post(
+        '/speech/tts',
+        data: {
+          'text': text,
+          'voice': persona,
+        },
+      );
+      if (response.data != null && response.data['audio_url'] != null) {
+        final audioPath = response.data['audio_url'] as String;
+        if (audioPath.startsWith('http')) return audioPath;
+        return 'http://localhost:8000$audioPath';
+      }
+    } catch (e) {
+      // Fallback
+    }
+    return null;
+  }
+
+}

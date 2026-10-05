@@ -1,0 +1,271 @@
+﻿import json
+import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+IPYNB_PATH = os.path.join(SCRIPT_DIR, "train_colab.ipynb")
+
+cells = [
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "# 🚀 Huấn Luyện AI Gia Sư Tiếng Anh (EnglishAI Tutor) bằng Unsloth & QLoRA\n",
+            "\n",
+            "Mô hình được huấn luyện và lưu thành **file nén đặt trực tiếp trong thư mục dự án `AI ENGLISH`**.\n",
+            "Không phụ thuộc Ollama, không cần cài phần mềm ngoài!\n",
+            "\n",
+            "⏱️ **Thời gian huấn luyện:** ~15 - 20 phút.\n",
+            "💾 **Đầu ra:** File `english_tutor_model.zip` để lưu trực tiếp vào thư mục dự án của bạn."
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 1: Cài đặt thư viện Unsloth"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "!pip install unsloth\n",
+            "!pip install --no-deps \"xformers<0.0.29\" \"trl<0.9.0\" peft accelerate bitsandbytes"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 2: Tải Mô hình nền tảng Qwen 2.5 3B (Nén 4-bit siêu nhẹ)"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "from unsloth import FastLanguageModel\n",
+            "import torch\n",
+            "\n",
+            "max_seq_length = 2048\n",
+            "dtype = None\n",
+            "load_in_4bit = True\n",
+            "\n",
+            "model, tokenizer = FastLanguageModel.from_pretrained(\n",
+            "    model_name = \"unsloth/Qwen2.5-3B-Instruct-bnb-4bit\",\n",
+            "    max_seq_length = max_seq_length,\n",
+            "    dtype = dtype,\n",
+            "    load_in_4bit = load_in_4bit,\n",
+            ")\n",
+            "print(\"✅ Mô hình nền tảng đã nạp thành công!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 3: Cấu hình QLoRA (Fine-Tuning)"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "model = FastLanguageModel.get_peft_model(\n",
+            "    model,\n",
+            "    r = 16,\n",
+            "    target_modules = [\"q_proj\", \"k_proj\", \"v_proj\", \"o_proj\",\n",
+            "                      \"gate_proj\", \"up_proj\", \"down_proj\"],\n",
+            "    lora_alpha = 16,\n",
+            "    lora_dropout = 0,\n",
+            "    bias = \"none\",\n",
+            "    use_gradient_checkpointing = \"unsloth\",\n",
+            "    random_state = 3407,\n",
+            ")\n",
+            "print(\"✅ LoRA Adapters đã sẵn sàng!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 4: Tải lên tập dữ liệu (dataset_train.jsonl)"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "from datasets import load_dataset\n",
+            "from google.colab import files\n",
+            "import os\n",
+            "\n",
+            "if not os.path.exists(\"dataset_train.jsonl\"):\n",
+            "    print(\"Vui lòng chọn file dataset_train.jsonl từ máy tính:\")\n",
+            "    uploaded = files.upload()\n",
+            "\n",
+            "dataset = load_dataset(\"json\", data_files=\"dataset_train.jsonl\", split=\"train\")\n",
+            "\n",
+            "prompt_template = \"\"\"<|im_start|>system\n",
+            "{system}<|im_end|>\n",
+            "<|im_start|>user\n",
+            "{instruction}\n",
+            "\n",
+            "{input}<|im_end|>\n",
+            "<|im_start|>assistant\n",
+            "{output}<|im_end|>\"\"\"\n",
+            "\n",
+            "def formatting_prompts_func(examples):\n",
+            "    systems = examples[\"system\"]\n",
+            "    instructions = examples[\"instruction\"]\n",
+            "    inputs = examples[\"input\"]\n",
+            "    outputs = examples[\"output\"]\n",
+            "    texts = []\n",
+            "    for sys, inst, inp, outp in zip(systems, instructions, inputs, outputs):\n",
+            "        text = prompt_template.format(system=sys, instruction=inst, input=inp, output=outp)\n",
+            "        texts.append(text)\n",
+            "    return { \"text\" : texts }\n",
+            "\n",
+            "dataset = dataset.map(formatting_prompts_func, batched = True)\n",
+            "print(f\"✅ Đã chuẩn bị {len(dataset)} mẫu dữ liệu huấn luyện!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 5: Bắt đầu Huấn luyện"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "from trl import SFTTrainer\n",
+            "from transformers import TrainingArguments\n",
+            "from unsloth import is_bfloat16_supported\n",
+            "\n",
+            "trainer = SFTTrainer(\n",
+            "    model = model,\n",
+            "    tokenizer = tokenizer,\n",
+            "    train_dataset = dataset,\n",
+            "    dataset_text_field = \"text\",\n",
+            "    max_seq_length = max_seq_length,\n",
+            "    dataset_num_proc = 2,\n",
+            "    packing = False,\n",
+            "    args = TrainingArguments(\n",
+            "        per_device_train_batch_size = 2,\n",
+            "        gradient_accumulation_steps = 4,\n",
+            "        warmup_steps = 10,\n",
+            "        max_steps = 150,\n",
+            "        learning_rate = 2e-4,\n",
+            "        fp16 = not is_bfloat16_supported(),\n",
+            "        bf16 = is_bfloat16_supported(),\n",
+            "        logging_steps = 10,\n",
+            "        optim = \"adamw_8bit\",\n",
+            "        weight_decay = 0.01,\n",
+            "        lr_scheduler_type = \"linear\",\n",
+            "        seed = 3407,\n",
+            "        output_dir = \"outputs\",\n",
+            "    ),\n",
+            ")\n",
+            "\n",
+            "print(\"🚀 Bắt đầu quá trình huấn luyện...\")\n",
+            "trainer_stats = trainer.train()\n",
+            "print(\"🎉 Huấn luyện thành công!\")"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 6: Thử nghiệm chất lượng mô hình vừa train"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "FastLanguageModel.for_inference(model)\n",
+            "\n",
+            "test_prompt = \"\"\"<|im_start|>system\n",
+            "You are Sarah, a warm, patient, and friendly English tutor.<|im_end|>\n",
+            "<|im_start|>user\n",
+            "Can you check this sentence: \"She don't likes go to school\"<|im_end|>\n",
+            "<|im_start|>assistant\n",
+            "\"\"\"\n",
+            "\n",
+            "inputs = tokenizer([test_prompt], return_tensors = \"pt\").to(\"cuda\")\n",
+            "outputs = model.generate(**inputs, max_new_tokens = 256, use_cache = True)\n",
+            "response = tokenizer.batch_decode(outputs)\n",
+            "print(response[0].split(\"<|im_start|>assistant\")[1].replace(\"<|im_end|>\", \"\"))"
+        ]
+    },
+    {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": [
+            "### Bước 7: Đóng gói thành 1 file zip để đặt vào thư mục AI ENGLISH"
+        ]
+    },
+    {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": [
+            "import os\n",
+            "from google.colab import files\n",
+            "\n",
+            "# Lưu trọng số LoRA và Tokenizer đã train\n",
+            "output_dir = \"english_tutor_model\"\n",
+            "model.save_pretrained(output_dir)\n",
+            "tokenizer.save_pretrained(output_dir)\n",
+            "print(f\"✅ Đã lưu trọng số vào thư mục {output_dir}\")\n",
+            "\n",
+            "# Nén thành 1 file duy nhất để lưu trong folder AI ENGLISH\n",
+            "!zip -r english_tutor_model.zip english_tutor_model\n",
+            "print(\"📦 Đã đóng gói thành file english_tutor_model.zip!\")\n",
+            "\n",
+            "# Tải trực tiếp về máy tính\n",
+            "files.download(\"english_tutor_model.zip\")"
+        ]
+    }
+]
+
+notebook = {
+    "cells": cells,
+    "metadata": {
+        "accelerator": "GPU",
+        "colab": {
+            "gpuType": "T4",
+            "provenance": []
+        },
+        "language_info": {
+            "name": "python"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 0
+}
+
+import sys
+if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
+with open(IPYNB_PATH, "w", encoding="utf-8") as f:
+    json.dump(notebook, f, ensure_ascii=False, indent=2)
+
+print(f"✅ Đã cập nhật xong {IPYNB_PATH} theo đúng yêu cầu lưu thành 1 file duy nhất vào AI ENGLISH!")
