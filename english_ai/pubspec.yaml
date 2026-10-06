@@ -39,11 +39,13 @@ dependencies:
 
   # Audio (Phase 2+)
   audioplayers: ^6.0.0
+  record: ^5.1.2
 
   # Utilities
   intl: ^0.19.0
   equatable: ^2.0.5
   logger: ^2.0.2+1
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

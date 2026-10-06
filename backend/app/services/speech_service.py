@@ -40,20 +40,43 @@ class SpeechAIService:
         import tempfile
 
         def _do():
+            import torch
             if not hasattr(cls, "_whisper_model") or cls._whisper_model is None:
                 from faster_whisper import WhisperModel
-                cls._whisper_model = WhisperModel("base.en", device="cpu", compute_type="int8")
+                dev = "cuda" if torch.cuda.is_available() else "cpu"
+                ct = "float16" if dev == "cuda" else "int8"
+                cls._whisper_model = WhisperModel("base", device=dev, compute_type=ct)
 
             with tempfile.NamedTemporaryFile(suffix=f".{file_format}", delete=False) as tmp:
                 tmp.write(audio_data)
                 tmp_path = tmp.name
 
             try:
-                segments, info = cls._whisper_model.transcribe(tmp_path, word_timestamps=True)
+                # Set to English by default for optimal ESL speaking accuracy
+                lang_code = language.split("-")[0].lower() if (language and "-" in language) else (language.lower() if language else "en")
+                if lang_code in ("auto", "none", "", "en-us"):
+                    lang_code = "en"
+
+                # Use initial prompt to bias Whisper towards clean conversational English
+                initial_prompt = "English conversation, clear pronunciation, ESL speaking practice." if lang_code == "en" else None
+
+                # Transcribe with VAD to eliminate background silence / ellipsis hallucinations
+                segments, info = cls._whisper_model.transcribe(
+                    tmp_path,
+                    language=lang_code,
+                    initial_prompt=initial_prompt,
+                    word_timestamps=True,
+                    vad_filter=True,
+                    vad_parameters=dict(min_silence_duration_ms=400),
+                    beam_size=5,
+                )
+
                 words = []
                 full_text = []
                 for s in segments:
-                    full_text.append(s.text.strip())
+                    clean_s = s.text.strip()
+                    if clean_s:
+                        full_text.append(clean_s)
                     if s.words:
                         for w in s.words:
                             words.append({
@@ -62,10 +85,17 @@ class SpeechAIService:
                                 "end_time": w.end,
                                 "confidence": round(w.probability, 2),
                             })
+                raw_transcript = " ".join(full_text).strip()
+                # Clean out repetitive punctuation / dots like '... ... ...'
+                cleaned_transcript = re.sub(r'^[.\s,!?]+|[.\s,!?]+$', '', raw_transcript).strip()
+                # If there are no alphanumeric characters, it was just noise/silence
+                if not re.search(r'[a-zA-Z0-9\u00C0-\u1EF9]', cleaned_transcript):
+                    cleaned_transcript = ""
+
                 return {
-                    "transcript": " ".join(full_text),
+                    "transcript": cleaned_transcript,
                     "confidence": round(info.avg_logprob, 2) if hasattr(info, "avg_logprob") else 0.95,
-                    "language": language,
+                    "language": getattr(info, "language", language),
                     "duration_seconds": round(info.duration, 2) if hasattr(info, "duration") else 0.0,
                     "words": words,
                 }
@@ -76,6 +106,7 @@ class SpeechAIService:
                     except Exception:
                         pass
         return await asyncio.to_thread(_do)
+
 
     @classmethod
     async def _local_edge_tts(

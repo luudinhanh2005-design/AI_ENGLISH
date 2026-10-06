@@ -29,6 +29,53 @@ router = APIRouter()
 # 1. AI Tutor Chat
 # ──────────────────────────────────────────────
 
+from pydantic import BaseModel
+
+class TranslationRequest(BaseModel):
+    text: str
+    target_lang: str = "vi"
+
+class TranslationResponse(BaseModel):
+    original_text: str
+    translated_text: str
+    target_lang: str = "vi"
+
+@router.get("/status")
+async def get_ai_status():
+    from ...services.local_llm_service import local_llm_service
+    return {
+        "is_loaded": local_llm_service.is_loaded,
+        "device": str(local_llm_service.device),
+        "model_dir": local_llm_service.model_dir,
+    }
+
+@router.post("/translate", response_model=TranslationResponse)
+async def translate_text(request: TranslationRequest):
+    """Translate text quickly to Vietnamese or other target languages."""
+    import urllib.request
+    import urllib.parse
+    import json
+    import asyncio
+
+    def _do_translate(text: str, target: str) -> str:
+        try:
+            url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={target}&dt=t&q=" + urllib.parse.quote(text)
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                return "".join([part[0] for part in data[0] if part and part[0]]).strip()
+        except Exception:
+            return text
+
+    translated = await asyncio.to_thread(_do_translate, request.text, request.target_lang)
+    return TranslationResponse(
+        original_text=request.text,
+        translated_text=translated,
+        target_lang=request.target_lang,
+    )
+
+
+
 @router.post("/chat", response_model=AIChatResponse)
 async def chat_with_ai_tutor(
     request: AIChatRequest,

@@ -41,7 +41,11 @@ class LocalLLMService:
 
         try:
             import torch
-            from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+            try:
+                from transformers.models.auto import AutoTokenizer, AutoModelForCausalLM
+                from transformers import BitsAndBytesConfig
+            except Exception:
+                from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
             from peft import PeftModel
 
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -76,7 +80,9 @@ class LocalLLMService:
             logger.info("Nap Local English Tutor LLM thanh cong!")
             return True
         except Exception as e:
-            logger.error(f"Loi khi nap Local LLM: {e}")
+            import traceback
+            self.load_error = f"{e}\n{traceback.format_exc()}"
+            logger.error(f"Loi khi nap Local LLM: {self.load_error}")
             return False
 
     def generate_chat_response(
@@ -98,10 +104,12 @@ class LocalLLMService:
         if not has_system:
             full_messages.append({
                 "role": "system",
-                "content": "You are Sarah, a warm, patient, and friendly English tutor for Vietnamese learners. "
-                "You are completely fluent in both Vietnamese and English. "
-                "When the user speaks or asks in Vietnamese, ALWAYS respond, explain grammar, and guide them warmly in natural Vietnamese. "
-                "Provide the correct English sentences clearly, point out mistakes, and explain the grammatical reasons in Vietnamese so the learner understands easily."
+                "content": (
+                    "You are Sarah, a warm, patient, and friendly native English tutor. "
+                    "You MUST ALWAYS reply and converse in natural, engaging ENGLISH so the learner can practice English speaking and conversation. "
+                    "Do NOT reply in Vietnamese unless the user explicitly asks for a Vietnamese translation. "
+                    "Always end your reply with an engaging follow-up question in English to keep the conversation going."
+                )
             })
         full_messages.extend(messages)
 

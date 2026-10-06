@@ -12,6 +12,7 @@ Endpoints for:
 """
 import uuid
 from pathlib import Path
+from typing import Optional
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 from fastapi.responses import FileResponse
@@ -34,7 +35,7 @@ from ...schemas.speech import (
     WordScore,
 )
 from ...services.speech_service import SpeechAIService, AUDIO_DIR
-from ..deps import get_current_user
+from ..deps import get_current_user, get_optional_user
 
 router = APIRouter()
 
@@ -52,7 +53,7 @@ async def assess_pronunciation(
     audio: UploadFile = File(..., description="Audio file (WAV/MP3/WebM)"),
     reference_text: str = Form(..., description="Target text the user read"),
     session_type: str = Form(default="read_aloud"),
-    current_user: User = Depends(get_current_user),
+    current_user: Optional[User] = Depends(get_optional_user),
     db: AsyncSession = Depends(get_db),
 ):
     """
@@ -86,7 +87,7 @@ async def assess_pronunciation(
             file_format = ext
 
     # Get user level
-    user_level = current_user.current_level or "B1"
+    user_level = current_user.current_level if (current_user and current_user.current_level) else "B1"
 
     # Run assessment
     result = await SpeechAIService.assess_pronunciation(
@@ -95,44 +96,46 @@ async def assess_pronunciation(
         user_level=user_level,
     )
 
-    # Save session to database
-    session = SpeakingSession(
-        user_id=current_user.id,
-        session_type=session_type,
-        reference_text=reference_text,
-        overall_score=result["overall_score"],
-        fluency_score=result["fluency_score"],
-        accuracy_score=result["accuracy_score"],
-        completeness_score=result["completeness_score"],
-        prosody_score=result["prosody_score"],
-        recognised_text=result["recognised_text"],
-        word_scores=result["word_scores"],
-        feedback=result["feedback"],
-        improvement_tips=result["improvement_tips"],
-    )
-    db.add(session)
+    session_id = uuid.uuid4()
+    if current_user:
+        # Save session to database
+        session = SpeakingSession(
+            user_id=current_user.id,
+            session_type=session_type,
+            reference_text=reference_text,
+            overall_score=result["overall_score"],
+            fluency_score=result["fluency_score"],
+            accuracy_score=result["accuracy_score"],
+            completeness_score=result["completeness_score"],
+            prosody_score=result["prosody_score"],
+            recognised_text=result["recognised_text"],
+            word_scores=result["word_scores"],
+            feedback=result["feedback"],
+            improvement_tips=result["improvement_tips"],
+        )
+        db.add(session)
 
-    # Save audio recording reference
-    audio_filename = f"user_{uuid.uuid4().hex[:12]}.{file_format}"
-    audio_path = AUDIO_DIR / audio_filename
-    audio_path.write_bytes(audio_data)
+        # Save audio recording reference
+        audio_filename = f"user_{uuid.uuid4().hex[:12]}.{file_format}"
+        audio_path = AUDIO_DIR / audio_filename
+        audio_path.write_bytes(audio_data)
 
-    recording = AudioRecording(
-        session_id=session.id,
-        audio_type="user",
-        file_url=f"/api/v1/speech/audio/{audio_filename}",
-        file_format=file_format,
-    )
-    db.add(recording)
-
-    await db.flush()
+        recording = AudioRecording(
+            session_id=session.id,
+            audio_type="user",
+            file_url=f"/api/v1/speech/audio/{audio_filename}",
+            file_format=file_format,
+        )
+        db.add(recording)
+        await db.flush()
+        session_id = session.id
 
     # Generate TTS for reference (native audio)
     tts_result = await SpeechAIService.text_to_speech(reference_text)
     native_audio_url = tts_result.get("audio_url") or None
 
     return PronunciationAssessResponse(
-        session_id=session.id,
+        session_id=session_id,
         reference_text=reference_text,
         recognised_text=result["recognised_text"],
         overall_score=result["overall_score"],
@@ -147,6 +150,7 @@ async def assess_pronunciation(
     )
 
 
+
 # ──────────────────────────────────────────────
 #  2. Speech-to-Text Only
 # ──────────────────────────────────────────────
@@ -159,7 +163,7 @@ async def assess_pronunciation(
 async def transcribe_audio(
     audio: UploadFile = File(..., description="Audio file to transcribe"),
     language: str = Form(default="en-US"),
-    current_user: User = Depends(get_current_user),
+    current_user: Optional[User] = Depends(get_optional_user),
 ):
     """Upload audio and get transcription without pronunciation scoring."""
     audio_data = await audio.read()
@@ -194,7 +198,7 @@ async def transcribe_audio(
 )
 async def text_to_speech(
     request: TTSRequest,
-    current_user: User = Depends(get_current_user),
+    current_user: Optional[User] = Depends(get_optional_user),
 ):
     """Convert text to speech with selectable voice and speed."""
     result = await SpeechAIService.text_to_speech(

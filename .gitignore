@@ -25,6 +25,10 @@ english_ai/english_ai.iml
 backend/.env
 .env
 
+# Generated Media / Audio Storage
+backend/storage/audio/*.mp3
+backend/storage/audio/*.wav
+
 # System files
 .DS_Store
 Thumbs.db

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/network/api_client.dart';
@@ -5,6 +7,7 @@ import '../../data/models/ai_tutor_models.dart';
 
 class AiTutorState {
   final bool isLoading;
+  final bool isTranscribing;
   final String? errorMessage;
   final String currentPersona; // 'sarah', 'harrison', 'emma'
   final String? sessionId;
@@ -13,6 +16,7 @@ class AiTutorState {
 
   const AiTutorState({
     this.isLoading = false,
+    this.isTranscribing = false,
     this.errorMessage,
     this.currentPersona = 'sarah',
     this.sessionId,
@@ -22,6 +26,7 @@ class AiTutorState {
 
   AiTutorState copyWith({
     bool? isLoading,
+    bool? isTranscribing,
     String? errorMessage,
     String? currentPersona,
     String? sessionId,
@@ -30,6 +35,7 @@ class AiTutorState {
   }) {
     return AiTutorState(
       isLoading: isLoading ?? this.isLoading,
+      isTranscribing: isTranscribing ?? this.isTranscribing,
       errorMessage: errorMessage,
       currentPersona: currentPersona ?? this.currentPersona,
       sessionId: sessionId ?? this.sessionId,
@@ -107,7 +113,7 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
     if (trimmed.isEmpty) return;
 
     final userMsg = ChatMessageModel(
-      id: UniqueKey().toString(),
+      id: 'msg_user_${DateTime.now().microsecondsSinceEpoch}',
       role: 'user',
       content: trimmed,
       createdAt: DateTime.now(),
@@ -145,7 +151,7 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
       final suggestions = rawSuggestions.map((s) => s.toString()).toList();
 
       final assistantMsg = ChatMessageModel(
-        id: UniqueKey().toString(),
+        id: 'msg_ai_${DateTime.now().microsecondsSinceEpoch}',
         role: 'assistant',
         content: replyText,
         corrections: corrections,
@@ -165,6 +171,45 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
       state = state.copyWith(
         isLoading: false,
         errorMessage: 'Không thể kết nối với AI Tutor. Vui lòng thử lại.',
+      );
+    }
+  }
+
+  Future<String?> transcribeAudio(Uint8List audioBytes, {String filename = 'audio.wav'}) async {
+    try {
+      final formData = FormData.fromMap({
+        'audio': MultipartFile.fromBytes(audioBytes, filename: filename),
+        'language': 'en',
+      });
+      final response = await _dio.post(
+        '/speech/transcribe',
+        data: formData,
+      );
+      if (response.data != null && response.data['transcript'] != null) {
+        return (response.data['transcript'] as String).trim();
+      }
+    } catch (e) {
+      // Transcription error
+    }
+    return null;
+  }
+
+  Future<void> sendAudioMessage(Uint8List audioBytes, {String filename = 'audio.wav'}) async {
+    state = state.copyWith(isTranscribing: true, errorMessage: null);
+    try {
+      final transcript = await transcribeAudio(audioBytes, filename: filename);
+      state = state.copyWith(isTranscribing: false);
+      if (transcript != null && transcript.isNotEmpty) {
+        await sendMessage(transcript);
+      } else {
+        state = state.copyWith(
+          errorMessage: 'Không nhận diện được âm thanh. Hãy thử nói to và rõ hơn nhé!',
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        isTranscribing: false,
+        errorMessage: 'Lỗi nhận diện âm thanh. Vui lòng thử lại.',
       );
     }
   }
@@ -189,4 +234,21 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
     return null;
   }
 
+  Future<String?> translateText(String text) async {
+    try {
+      final response = await _dio.post(
+        '/ai/translate',
+        data: {
+          'text': text,
+          'target_lang': 'vi',
+        },
+      );
+      if (response.data != null && response.data['translated_text'] != null) {
+        return response.data['translated_text'] as String;
+      }
+    } catch (e) {
+      // Fallback
+    }
+    return null;
+  }
 }

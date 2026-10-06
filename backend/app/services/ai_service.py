@@ -117,7 +117,19 @@ class AIService:
             if not loaded:
                 return None
 
-        formatted_messages = []
+        system_instruction = (
+            f"{system_prompt}\n"
+            f"The learner's name is {user_name}, and their CEFR level is {user_level}.\n"
+            "MANDATORY INSTRUCTION: You are an English speaking partner and tutor. "
+            "You MUST ALWAYS converse and reply in natural, engaging, and fluent ENGLISH. "
+            "If the learner makes ANY grammar, tense, vocabulary, or preposition mistake (or asks you to check a sentence), "
+            "gently point it out using this format:\n"
+            "Correction: \"<corrected sentence>\"\n"
+            "Note: <brief explanation in Vietnamese of why it is corrected>\n"
+            "Then continue the conversation in natural English with an engaging follow-up question."
+        )
+
+        formatted_messages = [{"role": "system", "content": system_instruction}]
         for h in history[-4:]:
             role = "assistant" if h.get("role") in ["assistant", "model"] else "user"
             formatted_messages.append({"role": role, "content": h.get("content", "")})
@@ -134,16 +146,56 @@ class AIService:
             return None
 
         corrections = []
-        corr_match = re.search(r'''(?:The correct|Correction):\s*["']([^"']+)["']''', raw_reply, re.IGNORECASE)
+        corr_match = re.search(
+            r'''(?:The correct(?:\s+way(?:\s+would\s+be)?)?|Correction|Correct version|Câu chuẩn|Accurate version|Professional standard)(?::|,|\s+is)?\s*["'“”]([^"'“”]+)["'“”]''',
+            raw_reply,
+            re.IGNORECASE
+        )
+        if not corr_match:
+            corr_match = re.search(r'''\*\*["'“”]([^"'“”]+)["'“”]\*\*''', raw_reply)
+
         if corr_match:
+            corrected_text = corr_match.group(1).strip()
+            expl_match = re.search(r'''(?:Note|Giải thích|Examiner Note):\s*([^\n\)]+)''', raw_reply, re.IGNORECASE)
+            explanation_vi = expl_match.group(1).strip() if expl_match else "AI Tutor đã phát hiện và sửa lỗi cấu trúc ngữ pháp giúp bạn."
             corrections.append({
                 "original": user_message,
-                "correction": corr_match.group(1),
-                "explanation_vi": "AI Tutor da phat hien va sua loi cau truc ngu phap."
+                "correction": corrected_text,
+                "explanation_vi": explanation_vi,
             })
 
+        # Rule-based safety net: always catch known errors even if model phrased it freely
+        rule_corrs = cls._detect_grammar_errors(user_message)
+        if not corrections and rule_corrs:
+            corrections.extend(rule_corrs)
+
+        # Clean conversational reply from verbose raw correction blocks
+        clean_reply = raw_reply
+        if corrections:
+            clean_reply = re.sub(
+                r'''(?:\n|\A)\s*(?:The correct(?:\s+way(?:\s+would\s+be)?)?|Correction|Correct version|Câu chuẩn|Accurate version)(?::|,|\s+is)?\s*["'“”][^"'“”]+["'“”][^\n]*''',
+                '',
+                clean_reply,
+                flags=re.IGNORECASE
+            )
+            clean_reply = re.sub(
+                r'''(?:\n|\A)\s*(?:Note|Giải thích|Examiner Note):\s*[^\n]+''',
+                '',
+                clean_reply,
+                flags=re.IGNORECASE
+            )
+            clean_reply = re.sub(
+                r'''(?:\n|\A)\s*The verb should change[^\n\.]+\.?''',
+                '',
+                clean_reply,
+                flags=re.IGNORECASE
+            )
+            clean_reply = re.sub(r'\n{3,}', '\n\n', clean_reply).strip()
+            if not clean_reply or len(clean_reply) < 10:
+                clean_reply = raw_reply
+
         return {
-            "reply": raw_reply,
+            "reply": clean_reply,
             "corrections": corrections,
             "suggested_replies": [
                 "Could you give me an example?",
@@ -247,6 +299,83 @@ class AIService:
             return json.loads(content_str)
 
     @classmethod
+    def _detect_grammar_errors(cls, user_message: str) -> list[dict[str, str]]:
+        msg_lower = user_message.lower().strip()
+        corrections = []
+        if re.search(r"\b(yesterday\s+i\s+go|i\s+go\s+to\s+.*yesterday|yesterday\s+i\s+eat|last\s+night\s+i\s+eat)\b", msg_lower):
+            wrong = "yesterday I go" if "go" in msg_lower else "yesterday I eat"
+            correct = "yesterday I went" if "go" in msg_lower else "yesterday I ate"
+            corrections.append({
+                "original": wrong,
+                "correction": correct,
+                "explanation_vi": "Hành động đã kết thúc trong quá khứ cần chia động từ ở thì Quá khứ đơn (Past Simple): 'go' -> 'went', 'eat' -> 'ate'.",
+            })
+        elif re.search(r"\b(she|he|it)\s+don't\b", msg_lower):
+            m = re.search(r"\b(she|he|it)\s+don't\b", msg_lower).group(0)
+            corrections.append({
+                "original": m,
+                "correction": m.replace("don't", "doesn't"),
+                "explanation_vi": "Chủ ngữ ngôi thứ ba số ít (she, he, it) trong thì hiện tại đơn phải đi với trợ động từ 'doesn't', không dùng 'don't'.",
+            })
+        elif re.search(r"\binterested\s+on\b", msg_lower):
+            corrections.append({
+                "original": "interested on",
+                "correction": "interested in",
+                "explanation_vi": "Cụm tính từ cố định luôn là 'interested in' (hứng thú với điều gì), không đi kèm giới từ 'on'.",
+            })
+        elif re.search(r"\b(depends?)\s+of\b", msg_lower):
+            corrections.append({
+                "original": "depend of",
+                "correction": "depend on",
+                "explanation_vi": "Động từ 'depend' đi kèm giới từ 'on' (hoặc 'upon'), không dùng 'of'.",
+            })
+        elif re.search(r"\blook\s+forward\s+to\s+hear\b", msg_lower):
+            corrections.append({
+                "original": "look forward to hear",
+                "correction": "look forward to hearing",
+                "explanation_vi": "Sau cấu trúc 'look forward to', động từ luôn ở dạng V-ing ('hearing').",
+            })
+        elif re.search(r"\bmake\s+homework\b", msg_lower):
+            corrections.append({
+                "original": "make homework",
+                "correction": "do homework",
+                "explanation_vi": "Cụm từ cố định chuẩn (collocation) là 'do homework', không dùng 'make homework'.",
+            })
+        elif re.search(r"\b(two|many|\d+)\s+childs\b", msg_lower):
+            corrections.append({
+                "original": "childs",
+                "correction": "children",
+                "explanation_vi": "Danh từ số nhiều bất quy tắc của 'child' là 'children', không thêm 's'.",
+            })
+        elif re.search(r"\bi\s+live\s+in\s+.*since\b", msg_lower):
+            corrections.append({
+                "original": "I live in ... since ...",
+                "correction": "I have lived in ... since ...",
+                "explanation_vi": "Hành động bắt đầu từ quá khứ kéo dài đến hiện tại có mốc 'since' phải dùng thì Hiện tại hoàn thành: 'have lived'.",
+            })
+        elif re.search(r"\b(she|he)\s+(study|go|play|have)\b", msg_lower):
+            m = re.search(r"\b(she|he)\s+(study|go|play|have)\b", msg_lower).group(0)
+            fixed = m.replace("study", "studies").replace("go", "goes").replace("play", "plays").replace("have", "has")
+            corrections.append({
+                "original": m,
+                "correction": fixed,
+                "explanation_vi": "Chủ ngữ ngôi thứ 3 số ít (He/She) trong thì hiện tại đơn cần chia động từ thêm 's/es' hoặc dùng 'has'.",
+            })
+        elif re.search(r"\bmore\s+better\b", msg_lower):
+            corrections.append({
+                "original": "more better",
+                "correction": "much better / better",
+                "explanation_vi": "'Better' đã là dạng so sánh hơn của 'good', không dùng kèm 'more'.",
+            })
+        elif re.search(r"\bi\s+have\s+see\b", msg_lower):
+            corrections.append({
+                "original": "I have see",
+                "correction": "I have seen",
+                "explanation_vi": "Sau 'have' trong thì hiện tại hoàn thành, động từ phải ở dạng quá khứ phân từ (V3): 'seen'.",
+            })
+        return corrections
+
+    @classmethod
     def _intelligent_fallback_chat(
         cls,
         persona: str,
@@ -258,33 +387,7 @@ class AIService:
         when cloud API keys are absent or network is offline.
         """
         msg_lower = user_message.lower().strip()
-        corrections = []
-
-        # Common grammatical error patterns to detect & explain
-        if re.search(r"\bi go to .* yesterday\b", msg_lower):
-            corrections.append({
-                "original": "I go to ... yesterday",
-                "correction": "I went to ... yesterday",
-                "explanation_vi": "Dùng thì quá khứ đơn 'went' thay vì 'go' vì có trạng từ thời gian 'yesterday'.",
-            })
-        elif re.search(r"\bi have see\b", msg_lower):
-            corrections.append({
-                "original": "I have see",
-                "correction": "I have seen",
-                "explanation_vi": "Sau 'have' trong thì hiện tại hoàn thành, động từ phải ở dạng quá khứ phân từ (V3): 'seen'.",
-            })
-        elif re.search(r"\bshe study\b", msg_lower):
-            corrections.append({
-                "original": "she study",
-                "correction": "she studies",
-                "explanation_vi": "Chủ ngữ ngôi thứ ba số ít (she) trong thì hiện tại đơn chia động từ thêm 'es': 'studies'.",
-            })
-        elif re.search(r"\bmore better\b", msg_lower):
-            corrections.append({
-                "original": "more better",
-                "correction": "much better / better",
-                "explanation_vi": "'Better' đã là dạng so sánh hơn của 'good', không dùng kèm 'more'.",
-            })
+        corrections = cls._detect_grammar_errors(user_message)
 
         # Persona-based responses
         if persona == "harrison":
@@ -334,7 +437,19 @@ class AIService:
                     "Could you provide an advanced idiom for this?",
                 ]
         else:  # Sarah (default friendly tutor)
-            if "hello" in msg_lower or "hi" in msg_lower:
+            if corrections:
+                first_corr = corrections[0]
+                reply = (
+                    f"Good effort! Here is a helpful grammar tip: instead of '{first_corr['original']}', "
+                    f"it is more natural to say: \"{first_corr['correction']}\". 😊 "
+                    "Could you try saying that sentence again?"
+                )
+                suggested = [
+                    "Could you give me another example?",
+                    "Can we practice another sentence?",
+                    "Why is it used that way?",
+                ]
+            elif "hello" in msg_lower or "hi" in msg_lower:
                 reply = (
                     "Hello! It's so wonderful to chat with you today! 😊 "
                     "How has your day been so far? Tell me about something interesting you did!"
