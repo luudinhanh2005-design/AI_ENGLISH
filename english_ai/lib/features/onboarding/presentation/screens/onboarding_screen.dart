@@ -126,7 +126,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     SmoothPageIndicator(
                       controller: _pageController,
                       count: 3,
-                      effect: ExpandingDotsEffect(
+                      effect: const ExpandingDotsEffect(
                         dotWidth: 8,
                         dotHeight: 8,
                         expansionFactor: 3,

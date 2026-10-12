@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import '../../../../core/utils/speech_service.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,15 +55,45 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
     final notifier = ref.read(flashcardSessionProvider.notifier);
 
     if (state.isLoading && state.cards.isEmpty) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: AppColors.backgroundDark,
-        body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textPrimaryDark),
+            tooltip: 'Thoát',
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/vocabulary');
+              }
+            },
+          ),
+        ),
+        body: const Center(child: CircularProgressIndicator(color: AppColors.primary)),
       );
     }
 
     if (state.errorMessage != null && state.cards.isEmpty) {
       return Scaffold(
         backgroundColor: AppColors.backgroundDark,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textPrimaryDark),
+            tooltip: 'Thoát',
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/vocabulary');
+              }
+            },
+          ),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -91,42 +123,85 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
     if (state.isSessionFinished || state.cards.isEmpty) {
       return Scaffold(
         backgroundColor: AppColors.backgroundDark,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textPrimaryDark),
+            tooltip: 'Thoát',
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/vocabulary');
+              }
+            },
+          ),
+        ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.success.withOpacity(0.15),
-                    border: Border.all(color: AppColors.success, width: 2),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.success.withOpacity(0.15),
+                      border: Border.all(color: AppColors.success, width: 2),
+                    ),
+                    child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 54),
                   ),
-                  child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 54),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Hoàn thành phiên ôn tập!',
-                  style: AppTextStyles.headlineSmall.copyWith(
-                    color: AppColors.textPrimaryDark,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 20),
+                  Text(
+                    'Hoàn thành phiên ôn tập!',
+                    style: AppTextStyles.headlineSmall.copyWith(
+                      color: AppColors.textPrimaryDark,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Bạn đã củng cố ${state.reviewedCount} từ vựng vào trí nhớ dài hạn với thuật toán SM-2.',
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondaryDark),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 32),
-                AppButton(
-                  text: 'Về trang chủ',
-                  onPressed: () => context.pop(),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Text(
+                    'Bạn đã hoàn thành củng cố từ vựng vào trí nhớ dài hạn với thuật toán SM-2.',
+                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondaryDark),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () => notifier.loadDueWords(),
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: AppColors.primary),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                        ),
+                        child: const Text('Ôn tập lại', style: TextStyle(color: AppColors.primary)),
+                      ),
+                      const SizedBox(width: 14),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            context.go('/vocabulary');
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                        ),
+                        child: const Text('Thoát', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -143,8 +218,15 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: AppColors.textSecondaryDark),
-          onPressed: () => context.pop(),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textSecondaryDark),
+          tooltip: 'Thoát',
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/vocabulary');
+            }
+          },
         ),
         title: Text(
           'Thẻ Flashcard ${state.currentIndex + 1}/$totalCards',
@@ -311,14 +393,20 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
             ),
           ),
           const SizedBox(height: 36),
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.surfaceLightDark,
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              SpeechService.speak(word.word as String);
+            },
+            child: Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.surfaceLightDark,
+              ),
+              child: const Icon(Icons.volume_up_rounded, color: AppColors.primary),
             ),
-            child: const Icon(Icons.volume_up_rounded, color: AppColors.primary),
           ),
         ],
       ),

@@ -84,7 +84,14 @@ class _ForgotPasswordScreenState
 
                   // Back button
                   IconButton(
-                    onPressed: () => context.pop(),
+                    tooltip: 'Quay lại',
+                    onPressed: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/login');
+                      }
+                    },
                     icon: const Icon(
                       Icons.arrow_back_ios_rounded,
                       color: AppColors.darkTextPrimary,

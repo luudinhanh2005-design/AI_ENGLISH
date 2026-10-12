@@ -30,15 +30,8 @@ async def lifespan(app: FastAPI):
         # Create tables (use Alembic migrations in production)
         await init_db()
         logger.info("Database initialized")
-        # Pre-load AI Model into GPU on startup
-        try:
-            import asyncio
-            from app.services.local_llm_service import local_llm_service
-            logger.info("Pre-loading local English Tutor AI model into GPU...")
-            asyncio.create_task(asyncio.to_thread(local_llm_service.load_model))
-        except Exception as e:
-            logger.warning(f"Could not pre-load local LLM: {e}")
-        logger.info("âœ… Database initialized")
+        # Local LLM will be lazy-loaded on demand if requested
+        logger.info("Server startup complete")
     except Exception as e:
         logger.warning(
             f"âš ï¸ Could not connect to database on startup: {e}. "

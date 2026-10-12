@@ -91,7 +91,7 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
       currentPersona: persona,
       messages: [
         ChatMessageModel(
-          id: 'welcome',
+          id: 'welcome_$persona',
           role: 'assistant',
           content: welcome,
           suggestedReplies: suggestions,
@@ -224,7 +224,8 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
         },
       );
       if (response.data != null && response.data['audio_url'] != null) {
-        final audioPath = response.data['audio_url'] as String;
+        final audioPath = (response.data['audio_url'] as String).trim();
+        if (audioPath.isEmpty) return null;
         if (audioPath.startsWith('http')) return audioPath;
         return 'http://localhost:8000$audioPath';
       }

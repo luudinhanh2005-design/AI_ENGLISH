@@ -8,10 +8,18 @@ import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/learn/presentation/screens/learn_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/placement/presentation/screens/placement_test_screen.dart';
+import '../../features/practice/presentation/screens/practice_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/vocabulary/presentation/screens/flashcard_screen.dart';
+import '../../features/vocabulary/presentation/screens/vocabulary_list_screen.dart';
 import '../../features/vocabulary/presentation/screens/vocabulary_topics_screen.dart';
+import '../../features/practice/presentation/screens/writing_practice_screen.dart';
+import '../../features/learn/presentation/screens/listening_screen.dart';
+import '../../features/learn/presentation/screens/reading_screen.dart';
+import '../../features/learn/presentation/screens/grammar_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import 'route_names.dart';
 
@@ -91,6 +99,34 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/vocabulary/review',
         name: RouteNames.vocabularyReview,
         builder: (context, state) => const FlashcardScreen(),
+      ),
+      GoRoute(
+        path: '/vocabulary/list',
+        name: RouteNames.vocabularyDetail,
+        builder: (context, state) => const VocabularyListScreen(),
+      ),
+      GoRoute(
+        path: '/writing-practice',
+        name: RouteNames.writing,
+        builder: (context, state) => const WritingPracticeScreen(),
+      ),
+      GoRoute(
+        path: '/listening',
+        name: RouteNames.listening,
+        builder: (context, state) => const ListeningScreen(),
+      ),
+      GoRoute(
+        path: '/reading',
+        name: RouteNames.reading,
+        builder: (context, state) => const ReadingScreen(),
+      ),
+      GoRoute(
+        path: '/grammar',
+        name: RouteNames.grammar,
+        builder: (context, state) {
+          final lessonId = state.uri.queryParameters['id'];
+          return GrammarScreen(initialLessonId: lessonId);
+        },
       ),
 
       // â”€â”€ Main App with Bottom Navigation â”€â”€
@@ -323,116 +359,3 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 }
 
-// Placeholder screens for tabs that will be built in later phases
-class LearnScreen extends StatelessWidget {
-  const LearnScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const _PlaceholderTab(
-      icon: Icons.menu_book_rounded,
-      title: 'Learn',
-      subtitle: 'Vocabulary, Grammar, Listening, Reading',
-    );
-  }
-}
-
-class PracticeScreen extends StatelessWidget {
-  const PracticeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const _PlaceholderTab(
-      icon: Icons.sports_esports_rounded,
-      title: 'Practice',
-      subtitle: 'Speaking, Pronunciation, Writing',
-    );
-  }
-}
-
-class AiTutorScreen extends StatelessWidget {
-  const AiTutorScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const _PlaceholderTab(
-      icon: Icons.smart_toy_rounded,
-      title: 'AI Tutor',
-      subtitle: 'Ask anything about English',
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const _PlaceholderTab(
-      icon: Icons.person_rounded,
-      title: 'Profile',
-      subtitle: 'Progress, Achievements, Settings',
-    );
-  }
-}
-
-class _PlaceholderTab extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  const _PlaceholderTab({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 64,
-              color: const Color(0xFF6C5CE7).withOpacity(0.5),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              subtitle,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 24),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              decoration: BoxDecoration(
-                color: const Color(0xFF6C5CE7).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: const Color(0xFF6C5CE7).withOpacity(0.3),
-                ),
-              ),
-              child: Text(
-                'Coming in Phase 2+',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFF6C5CE7),
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

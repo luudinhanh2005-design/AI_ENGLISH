@@ -35,6 +35,10 @@ class Base(DeclarativeBase):
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """Dependency that provides a database session."""
+    if not IS_DB_CONNECTED:
+        yield None  # type: ignore
+        return
+
     async with async_session_factory() as session:
         try:
             yield session
@@ -46,7 +50,19 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
             await session.close()
 
 
+IS_DB_CONNECTED: bool = False
+
+
 async def init_db():
     """Create all tables. Use Alembic in production instead."""
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    global IS_DB_CONNECTED
+    import asyncio
+    async def _connect():
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+    try:
+        await asyncio.wait_for(_connect(), timeout=1.5)
+        IS_DB_CONNECTED = True
+    except Exception as e:
+        IS_DB_CONNECTED = False
+        raise e

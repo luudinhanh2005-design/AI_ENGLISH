@@ -257,7 +257,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       // Divider
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Divider(
                               color: AppColors.darkDivider,
                             ),
@@ -273,7 +273,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: Divider(
                               color: AppColors.darkDivider,
                             ),

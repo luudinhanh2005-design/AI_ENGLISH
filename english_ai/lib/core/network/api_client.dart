@@ -22,7 +22,7 @@ final dioProvider = Provider<Dio>((ref) {
   );
 
   dio.interceptors.addAll([
-    AuthInterceptor(ref),
+    AuthInterceptor(),
     LoggingInterceptor(),
     ErrorInterceptor(),
   ]);
@@ -32,9 +32,7 @@ final dioProvider = Provider<Dio>((ref) {
 
 /// Adds JWT bearer token to every request.
 class AuthInterceptor extends Interceptor {
-  final Ref _ref;
-
-  AuthInterceptor(this._ref);
+  AuthInterceptor();
 
   @override
   void onRequest(

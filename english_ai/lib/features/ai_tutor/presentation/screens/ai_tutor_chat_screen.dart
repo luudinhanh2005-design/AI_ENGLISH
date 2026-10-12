@@ -83,6 +83,10 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
+
+    _audioPlayer.onPlayerComplete.listen((_) {
+      if (mounted) setState(() => _currentlyPlayingId = null);
+    });
   }
 
   @override
@@ -202,13 +206,16 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     try {
       final notifier = ref.read(aiTutorProvider.notifier);
       final audioUrl = await notifier.getAudioUrlForText(msg.content, persona);
-      if (audioUrl != null && mounted) {
+      if (audioUrl != null && audioUrl.isNotEmpty && mounted) {
+        await _audioPlayer.stop();
         await _audioPlayer.play(UrlSource(audioUrl));
-        _audioPlayer.onPlayerComplete.listen((_) {
-          if (mounted) setState(() => _currentlyPlayingId = null);
-        });
       } else {
-        if (mounted) setState(() => _currentlyPlayingId = null);
+        if (mounted) {
+          setState(() => _currentlyPlayingId = null);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Không thể phát âm thanh lúc này.')),
+          );
+        }
       }
     } catch (_) {
       if (mounted) setState(() => _currentlyPlayingId = null);
@@ -232,7 +239,11 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     final state = ref.watch(aiTutorProvider);
     final notifier = ref.read(aiTutorProvider.notifier);
 
-    _scrollToBottom();
+    ref.listen(aiTutorProvider.select((s) => s.messages.length), (previous, next) {
+      if (previous != next) {
+        _scrollToBottom();
+      }
+    });
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
@@ -241,7 +252,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
         elevation: 1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.textPrimaryDark),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/');
+            }
+          },
         ),
         title: Row(
           children: [
@@ -831,7 +848,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
       spans.add(TextSpan(
         text: '${w1.sublist(0, start).join(' ')} ',
         style: const TextStyle(color: AppColors.textSecondaryDark),
-      ));
+      ),);
     }
     if (start <= end1) {
       spans.add(TextSpan(
@@ -844,13 +861,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
           decorationThickness: 2.8,
           backgroundColor: Color(0x33FF4757),
         ),
-      ));
+      ),);
     }
     if (end1 + 1 < w1.length) {
       spans.add(TextSpan(
         text: w1.sublist(end1 + 1).join(' '),
         style: const TextStyle(color: AppColors.textSecondaryDark),
-      ));
+      ),);
     }
     return spans.isEmpty ? [TextSpan(text: orig)] : spans;
   }
@@ -879,7 +896,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
       spans.add(TextSpan(
         text: '${w2.sublist(0, start).join(' ')} ',
         style: const TextStyle(color: Colors.white),
-      ));
+      ),);
     }
     if (start <= end2) {
       spans.add(TextSpan(
@@ -889,13 +906,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
           fontWeight: FontWeight.w900,
           backgroundColor: Color(0x402ED573),
         ),
-      ));
+      ),);
     }
     if (end2 + 1 < w2.length) {
       spans.add(TextSpan(
         text: w2.sublist(end2 + 1).join(' '),
         style: const TextStyle(color: Colors.white),
-      ));
+      ),);
     }
     return spans.isEmpty ? [TextSpan(text: corr)] : spans;
   }

@@ -33,8 +33,8 @@ class AITutorMessageItem(BaseModel):
     id: UUID
     role: str
     content: str
-    corrections: list[dict] = []
-    suggested_replies: list[str] = []
+    corrections: Optional[list[dict]] = []
+    suggested_replies: Optional[list[str]] = []
     created_at: datetime
 
     class Config:

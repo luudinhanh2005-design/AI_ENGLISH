@@ -3,15 +3,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/network/api_client.dart';
 import '../../data/models/vocabulary_models.dart';
+import '../../data/vocabulary_data.dart';
+import 'vocabulary_list_provider.dart';
 
-// ── Topics Provider ──
+// ── Topics Provider (with robust fallback) ──
 final vocabularyTopicsProvider =
     FutureProvider<List<VocabularyTopicModel>>((ref) async {
-  final dio = ref.watch(dioProvider);
-  final response = await dio.get(ApiEndpoints.vocabularyTopics);
-  return (response.data as List<dynamic>)
-      .map((e) => VocabularyTopicModel.fromJson(e as Map<String, dynamic>))
-      .toList();
+  try {
+    final dio = ref.watch(dioProvider);
+    final response = await dio
+        .get(ApiEndpoints.vocabularyTopics)
+        .timeout(const Duration(seconds: 4));
+    final list = (response.data as List<dynamic>)
+        .map((e) => VocabularyTopicModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    if (list.isNotEmpty) return list;
+  } catch (_) {
+    // API failed or offline - use rich static fallback
+  }
+  return buildStaticTopics();
+});
+
+// ── Words for specific topic ──
+final topicWordsProvider =
+    FutureProvider.family<List<VocabularyWordModel>, String>((ref, topicId) async {
+  try {
+    final dio = ref.watch(dioProvider);
+    final response = await dio
+        .get('${ApiEndpoints.vocabularyTopics}/$topicId/words')
+        .timeout(const Duration(seconds: 4));
+    final list = (response.data as List<dynamic>)
+        .map((e) => VocabularyWordModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    if (list.isNotEmpty) return list;
+  } catch (_) {
+    // Fallback
+  }
+  return buildTopicWords(topicId);
 });
 
 // ── Due Words / Flashcard Session Provider ──
@@ -22,6 +50,7 @@ class FlashcardSessionState {
   final int currentIndex;
   final bool isFlipped;
   final int reviewedCount;
+  final String currentTopicTitle;
 
   const FlashcardSessionState({
     this.isLoading = false,
@@ -30,6 +59,7 @@ class FlashcardSessionState {
     this.currentIndex = 0,
     this.isFlipped = false,
     this.reviewedCount = 0,
+    this.currentTopicTitle = 'Ôn tập ngắt quãng (SM-2)',
   });
 
   FlashcardSessionState copyWith({
@@ -39,6 +69,7 @@ class FlashcardSessionState {
     int? currentIndex,
     bool? isFlipped,
     int? reviewedCount,
+    String? currentTopicTitle,
   }) {
     return FlashcardSessionState(
       isLoading: isLoading ?? this.isLoading,
@@ -47,6 +78,7 @@ class FlashcardSessionState {
       currentIndex: currentIndex ?? this.currentIndex,
       isFlipped: isFlipped ?? this.isFlipped,
       reviewedCount: reviewedCount ?? this.reviewedCount,
+      currentTopicTitle: currentTopicTitle ?? this.currentTopicTitle,
     );
   }
 
@@ -75,19 +107,54 @@ class FlashcardSessionNotifier extends StateNotifier<FlashcardSessionState> {
           .map((e) => DueReviewItemModel.fromJson(e as Map<String, dynamic>))
           .toList();
 
-      state = state.copyWith(
-        isLoading: false,
-        cards: list,
-        currentIndex: 0,
-        isFlipped: false,
-        reviewedCount: 0,
-      );
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: 'Không thể tải phiên ôn tập từ vựng.',
-      );
+      if (list.isNotEmpty) {
+        state = state.copyWith(
+          isLoading: false,
+          cards: list,
+          currentIndex: 0,
+          isFlipped: false,
+          reviewedCount: 0,
+          currentTopicTitle: 'Ôn tập ngắt quãng (SM-2)',
+        );
+        return;
+      }
+    } catch (_) {
+      // API error - fallback to static words below
     }
+
+    // Fallback: provide 15 rich flashcards from standard vocabulary pool
+    final fallbackCards = buildStaticWords().take(15).map((w) => DueReviewItemModel(
+      word: w,
+      intervalDays: 1,
+      status: 'learning',
+    )).toList();
+
+    state = state.copyWith(
+      isLoading: false,
+      cards: fallbackCards,
+      currentIndex: 0,
+      isFlipped: false,
+      reviewedCount: 0,
+      currentTopicTitle: 'Ôn tập ngắt quãng (SM-2)',
+    );
+  }
+
+  void startTopicSession(String topicId, String topicTitle) {
+    final words = buildTopicWords(topicId);
+    final cards = words.map((w) => DueReviewItemModel(
+      word: w,
+      intervalDays: 1,
+      status: 'learning',
+    )).toList();
+
+    state = state.copyWith(
+      isLoading: false,
+      cards: cards,
+      currentIndex: 0,
+      isFlipped: false,
+      reviewedCount: 0,
+      currentTopicTitle: topicTitle,
+    );
   }
 
   void flipCard() {
@@ -112,7 +179,7 @@ class FlashcardSessionNotifier extends StateNotifier<FlashcardSessionState> {
         ApiEndpoints.vocabularyReviewWord(currentCard.word.id),
         data: {'quality': quality},
       );
-    } catch (e) {
+    } catch (_) {
       // Background retry or logging
     }
   }

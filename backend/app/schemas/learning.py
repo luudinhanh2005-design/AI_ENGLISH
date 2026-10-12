@@ -71,7 +71,7 @@ class VocabularyTopicResponse(BaseModel):
     description: Optional[str] = None
     icon_name: str
     level: str
-    total_words: int
+    total_words: int = 0
     words: Optional[list[VocabularyWordResponse]] = None
 
     class Config:

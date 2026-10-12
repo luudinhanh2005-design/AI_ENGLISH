@@ -160,7 +160,7 @@ class HomeScreen extends ConsumerWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: LinearProgressIndicator(
-                        value: 0.0,
+                        value: ((user?.totalXp ?? 15) % 100 / 60.0).clamp(0.15, 1.0),
                         minHeight: 10,
                         backgroundColor: Colors.white.withOpacity(0.2),
                         valueColor: const AlwaysStoppedAnimation<Color>(
@@ -170,9 +170,10 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '0% — Start your first lesson!',
+                      '${(((user?.totalXp ?? 15) % 100 / 60.0).clamp(0.15, 1.0) * 100).toInt()}% — ${_getGoalMessage((user?.totalXp ?? 0))}',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withOpacity(0.9),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -303,7 +304,7 @@ class HomeScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios_rounded,
                         color: AppColors.darkTextHint,
                         size: 16,
@@ -324,25 +325,25 @@ class HomeScreen extends ConsumerWidget {
               _RecommendationCard(
                 icon: Icons.headphones_rounded,
                 title: 'Listening Practice',
-                subtitle: 'Daily Conversation',
+                subtitle: 'Daily Conversation & AI Tutor',
                 color: AppColors.listening,
-                onTap: () {},
+                onTap: () => context.go('/ai-tutor'),
               ),
               const SizedBox(height: 8),
               _RecommendationCard(
                 icon: Icons.book_rounded,
-                title: 'Vocabulary',
-                subtitle: 'Travel - 15 new words',
+                title: 'Vocabulary Flashcards',
+                subtitle: 'Học từ vựng qua thẻ ghi nhớ SM-2',
                 color: AppColors.vocabulary,
-                onTap: () {},
+                onTap: () => context.push('/vocabulary'),
               ),
               const SizedBox(height: 8),
               _RecommendationCard(
                 icon: Icons.edit_note_rounded,
-                title: 'Grammar Review',
-                subtitle: 'Present Perfect',
+                title: 'Grammar Review & Practice',
+                subtitle: 'Ngữ pháp & Trắc nghiệm mini quiz',
                 color: AppColors.grammar,
-                onTap: () {},
+                onTap: () => context.go('/practice'),
               ),
               const SizedBox(height: 32),
             ],
@@ -350,6 +351,11 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+  String _getGoalMessage(int xp) {
+    if (xp > 80) return 'Tuyệt vời, bạn sắp hoàn thành mục tiêu!';
+    if (xp > 30) return 'Đang học rất tốt, tiếp tục phát huy!';
+    return 'Bắt đầu bài học đầu tiên hôm nay nào!';
   }
   String _getgreeting() {
     final hour = DateTime.now().hour;

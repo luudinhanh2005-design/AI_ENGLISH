@@ -102,7 +102,7 @@ class PlacementResultScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        'Độ chính xác: \% (\/\)',
+                        'Độ chính xác: % (/)',
                         style: AppTextStyles.labelMedium.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -146,7 +146,7 @@ class PlacementResultScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '\%',
+                                  '%',
                                   style: AppTextStyles.labelMedium.copyWith(
                                     color: AppColors.textPrimaryDark,
                                     fontWeight: FontWeight.bold,

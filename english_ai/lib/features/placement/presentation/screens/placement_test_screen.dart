@@ -69,7 +69,14 @@ class PlacementTestScreen extends ConsumerWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.close, color: AppColors.textSecondaryDark),
-          onPressed: () => context.pop(),
+          tooltip: 'Thoát',
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/learn');
+            }
+          },
         ),
         title: Text(
           'Đánh giá năng lực đầu vào',

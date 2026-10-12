@@ -61,7 +61,7 @@ class PlacementNotifier extends StateNotifier<PlacementState> {
       final response = await _dio.get(ApiEndpoints.placementQuestions);
       final list = (response.data as List<dynamic>)
           .map((item) =>
-              PlacementQuestionModel.fromJson(item as Map<String, dynamic>))
+              PlacementQuestionModel.fromJson(item as Map<String, dynamic>),)
           .toList();
 
       state = state.copyWith(
@@ -87,14 +87,14 @@ class PlacementNotifier extends StateNotifier<PlacementState> {
   void nextQuestion() {
     if (state.currentQuestionIndex < state.questions.length - 1) {
       state = state.copyWith(
-          currentQuestionIndex: state.currentQuestionIndex + 1);
+          currentQuestionIndex: state.currentQuestionIndex + 1,);
     }
   }
 
   void previousQuestion() {
     if (state.currentQuestionIndex > 0) {
       state = state.copyWith(
-          currentQuestionIndex: state.currentQuestionIndex - 1);
+          currentQuestionIndex: state.currentQuestionIndex - 1,);
     }
   }
 
@@ -114,7 +114,7 @@ class PlacementNotifier extends StateNotifier<PlacementState> {
       );
 
       final result = PlacementResultModel.fromJson(
-          response.data as Map<String, dynamic>);
+          response.data as Map<String, dynamic>,);
 
       state = state.copyWith(
         isLoading: false,

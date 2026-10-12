@@ -95,11 +95,11 @@ class User(Base):
             "current_level": self.current_level,
             "target_level": self.target_level,
             "learning_goal": self.learning_goal,
-            "daily_learning_minutes": self.daily_learning_minutes,
-            "streak": self.streak,
-            "total_xp": self.total_xp,
-            "has_completed_onboarding": self.has_completed_onboarding,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "daily_learning_minutes": self.daily_learning_minutes if self.daily_learning_minutes is not None else 20,
+            "streak": self.streak if self.streak is not None else 0,
+            "total_xp": self.total_xp if self.total_xp is not None else 0,
+            "has_completed_onboarding": bool(self.has_completed_onboarding),
+            "created_at": self.created_at.isoformat() if self.created_at else datetime.utcnow().isoformat(),
         }
 
 

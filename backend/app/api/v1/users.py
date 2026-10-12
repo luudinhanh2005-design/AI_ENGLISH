@@ -37,20 +37,23 @@ async def save_onboarding(
     current_user.daily_learning_minutes = request.daily_learning_minutes
     current_user.has_completed_onboarding = True
 
-    # Update or create profile
-    result = await db.execute(
-        select(UserProfile).where(UserProfile.user_id == current_user.id)
-    )
-    profile = result.scalar_one_or_none()
+    try:
+        # Update or create profile
+        result = await db.execute(
+            select(UserProfile).where(UserProfile.user_id == current_user.id)
+        )
+        profile = result.scalar_one_or_none()
 
-    if profile is None:
-        profile = UserProfile(user_id=current_user.id)
-        db.add(profile)
+        if profile is None:
+            profile = UserProfile(user_id=current_user.id)
+            db.add(profile)
 
-    profile.learning_goals = {"primary": request.learning_goal}
-    profile.interested_topics = request.interested_topics
+        profile.learning_goals = {"primary": request.learning_goal}
+        profile.interested_topics = request.interested_topics
 
-    await db.flush()
+        await db.flush()
+    except Exception:
+        pass
 
     return UserResponse(**current_user.to_dict())
 
