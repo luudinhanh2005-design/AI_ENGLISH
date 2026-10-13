@@ -331,10 +331,10 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
         ),
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            width: double.infinity,
             child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
               itemCount: _lessons.length,
@@ -525,7 +525,6 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
         child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 800),
-            width: double.infinity,
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Column(
@@ -908,7 +907,6 @@ class _LessonFinishedView extends StatelessWidget {
         child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 600),
-            width: double.infinity,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(32),
               child: Column(

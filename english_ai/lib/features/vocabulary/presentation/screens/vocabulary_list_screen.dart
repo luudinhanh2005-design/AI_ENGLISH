@@ -40,6 +40,8 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
   @override
   Widget build(BuildContext context) {
     final wordsAsync = ref.watch(allVocabularyWordsProvider);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final contentWidth = screenWidth > 900 ? 900.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
@@ -83,164 +85,178 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
         ],
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 900),
-            width: double.infinity,
-            height: double.infinity,
-            child: Column(
-              children: [
-          // ── Search & Filter Bar ──
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: (v) => setState(() {}),
-                    style: AppTextStyles.bodyMedium
-                        .copyWith(color: AppColors.textPrimaryDark),
-                    decoration: InputDecoration(
-                      hintText: 'Search word...',
-                      hintStyle: AppTextStyles.bodySmall
-                          .copyWith(color: AppColors.textSecondaryDark),
-                      prefixIcon: const Icon(Icons.search,
-                          color: AppColors.textSecondaryDark, size: 20),
-                      filled: true,
-                      fillColor: AppColors.surfaceDark,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceDark,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _selectedLevel,
-                      dropdownColor: AppColors.surfaceDark,
-                      style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.textPrimaryDark),
-                      icon: const Icon(Icons.expand_more,
-                          color: AppColors.textSecondaryDark, size: 18),
-                      items: _levels
-                          .map((l) => DropdownMenuItem(
-                              value: l,
-                              child: Text(l,
-                                  style: AppTextStyles.labelSmall.copyWith(
-                                      color: AppColors.textPrimaryDark))))
-                          .toList(),
-                      onChanged: (v) {
-                        if (v != null) setState(() => _selectedLevel = v);
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // ── Action Buttons ──
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _ActionBtn(
-                    label: 'Search',
-                    color: AppColors.primary,
-                    icon: Icons.search_rounded,
-                    onTap: () => setState(() {}),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _ActionBtn(
-                    label: _flashcardMode ? 'List Mode' : 'Flashcard Mode',
-                    color: const Color(0xFFFFA502),
-                    icon: _flashcardMode ? Icons.grid_view : Icons.style_rounded,
-                    onTap: () => setState(() => _flashcardMode = !_flashcardMode),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // ── Word Grid / Flashcard Grid ──
-          Expanded(
-            child: wordsAsync.when(
-              data: (allWords) {
-                final query = _searchController.text.toLowerCase().trim();
-                final filtered = allWords.where((w) {
-                  final matchesQuery = query.isEmpty ||
-                      w.word.toLowerCase().contains(query) ||
-                      w.meaningVi.toLowerCase().contains(query);
-                  final matchesLevel = _selectedLevel == 'All Levels' ||
-                      w.level == _selectedLevel;
-                  return matchesQuery && matchesLevel;
-                }).toList();
-
-                if (filtered.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                children: [
+                  // ── Search & Filter Bar ──
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                    child: Row(
                       children: [
-                        const Icon(Icons.search_off,
-                            color: AppColors.textSecondaryDark, size: 48),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Không tìm thấy từ nào',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textSecondaryDark),
+                        Expanded(
+                          child: TextField(
+                            controller: _searchController,
+                            onChanged: (v) => setState(() {}),
+                            style: AppTextStyles.bodyMedium
+                                .copyWith(color: AppColors.textPrimaryDark),
+                            decoration: InputDecoration(
+                              hintText: 'Search word...',
+                              hintStyle: AppTextStyles.bodySmall
+                                  .copyWith(color: AppColors.textSecondaryDark),
+                              prefixIcon: const Icon(Icons.search,
+                                  color: AppColors.textSecondaryDark, size: 20),
+                              filled: true,
+                              fillColor: AppColors.surfaceDark,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: AppColors.surfaceDark,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: _selectedLevel,
+                              dropdownColor: AppColors.surfaceDark,
+                              style: AppTextStyles.labelSmall
+                                  .copyWith(color: AppColors.textPrimaryDark),
+                              icon: const Icon(Icons.expand_more,
+                                  color: AppColors.textSecondaryDark, size: 18),
+                              items: _levels
+                                  .map((l) => DropdownMenuItem(
+                                      value: l,
+                                      child: Text(l,
+                                          style: AppTextStyles.labelSmall
+                                              .copyWith(
+                                                  color: AppColors
+                                                      .textPrimaryDark))))
+                                  .toList(),
+                              onChanged: (v) {
+                                if (v != null)
+                                  setState(() => _selectedLevel = v);
+                              },
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  );
-                }
+                  ),
 
-                if (_flashcardMode) {
-                  return _FlashcardGrid(words: filtered);
-                }
-                return _WordGrid(words: filtered);
-              },
-              loading: () => const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
-              ),
-              error: (err, _) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.error_outline,
-                        color: AppColors.error, size: 40),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Không thể tải từ vựng',
-                      style: AppTextStyles.bodyMedium
-                          .copyWith(color: AppColors.textPrimaryDark),
+                  // ── Action Buttons ──
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: _ActionBtn(
+                            label: 'Search',
+                            color: AppColors.primary,
+                            icon: Icons.search_rounded,
+                            onTap: () => setState(() {}),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _ActionBtn(
+                            label:
+                                _flashcardMode ? 'List Mode' : 'Flashcard Mode',
+                            color: const Color(0xFFFFA502),
+                            icon: _flashcardMode
+                                ? Icons.grid_view
+                                : Icons.style_rounded,
+                            onTap: () => setState(
+                                () => _flashcardMode = !_flashcardMode),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    TextButton(
-                      onPressed: () =>
-                          ref.refresh(allVocabularyWordsProvider),
-                      child: const Text('Thử lại'),
+                  ),
+
+                  // ── Word Grid / Flashcard Grid ──
+                  Expanded(
+                    child: wordsAsync.when(
+                      data: (allWords) {
+                        final query =
+                            _searchController.text.toLowerCase().trim();
+                        final filtered = allWords.where((w) {
+                          final matchesQuery = query.isEmpty ||
+                              w.word.toLowerCase().contains(query) ||
+                              w.meaningVi.toLowerCase().contains(query);
+                          final matchesLevel = _selectedLevel == 'All Levels' ||
+                              w.level == _selectedLevel;
+                          return matchesQuery && matchesLevel;
+                        }).toList();
+
+                        if (filtered.isEmpty) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.search_off,
+                                    color: AppColors.textSecondaryDark,
+                                    size: 48),
+                                const SizedBox(height: 12),
+                                Text(
+                                  'Không tìm thấy từ nào',
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                      color: AppColors.textSecondaryDark),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        if (_flashcardMode) {
+                          return _FlashcardGrid(words: filtered);
+                        }
+                        return _WordGrid(words: filtered);
+                      },
+                      loading: () => const Center(
+                        child:
+                            CircularProgressIndicator(color: AppColors.primary),
+                      ),
+                      error: (err, _) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.error_outline,
+                                color: AppColors.error, size: 40),
+                            const SizedBox(height: 12),
+                            Text(
+                              'Không thể tải từ vựng',
+                              style: AppTextStyles.bodyMedium
+                                  .copyWith(color: AppColors.textPrimaryDark),
+                            ),
+                            const SizedBox(height: 12),
+                            TextButton(
+                              onPressed: () =>
+                                  ref.refresh(allVocabularyWordsProvider),
+                              child: const Text('Thử lại'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
-          ),
-        ],
             ),
           ),
         ),
@@ -344,8 +360,7 @@ class _WordCard extends StatelessWidget {
           ),
           const Spacer(),
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               color: lvlColor.withOpacity(0.2),
               borderRadius: BorderRadius.circular(8),
@@ -365,13 +380,11 @@ class _WordCard extends StatelessWidget {
               SpeechService.speak(word.word as String);
             },
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
                 color: AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                    color: AppColors.primary.withOpacity(0.4)),
+                border: Border.all(color: AppColors.primary.withOpacity(0.4)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -443,8 +456,8 @@ class _FlipCardState extends State<_FlipCard>
     super.initState();
     _ctrl = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 350));
-    _anim = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
+    _anim = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
   }
 
   @override
@@ -524,16 +537,13 @@ class _CardFront extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             word.phonetic as String,
-            style: const TextStyle(
-                fontSize: 12, color: Color(0xFF636E72)),
+            style: const TextStyle(fontSize: 12, color: Color(0xFF636E72)),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 6),
           const Text(
             '👆 Nhấn để lật',
-            style: TextStyle(
-                fontSize: 10,
-                color: Color(0xFFB2BEC3)),
+            style: TextStyle(fontSize: 10, color: Color(0xFFB2BEC3)),
           ),
         ],
       ),

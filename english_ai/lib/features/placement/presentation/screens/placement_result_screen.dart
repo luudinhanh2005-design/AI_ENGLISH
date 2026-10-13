@@ -216,7 +216,7 @@ class PlacementResultScreen extends StatelessWidget {
               AppButton(
                 text: 'Bắt đầu lộ trình học ngay',
                 onPressed: () {
-                  context.go(RouteNames.home);
+                  context.goNamed(RouteNames.home);
                 },
               ),
               const SizedBox(height: 16),

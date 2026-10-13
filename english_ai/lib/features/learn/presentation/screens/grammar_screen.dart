@@ -96,156 +96,164 @@ class _GrammarScreenState extends State<GrammarScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            width: double.infinity,
-            child: ListView(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              children: [
-                // ── Hero Banner ──
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF6C5CE7), Color(0xFFA29BFE)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF6C5CE7).withOpacity(0.35),
-                        blurRadius: 18,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.auto_stories_rounded,
-                            color: Colors.white, size: 36),
-                      ),
-                      const SizedBox(width: 16),
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hệ thống ngữ pháp chuẩn CEFR 📚',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Lý thuyết cô đọng, công thức dễ nhớ, ví dụ thực tế và bài tập kiểm tra tức thì',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                                height: 1.3,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 18),
-
-                // ── Search Bar ──
-                TextField(
-                  controller: _searchController,
-                  style: const TextStyle(color: AppColors.darkTextPrimary),
-                  onChanged: (val) => setState(() => _searchQuery = val.trim()),
-                  decoration: InputDecoration(
-                    hintText: 'Tìm kiếm thì, cấu trúc, mệnh đề...',
-                    hintStyle:
-                        const TextStyle(color: AppColors.darkTextHint, fontSize: 13),
-                    prefixIcon:
-                        const Icon(Icons.search_rounded, color: AppColors.primary),
-                    suffixIcon: _searchQuery.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.clear, size: 18),
-                            onPressed: () {
-                              _searchController.clear();
-                              setState(() => _searchQuery = '');
-                            },
-                          )
-                        : null,
-                    filled: true,
-                    fillColor: AppColors.darkCard,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: const BorderSide(color: AppColors.darkDivider),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: const BorderSide(color: AppColors.darkDivider),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: const BorderSide(color: AppColors.primary),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-                // ── Level Filter Chips ──
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildFilterChip('All', 'Tất cả (${grammarLessonsData.length})'),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('A1', 'A1 Căn bản'),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('A2', 'A2 Sơ cấp'),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('B1', 'B1 Trung cấp'),
-                      const SizedBox(width: 8),
-                      _buildFilterChip('B2', 'B2 Nâng cao'),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 18),
-
-                // ── Lesson List ──
-                if (filteredLessons.isEmpty)
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // ── Hero Banner ──
                   Container(
-                    padding: const EdgeInsets.all(32),
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        const Icon(Icons.search_off_rounded,
-                            size: 48, color: AppColors.darkTextHint),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Không tìm thấy bài học ngữ pháp phù hợp',
-                          style: AppTextStyles.bodyMedium
-                              .copyWith(color: AppColors.darkTextSecondary),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF6C5CE7), Color(0xFFA29BFE)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF6C5CE7).withOpacity(0.35),
+                          blurRadius: 18,
+                          offset: const Offset(0, 8),
                         ),
                       ],
                     ),
-                  )
-                else
-                  ...filteredLessons.map((lesson) => _buildLessonItem(lesson)),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.auto_stories_rounded,
+                              color: Colors.white, size: 36),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hệ thống ngữ pháp chuẩn CEFR 📚',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Lý thuyết cô đọng, công thức dễ nhớ, ví dụ thực tế và bài tập kiểm tra tức thì',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                  height: 1.3,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-                const SizedBox(height: 32),
-              ],
+                  const SizedBox(height: 18),
+
+                  // ── Search Bar ──
+                  TextField(
+                    controller: _searchController,
+                    style: const TextStyle(color: AppColors.darkTextPrimary),
+                    onChanged: (val) =>
+                        setState(() => _searchQuery = val.trim()),
+                    decoration: InputDecoration(
+                      hintText: 'Tìm kiếm thì, cấu trúc, mệnh đề...',
+                      hintStyle: const TextStyle(
+                          color: AppColors.darkTextHint, fontSize: 13),
+                      prefixIcon: const Icon(Icons.search_rounded,
+                          color: AppColors.primary),
+                      suffixIcon: _searchQuery.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear, size: 18),
+                              onPressed: () {
+                                _searchController.clear();
+                                setState(() => _searchQuery = '');
+                              },
+                            )
+                          : null,
+                      filled: true,
+                      fillColor: AppColors.darkCard,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide:
+                            const BorderSide(color: AppColors.darkDivider),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide:
+                            const BorderSide(color: AppColors.darkDivider),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(color: AppColors.primary),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // ── Level Filter Chips ──
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _buildFilterChip(
+                            'All', 'Tất cả (${grammarLessonsData.length})'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip('A1', 'A1 Căn bản'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip('A2', 'A2 Sơ cấp'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip('B1', 'B1 Trung cấp'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip('B2', 'B2 Nâng cao'),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 18),
+
+                  // ── Lesson List ──
+                  if (filteredLessons.isEmpty)
+                    Container(
+                      padding: const EdgeInsets.all(32),
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          const Icon(Icons.search_off_rounded,
+                              size: 48, color: AppColors.darkTextHint),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Không tìm thấy bài học ngữ pháp phù hợp',
+                            style: AppTextStyles.bodyMedium
+                                .copyWith(color: AppColors.darkTextSecondary),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    ...filteredLessons
+                        .map((lesson) => _buildLessonItem(lesson)),
+
+                  const SizedBox(height: 32),
+                ],
+              ),
             ),
           ),
         ),
@@ -302,7 +310,8 @@ class _GrammarScreenState extends State<GrammarScreen> {
                     color: levelColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: Icon(Icons.menu_book_rounded, color: levelColor, size: 24),
+                  child: Icon(Icons.menu_book_rounded,
+                      color: levelColor, size: 24),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -493,10 +502,15 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
           indicatorColor: AppColors.primary,
           labelColor: AppColors.primary,
           unselectedLabelColor: AppColors.darkTextSecondary,
-          labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           tabs: [
-            const Tab(icon: Icon(Icons.menu_book_rounded, size: 18), text: 'Lý thuyết'),
-            const Tab(icon: Icon(Icons.lightbulb_outline_rounded, size: 18), text: 'Ví dụ & Lỗi'),
+            const Tab(
+                icon: Icon(Icons.menu_book_rounded, size: 18),
+                text: 'Lý thuyết'),
+            const Tab(
+                icon: Icon(Icons.lightbulb_outline_rounded, size: 18),
+                text: 'Ví dụ & Lỗi'),
             Tab(
               icon: const Icon(Icons.quiz_rounded, size: 18),
               text: 'Kiểm tra (${widget.lesson.quiz.length})',
@@ -505,16 +519,21 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         ),
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildTheoryTab(levelColor),
-                _buildExamplesTab(),
-                _buildQuizTab(),
-              ],
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildTheoryTab(levelColor),
+                  _buildExamplesTab(),
+                  _buildQuizTab(),
+                ],
+              ),
             ),
           ),
         ),
@@ -769,7 +788,6 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
           ),
         ),
         const SizedBox(height: 10),
-
         ...widget.lesson.examples.map((ex) {
           return Container(
             margin: const EdgeInsets.only(bottom: 12),
@@ -783,7 +801,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.volume_up_rounded, color: AppColors.secondary),
+                  icon: const Icon(Icons.volume_up_rounded,
+                      color: AppColors.secondary),
                   tooltip: 'Nghe phát âm',
                   onPressed: () => SpeechService.speak(ex.english),
                 ),
@@ -826,9 +845,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             ),
           );
         }),
-
         const SizedBox(height: 20),
-
         Text(
           'Lỗi sai người học hay mắc phải ⚠️',
           style: AppTextStyles.labelLarge.copyWith(
@@ -837,7 +854,6 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
           ),
         ),
         const SizedBox(height: 10),
-
         ...widget.lesson.commonMistakes.map((mistake) {
           return Container(
             margin: const EdgeInsets.only(bottom: 10),
@@ -845,7 +861,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             decoration: BoxDecoration(
               color: const Color(0xFFE74C3C).withOpacity(0.08),
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: const Color(0xFFE74C3C).withOpacity(0.25)),
+              border:
+                  Border.all(color: const Color(0xFFE74C3C).withOpacity(0.25)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -867,7 +884,6 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             ),
           );
         }),
-
         const SizedBox(height: 24),
       ],
     );
@@ -912,7 +928,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                         _score == widget.lesson.quiz.length
                             ? 'Xuất sắc! Bạn đã nắm vững điểm ngữ pháp này.'
                             : 'Tốt lắm! Hãy xem lại các câu giải thích bên dưới.',
-                        style: const TextStyle(color: Colors.white70, fontSize: 12),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 12),
                       ),
                     ],
                   ),
@@ -928,7 +945,6 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
               ],
             ),
           ),
-
         ...widget.lesson.quiz.asMap().entries.map((entry) {
           final qIndex = entry.key;
           final q = entry.value;
@@ -1089,7 +1105,6 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             ),
           );
         }),
-
         const SizedBox(height: 24),
       ],
     );

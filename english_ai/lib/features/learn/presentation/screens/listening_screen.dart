@@ -24,10 +24,15 @@ class _ListeningScreenState extends State<ListeningScreen>
   double _playbackRate = 1.0;
   bool _showTranslation = true;
 
+  // Mỗi lần phát/dừng/đổi bài tăng số này; vòng lặp phát cũ thấy số khác sẽ tự thoát.
+  int _playSession = 0;
+
   // Quiz State
   final Map<int, int> _userAnswers = {}; // questionIndex -> selectedOptionIndex
 
   void _selectLesson(ListeningLesson lesson) {
+    _playSession++;
+    SpeechService.stop();
     setState(() {
       _activeLesson = lesson;
       _activeTabIndex = 0;
@@ -38,6 +43,7 @@ class _ListeningScreenState extends State<ListeningScreen>
   }
 
   void _backToLessonList() {
+    _playSession++;
     SpeechService.stop();
     setState(() {
       _activeLesson = null;
@@ -47,25 +53,29 @@ class _ListeningScreenState extends State<ListeningScreen>
     });
   }
 
-  void _playSingleLine(String text, int lineIndex) {
+  Future<void> _playSingleLine(String text, int lineIndex) async {
+    final session = ++_playSession;
     setState(() {
       _isPlayingAll = false;
       _currentPlayingLineIndex = lineIndex;
     });
-    SpeechService.speak(text, rate: _playbackRate);
-    final delayMs = (text.length * 65).clamp(1800, 5000);
-    Future.delayed(Duration(milliseconds: delayMs), () {
-      if (mounted && _currentPlayingLineIndex == lineIndex) {
-        setState(() {
-          _currentPlayingLineIndex = -1;
-        });
-      }
-    });
+
+    // Chờ đọc xong thật sự (không dùng timer đoán thời gian).
+    await SpeechService.speak(text, rate: _playbackRate);
+
+    if (mounted && session == _playSession) {
+      setState(() {
+        _currentPlayingLineIndex = -1;
+      });
+    }
   }
 
   Future<void> _playEntireDialogue() async {
     if (_activeLesson == null) return;
+
+    // Đang phát -> bấm lần nữa là dừng.
     if (_isPlayingAll) {
+      _playSession++;
       SpeechService.stop();
       setState(() {
         _isPlayingAll = false;
@@ -74,22 +84,26 @@ class _ListeningScreenState extends State<ListeningScreen>
       return;
     }
 
+    final session = ++_playSession;
+    final dialogue = _activeLesson!.dialogue;
     setState(() {
       _isPlayingAll = true;
     });
 
-    final dialogue = _activeLesson!.dialogue;
     for (int i = 0; i < dialogue.length; i++) {
-      if (!_isPlayingAll || !mounted) break;
+      if (!mounted || session != _playSession) return;
       setState(() {
         _currentPlayingLineIndex = i;
       });
-      SpeechService.speak(dialogue[i].text, rate: _playbackRate);
-      final delayMs = (dialogue[i].text.length * 75).clamp(2200, 6000);
-      await Future.delayed(Duration(milliseconds: delayMs));
+
+      await SpeechService.speak(dialogue[i].text, rate: _playbackRate);
+
+      if (!mounted || session != _playSession) return;
+      // Nghỉ ngắn giữa các lượt thoại cho tự nhiên.
+      await Future.delayed(const Duration(milliseconds: 350));
     }
 
-    if (mounted) {
+    if (mounted && session == _playSession) {
       setState(() {
         _isPlayingAll = false;
         _currentPlayingLineIndex = -1;
@@ -111,6 +125,7 @@ class _ListeningScreenState extends State<ListeningScreen>
 
   @override
   void dispose() {
+    _playSession++;
     SpeechService.stop();
     super.dispose();
   }
@@ -127,6 +142,9 @@ class _ListeningScreenState extends State<ListeningScreen>
   // 1. LESSON SELECTOR SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildLessonSelector(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
       appBar: AppBar(
@@ -154,76 +172,79 @@ class _ListeningScreenState extends State<ListeningScreen>
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            width: double.infinity,
-            child: ListView(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              children: [
-                // Banner header
-                Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF2E86DE), Color(0xFF0984E3)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF2E86DE).withOpacity(0.3),
-                        blurRadius: 16,
-                        offset: const Offset(0, 6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Banner header
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF2E86DE), Color(0xFF0984E3)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ],
-                  ),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.headphones_rounded,
-                          color: Colors.white, size: 40),
-                      SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hội thoại tiếng Anh thực tế 🎧',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Luyện nghe đa giọng điệu, kiểm tra phản xạ và mở rộng vốn từ',
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 12),
-                            ),
-                          ],
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF2E86DE).withOpacity(0.3),
+                          blurRadius: 16,
+                          offset: const Offset(0, 6),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.headphones_rounded,
+                            color: Colors.white, size: 40),
+                        SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hội thoại tiếng Anh thực tế 🎧',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Luyện nghe đa giọng điệu, kiểm tra phản xạ và mở rộng vốn từ',
+                                style: TextStyle(
+                                    color: Colors.white70, fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                Text(
-                  'Danh sách bài học (${listeningLessonsData.length} chủ đề)',
-                  style: AppTextStyles.labelLarge.copyWith(
-                    color: AppColors.textPrimaryDark,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    'Danh sách bài học (${listeningLessonsData.length} chủ đề)',
+                    style: AppTextStyles.labelLarge.copyWith(
+                      color: AppColors.textPrimaryDark,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
-                ...listeningLessonsData.map((lesson) {
-                  return _buildLessonCard(context, lesson);
-                }),
-                const SizedBox(height: 32),
-              ],
+                  ...listeningLessonsData.map((lesson) {
+                    return _buildLessonCard(context, lesson);
+                  }),
+                  const SizedBox(height: 32),
+                ],
+              ),
             ),
           ),
         ),
@@ -365,6 +386,9 @@ class _ListeningScreenState extends State<ListeningScreen>
   // 2. ACTIVE LESSON SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildActiveLesson(BuildContext context, ListeningLesson lesson) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
       appBar: AppBar(
@@ -428,23 +452,28 @@ class _ListeningScreenState extends State<ListeningScreen>
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            child: Column(
-              children: [
-                // Audio control bar
-                _buildAudioPlayerBar(lesson),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Audio control bar
+                  _buildAudioPlayerBar(lesson),
 
-                // Tab Switcher
-                _buildTabSwitcher(),
+                  // Tab Switcher
+                  _buildTabSwitcher(),
 
-                // Tab Content
-                Expanded(
-                  child: _activeTabIndex == 0
-                      ? _buildDialogueTab(lesson)
-                      : _activeTabIndex == 1
-                          ? _buildVocabTab(lesson)
-                          : _buildQuizTab(lesson),
-                ),
-              ],
+                  // Tab Content
+                  Expanded(
+                    child: _activeTabIndex == 0
+                        ? _buildDialogueTab(lesson)
+                        : _activeTabIndex == 1
+                            ? _buildVocabTab(lesson)
+                            : _buildQuizTab(lesson),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -467,11 +496,13 @@ class _ListeningScreenState extends State<ListeningScreen>
           ElevatedButton.icon(
             onPressed: _playEntireDialogue,
             style: ElevatedButton.styleFrom(
-              backgroundColor: _isPlayingAll ? Colors.orange : AppColors.listening,
+              backgroundColor:
+                  _isPlayingAll ? Colors.orange : AppColors.listening,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              minimumSize: const Size(0, 44),
             ),
             icon: Icon(
               _isPlayingAll ? Icons.stop_rounded : Icons.play_arrow_rounded,
@@ -554,9 +585,7 @@ class _ListeningScreenState extends State<ListeningScreen>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isSelected
-                    ? AppColors.listening
-                    : AppColors.darkDivider,
+                color: isSelected ? AppColors.listening : AppColors.darkDivider,
               ),
             ),
             child: Row(
@@ -610,9 +639,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                 : AppColors.darkCard,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: isCurrent
-                  ? AppColors.listening
-                  : AppColors.darkDivider,
+              color: isCurrent ? AppColors.listening : AppColors.darkDivider,
               width: isCurrent ? 1.5 : 1,
             ),
           ),
@@ -823,7 +850,6 @@ class _ListeningScreenState extends State<ListeningScreen>
           ),
           const SizedBox(height: 16),
         ],
-
         ...List.generate(lesson.questions.length, (qIdx) {
           final q = lesson.questions[qIdx];
           final selected = _userAnswers[qIdx];
@@ -856,7 +882,6 @@ class _ListeningScreenState extends State<ListeningScreen>
                   ),
                 ),
                 const SizedBox(height: 12),
-
                 ...List.generate(q.options.length, (optIdx) {
                   final optionText = q.options[optIdx];
                   final isThisSelected = selected == optIdx;
@@ -931,7 +956,6 @@ class _ListeningScreenState extends State<ListeningScreen>
                     ),
                   );
                 }),
-
                 if (isAnswered) ...[
                   const SizedBox(height: 6),
                   Container(

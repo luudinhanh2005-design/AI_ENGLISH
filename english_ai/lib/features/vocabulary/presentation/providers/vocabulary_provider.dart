@@ -95,14 +95,22 @@ final flashcardSessionProvider =
 class FlashcardSessionNotifier extends StateNotifier<FlashcardSessionState> {
   final dynamic _dio;
 
+  // Mỗi lần nạp/bắt đầu phiên mới sẽ tăng số này. Kết quả của request cũ
+  // (đến muộn) sẽ bị bỏ qua để không ghi đè phiên hiện tại.
+  int _requestId = 0;
+
   FlashcardSessionNotifier(this._dio) : super(const FlashcardSessionState()) {
     loadDueWords();
   }
 
   Future<void> loadDueWords() async {
+    final requestId = ++_requestId;
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
-      final response = await _dio.get(ApiEndpoints.vocabularyDue);
+      final response = await _dio
+          .get(ApiEndpoints.vocabularyDue)
+          .timeout(const Duration(seconds: 4));
+      if (!mounted || requestId != _requestId) return;
       final list = (response.data as List<dynamic>)
           .map((e) => DueReviewItemModel.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -122,6 +130,8 @@ class FlashcardSessionNotifier extends StateNotifier<FlashcardSessionState> {
       // API error - fallback to static words below
     }
 
+    if (!mounted || requestId != _requestId) return;
+
     // Fallback: provide 15 rich flashcards from standard vocabulary pool
     final fallbackCards = buildStaticWords().take(15).map((w) => DueReviewItemModel(
       word: w,
@@ -140,6 +150,7 @@ class FlashcardSessionNotifier extends StateNotifier<FlashcardSessionState> {
   }
 
   void startTopicSession(String topicId, String topicTitle) {
+    _requestId++; // huỷ mọi request loadDueWords() đang chạy dở
     final words = buildTopicWords(topicId);
     final cards = words.map((w) => DueReviewItemModel(
       word: w,

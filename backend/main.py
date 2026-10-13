@@ -60,6 +60,23 @@ def create_app() -> FastAPI:
     # â”€â”€ Routes â”€â”€
     app.include_router(api_router)
 
+    # Also support direct paths without /api/v1 prefix for client compatibility
+    from app.api.v1.auth import router as auth_router
+    from app.api.v1.users import router as users_router
+    from app.api.v1.placement import router as placement_router
+    from app.api.v1.vocabulary import router as vocabulary_router
+    from app.api.v1.grammar import router as grammar_router
+    from app.api.v1.ai import router as ai_router
+    from app.api.v1.speech import router as speech_router
+
+    app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
+    app.include_router(users_router, prefix="/users", tags=["Users"])
+    app.include_router(placement_router, prefix="/placement", tags=["Placement Test"])
+    app.include_router(vocabulary_router, prefix="/vocabulary", tags=["Vocabulary & SM-2"])
+    app.include_router(grammar_router, prefix="/grammar", tags=["Grammar"])
+    app.include_router(ai_router, prefix="/ai", tags=["AI Tutor & Intelligent Engine"])
+    app.include_router(speech_router, prefix="/speech", tags=["Speech AI & Pronunciation"])
+
     # â”€â”€ Health Check â”€â”€
     @app.get("/health", tags=["Health"])
     async def health_check():

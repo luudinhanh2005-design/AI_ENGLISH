@@ -53,6 +53,7 @@ List<VocabularyTopicModel> buildStaticTopics() {
 List<VocabularyWordModel> buildTopicWords(String topicId) {
   switch (topicId) {
     case 'topic_daily_comm':
+    case 'daily-communication':
       return [
         const VocabularyWordModel(
           id: 'dc_1', topicId: 'topic_daily_comm', word: 'Greeting',
@@ -127,6 +128,8 @@ List<VocabularyWordModel> buildTopicWords(String topicId) {
       ];
 
     case 'topic_work_business':
+    case 'work-and-business':
+    case 'business-and-workplace':
       return [
         const VocabularyWordModel(
           id: 'wb_1', topicId: 'topic_work_business', word: 'Colleague',
@@ -201,6 +204,7 @@ List<VocabularyWordModel> buildTopicWords(String topicId) {
       ];
 
     case 'topic_travel_world':
+    case 'travel-and-tourism':
       return [
         const VocabularyWordModel(
           id: 'tw_1', topicId: 'topic_travel_world', word: 'Destination',
@@ -275,6 +279,8 @@ List<VocabularyWordModel> buildTopicWords(String topicId) {
       ];
 
     case 'topic_tech_digital':
+    case 'technology-and-digital':
+    case 'tech-and-ai':
       return [
         const VocabularyWordModel(
           id: 'td_1', topicId: 'topic_tech_digital', word: 'Algorithm',
@@ -349,6 +355,8 @@ List<VocabularyWordModel> buildTopicWords(String topicId) {
       ];
 
     case 'topic_emotions_life':
+    case 'emotions-and-feelings':
+    case 'academic-and-ielts':
       return [
         const VocabularyWordModel(
           id: 'el_1', topicId: 'topic_emotions_life', word: 'Enthusiastic',

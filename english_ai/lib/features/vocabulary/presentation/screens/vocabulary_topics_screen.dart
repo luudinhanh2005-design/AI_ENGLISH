@@ -34,7 +34,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
     WidgetRef ref,
     VocabularyTopicModel topic,
   ) {
-    final words = buildTopicWords(topic.id);
+    final words = buildTopicWords(topic.slug.isNotEmpty ? topic.slug : topic.id);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -117,7 +117,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                       onPressed: () {
                         Navigator.pop(ctx);
                         ref.read(flashcardSessionProvider.notifier).startTopicSession(topic.id, topic.title);
-                        context.push(RouteNames.vocabularyReview);
+                        context.pushNamed(RouteNames.vocabularyReview);
                       },
                       icon: const Icon(Icons.style_rounded, size: 20),
                       label: const Text('Luyện Flashcard Chủ Đề Này (SM-2)'),
@@ -211,6 +211,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final topicsAsync = ref.watch(vocabularyTopicsProvider);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
@@ -241,11 +243,10 @@ class VocabularyTopicsScreen extends ConsumerWidget {
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // ── Daily SM-2 Review Banner ──
                   Container(
-                    width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
@@ -303,7 +304,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                         ElevatedButton(
                           onPressed: () {
                             ref.read(flashcardSessionProvider.notifier).loadDueWords();
-                            context.push(RouteNames.vocabularyReview);
+                            context.pushNamed(RouteNames.vocabularyReview);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
@@ -312,6 +313,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                            minimumSize: const Size(0, 40),
                           ),
                           child: const Text('Luyện ngay', style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
@@ -325,7 +327,6 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                   GestureDetector(
                     onTap: () => context.push('/vocabulary/list'),
                     child: Container(
-                      width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: AppColors.surfaceDark,
@@ -406,90 +407,93 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                   const SizedBox(height: 14),
 
                   // Topic cards list
-                  Builder(
-                    builder: (context) {
-                      final topics = topicsAsync.valueOrNull ?? buildStaticTopics();
-                      return Column(
-                        children: topics.map((topic) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 14),
-                            child: InkWell(
-                              onTap: () => _openTopicDetails(context, ref, topic),
-                              borderRadius: BorderRadius.circular(16),
-                              child: AppCard(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 48,
-                                      height: 48,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primary.withOpacity(0.12),
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      child: Icon(
-                                        _getIconData(topic.iconName),
-                                        color: AppColors.primary,
-                                        size: 26,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ...(topicsAsync.valueOrNull ?? buildStaticTopics()).map((topic) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      decoration: BoxDecoration(
+                        color: AppColors.darkCard,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.darkDivider),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(16),
+                          onTap: () => _openTopicDetails(context, ref, topic),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 48,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary.withOpacity(0.12),
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child: Icon(
+                                    _getIconData(topic.iconName),
+                                    color: AppColors.primary,
+                                    size: 26,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  topic.title,
-                                                  style: AppTextStyles.titleSmall.copyWith(
-                                                    color: AppColors.textPrimaryDark,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
+                                          Expanded(
+                                            child: Text(
+                                              topic.title,
+                                              style: AppTextStyles.titleSmall.copyWith(
+                                                color: AppColors.textPrimaryDark,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              Container(
-                                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.surfaceLightDark,
-                                                  borderRadius: BorderRadius.circular(6),
-                                                ),
-                                                child: Text(
-                                                  topic.level,
-                                                  style: AppTextStyles.labelSmall.copyWith(
-                                                    color: AppColors.secondary,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 6),
-                                          Text(
-                                            topic.description ?? '${topic.totalWords} từ vựng then chốt',
-                                            style: AppTextStyles.bodySmall.copyWith(
-                                              color: AppColors.textSecondaryDark,
                                             ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.surfaceLightDark,
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                            child: Text(
+                                              topic.level,
+                                              style: AppTextStyles.labelSmall.copyWith(
+                                                color: AppColors.secondary,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    const Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: AppColors.textSecondaryDark,
-                                    ),
-                                  ],
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        topic.description ?? '${topic.totalWords} từ vựng then chốt',
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          color: AppColors.textSecondaryDark,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(width: 8),
+                                const Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: AppColors.textSecondaryDark,
+                                ),
+                              ],
                             ),
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),

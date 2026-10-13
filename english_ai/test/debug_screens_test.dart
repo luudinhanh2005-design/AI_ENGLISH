@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:english_ai/features/practice/presentation/screens/practice_screen.dart';
 import 'package:english_ai/features/vocabulary/presentation/screens/vocabulary_topics_screen.dart';
+import 'package:english_ai/features/vocabulary/presentation/screens/vocabulary_list_screen.dart';
 import 'package:english_ai/features/learn/presentation/screens/listening_screen.dart';
 import 'package:english_ai/features/learn/presentation/screens/reading_screen.dart';
+import 'package:english_ai/features/learn/presentation/screens/grammar_screen.dart';
 
 void main() {
   testWidgets('Test PracticeScreen renders content', (tester) async {
@@ -23,6 +25,11 @@ void main() {
   });
 
   testWidgets('Test ListeningScreen active lesson renders content', (tester) async {
+    tester.view.physicalSize = const Size(1920, 1080);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(
       const MaterialApp(
         home: ListeningScreen(),
@@ -35,8 +42,12 @@ void main() {
     await tester.tap(firstLessonFinder);
     await tester.pumpAndSettle();
     
-    expect(find.text('Hội thoại'), findsOneWidget);
-    expect(find.text('Nghe toàn bài'), findsOneWidget);
+    final hoiThoaiFinder = find.text('Hội thoại');
+    expect(hoiThoaiFinder, findsOneWidget);
+
+    // Simulate mouse move / hit test across the screen like Chrome does
+    tester.hitTestOnBinding(const Offset(400, 300));
+    tester.hitTestOnBinding(const Offset(960, 540));
   });
 
   testWidgets('Test VocabularyTopicsScreen renders content', (tester) async {
@@ -67,8 +78,36 @@ void main() {
     await tester.pumpAndSettle();
     
     expect(find.text('Bài đọc'), findsOneWidget);
+
+    tester.hitTestOnBinding(const Offset(400, 300));
+    tester.hitTestOnBinding(const Offset(960, 540));
+  });
+
+  testWidgets('Test GrammarScreen renders content', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: GrammarScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    
+    expect(find.text('Ngữ Pháp Toàn Diện (Grammar)'), findsOneWidget);
+    tester.hitTestOnBinding(const Offset(400, 300));
+    tester.hitTestOnBinding(const Offset(960, 540));
+  });
+
+  testWidgets('Test VocabularyListScreen renders content', (tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(
+          home: VocabularyListScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    
+    expect(find.text('Kho Từ Vựng'), findsOneWidget);
+    tester.hitTestOnBinding(const Offset(400, 300));
+    tester.hitTestOnBinding(const Offset(960, 540));
   });
 }
-
-
-

@@ -90,6 +90,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
   // 1. ARTICLE SELECTOR SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildArticleSelector(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
       appBar: AppBar(
@@ -117,76 +120,79 @@ class _ReadingScreenState extends State<ReadingScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            width: double.infinity,
-            child: ListView(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              children: [
-                // Banner header
-                Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF10AC84), Color(0xFF1DD1A1)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF10AC84).withOpacity(0.3),
-                        blurRadius: 16,
-                        offset: const Offset(0, 6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Banner header
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF10AC84), Color(0xFF1DD1A1)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ],
-                  ),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.chrome_reader_mode_rounded,
-                          color: Colors.white, size: 40),
-                      SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Đọc hiểu tiếng Anh đa chủ đề 📖',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Rèn luyện kỹ năng đọc lướt (Skimming) & tìm ý chính (Scanning)',
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 12),
-                            ),
-                          ],
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF10AC84).withOpacity(0.3),
+                          blurRadius: 16,
+                          offset: const Offset(0, 6),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.chrome_reader_mode_rounded,
+                            color: Colors.white, size: 40),
+                        SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Đọc hiểu tiếng Anh đa chủ đề 📖',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Rèn luyện kỹ năng đọc lướt (Skimming) & tìm ý chính (Scanning)',
+                                style: TextStyle(
+                                    color: Colors.white70, fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                Text(
-                  'Kho bài đọc (${readingArticlesData.length} bài viết)',
-                  style: AppTextStyles.labelLarge.copyWith(
-                    color: AppColors.textPrimaryDark,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    'Kho bài đọc (${readingArticlesData.length} bài viết)',
+                    style: AppTextStyles.labelLarge.copyWith(
+                      color: AppColors.textPrimaryDark,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
-                ...readingArticlesData.map((article) {
-                  return _buildArticleCard(context, article);
-                }),
-                const SizedBox(height: 32),
-              ],
+                  ...readingArticlesData.map((article) {
+                    return _buildArticleCard(context, article);
+                  }),
+                  const SizedBox(height: 32),
+                ],
+              ),
             ),
           ),
         ),
@@ -339,6 +345,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
   // 2. ACTIVE ARTICLE SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildActiveArticle(BuildContext context, ReadingArticle article) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
       appBar: AppBar(
@@ -389,20 +398,25 @@ class _ReadingScreenState extends State<ReadingScreen> {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            child: Column(
-              children: [
-                // Tab Switcher
-                _buildTabSwitcher(),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Tab Switcher
+                  _buildTabSwitcher(),
 
-                // Tab Content
-                Expanded(
-                  child: _activeTabIndex == 0
-                      ? _buildPassageTab(article)
-                      : _activeTabIndex == 1
-                          ? _buildVocabTab(article)
-                          : _buildQuizTab(article),
-                ),
-              ],
+                  // Tab Content
+                  Expanded(
+                    child: _activeTabIndex == 0
+                        ? _buildPassageTab(article)
+                        : _activeTabIndex == 1
+                            ? _buildVocabTab(article)
+                            : _buildQuizTab(article),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -533,9 +547,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   : AppColors.darkCard,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: isPlayingThis
-                    ? AppColors.reading
-                    : AppColors.darkDivider,
+                color:
+                    isPlayingThis ? AppColors.reading : AppColors.darkDivider,
                 width: isPlayingThis ? 1.5 : 1,
               ),
             ),
@@ -558,9 +571,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
                         isPlayingThis
                             ? Icons.pause_circle_rounded
                             : Icons.volume_up_rounded,
-                        color: isPlayingThis
-                            ? Colors.orange
-                            : AppColors.reading,
+                        color:
+                            isPlayingThis ? Colors.orange : AppColors.reading,
                         size: 20,
                       ),
                       tooltip: 'Nghe đoạn văn này',
@@ -710,7 +722,6 @@ class _ReadingScreenState extends State<ReadingScreen> {
           ),
           const SizedBox(height: 16),
         ],
-
         ...List.generate(article.questions.length, (qIdx) {
           final q = article.questions[qIdx];
           final selected = _userAnswers[qIdx];
@@ -743,7 +754,6 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-
                 ...List.generate(q.options.length, (optIdx) {
                   final optionText = q.options[optIdx];
                   final isThisSelected = selected == optIdx;
@@ -818,7 +828,6 @@ class _ReadingScreenState extends State<ReadingScreen> {
                     ),
                   );
                 }),
-
                 if (isAnswered) ...[
                   const SizedBox(height: 6),
                   Container(
@@ -826,8 +835,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.backgroundDark,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          color: AppColors.reading.withOpacity(0.3)),
+                      border:
+                          Border.all(color: AppColors.reading.withOpacity(0.3)),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
