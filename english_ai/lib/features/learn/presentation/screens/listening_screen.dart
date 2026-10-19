@@ -146,13 +146,13 @@ class _ListeningScreenState extends State<ListeningScreen>
     final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Thoát',
           onPressed: () {
             if (context.canPop()) {
@@ -165,7 +165,7 @@ class _ListeningScreenState extends State<ListeningScreen>
         title: Text(
           'Luyện Nghe Hiểu (Listening)',
           style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimaryDark,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -233,7 +233,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                   Text(
                     'Danh sách bài học (${listeningLessonsData.length} chủ đề)',
                     style: AppTextStyles.labelLarge.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -261,9 +261,9 @@ class _ListeningScreenState extends State<ListeningScreen>
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Material(
         color: Colors.transparent,
@@ -298,7 +298,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                             child: Text(
                               lesson.title,
                               style: AppTextStyles.labelMedium.copyWith(
-                                color: AppColors.textPrimaryDark,
+                                color: context.palette.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -333,7 +333,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                       Text(
                         lesson.scenarioVi,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondaryDark,
+                          color: context.palette.textSecondary,
                           fontSize: 12,
                         ),
                         maxLines: 2,
@@ -343,23 +343,23 @@ class _ListeningScreenState extends State<ListeningScreen>
                       Row(
                         children: [
                           Icon(Icons.chat_bubble_outline_rounded,
-                              size: 13, color: AppColors.textSecondaryDark),
+                              size: 13, color: context.palette.textSecondary),
                           const SizedBox(width: 4),
                           Text(
                             '${lesson.dialogue.length} câu thoại',
                             style: TextStyle(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                               fontSize: 11,
                             ),
                           ),
                           const SizedBox(width: 14),
                           Icon(Icons.quiz_outlined,
-                              size: 13, color: AppColors.textSecondaryDark),
+                              size: 13, color: context.palette.textSecondary),
                           const SizedBox(width: 4),
                           Text(
                             '${lesson.questions.length} câu hỏi',
                             style: TextStyle(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                               fontSize: 11,
                             ),
                           ),
@@ -369,10 +369,10 @@ class _ListeningScreenState extends State<ListeningScreen>
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 14,
-                  color: AppColors.darkTextHint,
+                  color: context.palette.textHint,
                 ),
               ],
             ),
@@ -390,13 +390,13 @@ class _ListeningScreenState extends State<ListeningScreen>
     final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Quay lại',
           onPressed: _backToLessonList,
         ),
@@ -405,7 +405,7 @@ class _ListeningScreenState extends State<ListeningScreen>
             Text(
               lesson.title,
               style: AppTextStyles.titleSmall.copyWith(
-                color: AppColors.textPrimaryDark,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -434,8 +434,8 @@ class _ListeningScreenState extends State<ListeningScreen>
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.close_rounded,
-                color: AppColors.textSecondaryDark),
+            icon:
+                Icon(Icons.close_rounded, color: context.palette.textSecondary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -486,9 +486,9 @@ class _ListeningScreenState extends State<ListeningScreen>
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Row(
         children: [
@@ -522,7 +522,7 @@ class _ListeningScreenState extends State<ListeningScreen>
               style: TextStyle(
                 color: _isPlayingAll
                     ? AppColors.listening
-                    : AppColors.textSecondaryDark,
+                    : context.palette.textSecondary,
                 fontSize: 12,
               ),
               overflow: TextOverflow.ellipsis,
@@ -536,7 +536,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                   : Icons.translate_outlined,
               color: _showTranslation
                   ? AppColors.secondary
-                  : AppColors.textSecondaryDark,
+                  : context.palette.textSecondary,
               size: 20,
             ),
             onPressed: () {
@@ -571,7 +571,7 @@ class _ListeningScreenState extends State<ListeningScreen>
       child: Material(
         color: isSelected
             ? AppColors.listening.withOpacity(0.2)
-            : AppColors.darkCard,
+            : context.palette.card,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
@@ -585,7 +585,8 @@ class _ListeningScreenState extends State<ListeningScreen>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isSelected ? AppColors.listening : AppColors.darkDivider,
+                color:
+                    isSelected ? AppColors.listening : context.palette.divider,
               ),
             ),
             child: Row(
@@ -596,7 +597,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                   size: 16,
                   color: isSelected
                       ? AppColors.listening
-                      : AppColors.textSecondaryDark,
+                      : context.palette.textSecondary,
                 ),
                 const SizedBox(width: 6),
                 Text(
@@ -604,7 +605,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                   style: TextStyle(
                     color: isSelected
                         ? AppColors.listening
-                        : AppColors.textSecondaryDark,
+                        : context.palette.textSecondary,
                     fontWeight:
                         isSelected ? FontWeight.bold : FontWeight.normal,
                     fontSize: 12,
@@ -636,10 +637,10 @@ class _ListeningScreenState extends State<ListeningScreen>
           decoration: BoxDecoration(
             color: isCurrent
                 ? AppColors.listening.withOpacity(0.15)
-                : AppColors.darkCard,
+                : context.palette.card,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: isCurrent ? AppColors.listening : AppColors.darkDivider,
+              color: isCurrent ? AppColors.listening : context.palette.divider,
               width: isCurrent ? 1.5 : 1,
             ),
           ),
@@ -686,7 +687,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                     Text(
                       line.text,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textPrimaryDark,
+                        color: context.palette.textPrimary,
                         fontWeight:
                             isCurrent ? FontWeight.bold : FontWeight.w500,
                         fontSize: 14,
@@ -697,7 +698,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                       Text(
                         line.textVi,
                         style: TextStyle(
-                          color: AppColors.textSecondaryDark,
+                          color: context.palette.textSecondary,
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
                         ),
@@ -713,7 +714,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                       : Icons.play_circle_outline_rounded,
                   color: isCurrent
                       ? AppColors.listening
-                      : AppColors.textSecondaryDark,
+                      : context.palette.textSecondary,
                   size: 24,
                 ),
                 tooltip: 'Nghe câu này',
@@ -739,9 +740,9 @@ class _ListeningScreenState extends State<ListeningScreen>
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.darkCard,
+            color: context.palette.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.darkDivider),
+            border: Border.all(color: context.palette.divider),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -762,7 +763,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                         Text(
                           vocab.phonetic,
                           style: TextStyle(
-                            color: AppColors.textSecondaryDark,
+                            color: context.palette.textSecondary,
                             fontSize: 13,
                           ),
                         ),
@@ -777,11 +778,11 @@ class _ListeningScreenState extends State<ListeningScreen>
                   ),
                 ],
               ),
-              const Divider(color: AppColors.darkDivider, height: 16),
+              Divider(color: context.palette.divider, height: 16),
               Text(
                 'Nghĩa: ${vocab.meaning}',
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textPrimaryDark,
+                  color: context.palette.textPrimary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -789,7 +790,7 @@ class _ListeningScreenState extends State<ListeningScreen>
               Text(
                 'Ví dụ: "${vocab.example}"',
                 style: TextStyle(
-                  color: AppColors.textSecondaryDark,
+                  color: context.palette.textSecondary,
                   fontSize: 13,
                   fontStyle: FontStyle.italic,
                 ),
@@ -859,9 +860,9 @@ class _ListeningScreenState extends State<ListeningScreen>
             margin: const EdgeInsets.only(bottom: 16),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.darkCard,
+              color: context.palette.card,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.darkDivider),
+              border: Border.all(color: context.palette.divider),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -869,7 +870,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                 Text(
                   'Câu ${qIdx + 1}: ${q.question}',
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textPrimaryDark,
+                    color: context.palette.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -877,7 +878,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                 Text(
                   q.questionVi,
                   style: TextStyle(
-                    color: AppColors.textSecondaryDark,
+                    color: context.palette.textSecondary,
                     fontSize: 12,
                   ),
                 ),
@@ -887,9 +888,9 @@ class _ListeningScreenState extends State<ListeningScreen>
                   final isThisSelected = selected == optIdx;
                   final isCorrect = optIdx == q.correctIndex;
 
-                  Color optBg = AppColors.backgroundDark;
-                  Color optBorder = AppColors.darkDivider;
-                  Color optTextColor = AppColors.textPrimaryDark;
+                  Color optBg = context.palette.background;
+                  Color optBorder = context.palette.divider;
+                  Color optTextColor = context.palette.textPrimary;
 
                   if (isAnswered) {
                     if (isCorrect) {
@@ -961,7 +962,7 @@ class _ListeningScreenState extends State<ListeningScreen>
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.backgroundDark,
+                      color: context.palette.background,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                           color: AppColors.listening.withOpacity(0.3)),
@@ -975,8 +976,8 @@ class _ListeningScreenState extends State<ListeningScreen>
                         Expanded(
                           child: Text(
                             'Giải thích: ${q.explanation}',
-                            style: const TextStyle(
-                              color: AppColors.textPrimaryDark,
+                            style: TextStyle(
+                              color: context.palette.textPrimary,
                               fontSize: 12,
                             ),
                           ),

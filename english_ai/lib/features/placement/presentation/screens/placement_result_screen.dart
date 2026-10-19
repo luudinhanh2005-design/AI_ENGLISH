@@ -16,7 +16,7 @@ class PlacementResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
@@ -42,7 +42,7 @@ class PlacementResultScreen extends StatelessWidget {
               Text(
                 'Hoàn thành đánh giá!',
                 style: AppTextStyles.headlineSmall.copyWith(
-                  color: AppColors.textPrimaryDark,
+                  color: context.palette.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -50,7 +50,7 @@ class PlacementResultScreen extends StatelessWidget {
               Text(
                 'AI đã phân tích và thiết lập lộ trình học riêng cho bạn',
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondaryDark,
+                  color: context.palette.textSecondary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -96,7 +96,8 @@ class PlacementResultScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(20),
@@ -123,7 +124,7 @@ class PlacementResultScreen extends StatelessWidget {
                     Text(
                       'Phân tích năng lực theo kỹ năng',
                       style: AppTextStyles.titleSmall.copyWith(
-                        color: AppColors.textPrimaryDark,
+                        color: context.palette.textPrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -142,13 +143,13 @@ class PlacementResultScreen extends StatelessWidget {
                                 Text(
                                   skill.toUpperCase(),
                                   style: AppTextStyles.labelMedium.copyWith(
-                                    color: AppColors.textSecondaryDark,
+                                    color: context.palette.textSecondary,
                                   ),
                                 ),
                                 Text(
                                   '%',
                                   style: AppTextStyles.labelMedium.copyWith(
-                                    color: AppColors.textPrimaryDark,
+                                    color: context.palette.textPrimary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -159,9 +160,11 @@ class PlacementResultScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(6),
                               child: LinearProgressIndicator(
                                 value: score / 100,
-                                backgroundColor: AppColors.surfaceLightDark,
+                                backgroundColor: context.palette.cardLight,
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  score >= 70 ? AppColors.success : AppColors.primary,
+                                  score >= 70
+                                      ? AppColors.success
+                                      : AppColors.primary,
                                 ),
                                 minHeight: 6,
                               ),
@@ -182,7 +185,8 @@ class PlacementResultScreen extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.auto_awesome, color: AppColors.accent, size: 24),
+                      const Icon(Icons.auto_awesome,
+                          color: AppColors.accent, size: 24),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
@@ -199,7 +203,7 @@ class PlacementResultScreen extends StatelessWidget {
                             Text(
                               result.recommendation,
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textPrimaryDark,
+                                color: context.palette.textPrimary,
                                 height: 1.5,
                               ),
                             ),

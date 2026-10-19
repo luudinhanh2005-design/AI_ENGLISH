@@ -49,7 +49,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
 
   static const List<PracticeQuizItem> _quizQuestions = [
     PracticeQuizItem(
-      question: 'Choose the correct verb form: "She _______ to school every day."',
+      question:
+          'Choose the correct verb form: "She _______ to school every day."',
       options: ['go', 'goes', 'going', 'gone'],
       correct: 1,
       explanation:
@@ -68,7 +69,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
           '"Already" đi với Hiện tại hoàn thành → "have + V3 (seen)" là đúng.',
     ),
     PracticeQuizItem(
-      question: 'Complete the sentence: "If I _______ rich, I would travel the world."',
+      question:
+          'Complete the sentence: "If I _______ rich, I would travel the world."',
       options: ['am', 'will be', 'were', 'had been'],
       correct: 2,
       explanation:
@@ -83,11 +85,11 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
         'is writing',
       ],
       correct: 1,
-      explanation:
-          'Câu bị động tương lai: will be + V3 → "will be written".',
+      explanation: 'Câu bị động tương lai: will be + V3 → "will be written".',
     ),
     PracticeQuizItem(
-      question: 'Choose the correct preposition: "I\'m interested _______ learning English."',
+      question:
+          'Choose the correct preposition: "I\'m interested _______ learning English."',
       options: ['on', 'at', 'in', 'for'],
       correct: 2,
       explanation:
@@ -153,7 +155,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
           content: const Text('Vui lòng nhập ít nhất 20 ký tự để đánh giá!'),
           backgroundColor: AppColors.warning,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
       );
       return;
@@ -167,7 +170,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
     await Future.delayed(const Duration(milliseconds: 1500));
 
     final words = text.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
-    final sentences = text.split(RegExp(r'[.!?]+')).where((s) => s.trim().isNotEmpty).length;
+    final sentences =
+        text.split(RegExp(r'[.!?]+')).where((s) => s.trim().isNotEmpty).length;
     final avgWordsPerSentence = sentences > 0 ? words / sentences : words;
 
     // Scoring
@@ -175,12 +179,19 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
     if (words >= 40) score += 10;
     if (words >= 80) score += 10;
     if (avgWordsPerSentence >= 8 && avgWordsPerSentence <= 20) score += 8;
-    if (text.contains(RegExp(r'\b(however|furthermore|nevertheless|consequently|moreover)\b', caseSensitive: false))) score += 5;
-    if (text.contains(RegExp(r'\b(although|despite|whereas|whilst|because)\b', caseSensitive: false))) score += 5;
+    if (text.contains(RegExp(
+        r'\b(however|furthermore|nevertheless|consequently|moreover)\b',
+        caseSensitive: false))) score += 5;
+    if (text.contains(RegExp(r'\b(although|despite|whereas|whilst|because)\b',
+        caseSensitive: false))) score += 5;
     score = score.clamp(50.0, 96.0);
 
     final ielts = (score / 100 * 9).clamp(4.5, 8.5);
-    final cefr = score >= 80 ? 'B2' : score >= 65 ? 'B1' : 'A2';
+    final cefr = score >= 80
+        ? 'B2'
+        : score >= 65
+            ? 'B1'
+            : 'A2';
 
     setState(() {
       _isEvaluating = false;
@@ -191,8 +202,10 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
         'word_count': words,
         'sentence_count': sentences,
         'tips': [
-          if (words < 50) '✍️ Hãy viết thêm khoảng ${50 - words} từ nữa để phát triển ý đầy đủ hơn.',
-          if (!text.contains(RegExp(r'\b(however|furthermore)\b', caseSensitive: false)))
+          if (words < 50)
+            '✍️ Hãy viết thêm khoảng ${50 - words} từ nữa để phát triển ý đầy đủ hơn.',
+          if (!text.contains(
+              RegExp(r'\b(however|furthermore)\b', caseSensitive: false)))
             '💡 Thêm liên từ học thuật: however, furthermore, consequently.',
           if (avgWordsPerSentence < 8)
             '📝 Câu quá ngắn - thử kết hợp các câu đơn thành câu ghép (compound sentence).',
@@ -205,7 +218,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       body: SafeArea(
         child: Align(
           alignment: Alignment.topCenter,
@@ -228,7 +241,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                             Text(
                               'Đấu Trường Luyện Tập ⚡',
                               style: AppTextStyles.h2.copyWith(
-                                color: AppColors.darkTextPrimary,
+                                color: context.palette.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -236,18 +249,20 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                             Text(
                               'Rèn phản xạ nhanh, làm chủ ngữ pháp & viết câu thông minh',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.darkTextSecondary,
+                                color: context.palette.textSecondary,
                               ),
                             ),
                           ],
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
                           color: const Color(0xFFFFA502).withOpacity(0.15),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFFFFA502).withOpacity(0.4)),
+                          border: Border.all(
+                              color: const Color(0xFFFFA502).withOpacity(0.4)),
                         ),
                         child: Row(
                           children: [
@@ -275,9 +290,9 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      color: AppColors.darkCard,
+                      color: context.palette.card,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.darkDivider),
+                      border: Border.all(color: context.palette.divider),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.2),
@@ -295,14 +310,21 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                           value: '450 XP',
                           label: 'Điểm rèn luyện',
                         ),
-                        Container(width: 1, height: 40, color: AppColors.darkDivider),
+                        Container(
+                            width: 1,
+                            height: 40,
+                            color: context.palette.divider),
                         _buildStatColumn(
                           icon: Icons.check_circle_outline_rounded,
                           color: const Color(0xFF2ED573),
-                          value: '${_quizQuestions.isNotEmpty ? (_correctCount / _quizQuestions.length * 100).round() : 85}%',
+                          value:
+                              '${_quizQuestions.isNotEmpty ? (_correctCount / _quizQuestions.length * 100).round() : 85}%',
                           label: 'Độ chính xác',
                         ),
-                        Container(width: 1, height: 40, color: AppColors.darkDivider),
+                        Container(
+                            width: 1,
+                            height: 40,
+                            color: context.palette.divider),
                         _buildStatColumn(
                           icon: Icons.flash_on_rounded,
                           color: const Color(0xFFFFA502),
@@ -340,7 +362,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.25),
                                 borderRadius: BorderRadius.circular(8),
@@ -390,17 +413,20 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                             _buildFeatureTag('Khó (B2)'),
                             const Spacer(),
                             ElevatedButton(
-                              onPressed: () => context.push('/writing-practice'),
+                              onPressed: () =>
+                                  context.push('/writing-practice'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: const Color(0xFF00B894),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 10),
                               ),
                               child: const Text('Vào luyện ➔',
-                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),
@@ -456,23 +482,24 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                           Text(
                             'Trắc Nghiệm Tốc Độ ⚡',
                             style: AppTextStyles.h4.copyWith(
-                              color: AppColors.darkTextPrimary,
+                              color: context.palette.textPrimary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceDark,
+                          color: context.palette.surface,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColors.darkDivider),
+                          border: Border.all(color: context.palette.divider),
                         ),
                         child: Text(
                           '${_quizIndex + 1}/${_quizQuestions.length} câu',
-                          style: const TextStyle(
-                            color: AppColors.darkTextPrimary,
+                          style: TextStyle(
+                            color: context.palette.textPrimary,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -505,7 +532,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                           Text(
                             'Phòng Thử Nghiệm Viết AI 📝',
                             style: AppTextStyles.h4.copyWith(
-                              color: AppColors.darkTextPrimary,
+                              color: context.palette.textPrimary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -514,8 +541,10 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                       TextButton.icon(
                         onPressed: _insertRandomPrompt,
                         icon: const Icon(Icons.casino_outlined, size: 16),
-                        label: const Text('Gợi ý đề', style: TextStyle(fontSize: 12)),
-                        style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                        label: const Text('Gợi ý đề',
+                            style: TextStyle(fontSize: 12)),
+                        style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primary),
                       ),
                     ],
                   ),
@@ -554,8 +583,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
         const SizedBox(height: 2),
         Text(
           label,
-          style: const TextStyle(
-            color: AppColors.darkTextSecondary,
+          style: TextStyle(
+            color: context.palette.textSecondary,
             fontSize: 10,
           ),
         ),
@@ -590,7 +619,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: color.withOpacity(0.3)),
       ),
@@ -620,7 +649,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                       Text(
                         title,
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.darkTextPrimary,
+                          color: context.palette.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -628,7 +657,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                       Text(
                         subtitle,
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.darkTextSecondary,
+                          color: context.palette.textSecondary,
                           fontSize: 10,
                         ),
                         maxLines: 1,
@@ -663,7 +692,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
         ),
         child: Column(
           children: [
-            const Icon(Icons.emoji_events_rounded, color: Colors.white, size: 48),
+            const Icon(Icons.emoji_events_rounded,
+                color: Colors.white, size: 48),
             const SizedBox(height: 12),
             Text(
               percent >= 80
@@ -686,11 +716,12 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
               onPressed: _resetQuiz,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
-                foregroundColor: AppColors.backgroundDark,
+                foregroundColor: context.palette.background,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
               ),
               child: const Text('Luyện lại lần nữa',
                   style: TextStyle(fontWeight: FontWeight.bold)),
@@ -704,9 +735,9 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -714,7 +745,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
           Text(
             q.question,
             style: AppTextStyles.labelLarge.copyWith(
-              color: AppColors.darkTextPrimary,
+              color: context.palette.textPrimary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -725,9 +756,9 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
             final isCorrect = idx == q.correct;
             final isSelected = _selectedAnswer == idx;
 
-            Color borderColor = AppColors.darkDivider;
-            Color bgColor = AppColors.surfaceDark;
-            Color textColor = AppColors.darkTextPrimary;
+            Color borderColor = context.palette.divider;
+            Color bgColor = context.palette.surface;
+            Color textColor = context.palette.textPrimary;
 
             if (_showResult) {
               if (isCorrect) {
@@ -750,7 +781,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                   onTap: () => _selectAnswer(idx),
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 12),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor),
@@ -764,13 +796,15 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                             shape: BoxShape.circle,
                             color: isSelected
                                 ? borderColor
-                                : AppColors.darkDivider.withOpacity(0.5),
+                                : context.palette.divider.withOpacity(0.5),
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             String.fromCharCode(65 + idx),
                             style: TextStyle(
-                              color: isSelected ? Colors.white : AppColors.darkTextSecondary,
+                              color: isSelected
+                                  ? Colors.white
+                                  : context.palette.textSecondary,
                               fontWeight: FontWeight.bold,
                               fontSize: 11,
                             ),
@@ -780,7 +814,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                         Expanded(
                           child: Text(
                             opt,
-                            style: AppTextStyles.bodyMedium.copyWith(color: textColor),
+                            style: AppTextStyles.bodyMedium
+                                .copyWith(color: textColor),
                           ),
                         ),
                         if (_showResult && isCorrect)
@@ -801,19 +836,20 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark,
+                color: context.palette.surface,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.info_outline, color: AppColors.secondary, size: 16),
+                  const Icon(Icons.info_outline,
+                      color: AppColors.secondary, size: 16),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       q.explanation,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.darkTextSecondary,
+                        color: context.palette.textSecondary,
                       ),
                     ),
                   ),
@@ -827,7 +863,9 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                 onPressed: _nextQuestion,
                 icon: const Icon(Icons.arrow_forward_rounded, size: 16),
                 label: Text(
-                  _quizIndex < _quizQuestions.length - 1 ? 'Câu tiếp theo' : 'Xem kết quả',
+                  _quizIndex < _quizQuestions.length - 1
+                      ? 'Câu tiếp theo'
+                      : 'Xem kết quả',
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
@@ -835,7 +873,8 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 ),
               ),
             ),
@@ -850,9 +889,9 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -860,12 +899,14 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
           TextField(
             controller: _writingController,
             maxLines: 4,
-            style: const TextStyle(color: AppColors.darkTextPrimary, fontSize: 13),
+            style: TextStyle(color: context.palette.textPrimary, fontSize: 13),
             decoration: InputDecoration(
-              hintText: 'Nhập hoặc dán câu tiếng Anh của bạn tại đây để AI đánh giá...',
-              hintStyle: const TextStyle(color: AppColors.darkTextHint, fontSize: 13),
+              hintText:
+                  'Nhập hoặc dán câu tiếng Anh của bạn tại đây để AI đánh giá...',
+              hintStyle:
+                  TextStyle(color: context.palette.textHint, fontSize: 13),
               filled: true,
-              fillColor: AppColors.surfaceDark,
+              fillColor: context.palette.surface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -882,23 +923,26 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                   ? const SizedBox(
                       width: 14,
                       height: 14,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                          color: Colors.white, strokeWidth: 2),
                     )
                   : const Icon(Icons.auto_awesome_rounded, size: 16),
-              label: Text(_isEvaluating ? 'AI đang chấm điểm...' : 'Đánh giá với AI'),
+              label: Text(
+                  _isEvaluating ? 'AI đang chấm điểm...' : 'Đánh giá với AI'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
               ),
             ),
           ),
           if (_writingResult != null) ...[
             const SizedBox(height: 16),
-            const Divider(color: AppColors.darkDivider),
+            Divider(color: context.palette.divider),
             const SizedBox(height: 12),
             Row(
               children: [
@@ -939,18 +983,21 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
             Text(
               'Gợi ý cải thiện:',
               style: AppTextStyles.labelMedium.copyWith(
-                color: AppColors.darkTextPrimary,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 6),
-            ...((_writingResult!['tips'] as List<dynamic>?)?.map((e) => e.toString()) ?? const <String>[]).map(
+            ...((_writingResult!['tips'] as List<dynamic>?)
+                        ?.map((e) => e.toString()) ??
+                    const <String>[])
+                .map(
               (tip) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Text(
                   tip,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.darkTextSecondary,
+                    color: context.palette.textSecondary,
                   ),
                 ),
               ),
@@ -995,7 +1042,7 @@ class _ScoreBadge extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.darkTextHint,
+                color: context.palette.textHint,
               ),
             ),
           ],
@@ -1018,14 +1065,14 @@ class _WritingStat extends StatelessWidget {
         Text(
           value,
           style: AppTextStyles.h4.copyWith(
-            color: AppColors.darkTextPrimary,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           label,
           style: AppTextStyles.labelSmall.copyWith(
-            color: AppColors.darkTextHint,
+            color: context.palette.textHint,
           ),
         ),
       ],

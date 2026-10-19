@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'app_colors.dart';
-
 /// Typography system using Inter font family.
 class AppTextStyles {
   AppTextStyles._();
@@ -108,7 +106,6 @@ class AppTextStyles {
         fontSize: 14,
         fontWeight: FontWeight.w400,
         fontStyle: FontStyle.italic,
-        color: AppColors.darkTextSecondary,
       );
 
   static TextStyle get score => GoogleFonts.inter(

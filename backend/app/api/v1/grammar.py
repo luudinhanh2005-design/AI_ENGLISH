@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...database import get_db, IS_DB_CONNECTED
+from ...database import get_db, is_db_connected
 from ...models.learning import GrammarLesson, UserGrammarProgress
 from ...models.user import User
 from ...schemas.learning import (
@@ -51,7 +51,7 @@ async def list_grammar_lessons(
     current_user: User = Depends(get_current_user),
 ):
     """Retrieve all grammar lessons with current user completion status."""
-    if IS_DB_CONNECTED:
+    if is_db_connected():
         try:
             result = await db.execute(
                 select(GrammarLesson)
@@ -108,7 +108,7 @@ async def get_grammar_lesson_detail(
 ):
     """Retrieve full content, formulas, examples, and practice quiz of a grammar lesson."""
     lesson = None
-    if IS_DB_CONNECTED:
+    if is_db_connected():
         try:
             result = await db.execute(
                 select(GrammarLesson).where(GrammarLesson.id == lesson_id)

@@ -79,7 +79,8 @@ class WritingScreenNotifier extends StateNotifier<WritingScreenState> {
       currentLesson.questions[state.questionIndex];
 
   void setLevel(WritingLevel level) {
-    state = state.copyWith(level: level, lessonIndex: 0, isSelectingLesson: true);
+    state =
+        state.copyWith(level: level, lessonIndex: 0, isSelectingLesson: true);
   }
 
   void selectLesson(WritingLevel level, int idx) {
@@ -266,13 +267,13 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
     final currentLvl = WritingLevel.values[_tab.index];
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Thoát',
           onPressed: () {
             if (context.canPop()) {
@@ -285,7 +286,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
         title: Text(
           'Luyện Viết Câu (30 Bài Học)',
           style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimaryDark,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -295,7 +296,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
           indicatorColor: AppColors.primary,
           indicatorWeight: 3,
           labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.textSecondaryDark,
+          unselectedLabelColor: context.palette.textSecondary,
           tabs: const [
             Tab(
               child: Row(
@@ -303,7 +304,8 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                 children: [
                   Text('🟢', style: TextStyle(fontSize: 12)),
                   SizedBox(width: 6),
-                  Text('Dễ (A1-A2)', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Dễ (A1-A2)',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -313,7 +315,8 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                 children: [
                   Text('🟡', style: TextStyle(fontSize: 12)),
                   SizedBox(width: 6),
-                  Text('Trung Bình (B1)', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Trung Bình (B1)',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -323,7 +326,8 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                 children: [
                   Text('🔴', style: TextStyle(fontSize: 12)),
                   SizedBox(width: 6),
-                  Text('Khó (B2-C1)', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Khó (B2-C1)',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -344,7 +348,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Material(
-                    color: AppColors.surfaceDark,
+                    color: context.palette.surface,
                     borderRadius: BorderRadius.circular(16),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(16),
@@ -356,7 +360,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: AppColors.borderDark.withOpacity(0.4),
+                            color: context.palette.divider.withOpacity(0.4),
                           ),
                         ),
                         child: Row(
@@ -387,7 +391,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                                   Text(
                                     'Bài ${lesson.lessonNumber}: ${lesson.title}',
                                     style: AppTextStyles.labelLarge.copyWith(
-                                      color: AppColors.textPrimaryDark,
+                                      color: context.palette.textPrimary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -395,7 +399,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                                   Text(
                                     '${lesson.questions.length} câu luyện viết & nghe',
                                     style: AppTextStyles.labelSmall.copyWith(
-                                      color: AppColors.textSecondaryDark,
+                                      color: context.palette.textSecondary,
                                     ),
                                   ),
                                 ],
@@ -404,7 +408,7 @@ class _LevelSelectorViewState extends State<_LevelSelectorView>
                             Icon(
                               Icons.arrow_forward_ios_rounded,
                               size: 16,
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                             ),
                           ],
                         ),
@@ -477,13 +481,13 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
     final progress = (s.questionIndex + 1) / total;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Quay lại danh sách bài',
           onPressed: () => notifier.backToLessons(),
         ),
@@ -492,7 +496,7 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
             Text(
               '🎧 Luyện Nghe – Viết',
               style: AppTextStyles.titleMedium.copyWith(
-                color: AppColors.textPrimaryDark,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -508,8 +512,8 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.close_rounded,
-                color: AppColors.textSecondaryDark),
+            icon:
+                Icon(Icons.close_rounded, color: context.palette.textSecondary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -537,7 +541,7 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                       Text(
                         'Tiến độ bài học',
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.textSecondaryDark,
+                          color: context.palette.textSecondary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -558,7 +562,7 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                     child: LinearProgressIndicator(
                       value: progress,
                       minHeight: 8,
-                      backgroundColor: AppColors.surfaceLightDark,
+                      backgroundColor: context.palette.cardLight,
                       valueColor: const AlwaysStoppedAnimation<Color>(
                         AppColors.primary,
                       ),
@@ -571,10 +575,10 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceDark,
+                      color: context.palette.surface,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: AppColors.borderDark.withOpacity(0.5),
+                        color: context.palette.divider.withOpacity(0.5),
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -591,10 +595,10 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.backgroundDark,
+                            color: context.palette.background,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: AppColors.borderDark.withOpacity(0.4),
+                              color: context.palette.divider.withOpacity(0.4),
                             ),
                           ),
                           child: Column(
@@ -611,7 +615,7 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                               Text(
                                 question.hint,
                                 style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.textPrimaryDark,
+                                  color: context.palette.textPrimary,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -652,25 +656,25 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                           controller: _ctrl,
                           onChanged: notifier.updateInput,
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textPrimaryDark,
+                            color: context.palette.textPrimary,
                           ),
                           decoration: InputDecoration(
                             hintText: 'Nhập câu tiếng Anh bạn nghe được...',
                             hintStyle: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                             ),
                             filled: true,
-                            fillColor: AppColors.backgroundDark,
+                            fillColor: context.palette.background,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: AppColors.borderDark.withOpacity(0.4),
+                                color: context.palette.divider.withOpacity(0.4),
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: AppColors.borderDark.withOpacity(0.4),
+                                color: context.palette.divider.withOpacity(0.4),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -692,7 +696,7 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                           onPressed: s.showResult ? null : notifier.check,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF2E8B57),
-                            disabledBackgroundColor: AppColors.surfaceLightDark,
+                            disabledBackgroundColor: context.palette.cardLight,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             shape: RoundedRectangleBorder(
@@ -761,8 +765,8 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                                       ),
                                       padding: EdgeInsets.zero,
                                       constraints: const BoxConstraints(),
-                                      onPressed: () =>
-                                          SpeechService.speak(question.sentence),
+                                      onPressed: () => SpeechService.speak(
+                                          question.sentence),
                                     ),
                                   ],
                                 ),
@@ -789,12 +793,14 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                             if (s.questionIndex > 0)
                               OutlinedButton.icon(
                                 onPressed: notifier.previous,
-                                icon: const Icon(Icons.arrow_back_rounded, size: 16),
+                                icon: const Icon(Icons.arrow_back_rounded,
+                                    size: 16),
                                 label: const Text('Câu trước'),
                                 style: OutlinedButton.styleFrom(
-                                  foregroundColor: AppColors.textSecondaryDark,
-                                  side: const BorderSide(
-                                    color: AppColors.textSecondaryDark,
+                                  foregroundColor:
+                                      context.palette.textSecondary,
+                                  side: BorderSide(
+                                    color: context.palette.textSecondary,
                                   ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -818,7 +824,8 @@ class _ActiveLessonViewState extends ConsumerState<_ActiveLessonView> {
                                 s.questionIndex < lesson.questions.length - 1
                                     ? 'Câu sau'
                                     : 'Hoàn thành 🏆',
-                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                               ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
@@ -878,20 +885,20 @@ class _LessonFinishedView extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Quay lại',
           onPressed: () => notifier.backToLessons(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.close_rounded,
-                color: AppColors.textSecondaryDark),
+            icon:
+                Icon(Icons.close_rounded, color: context.palette.textSecondary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -936,7 +943,7 @@ class _LessonFinishedView extends StatelessWidget {
                   Text(
                     '${state.score}/$total câu đúng ($percent%)',
                     style: AppTextStyles.bodyLarge.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -993,7 +1000,7 @@ class _LessonFinishedView extends StatelessWidget {
                     },
                     child: Text(
                       'Về trang Luyện tập',
-                      style: TextStyle(color: AppColors.textSecondaryDark),
+                      style: TextStyle(color: context.palette.textSecondary),
                     ),
                   ),
                 ],

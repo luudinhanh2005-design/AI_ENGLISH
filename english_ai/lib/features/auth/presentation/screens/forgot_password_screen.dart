@@ -18,8 +18,7 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
       _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState
-    extends ConsumerState<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   bool _isLoading = false;
@@ -60,13 +59,13 @@ class _ForgotPasswordScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF0F0F23),
-              Color(0xFF1A1A2E),
+              context.palette.background,
+              context.palette.surface,
             ],
           ),
         ),
@@ -92,9 +91,9 @@ class _ForgotPasswordScreenState
                         context.go('/login');
                       }
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_rounded,
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -121,7 +120,7 @@ class _ForgotPasswordScreenState
                           Text(
                             'Check Your Email',
                             style: AppTextStyles.h2.copyWith(
-                              color: AppColors.darkTextPrimary,
+                              color: context.palette.textPrimary,
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -129,7 +128,7 @@ class _ForgotPasswordScreenState
                             'We sent a password reset link to\n${_emailController.text.trim()}',
                             textAlign: TextAlign.center,
                             style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.darkTextSecondary,
+                              color: context.palette.textSecondary,
                             ),
                           ),
                           const SizedBox(height: 32),
@@ -145,14 +144,14 @@ class _ForgotPasswordScreenState
                     Text(
                       'Forgot Password?',
                       style: AppTextStyles.h1.copyWith(
-                        color: AppColors.darkTextPrimary,
+                        color: context.palette.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       "Enter your email and we'll send you a link to reset your password.",
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.darkTextSecondary,
+                        color: context.palette.textSecondary,
                       ),
                     ),
                     const SizedBox(height: 36),

@@ -30,19 +30,16 @@ class AppCard extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: AppDimensions.animFast,
-        padding: padding ??
-            const EdgeInsets.all(AppDimensions.cardPadding),
+        padding: padding ?? const EdgeInsets.all(AppDimensions.cardPadding),
         decoration: BoxDecoration(
           gradient: gradient,
-          color: gradient == null
-              ? (color ?? AppColors.darkCard)
-              : null,
+          color: gradient == null ? (color ?? context.palette.card) : null,
           borderRadius: BorderRadius.circular(
             borderRadius ?? AppDimensions.radiusLg,
           ),
           border: border ??
               Border.all(
-                color: AppColors.darkDivider.withOpacity(0.5),
+                color: context.palette.divider.withOpacity(0.5),
                 width: 1,
               ),
           boxShadow: [

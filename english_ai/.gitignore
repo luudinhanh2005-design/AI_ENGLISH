@@ -13,18 +13,19 @@ build/
 
 # macOS
 .DS_Store
-*.plist
+*.dsstore
 
-# Android
+# Android release keletons
 /android/app/debug/
 /android/app/profile/
 /android/app/release/
 *.apk
 *.aab
+google-services.json
 
 # iOS
-/ios/Pods/
-/ios/.symlinks/
+**/Pods/
+**/.symlink/
 
 # Generated
 *.g.dart

@@ -110,3 +110,94 @@ class AppColors {
     end: Alignment.bottomRight,
   );
 }
+
+/// Theme-aware color palette resolved through the current [ThemeData].
+@immutable
+class AppPalette extends ThemeExtension<AppPalette> {
+  final Color background;
+  final Color surface;
+  final Color card;
+  final Color cardLight;
+  final Color divider;
+  final Color textPrimary;
+  final Color textSecondary;
+  final Color textHint;
+
+  const AppPalette({
+    required this.background,
+    required this.surface,
+    required this.card,
+    required this.cardLight,
+    required this.divider,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textHint,
+  });
+
+  static const AppPalette dark = AppPalette(
+    background: AppColors.darkBackground,
+    surface: AppColors.darkSurface,
+    card: AppColors.darkCard,
+    cardLight: AppColors.darkCardLight,
+    divider: AppColors.darkDivider,
+    textPrimary: AppColors.darkTextPrimary,
+    textSecondary: AppColors.darkTextSecondary,
+    textHint: AppColors.darkTextHint,
+  );
+
+  static const AppPalette light = AppPalette(
+    background: AppColors.lightBackground,
+    surface: AppColors.lightSurface,
+    card: AppColors.lightCard,
+    cardLight: AppColors.lightBackground,
+    divider: AppColors.lightDivider,
+    textPrimary: AppColors.lightTextPrimary,
+    textSecondary: AppColors.lightTextSecondary,
+    textHint: AppColors.lightTextHint,
+  );
+
+  @override
+  AppPalette copyWith({
+    Color? background,
+    Color? surface,
+    Color? card,
+    Color? cardLight,
+    Color? divider,
+    Color? textPrimary,
+    Color? textSecondary,
+    Color? textHint,
+  }) {
+    return AppPalette(
+      background: background ?? this.background,
+      surface: surface ?? this.surface,
+      card: card ?? this.card,
+      cardLight: cardLight ?? this.cardLight,
+      divider: divider ?? this.divider,
+      textPrimary: textPrimary ?? this.textPrimary,
+      textSecondary: textSecondary ?? this.textSecondary,
+      textHint: textHint ?? this.textHint,
+    );
+  }
+
+  @override
+  AppPalette lerp(ThemeExtension<AppPalette>? other, double t) {
+    if (other is! AppPalette) return this;
+    return AppPalette(
+      background: Color.lerp(background, other.background, t)!,
+      surface: Color.lerp(surface, other.surface, t)!,
+      card: Color.lerp(card, other.card, t)!,
+      cardLight: Color.lerp(cardLight, other.cardLight, t)!,
+      divider: Color.lerp(divider, other.divider, t)!,
+      textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
+      textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
+      textHint: Color.lerp(textHint, other.textHint, t)!,
+    );
+  }
+}
+
+extension AppPaletteContext on BuildContext {
+  AppPalette get palette =>
+      Theme.of(this).extension<AppPalette>() ?? AppPalette.dark;
+
+  bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
+}

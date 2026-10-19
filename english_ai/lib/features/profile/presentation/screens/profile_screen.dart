@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/theme_provider.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -13,9 +14,10 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authStateProvider);
     final user = authState.valueOrNull;
+    final themeMode = ref.watch(themeModeProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -76,7 +78,7 @@ class ProfileScreen extends ConsumerWidget {
                               color: AppColors.success,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: AppColors.darkBackground,
+                                color: context.palette.background,
                                 width: 2,
                               ),
                             ),
@@ -184,9 +186,9 @@ class ProfileScreen extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.darkCard,
+                      color: context.palette.card,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.darkDivider),
+                      border: Border.all(color: context.palette.divider),
                     ),
                     child: Row(
                       children: [
@@ -211,14 +213,14 @@ class ProfileScreen extends ConsumerWidget {
                               Text(
                                 'Mục tiêu học tập',
                                 style: AppTextStyles.labelSmall.copyWith(
-                                  color: AppColors.darkTextHint,
+                                  color: context.palette.textHint,
                                 ),
                               ),
                               const SizedBox(height: 2),
                               Text(
                                 user?.learningGoal ?? 'Chưa đặt mục tiêu',
                                 style: AppTextStyles.labelMedium.copyWith(
-                                  color: AppColors.darkTextPrimary,
+                                  color: context.palette.textPrimary,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -250,7 +252,7 @@ class ProfileScreen extends ConsumerWidget {
                     Text(
                       'Thành tích',
                       style: AppTextStyles.h4.copyWith(
-                        color: AppColors.darkTextPrimary,
+                        color: context.palette.textPrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -262,7 +264,7 @@ class ProfileScreen extends ConsumerWidget {
                     Text(
                       'Cài đặt',
                       style: AppTextStyles.h4.copyWith(
-                        color: AppColors.darkTextPrimary,
+                        color: context.palette.textPrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -272,6 +274,13 @@ class ProfileScreen extends ConsumerWidget {
                       label: 'Thông tin cá nhân',
                       iconColor: AppColors.primary,
                       onTap: () {},
+                    ),
+                    _SettingsItem(
+                      icon: Icons.brightness_6_outlined,
+                      label: 'Giao diện',
+                      value: _themeLabel(themeMode),
+                      iconColor: AppColors.primary,
+                      onTap: () => _showThemePicker(context, ref, themeMode),
                     ),
                     _SettingsItem(
                       icon: Icons.notifications_outlined,
@@ -402,9 +411,99 @@ class ProfileScreen extends ConsumerWidget {
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
       childAspectRatio: 0.9,
-      children: achievements
-          .map((a) => _AchievementBadge(achievement: a))
-          .toList(),
+      children:
+          achievements.map((a) => _AchievementBadge(achievement: a)).toList(),
+    );
+  }
+
+  String _themeLabel(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return 'Sáng';
+      case ThemeMode.system:
+        return 'Hệ thống';
+      case ThemeMode.dark:
+        return 'Tối';
+    }
+  }
+
+  void _showThemePicker(
+    BuildContext context,
+    WidgetRef ref,
+    ThemeMode current,
+  ) {
+    final options = <({ThemeMode mode, String label, IconData icon})>[
+      (mode: ThemeMode.light, label: 'Sáng', icon: Icons.light_mode_rounded),
+      (mode: ThemeMode.dark, label: 'Tối', icon: Icons.dark_mode_rounded),
+      (
+        mode: ThemeMode.system,
+        label: 'Hệ thống',
+        icon: Icons.brightness_auto_rounded
+      ),
+    ];
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: context.palette.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+                child: Row(
+                  children: [
+                    Text(
+                      'Giao diện',
+                      style: AppTextStyles.h4.copyWith(
+                        color: context.palette.textPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              for (final option in options)
+                ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                  leading: Icon(
+                    option.icon,
+                    color: option.mode == current
+                        ? AppColors.primary
+                        : context.palette.textSecondary,
+                  ),
+                  title: Text(
+                    option.label,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: option.mode == current
+                          ? AppColors.primary
+                          : context.palette.textPrimary,
+                      fontWeight: option.mode == current
+                          ? FontWeight.w600
+                          : FontWeight.w400,
+                    ),
+                  ),
+                  trailing: option.mode == current
+                      ? const Icon(
+                          Icons.check_circle_rounded,
+                          color: AppColors.primary,
+                        )
+                      : null,
+                  onTap: () {
+                    ref.read(themeModeProvider.notifier).setMode(option.mode);
+                    Navigator.pop(sheetContext);
+                  },
+                ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -412,24 +511,24 @@ class ProfileScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: AppColors.darkCard,
+        backgroundColor: context.palette.card,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
           'Đăng xuất',
-          style: AppTextStyles.h4.copyWith(color: AppColors.darkTextPrimary),
+          style: AppTextStyles.h4.copyWith(color: context.palette.textPrimary),
         ),
         content: Text(
           'Bạn có chắc muốn đăng xuất khỏi tài khoản không?',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.darkTextSecondary,
+            color: context.palette.textSecondary,
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
+            child: Text(
               'Hủy',
-              style: TextStyle(color: AppColors.darkTextHint),
+              style: TextStyle(color: context.palette.textHint),
             ),
           ),
           ElevatedButton(
@@ -488,9 +587,9 @@ class _StatCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
-          color: AppColors.darkCard,
+          color: context.palette.card,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.darkDivider),
+          border: Border.all(color: context.palette.divider),
         ),
         child: Column(
           children: [
@@ -507,7 +606,7 @@ class _StatCard extends StatelessWidget {
             Text(
               value,
               style: AppTextStyles.h3.copyWith(
-                color: AppColors.darkTextPrimary,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -515,7 +614,7 @@ class _StatCard extends StatelessWidget {
             Text(
               label,
               style: AppTextStyles.labelSmall.copyWith(
-                color: AppColors.darkTextHint,
+                color: context.palette.textHint,
               ),
             ),
           ],
@@ -545,9 +644,9 @@ class _SettingsItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Material(
         color: Colors.transparent,
@@ -573,7 +672,7 @@ class _SettingsItem extends StatelessWidget {
                   child: Text(
                     label,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                     ),
                   ),
                 ),
@@ -581,14 +680,14 @@ class _SettingsItem extends StatelessWidget {
                   Text(
                     value!,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.darkTextSecondary,
+                      color: context.palette.textSecondary,
                     ),
                   ),
                   const SizedBox(width: 6),
                 ],
-                const Icon(
+                Icon(
                   Icons.chevron_right_rounded,
-                  color: AppColors.darkTextHint,
+                  color: context.palette.textHint,
                   size: 20,
                 ),
               ],
@@ -626,12 +725,12 @@ class _AchievementBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: achievement.unlocked
             ? achievement.color.withOpacity(0.12)
-            : AppColors.darkCard,
+            : context.palette.card,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: achievement.unlocked
               ? achievement.color.withOpacity(0.3)
-              : AppColors.darkDivider,
+              : context.palette.divider,
         ),
       ),
       child: Column(
@@ -642,7 +741,7 @@ class _AchievementBadge extends StatelessWidget {
             size: 28,
             color: achievement.unlocked
                 ? achievement.color
-                : AppColors.darkTextHint,
+                : context.palette.textHint,
           ),
           const SizedBox(height: 6),
           Text(
@@ -653,11 +752,10 @@ class _AchievementBadge extends StatelessWidget {
             style: AppTextStyles.labelSmall.copyWith(
               fontSize: 10,
               color: achievement.unlocked
-                  ? AppColors.darkTextPrimary
-                  : AppColors.darkTextHint,
-              fontWeight: achievement.unlocked
-                  ? FontWeight.w600
-                  : FontWeight.normal,
+                  ? context.palette.textPrimary
+                  : context.palette.textHint,
+              fontWeight:
+                  achievement.unlocked ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
         ],

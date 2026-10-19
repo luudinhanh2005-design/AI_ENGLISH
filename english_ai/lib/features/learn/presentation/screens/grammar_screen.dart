@@ -70,13 +70,13 @@ class _GrammarScreenState extends State<GrammarScreen> {
     }).toList();
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Thoát',
           onPressed: () {
             if (context.canPop()) {
@@ -89,7 +89,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
         title: Text(
           'Ngữ Pháp Toàn Diện (Grammar)',
           style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimaryDark,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -168,13 +168,13 @@ class _GrammarScreenState extends State<GrammarScreen> {
                   // ── Search Bar ──
                   TextField(
                     controller: _searchController,
-                    style: const TextStyle(color: AppColors.darkTextPrimary),
+                    style: TextStyle(color: context.palette.textPrimary),
                     onChanged: (val) =>
                         setState(() => _searchQuery = val.trim()),
                     decoration: InputDecoration(
                       hintText: 'Tìm kiếm thì, cấu trúc, mệnh đề...',
-                      hintStyle: const TextStyle(
-                          color: AppColors.darkTextHint, fontSize: 13),
+                      hintStyle: TextStyle(
+                          color: context.palette.textHint, fontSize: 13),
                       prefixIcon: const Icon(Icons.search_rounded,
                           color: AppColors.primary),
                       suffixIcon: _searchQuery.isNotEmpty
@@ -187,17 +187,15 @@ class _GrammarScreenState extends State<GrammarScreen> {
                             )
                           : null,
                       filled: true,
-                      fillColor: AppColors.darkCard,
+                      fillColor: context.palette.card,
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide:
-                            const BorderSide(color: AppColors.darkDivider),
+                        borderSide: BorderSide(color: context.palette.divider),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide:
-                            const BorderSide(color: AppColors.darkDivider),
+                        borderSide: BorderSide(color: context.palette.divider),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
@@ -236,13 +234,13 @@ class _GrammarScreenState extends State<GrammarScreen> {
                       alignment: Alignment.center,
                       child: Column(
                         children: [
-                          const Icon(Icons.search_off_rounded,
-                              size: 48, color: AppColors.darkTextHint),
+                          Icon(Icons.search_off_rounded,
+                              size: 48, color: context.palette.textHint),
                           const SizedBox(height: 12),
                           Text(
                             'Không tìm thấy bài học ngữ pháp phù hợp',
                             style: AppTextStyles.bodyMedium
-                                .copyWith(color: AppColors.darkTextSecondary),
+                                .copyWith(color: context.palette.textSecondary),
                           ),
                         ],
                       ),
@@ -267,15 +265,15 @@ class _GrammarScreenState extends State<GrammarScreen> {
       label: Text(label),
       selected: isSelected,
       onSelected: (_) => setState(() => _selectedLevel = level),
-      backgroundColor: AppColors.darkCard,
+      backgroundColor: context.palette.card,
       selectedColor: AppColors.primary.withOpacity(0.25),
       labelStyle: TextStyle(
-        color: isSelected ? AppColors.primary : AppColors.darkTextSecondary,
+        color: isSelected ? AppColors.primary : context.palette.textSecondary,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         fontSize: 12,
       ),
       side: BorderSide(
-        color: isSelected ? AppColors.primary : AppColors.darkDivider,
+        color: isSelected ? AppColors.primary : context.palette.divider,
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     );
@@ -290,9 +288,9 @@ class _GrammarScreenState extends State<GrammarScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Material(
         color: Colors.transparent,
@@ -324,7 +322,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
                             child: Text(
                               lesson.title,
                               style: AppTextStyles.labelLarge.copyWith(
-                                color: AppColors.darkTextPrimary,
+                                color: context.palette.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -359,7 +357,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
                       Text(
                         lesson.description,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.darkTextSecondary,
+                          color: context.palette.textSecondary,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -368,10 +366,10 @@ class _GrammarScreenState extends State<GrammarScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 14,
-                  color: AppColors.darkTextHint,
+                  color: context.palette.textHint,
                 ),
               ],
             ),
@@ -449,13 +447,13 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
     if (widget.lesson.level == 'B2') levelColor = const Color(0xFFFF4757);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           onPressed: widget.onBack,
         ),
         title: Column(
@@ -463,7 +461,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             Text(
               widget.lesson.title,
               style: AppTextStyles.titleSmall.copyWith(
-                color: AppColors.textPrimaryDark,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -501,7 +499,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
           controller: _tabController,
           indicatorColor: AppColors.primary,
           labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.darkTextSecondary,
+          unselectedLabelColor: context.palette.textSecondary,
           labelStyle:
               const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           tabs: [
@@ -550,9 +548,9 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.darkCard,
+            color: context.palette.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.darkDivider),
+            border: Border.all(color: context.palette.divider),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -565,7 +563,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                   Text(
                     'Định nghĩa & Ý nghĩa',
                     style: AppTextStyles.labelLarge.copyWith(
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -575,7 +573,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
               Text(
                 widget.lesson.description,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.darkTextSecondary,
+                  color: context.palette.textSecondary,
                   height: 1.4,
                 ),
               ),
@@ -589,7 +587,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         Text(
           'Công thức cốt lõi 📐',
           style: AppTextStyles.labelLarge.copyWith(
-            color: AppColors.darkTextPrimary,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -622,7 +620,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         Text(
           'Dấu hiệu nhận biết & Từ then chốt ⚡',
           style: AppTextStyles.labelLarge.copyWith(
-            color: AppColors.darkTextPrimary,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -634,7 +632,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark,
+                color: context.palette.surface,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: AppColors.primary.withOpacity(0.3)),
               ),
@@ -656,7 +654,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         Text(
           'Cách sử dụng chi tiết 📋',
           style: AppTextStyles.labelLarge.copyWith(
-            color: AppColors.darkTextPrimary,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -668,9 +666,9 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.darkCard,
+              color: context.palette.card,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.darkDivider),
+              border: Border.all(color: context.palette.divider),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -697,7 +695,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                   child: Text(
                     rule,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                       height: 1.4,
                     ),
                   ),
@@ -721,7 +719,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: color.withOpacity(0.3)),
       ),
@@ -783,7 +781,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         Text(
           'Ví dụ thực tế & Phát âm 🎙️',
           style: AppTextStyles.labelLarge.copyWith(
-            color: AppColors.darkTextPrimary,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -793,9 +791,9 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppColors.darkCard,
+              color: context.palette.card,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: AppColors.darkDivider),
+              border: Border.all(color: context.palette.divider),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -831,8 +829,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                         const SizedBox(height: 4),
                         Text(
                           '💡 ${ex.note}',
-                          style: const TextStyle(
-                            color: AppColors.darkTextSecondary,
+                          style: TextStyle(
+                            color: context.palette.textSecondary,
                             fontSize: 11,
                             fontStyle: FontStyle.italic,
                           ),
@@ -849,7 +847,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
         Text(
           'Lỗi sai người học hay mắc phải ⚠️',
           style: AppTextStyles.labelLarge.copyWith(
-            color: AppColors.darkTextPrimary,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -873,8 +871,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                 Expanded(
                   child: Text(
                     mistake,
-                    style: const TextStyle(
-                      color: AppColors.darkTextPrimary,
+                    style: TextStyle(
+                      color: context.palette.textPrimary,
                       fontSize: 12,
                       height: 1.4,
                     ),
@@ -955,9 +953,9 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
             margin: const EdgeInsets.only(bottom: 20),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.darkCard,
+              color: context.palette.card,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.darkDivider),
+              border: Border.all(color: context.palette.divider),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1003,9 +1001,9 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                   final isThisOptionSelected = userSelected == optIndex;
                   final isThisCorrect = optIndex == q.correctIndex;
 
-                  Color optBg = AppColors.surfaceDark;
-                  Color optBorder = AppColors.darkDivider;
-                  Color textColor = AppColors.darkTextPrimary;
+                  Color optBg = context.palette.surface;
+                  Color optBorder = context.palette.divider;
+                  Color textColor = context.palette.textPrimary;
 
                   if (isAnswered) {
                     if (isThisCorrect) {
@@ -1078,7 +1076,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceDark,
+                      color: context.palette.surface,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -1090,8 +1088,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                         Expanded(
                           child: Text(
                             'Giải thích: ${q.explanation}',
-                            style: const TextStyle(
-                              color: AppColors.darkTextSecondary,
+                            style: TextStyle(
+                              color: context.palette.textSecondary,
                               fontSize: 11,
                               height: 1.3,
                             ),

@@ -378,25 +378,27 @@ class SpeechAIService:
         """
         Transcribe audio to text.
         Priority:
-        1. Free Google Speech Recognition via speech_recognition (Zero API key, instant)
-        2. Local faster-whisper (if model loaded)
+        1. Local faster-whisper (offline, installed)
+        2. Free Google Speech Recognition via speech_recognition
         3. OpenAI Whisper (if API key set)
         4. Google Cloud Speech-to-Text (if API key set)
         5. Clean fallback (empty string)
         """
-        # 1. Try local/free Google Web Speech via speech_recognition
+        # 1. Try Local faster-whisper first (offline on machine)
+        try:
+            result = await cls._local_whisper_transcribe(audio_data, language, file_format)
+            if result.get("transcript"):
+                return result
+        except Exception as e:
+            logger.debug(f"Local faster-whisper skipped/failed: {e}")
+
+        # 2. Try local/free Google Web Speech via speech_recognition
         try:
             result = await cls._local_speech_recognition(audio_data, language, file_format)
             if result.get("transcript"):
                 return result
         except Exception as e:
             logger.warning(f"Local speech recognition failed, trying fallbacks: {e}")
-
-        # 2. Try Local faster-whisper (Offline on machine)
-        try:
-            return await cls._local_whisper_transcribe(audio_data, language, file_format)
-        except Exception as e:
-            logger.debug(f"Local faster-whisper skipped/failed: {e}")
 
         # 3. Try OpenAI Whisper
         if settings.openai_api_key:

@@ -70,9 +70,8 @@ class _AppButtonState extends State<AppButton>
         child: SizedBox(
           width: widget.width ?? double.infinity,
           height: AppDimensions.buttonHeight,
-          child: widget.isOutlined
-              ? _buildOutlinedButton()
-              : _buildFilledButton(),
+          child:
+              widget.isOutlined ? _buildOutlinedButton() : _buildFilledButton(),
         ),
       ),
     );
@@ -85,7 +84,7 @@ class _AppButtonState extends State<AppButton>
             ? AppColors.primaryGradient
             : null,
         color: widget.onPressed == null || widget.isLoading
-            ? AppColors.darkCard
+            ? context.palette.card
             : widget.backgroundColor,
         borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
         boxShadow: widget.onPressed != null && !widget.isLoading
@@ -115,7 +114,7 @@ class _AppButtonState extends State<AppButton>
         side: BorderSide(
           color: widget.onPressed != null
               ? AppColors.primary
-              : AppColors.darkDivider,
+              : context.palette.divider,
           width: 1.5,
         ),
       ),

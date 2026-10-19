@@ -6,6 +6,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ..config import settings
 from ..database import get_db
 from ..models.user import User
 from ..utils.security import decode_token, hash_password
@@ -13,39 +14,50 @@ from ..utils.security import decode_token, hash_password
 # Bearer token scheme
 security = HTTPBearer()
 
-# In-memory user store for demo/offline fallback
+# In-memory user store for demo/offline fallback.
+# Only populated when ENABLE_DEMO_ACCOUNTS=true (must be disabled in production).
 _DEFAULT_DEMO_ID = UUID("11111111-1111-1111-1111-111111111111")
 _DEMO_ADMIN_ID = UUID("22222222-2222-2222-2222-222222222222")
-MEMORY_USERS: dict[UUID, User] = {
-    _DEFAULT_DEMO_ID: User(
-        id=_DEFAULT_DEMO_ID,
-        email="test@gmail.com",
-        password_hash=hash_password("Password123"),
-        name="Admin Learner",
-        current_level="B1",
-        target_level="B2",
-        learning_goal="General Communication",
-        daily_learning_minutes=20,
-        streak=5,
-        total_xp=450,
-        has_completed_onboarding=True,
-        is_active=True,
-    ),
-    _DEMO_ADMIN_ID: User(
-        id=_DEMO_ADMIN_ID,
-        email="admin@gmail.com",
-        password_hash=hash_password("Password123"),
-        name="Admin User",
-        current_level="B2",
-        target_level="C1",
-        learning_goal="IELTS Academic",
-        daily_learning_minutes=30,
-        streak=10,
-        total_xp=1200,
-        has_completed_onboarding=True,
-        is_active=True,
-    ),
-}
+
+
+def _build_memory_users() -> dict[UUID, User]:
+    if not settings.enable_demo_accounts:
+        return {}
+
+    demo_password = settings.demo_user_password
+    return {
+        _DEFAULT_DEMO_ID: User(
+            id=_DEFAULT_DEMO_ID,
+            email="test@gmail.com",
+            password_hash=hash_password(demo_password),
+            name="Admin Learner",
+            current_level="B1",
+            target_level="B2",
+            learning_goal="General Communication",
+            daily_learning_minutes=20,
+            streak=5,
+            total_xp=450,
+            has_completed_onboarding=True,
+            is_active=True,
+        ),
+        _DEMO_ADMIN_ID: User(
+            id=_DEMO_ADMIN_ID,
+            email="admin@gmail.com",
+            password_hash=hash_password(demo_password),
+            name="Admin User",
+            current_level="B2",
+            target_level="C1",
+            learning_goal="IELTS Academic",
+            daily_learning_minutes=30,
+            streak=10,
+            total_xp=1200,
+            has_completed_onboarding=True,
+            is_active=True,
+        ),
+    }
+
+
+MEMORY_USERS: dict[UUID, User] = _build_memory_users()
 
 
 async def get_current_user(
@@ -79,8 +91,8 @@ async def get_current_user(
 
     # Fetch user from database, with fallback to in-memory store
     user = None
-    from ..database import IS_DB_CONNECTED
-    if IS_DB_CONNECTED:
+    from ..database import is_db_connected
+    if is_db_connected():
         try:
             result = await db.execute(
                 select(User).where(User.id == UUID(user_id))

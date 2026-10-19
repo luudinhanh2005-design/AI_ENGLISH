@@ -29,6 +29,10 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   shared_preferences: ^2.2.2
 
+  # Authentication
+  google_sign_in: ^6.2.1
+  google_sign_in_web: ^0.12.4
+
   # UI
   google_fonts: ^6.1.0
   flutter_svg: ^2.0.10+1
@@ -46,6 +50,7 @@ dependencies:
   equatable: ^2.0.5
   logger: ^2.0.2+1
   http: ^1.6.0
+  http_parser: ^4.1.2
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ...config import settings
 from ...database import get_db
 from ...models.ai import AITutorMessage, AITutorSession, AIWritingSubmission
 from ...models.user import User, UserProfile
@@ -49,10 +50,14 @@ class TranslationResponse(BaseModel):
 @router.get("/status")
 async def get_ai_status():
     from ...services.local_llm_service import local_llm_service
+
+    local_status = local_llm_service.status()
     return {
-        "is_loaded": local_llm_service.is_loaded,
-        "device": str(local_llm_service.device),
-        "model_dir": local_llm_service.model_dir,
+        **local_status,
+        "provider": settings.ai_provider,
+        "cloud_fallback": settings.ai_cloud_fallback,
+        "gemini_configured": bool(settings.google_ai_api_key),
+        "openai_configured": bool(settings.openai_api_key),
     }
 
 @router.post("/translate", response_model=TranslationResponse)
@@ -129,7 +134,7 @@ async def chat_with_ai_tutor(
     Send a message to the AI Tutor (Sarah, Harrison, or Emma).
     Receives conversational reply, real-time error correction, and follow-up suggestion chips.
     """
-    session_id = request.session_id or UUID("22222222-2222-2222-2222-222222222222")
+    session_id = request.session_id or uuid.uuid4()
     persona = request.persona
     topic = request.topic or "General Conversation"
     history_payload = []
@@ -159,7 +164,8 @@ async def chat_with_ai_tutor(
             await db.flush()
             session_id = session.id
     except Exception:
-        pass
+        if db is not None:
+            await db.rollback()
 
     if session_id not in _MEMORY_SESSIONS:
         _MEMORY_SESSIONS[session_id] = AITutorSession(
@@ -201,6 +207,8 @@ async def chat_with_ai_tutor(
             for m in all_msgs[:-1]
         ]
     except Exception:
+        if db is not None:
+            await db.rollback()
         # Fallback to in-memory history
         all_mem_msgs = _MEMORY_MESSAGES.get(session_id, [])
         history_payload = [
@@ -219,9 +227,15 @@ async def chat_with_ai_tutor(
         history=history_payload,
     )
 
-    corrections_raw = ai_result.get("corrections", [])
-    suggested_replies = ai_result.get("suggested_replies", [])
-    reply_text = ai_result.get("reply", "I see! Could you tell me more about that?")
+    corrections_raw = AIService.normalize_corrections(
+        ai_result.get("corrections", []), request.message
+    )
+    suggested_replies = AIService.normalize_suggestions(
+        ai_result.get("suggested_replies", [])
+    )
+    reply_text = AIService._clean_text(
+        ai_result.get("reply"), 4000
+    ) or "I see! Could you tell me more about that?"
 
     # 5. Save assistant reply safely
     assistant_msg = AITutorMessage(
@@ -240,6 +254,8 @@ async def chat_with_ai_tutor(
         current_user.total_xp = (current_user.total_xp or 0) + 5
         await db.flush()
     except Exception:
+        if db is not None:
+            await db.rollback()
         current_user.total_xp = (current_user.total_xp or 0) + 5
 
     return AIChatResponse(

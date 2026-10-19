@@ -1,3 +1,4 @@
+import 'dart:io' show File;
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:record/record.dart';
@@ -19,28 +20,38 @@ class AudioRecordingService {
       throw Exception('Microphone permission not granted');
     }
 
-    await _recorder.start(
-      const RecordConfig(
-        encoder: AudioEncoder.wav,
-        sampleRate: 16000,
-        numChannels: 1,
-        autoGain: true,
-        echoCancel: true,
-        noiseSuppress: true,
-      ),
-      path: '',
+    // Browsers on Web (Chrome/Edge) support opus for MediaRecorder
+    final config = RecordConfig(
+      encoder: kIsWeb ? AudioEncoder.opus : AudioEncoder.wav,
+      sampleRate: 16000,
+      numChannels: 1,
+      autoGain: true,
+      echoCancel: true,
+      noiseSuppress: true,
     );
 
+    await _recorder.start(
+      config,
+      path: '',
+    );
   }
 
   Future<Uint8List?> stopRecording() async {
     final path = await _recorder.stop();
     if (path == null || path.isEmpty) return null;
 
-    if (kIsWeb || path.startsWith('blob:')) {
+    if (kIsWeb || path.startsWith('blob:') || path.startsWith('http')) {
       final bytes = await http.readBytes(Uri.parse(path));
       return bytes;
     } else {
+      try {
+        final file = File(path);
+        if (await file.exists()) {
+          return await file.readAsBytes();
+        }
+      } catch (e) {
+        debugPrint('Error reading recorded file: $e');
+      }
       return null;
     }
   }

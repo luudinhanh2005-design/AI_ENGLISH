@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...database import get_db, IS_DB_CONNECTED
+from ...database import get_db, is_db_connected
 from ...models.learning import PlacementQuestion, UserTestSubmission
 from ...models.user import User, UserProfile
 from ...schemas.learning import (
@@ -52,7 +52,7 @@ async def get_placement_questions(
     current_user: User = Depends(get_current_user),
 ):
     """Retrieve active placement test questions."""
-    if IS_DB_CONNECTED:
+    if is_db_connected():
         try:
             result = await db.execute(
                 select(PlacementQuestion)

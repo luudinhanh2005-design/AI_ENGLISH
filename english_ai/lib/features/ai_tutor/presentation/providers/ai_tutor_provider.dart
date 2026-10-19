@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/constants/app_config.dart';
 import '../../../../core/network/api_client.dart';
 import '../../data/models/ai_tutor_models.dart';
 
@@ -146,7 +147,8 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
       final rawSuggestions = data['suggested_replies'] as List<dynamic>? ?? [];
 
       final corrections = rawCorrections
-          .map((c) => AICorrectionModel.fromJson(c as Map<String, dynamic>))
+          .whereType<Map<String, dynamic>>()
+          .map(AICorrectionModel.fromJson)
           .toList();
       final suggestions = rawSuggestions.map((s) => s.toString()).toList();
 
@@ -226,8 +228,7 @@ class AiTutorNotifier extends StateNotifier<AiTutorState> {
       if (response.data != null && response.data['audio_url'] != null) {
         final audioPath = (response.data['audio_url'] as String).trim();
         if (audioPath.isEmpty) return null;
-        if (audioPath.startsWith('http')) return audioPath;
-        return 'http://localhost:8000$audioPath';
+        return AppConfig.resolveMediaUrl(audioPath);
       }
     } catch (e) {
       // Fallback

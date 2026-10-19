@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def setup_cors(app, origins: list = None):
+def setup_cors(app, origins: list[str] | None = None):
     """Configure CORS middleware."""
     app.add_middleware(
         CORSMiddleware,

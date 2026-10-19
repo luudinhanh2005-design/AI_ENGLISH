@@ -43,6 +43,18 @@ class AuthRemoteDataSource {
     );
   }
 
+  Future<AuthResponseModel> loginWithGoogle({
+    required String idToken,
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.googleAuth,
+      data: {'id_token': idToken},
+    );
+    return AuthResponseModel.fromJson(
+      response.data as Map<String, dynamic>,
+    );
+  }
+
   Future<void> logout() async {
     await _dio.post(ApiEndpoints.logout);
   }

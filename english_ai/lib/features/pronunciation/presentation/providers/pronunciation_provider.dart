@@ -1,0 +1,339 @@
+import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
+
+import '../../../../core/constants/app_config.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/services/audio_recording_service.dart';
+import '../../data/models/pronunciation_models.dart';
+
+// -----------------------------------------------------------------------------
+// State
+// -----------------------------------------------------------------------------
+enum PronunciationPhase { ready, recording, analyzing, result }
+
+class PronunciationState {
+  final PronunciationPhase phase;
+  final String selectedLevel;
+  final List<PracticeSentenceModel> sentences;
+  final PracticeSentenceModel? currentSentence;
+  final PronunciationResultModel? result;
+  final PronunciationStatsModel stats;
+  final List<PronunciationHistoryModel> history;
+  final bool isLoadingSentences;
+  final bool isLoadingHistory;
+  final bool isPlayingTTS;
+  final String? errorMessage;
+  final int recordDuration; // seconds elapsed while recording
+
+  const PronunciationState({
+    this.phase = PronunciationPhase.ready,
+    this.selectedLevel = 'B1',
+    this.sentences = const [],
+    this.currentSentence,
+    this.result,
+    this.stats = const PronunciationStatsModel(),
+    this.history = const [],
+    this.isLoadingSentences = false,
+    this.isLoadingHistory = false,
+    this.isPlayingTTS = false,
+    this.errorMessage,
+    this.recordDuration = 0,
+  });
+
+  PronunciationState copyWith({
+    PronunciationPhase? phase,
+    String? selectedLevel,
+    List<PracticeSentenceModel>? sentences,
+    PracticeSentenceModel? currentSentence,
+    PronunciationResultModel? result,
+    PronunciationStatsModel? stats,
+    List<PronunciationHistoryModel>? history,
+    bool? isLoadingSentences,
+    bool? isLoadingHistory,
+    bool? isPlayingTTS,
+    String? errorMessage,
+    int? recordDuration,
+    bool clearError = false,
+    bool clearResult = false,
+    bool clearCurrentSentence = false,
+  }) {
+    return PronunciationState(
+      phase: phase ?? this.phase,
+      selectedLevel: selectedLevel ?? this.selectedLevel,
+      sentences: sentences ?? this.sentences,
+      currentSentence: clearCurrentSentence ? null : (currentSentence ?? this.currentSentence),
+      result: clearResult ? null : (result ?? this.result),
+      stats: stats ?? this.stats,
+      history: history ?? this.history,
+      isLoadingSentences: isLoadingSentences ?? this.isLoadingSentences,
+      isLoadingHistory: isLoadingHistory ?? this.isLoadingHistory,
+      isPlayingTTS: isPlayingTTS ?? this.isPlayingTTS,
+      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+      recordDuration: recordDuration ?? this.recordDuration,
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Provider
+// -----------------------------------------------------------------------------
+final pronunciationProvider =
+    StateNotifierProvider<PronunciationNotifier, PronunciationState>((ref) {
+  return PronunciationNotifier(ref.watch(dioProvider));
+});
+
+// -----------------------------------------------------------------------------
+// Notifier
+// -----------------------------------------------------------------------------
+class PronunciationNotifier extends StateNotifier<PronunciationState> {
+  final dynamic _dio;
+  final AudioRecordingService _recorder = AudioRecordingService();
+
+  PronunciationNotifier(this._dio) : super(const PronunciationState()) {
+    loadSentences('B1');
+    loadStats();
+    loadHistory();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load practice sentences by level
+  // ---------------------------------------------------------------------------
+  Future<void> loadSentences(String level) async {
+    state = state.copyWith(
+      selectedLevel: level,
+      isLoadingSentences: true,
+      clearError: true,
+    );
+    try {
+      final response = await _dio.get(
+        '/speech/practice',
+        queryParameters: {'level': level},
+      );
+      final data = response.data as Map<String, dynamic>;
+      final rawList = data['sentences'] as List<dynamic>? ?? [];
+      final sentences = rawList
+          .map((s) => PracticeSentenceModel.fromJson(s as Map<String, dynamic>))
+          .toList();
+      state = state.copyWith(
+        sentences: sentences,
+        isLoadingSentences: false,
+      );
+    } catch (_) {
+      // Fallback sentences khi không có internet / backend đang tắt
+      state = state.copyWith(
+        sentences: _fallbackSentences(level),
+        isLoadingSentences: false,
+      );
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Pick a sentence to practice
+  // ---------------------------------------------------------------------------
+  void selectSentence(PracticeSentenceModel sentence) {
+    state = state.copyWith(
+      currentSentence: sentence,
+      phase: PronunciationPhase.ready,
+      clearResult: true,
+      clearError: true,
+      recordDuration: 0,
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Play TTS (reference pronunciation)
+  // ---------------------------------------------------------------------------
+  Future<String?> getReferenceTTSUrl(String text) async {
+    state = state.copyWith(isPlayingTTS: true);
+    try {
+      final response = await _dio.post(
+        '/speech/tts',
+        data: {'text': text, 'voice': 'sarah'},
+      );
+      final data = response.data as Map<String, dynamic>;
+      final path = data['audio_url'] as String? ?? '';
+      state = state.copyWith(isPlayingTTS: false);
+      if (path.isEmpty) return null;
+      return AppConfig.resolveMediaUrl(path);
+    } catch (_) {
+      state = state.copyWith(isPlayingTTS: false);
+      return null;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Recording lifecycle
+  // ---------------------------------------------------------------------------
+  Future<void> startRecording() async {
+    try {
+      await _recorder.startRecording();
+      state = state.copyWith(
+        phase: PronunciationPhase.recording,
+        recordDuration: 0,
+        clearError: true,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        errorMessage: 'Không thể truy cập micro. Hãy cho phép quyền microphone.',
+      );
+    }
+  }
+
+  void tickRecordDuration() {
+    if (state.phase == PronunciationPhase.recording) {
+      state = state.copyWith(recordDuration: state.recordDuration + 1);
+    }
+  }
+
+  Future<void> cancelRecording() async {
+    await _recorder.cancelRecording();
+    state = state.copyWith(
+      phase: PronunciationPhase.ready,
+      recordDuration: 0,
+      clearError: true,
+    );
+  }
+
+  Future<void> stopAndAssess() async {
+    final sentence = state.currentSentence;
+    if (sentence == null) return;
+
+    state = state.copyWith(phase: PronunciationPhase.analyzing);
+
+    try {
+      final audioBytes = await _recorder.stopRecording();
+      if (audioBytes == null || audioBytes.isEmpty) {
+        state = state.copyWith(
+          phase: PronunciationPhase.ready,
+          errorMessage: 'Không thu được âm thanh. Hãy thử lại!',
+        );
+        return;
+      }
+
+      // ĐOẠN CODE ĐƯỢC SỬA LỖI Ở ĐÂY:
+      final formData = FormData.fromMap({
+        'audio': MultipartFile.fromBytes(
+          audioBytes, 
+          filename: kIsWeb ? 'pronunciation.webm' : 'pronunciation.wav',
+          // Ép trình duyệt Web gửi file dưới dạng audio thay vì video
+          contentType: MediaType('audio', kIsWeb ? 'webm' : 'wav'),
+        ),
+        'reference_text': sentence.text,
+        'session_type': 'read_aloud',
+      });
+
+      final response = await _dio.post('/speech/assess', data: formData);
+      final result = PronunciationResultModel.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+
+      state = state.copyWith(
+        phase: PronunciationPhase.result,
+        result: result,
+        clearError: true,
+      );
+
+      // Refresh history sau khi hoàn thành
+      loadHistory();
+    } catch (e) {
+      state = state.copyWith(
+        phase: PronunciationPhase.ready,
+        errorMessage: 'Lỗi phân tích phát âm. Vui lòng thử lại.',
+      );
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load history & stats
+  // ---------------------------------------------------------------------------
+  Future<void> loadHistory() async {
+    state = state.copyWith(isLoadingHistory: true);
+    try {
+      final response = await _dio.get('/speech/history');
+      final data = response.data as Map<String, dynamic>;
+      final rawList = data['sessions'] as List<dynamic>? ?? [];
+      final history = rawList
+          .map((h) => PronunciationHistoryModel.fromJson(h as Map<String, dynamic>))
+          .toList();
+      state = state.copyWith(history: history, isLoadingHistory: false);
+    } catch (_) {
+      state = state.copyWith(isLoadingHistory: false);
+    }
+  }
+
+  Future<void> loadStats() async {
+    try {
+      final response = await _dio.get('/speech/stats');
+      final stats = PronunciationStatsModel.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      state = state.copyWith(stats: stats);
+    } catch (_) {
+      // Keep defaults
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Reset về ready để luyện lại câu
+  // ---------------------------------------------------------------------------
+  void retryCurrentSentence() {
+    state = state.copyWith(
+      phase: PronunciationPhase.ready,
+      clearResult: true,
+      clearError: true,
+      recordDuration: 0,
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Chọn câu ngẫu nhiên kế tiếp cùng level
+  // ---------------------------------------------------------------------------
+  void nextRandomSentence() {
+    final list = state.sentences;
+    if (list.isEmpty) return;
+    final current = state.currentSentence;
+    final candidates = list.where((s) => s.text != current?.text).toList();
+    if (candidates.isEmpty) return;
+    candidates.shuffle();
+    selectSentence(candidates.first);
+  }
+
+  @override
+  void dispose() {
+    _recorder.dispose();
+    super.dispose();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Fallback sentences khi không có backend
+  // ---------------------------------------------------------------------------
+  List<PracticeSentenceModel> _fallbackSentences(String level) {
+    final map = {
+      'A1': [
+        PracticeSentenceModel(text: 'Hello, my name is Sarah.', level: 'A1', topic: 'Greeting', ipaTranscription: '/həˈloʊ maɪ neɪm ɪz ˈsærə/'),
+        PracticeSentenceModel(text: 'I am happy to meet you.', level: 'A1', topic: 'Greeting', ipaTranscription: '/aɪ æm ˈhæpi tuː miːt juː/'),
+        PracticeSentenceModel(text: 'The weather is nice today.', level: 'A1', topic: 'Weather', ipaTranscription: '/ðə ˈwɛðər ɪz naɪs təˈdeɪ/'),
+      ],
+      'A2': [
+        PracticeSentenceModel(text: 'I usually wake up at seven in the morning.', level: 'A2', topic: 'Daily Routine', ipaTranscription: '/aɪ ˈjuːʒuəli weɪk ʌp æt ˈsɛvən/'),
+        PracticeSentenceModel(text: 'Can you tell me the way to the nearest station?', level: 'A2', topic: 'Directions', ipaTranscription: '/kæn juː tɛl miː ðə weɪ/'),
+      ],
+      'B1': [
+        PracticeSentenceModel(text: 'Yesterday, I went to school with my friend.', level: 'B1', topic: 'Daily Life', ipaTranscription: '/ˈjɛstərdeɪ aɪ wɛnt tuː skuːl/'),
+        PracticeSentenceModel(text: 'She has been learning English for three years.', level: 'B1', topic: 'Education', ipaTranscription: '/ʃiː hæz bɪn ˈlɜːrnɪŋ ˈɪŋɡlɪʃ/'),
+        PracticeSentenceModel(text: 'I would rather stay home than go out tonight.', level: 'B1', topic: 'Preference', ipaTranscription: '/aɪ wʊd ˈræðər steɪ hoʊm/'),
+      ],
+      'B2': [
+        PracticeSentenceModel(text: 'Despite the challenges, she managed to finish the project on time.', level: 'B2', topic: 'Work', ipaTranscription: '/dɪˈspaɪt ðə ˈtʃælɪndʒɪz/'),
+        PracticeSentenceModel(text: 'The government should invest more in renewable energy sources.', level: 'B2', topic: 'Environment', ipaTranscription: '/ðə ˈɡʌvərnmənt ʃʊd ɪnˈvɛst/'),
+      ],
+      'C1': [
+        PracticeSentenceModel(text: 'The ramifications of climate change are far more pervasive than previously anticipated.', level: 'C1', topic: 'Environment', ipaTranscription: '/ðə ˌræmɪfɪˈkeɪʃənz əv ˈklaɪmɪt/'),
+        PracticeSentenceModel(text: 'Notwithstanding the economic downturn, the company maintained its competitive edge.', level: 'C1', topic: 'Business', ipaTranscription: '/ˌnɒtwɪθˈstændɪŋ ðə ˌiːkəˈnɒmɪk/'),
+      ],
+    };
+    return map[level] ?? map['B1']!;
+  }
+}

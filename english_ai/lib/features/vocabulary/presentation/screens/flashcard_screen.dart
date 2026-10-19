@@ -56,12 +56,13 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
 
     if (state.isLoading && state.cards.isEmpty) {
       return Scaffold(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textPrimaryDark),
+            icon: Icon(Icons.arrow_back_ios_new_rounded,
+                color: context.palette.textPrimary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -72,18 +73,20 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
             },
           ),
         ),
-        body: const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        body: const Center(
+            child: CircularProgressIndicator(color: AppColors.primary)),
       );
     }
 
     if (state.errorMessage != null && state.cards.isEmpty) {
       return Scaffold(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textPrimaryDark),
+            icon: Icon(Icons.arrow_back_ios_new_rounded,
+                color: context.palette.textPrimary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -100,11 +103,13 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+                const Icon(Icons.error_outline,
+                    color: AppColors.error, size: 48),
                 const SizedBox(height: 16),
                 Text(
                   state.errorMessage!,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimaryDark),
+                  style: AppTextStyles.bodyMedium
+                      .copyWith(color: context.palette.textPrimary),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
@@ -122,12 +127,13 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
     // ── Session Finished Screen ──
     if (state.isSessionFinished || state.cards.isEmpty) {
       return Scaffold(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textPrimaryDark),
+            icon: Icon(Icons.arrow_back_ios_new_rounded,
+                color: context.palette.textPrimary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -153,20 +159,22 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                       color: AppColors.success.withOpacity(0.15),
                       border: Border.all(color: AppColors.success, width: 2),
                     ),
-                    child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 54),
+                    child: const Icon(Icons.check_circle_rounded,
+                        color: AppColors.success, size: 54),
                   ),
                   const SizedBox(height: 20),
                   Text(
                     'Hoàn thành phiên ôn tập!',
                     style: AppTextStyles.headlineSmall.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Bạn đã hoàn thành củng cố từ vựng vào trí nhớ dài hạn với thuật toán SM-2.',
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondaryDark),
+                    style: AppTextStyles.bodyMedium
+                        .copyWith(color: context.palette.textSecondary),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -177,11 +185,14 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                         onPressed: () => notifier.loadDueWords(),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: AppColors.primary),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 14),
                           minimumSize: const Size(0, 48),
                         ),
-                        child: const Text('Ôn tập lại', style: TextStyle(color: AppColors.primary)),
+                        child: const Text('Ôn tập lại',
+                            style: TextStyle(color: AppColors.primary)),
                       ),
                       const SizedBox(width: 14),
                       ElevatedButton(
@@ -194,11 +205,16 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 14),
                           minimumSize: const Size(0, 48),
                         ),
-                        child: const Text('Thoát', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        child: const Text('Thoát',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -215,12 +231,13 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
     final word = currentCard.word;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.textSecondaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textSecondary),
           tooltip: 'Thoát',
           onPressed: () {
             if (context.canPop()) {
@@ -232,7 +249,8 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
         ),
         title: Text(
           'Thẻ Flashcard ${state.currentIndex + 1}/$totalCards',
-          style: AppTextStyles.titleMedium.copyWith(color: AppColors.textPrimaryDark),
+          style: AppTextStyles.titleMedium
+              .copyWith(color: context.palette.textPrimary),
         ),
         centerTitle: true,
       ),
@@ -246,8 +264,9 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                 borderRadius: BorderRadius.circular(8),
                 child: LinearProgressIndicator(
                   value: (state.currentIndex + 1) / totalCards,
-                  backgroundColor: AppColors.surfaceLightDark,
-                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  backgroundColor: context.palette.cardLight,
+                  valueColor:
+                      const AlwaysStoppedAnimation<Color>(AppColors.primary),
                   minHeight: 6,
                 ),
               ),
@@ -288,7 +307,8 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
               if (state.isFlipped) ...[
                 Text(
                   'Bạn nhớ từ này như thế nào?',
-                  style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondaryDark),
+                  style: AppTextStyles.labelMedium
+                      .copyWith(color: context.palette.textSecondary),
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -333,7 +353,8 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
               ] else ...[
                 Text(
                   '👆 Chạm vào thẻ để lật xem đáp án & ví dụ',
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondaryDark),
+                  style: AppTextStyles.bodySmall
+                      .copyWith(color: context.palette.textSecondary),
                 ),
               ],
               const SizedBox(height: 16),
@@ -349,9 +370,9 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
       width: double.infinity,
       padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: context.palette.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.borderDark),
+        border: Border.all(color: context.palette.divider),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
@@ -381,7 +402,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
           Text(
             word.word,
             style: AppTextStyles.displaySmall.copyWith(
-              color: AppColors.textPrimaryDark,
+              color: context.palette.textPrimary,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -403,11 +424,12 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
             child: Container(
               width: 44,
               height: 44,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.surfaceLightDark,
+                color: context.palette.cardLight,
               ),
-              child: const Icon(Icons.volume_up_rounded, color: AppColors.primary),
+              child:
+                  const Icon(Icons.volume_up_rounded, color: AppColors.primary),
             ),
           ),
         ],
@@ -420,9 +442,10 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: context.palette.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.primary.withOpacity(0.5), width: 1.5),
+        border:
+            Border.all(color: AppColors.primary.withOpacity(0.5), width: 1.5),
         boxShadow: [
           BoxShadow(
             color: AppColors.primary.withOpacity(0.15),
@@ -450,17 +473,17 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
               child: Text(
                 word.meaningEn,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondaryDark,
+                  color: context.palette.textSecondary,
                   fontStyle: FontStyle.italic,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            const Divider(color: AppColors.borderDark, height: 32),
+            Divider(color: context.palette.divider, height: 32),
             Text(
               'Ví dụ trong câu:',
               style: AppTextStyles.labelMedium.copyWith(
-                color: AppColors.textSecondaryDark,
+                color: context.palette.textSecondary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -468,7 +491,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: AppColors.surfaceLightDark.withOpacity(0.5),
+                color: context.palette.cardLight.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -477,7 +500,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                   Text(
                     word.exampleSentence,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -485,7 +508,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                   Text(
                     word.exampleTranslation,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondaryDark,
+                      color: context.palette.textSecondary,
                     ),
                   ),
                 ],
@@ -525,7 +548,8 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
             const SizedBox(height: 2),
             Text(
               subtitle,
-              style: AppTextStyles.labelSmall.copyWith(color: color.withOpacity(0.8)),
+              style: AppTextStyles.labelSmall
+                  .copyWith(color: color.withOpacity(0.8)),
             ),
           ],
         ),

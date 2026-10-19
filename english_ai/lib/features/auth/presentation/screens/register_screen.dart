@@ -80,11 +80,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             email: _emailController.text.trim(),
             password: _passwordController.text,
           );
-
-      if (mounted) {
-        context.go('/onboarding');
-      }
+      // Đăng ký thành công: router tự chuyển sang onboarding/home.
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _errorMessage = e.toString().replaceAll('Exception: ', '');
       });
@@ -99,13 +97,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF0F0F23),
-              Color(0xFF1A1A2E),
+              context.palette.background,
+              context.palette.surface,
             ],
           ),
         ),
@@ -128,9 +126,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                       // Back button
                       IconButton(
                         onPressed: () => context.go('/login'),
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_back_ios_rounded,
-                          color: AppColors.darkTextPrimary,
+                          color: context.palette.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -139,14 +137,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                       Text(
                         'Create Account',
                         style: AppTextStyles.h1.copyWith(
-                          color: AppColors.darkTextPrimary,
+                          color: context.palette.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Start your English learning journey',
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.darkTextSecondary,
+                          color: context.palette.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 36),
@@ -254,7 +252,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                             Text(
                               'Already have an account? ',
                               style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.darkTextSecondary,
+                                color: context.palette.textSecondary,
                               ),
                             ),
                             GestureDetector(

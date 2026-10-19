@@ -1,0 +1,40 @@
+# ──────────────────────────────────────────────
+# EnglishAI Backend — AI & SPEECH dependencies
+# Install on top of the core requirements:
+#
+#   pip install -r requirements-ai.txt
+#
+# These are heavy (GPU/native) and only needed for the
+# local AI Tutor LLM and the Speech (STT/TTS) features.
+#
+# For a CUDA build of torch, install it first from the
+# PyTorch index, e.g.:
+#   pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+# ──────────────────────────────────────────────
+
+-r requirements.txt
+
+# ── Local tutor LLM (Qwen2.5-3B + LoRA) ───────
+torch==2.5.1
+transformers==5.18.0
+peft==0.21.2
+bitsandbytes==0.50.2
+accelerate==1.15.0
+safetensors==0.8.0
+tokenizers==0.23.2
+
+# ── Speech-to-text / text-to-speech ───────────
+faster-whisper==1.2.1
+ctranslate2==4.8.2
+av==17.1.0
+onnxruntime==1.23.2
+edge-tts==7.3.1
+soundfile==0.13.1
+pydub==0.25.1
+imageio-ffmpeg>=0.4.9
+SpeechRecognition>=3.10
+
+# ── Numeric / utility ─────────────────────────
+numpy==2.2.6
+scipy==1.15.3
+aiohttp==3.13.3

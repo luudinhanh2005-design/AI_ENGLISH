@@ -38,6 +38,199 @@ class AIService:
         ),
     }
 
+    DEFAULT_SUGGESTIONS = [
+        "Could you give me an example?",
+        "Can we practice another sentence?",
+        "How can I sound more natural?",
+    ]
+
+    @staticmethod
+    def _clean_text(value: Any, max_length: int = 1000) -> str:
+        if value is None:
+            return ""
+        text = str(value).replace("\x00", " ").strip()
+        text = text.strip("\"'“”‘’` ")
+        text = re.sub(r"\s+", " ", text)
+        return text[:max_length].strip()
+
+    @classmethod
+    def _normalize_correction_type(cls, value: Any) -> str:
+        raw = cls._clean_text(value, 60).lower()
+        if raw in {"grammar", "vocabulary", "pronunciation"}:
+            return raw
+        if any(key in raw for key in ("vocab", "lexical", "word choice", "collocation", "từ vựng", "tu vung")):
+            return "vocabulary"
+        if any(key in raw for key in ("pronunciation", "phát âm", "phat am", "phoneme")):
+            return "pronunciation"
+        return "grammar"
+
+    @classmethod
+    def normalize_corrections(
+        cls,
+        raw_corrections: Any,
+        user_message: str,
+    ) -> list[dict[str, str]]:
+        """Chuan hoa correction tu bat ky provider nao, tranh loi 500."""
+        if isinstance(raw_corrections, dict):
+            raw_corrections = [raw_corrections]
+        if not isinstance(raw_corrections, list):
+            return []
+
+        normalized: list[dict[str, str]] = []
+        seen: set[tuple[str, str]] = set()
+        for item in raw_corrections:
+            if isinstance(item, str):
+                try:
+                    item = json.loads(item)
+                except Exception:
+                    continue
+            if not isinstance(item, dict):
+                continue
+
+            original = cls._clean_text(
+                item.get("original") or item.get("incorrect") or item.get("error"),
+                500,
+            )
+            correction = cls._clean_text(
+                item.get("correction") or item.get("corrected") or item.get("correct"),
+                1000,
+            )
+            explanation = cls._clean_text(
+                item.get("explanation_vi") or item.get("explanation") or item.get("note"),
+                600,
+            )
+            if not correction:
+                continue
+            if len(correction.strip(" .,:;!?-_")) < 2:
+                continue
+            if not re.search(r"[A-Za-z0-9\u00C0-\u1EF9]", correction):
+                continue
+            if not original:
+                original = cls._clean_text(user_message, 500)
+            if not original or original.casefold() == correction.casefold():
+                continue
+
+            key = (original.casefold(), correction.casefold())
+            if key in seen:
+                continue
+            seen.add(key)
+
+            normalized.append({
+                "original": original,
+                "correction": correction,
+                "explanation_vi": explanation or "AI Tutor đã điều chỉnh câu cho tự nhiên và đúng hơn.",
+                "type": cls._normalize_correction_type(
+                    item.get("type") or item.get("category") or item.get("kind")
+                ),
+            })
+            if len(normalized) >= 3:
+                break
+        return normalized
+
+    @classmethod
+    def normalize_suggestions(cls, raw_suggestions: Any) -> list[str]:
+        if not isinstance(raw_suggestions, list):
+            return list(cls.DEFAULT_SUGGESTIONS)
+        suggestions: list[str] = []
+        for item in raw_suggestions:
+            text = cls._clean_text(item, 160)
+            if text and text not in suggestions:
+                suggestions.append(text)
+            if len(suggestions) >= 3:
+                break
+        return suggestions or list(cls.DEFAULT_SUGGESTIONS)
+
+    @staticmethod
+    def _parse_json_object(raw: str) -> Optional[dict[str, Any]]:
+        if not raw:
+            return None
+        text = raw.strip()
+        text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"\s*```$", "", text)
+        candidates = [text]
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end > start:
+            candidates.append(text[start:end + 1])
+        for candidate in candidates:
+            try:
+                parsed = json.loads(candidate)
+                if isinstance(parsed, dict):
+                    return parsed
+            except Exception:
+                continue
+        return None
+
+    @classmethod
+    def _normalize_result(
+        cls,
+        raw_result: Any,
+        user_message: str,
+    ) -> Optional[dict[str, Any]]:
+        if not isinstance(raw_result, dict):
+            return None
+        reply = cls._clean_text(
+            raw_result.get("reply")
+            or raw_result.get("response")
+            or raw_result.get("message"),
+            4000,
+        )
+        if not reply:
+            return None
+        return {
+            "reply": reply,
+            "corrections": cls.normalize_corrections(
+                raw_result.get("corrections"), user_message
+            ),
+            "suggested_replies": cls.normalize_suggestions(
+                raw_result.get("suggested_replies") or raw_result.get("suggestions")
+            ),
+        }
+
+    @classmethod
+    def _provider_order(cls) -> list[str]:
+        provider = (settings.ai_provider or "local").strip().lower()
+        if provider == "gemini":
+            return ["gemini", "openai", "local"]
+        if provider == "openai":
+            return ["openai", "gemini", "local"]
+        if provider == "mock":
+            return ["local"]
+        return ["local", "gemini", "openai"]
+
+    @staticmethod
+    def _reply_claims_correct(reply: str) -> bool:
+        return bool(
+            re.search(
+                r"\b(sentence is correct|no mistakes?|nothing to correct|"
+                r"perfectly correct|looks correct|is correct)\b",
+                reply or "",
+                re.IGNORECASE,
+            )
+        )
+
+    @classmethod
+    def _with_rule_corrections(
+        cls,
+        result: dict[str, Any],
+        user_message: str,
+    ) -> dict[str, Any]:
+        """Them rule-based safety net neu model khong tra correction nao."""
+        if not result.get("corrections"):
+            rule_corrections = cls._detect_grammar_errors(user_message)
+            result["corrections"] = cls.normalize_corrections(
+                rule_corrections, user_message
+            )
+
+        if result.get("corrections") and cls._reply_claims_correct(
+            str(result.get("reply", ""))
+        ):
+            result["reply"] = (
+                "Good effort! I spotted a small mistake in that sentence. "
+                "Have a look at the correction below and try saying it again."
+            )
+        return result
+
     @classmethod
     async def chat_with_tutor(
         cls,
@@ -53,48 +246,63 @@ class AIService:
         """
         persona_key = persona.lower()
         system_prompt = cls.PERSONA_PROMPTS.get(persona_key, cls.PERSONA_PROMPTS["sarah"])
+        provider = (settings.ai_provider or "local").strip().lower()
 
-                # 0. Try Self-Trained Local LLM Model (NVIDIA GPU)
-        try:
-            local_res = await cls._call_local_llm_chat(
-                system_prompt=system_prompt,
-                user_name=user_name,
-                user_level=user_level,
-                user_message=user_message,
-                history=history,
-            )
-            if local_res:
-                return local_res
-        except Exception as e:
-            logger.warning(f"Local LLM call failed, falling back: {e}")
+        for provider_name in cls._provider_order():
+            if provider_name == "local":
+                if not settings.local_llm_enabled:
+                    continue
+                try:
+                    local_res = await cls._call_local_llm_chat(
+                        system_prompt=system_prompt,
+                        user_name=user_name,
+                        user_level=user_level,
+                        user_message=user_message,
+                        history=history,
+                    )
+                    if local_res:
+                        return cls._with_rule_corrections(local_res, user_message)
+                except Exception as e:
+                    logger.warning(f"Local LLM call failed, falling back: {e}")
 
-        # 1. Try Google Gemini API if configured
-        if settings.google_ai_api_key:
-            try:
-                return await cls._call_gemini_chat(
-                    system_prompt=system_prompt,
-                    user_name=user_name,
-                    user_level=user_level,
-                    user_message=user_message,
-                    history=history,
-                )
-            except Exception as e:
-                logger.warning(f"Gemini API call failed, using intelligent fallback: {e}")
+            elif provider_name == "gemini":
+                if not settings.google_ai_api_key:
+                    continue
+                if provider == "local" and not settings.ai_cloud_fallback:
+                    continue
+                try:
+                    gemini_res = await cls._call_gemini_chat(
+                        system_prompt=system_prompt,
+                        user_name=user_name,
+                        user_level=user_level,
+                        user_message=user_message,
+                        history=history,
+                    )
+                    normalized = cls._normalize_result(gemini_res, user_message)
+                    if normalized:
+                        return cls._with_rule_corrections(normalized, user_message)
+                except Exception as e:
+                    logger.warning(f"Gemini API call failed, using fallback: {e}")
 
-        # 2. Try OpenAI API if configured
-        if settings.openai_api_key:
-            try:
-                return await cls._call_openai_chat(
-                    system_prompt=system_prompt,
-                    user_name=user_name,
-                    user_level=user_level,
-                    user_message=user_message,
-                    history=history,
-                )
-            except Exception as e:
-                logger.warning(f"OpenAI API call failed, using intelligent fallback: {e}")
+            elif provider_name == "openai":
+                if not settings.openai_api_key:
+                    continue
+                if provider == "local" and not settings.ai_cloud_fallback:
+                    continue
+                try:
+                    openai_res = await cls._call_openai_chat(
+                        system_prompt=system_prompt,
+                        user_name=user_name,
+                        user_level=user_level,
+                        user_message=user_message,
+                        history=history,
+                    )
+                    normalized = cls._normalize_result(openai_res, user_message)
+                    if normalized:
+                        return cls._with_rule_corrections(normalized, user_message)
+                except Exception as e:
+                    logger.warning(f"OpenAI API call failed, using fallback: {e}")
 
-        # 3. Intelligent Built-in Conversational Engine
         return cls._intelligent_fallback_chat(
             persona=persona_key,
             user_message=user_message,
@@ -112,21 +320,51 @@ class AIService:
     ) -> Optional[dict[str, Any]]:
         """Goi truc tiep mo hinh AI cua nguoi dung tren GPU cuc bo."""
         import asyncio
+
         if not local_llm_service.is_loaded:
-            loaded = await asyncio.to_thread(local_llm_service.load_model)
+            if local_llm_service.is_loading:
+                return None
+            try:
+                loaded = await asyncio.wait_for(
+                    asyncio.to_thread(local_llm_service.load_model),
+                    timeout=settings.local_llm_load_timeout_seconds,
+                )
+            except asyncio.TimeoutError:
+                logger.warning("Local LLM load timed out; using fallback provider")
+                return None
             if not loaded:
+                logger.warning(
+                    f"Local LLM unavailable: {local_llm_service.load_error or 'unknown error'}"
+                )
                 return None
 
         system_instruction = (
             f"{system_prompt}\n"
             f"The learner's name is {user_name}, and their CEFR level is {user_level}.\n"
-            "MANDATORY INSTRUCTION: You are an English speaking partner and tutor. "
-            "You MUST ALWAYS converse and reply in natural, engaging, and fluent ENGLISH. "
-            "If the learner makes ANY grammar, tense, vocabulary, or preposition mistake (or asks you to check a sentence), "
-            "gently point it out using this format:\n"
-            "Correction: \"<corrected sentence>\"\n"
-            "Note: <brief explanation in Vietnamese of why it is corrected>\n"
-            "Then continue the conversation in natural English with an engaging follow-up question."
+            "You are an English speaking partner and tutor. Always reply in natural, "
+            "engaging ENGLISH and end with a follow-up question.\n"
+            "Check the learner's message for grammar, tense, preposition and vocabulary mistakes.\n"
+            "Return ONLY one valid JSON object with exactly these keys:\n"
+            '{"reply":"<English reply>","corrections":[{"original":"<incorrect part>",'
+            '"correction":"<corrected version>","explanation_vi":"<short Vietnamese explanation>",'
+            '"type":"grammar|vocabulary"}],"suggested_replies":["<short reply>","<short reply>"]}\n'
+            "Rules: original must be the incorrect part from the learner's message; "
+            "correction must fix it; type must be 'grammar' for grammar/tense/preposition "
+            "and 'vocabulary' for word choice/collocation; if there are no errors, use an "
+            "empty corrections array. The explanation_vi value MUST be written in Vietnamese "
+            "with Vietnamese diacritics. The reply must react naturally and end with a "
+            "follow-up question; never use reply only to repeat the corrected sentence, and "
+            "never say the sentence is correct when corrections is non-empty. "
+            "Keep reply and each explanation short; do not add extra text. "
+            "Do not wrap the JSON in markdown.\n"
+            "Example input: Yesterday I go to school.\n"
+            'Example output: {"reply":"That sounds like a busy day! What did you do at school?",'
+            '"corrections":[{"original":"Yesterday I go","correction":"Yesterday I went",'
+            '"explanation_vi":"Dùng thì quá khứ đơn với mốc thời gian đã kết thúc trong quá khứ.",'
+            '"type":"grammar"}],"suggested_replies":["I studied English.","I met my friends."]}\n'
+            "Example input: I like coffee.\n"
+            'Example output: {"reply":"Coffee is a great choice! Do you prefer it hot or iced?",'
+            '"corrections":[],"suggested_replies":["I prefer iced coffee.","I drink it every morning."]}'
         )
 
         formatted_messages = [{"role": "system", "content": system_instruction}]
@@ -135,39 +373,74 @@ class AIService:
             formatted_messages.append({"role": role, "content": h.get("content", "")})
         formatted_messages.append({"role": "user", "content": user_message})
 
-        raw_reply = await asyncio.to_thread(
-            local_llm_service.generate_chat_response,
-            formatted_messages,
-            300,
-            0.7
-        )
+        try:
+            raw_reply = await asyncio.wait_for(
+                asyncio.to_thread(
+                    local_llm_service.generate_chat_response,
+                    formatted_messages,
+                    220,
+                    0.2,
+                    timeout_seconds=max(15.0, settings.local_llm_timeout_seconds - 5.0),
+                ),
+                timeout=settings.local_llm_timeout_seconds,
+            )
+        except asyncio.TimeoutError:
+            logger.warning("Local LLM generation timed out; using fallback provider")
+            return None
 
         if not raw_reply:
             return None
 
-        corrections = []
+        parsed = cls._parse_json_object(raw_reply)
+        if parsed:
+            normalized = cls._normalize_result(parsed, user_message)
+            if normalized:
+                return normalized
+
+        # A malformed JSON-looking answer is not safe to parse as free-form.
+        if raw_reply.lstrip().startswith("{"):
+            logger.warning("Local LLM returned malformed JSON; using rule fallback")
+            return None
+
+        # Legacy/free-form response fallback: parse Correction/Note labels.
+        corrections: list[dict[str, Any]] = []
         corr_match = re.search(
-            r'''(?:The correct(?:\s+way(?:\s+would\s+be)?)?|Correction|Correct version|Câu chuẩn|Accurate version|Professional standard)(?::|,|\s+is)?\s*["'“”]([^"'“”]+)["'“”]''',
+            r'''(?:^\s*[*-]+\s*)?(?:The correct(?:\s+way(?:\s+would\s+be)?)?|Correction|Correct version|Câu chuẩn|Accurate version|Professional standard)\s*(?:\*\*)?\s*[:,\-]\s*(?:\*\*)?\s*["'“”]([^"'“”]+)["'“”]''',
             raw_reply,
-            re.IGNORECASE
+            re.IGNORECASE | re.MULTILINE,
         )
         if not corr_match:
             corr_match = re.search(r'''\*\*["'“”]([^"'“”]+)["'“”]\*\*''', raw_reply)
 
         if corr_match:
             corrected_text = corr_match.group(1).strip()
-            expl_match = re.search(r'''(?:Note|Giải thích|Examiner Note):\s*([^\n\)]+)''', raw_reply, re.IGNORECASE)
-            explanation_vi = expl_match.group(1).strip() if expl_match else "AI Tutor đã phát hiện và sửa lỗi cấu trúc ngữ pháp giúp bạn."
+            expl_match = re.search(
+                r'''(?:Note|Giải thích|Examiner Note):\s*([^\n\)]+)''',
+                raw_reply,
+                re.IGNORECASE,
+            )
+            explanation_vi = (
+                expl_match.group(1).strip()
+                if expl_match
+                else "AI Tutor đã phát hiện và sửa lỗi cấu trúc ngữ pháp giúp bạn."
+            )
+            correction_type = (
+                "vocabulary"
+                if re.search(
+                    r"\b(vocab(?:ulary)?|word choice|collocation|lexical)\b|từ vựng",
+                    raw_reply,
+                    re.IGNORECASE,
+                )
+                else "grammar"
+            )
             corrections.append({
                 "original": user_message,
                 "correction": corrected_text,
                 "explanation_vi": explanation_vi,
+                "type": correction_type,
             })
 
-        # Rule-based safety net: always catch known errors even if model phrased it freely
-        rule_corrs = cls._detect_grammar_errors(user_message)
-        if not corrections and rule_corrs:
-            corrections.extend(rule_corrs)
+        corrections = cls.normalize_corrections(corrections, user_message)
 
         # Clean conversational reply from verbose raw correction blocks
         clean_reply = raw_reply
@@ -195,13 +468,9 @@ class AIService:
                 clean_reply = raw_reply
 
         return {
-            "reply": clean_reply,
+            "reply": cls._clean_text(clean_reply, 4000),
             "corrections": corrections,
-            "suggested_replies": [
-                "Could you give me an example?",
-                "Can we practice another sentence?",
-                "How can I sound more natural?"
-            ]
+            "suggested_replies": list(cls.DEFAULT_SUGGESTIONS),
         }
 
     @classmethod
@@ -219,7 +488,7 @@ class AIService:
         instruction = (
             f"{system_prompt}\n"
             f"The learner's name is {user_name}, and their CEFR level is {user_level}.\n"
-            "Analyze the learner's message for any grammatical, spelling, or unnatural phrasing errors.\n"
+            "Analyze the learner's message for grammatical, spelling, vocabulary, collocation, or unnatural phrasing errors.\n"
             "Respond strictly in valid JSON format matching this JSON schema:\n"
             "{\n"
             '  "reply": "Your conversational response in natural English (keep it engaging and ask a relevant question back)",\n'
@@ -227,7 +496,8 @@ class AIService:
             '    {\n'
             '      "original": "The incorrect part of the learner\'s sentence",\n'
             '      "correction": "The corrected natural version",\n'
-            '      "explanation_vi": "Brief explanation in Vietnamese of why it is corrected"\n'
+            '      "explanation_vi": "Brief explanation in Vietnamese of why it is corrected",\n'
+            '      "type": "grammar or vocabulary"\n'
             '    }\n'
             "  ],\n"
             '  "suggested_replies": ["Short suggestion 1", "Short suggestion 2", "Short suggestion 3"]\n'
@@ -276,7 +546,10 @@ class AIService:
         instruction = (
             f"{system_prompt}\n"
             f"The learner's name is {user_name}, and their CEFR level is {user_level}.\n"
-            "Respond in JSON format with keys: 'reply' (English string), 'corrections' (list of {original, correction, explanation_vi}), 'suggested_replies' (list of 2-3 short strings)."
+            "Respond in JSON format with keys: 'reply' (English string), "
+            "'corrections' (list of {original, correction, explanation_vi, type}), "
+            "and 'suggested_replies' (list of 2-3 short strings). "
+            "Use type='grammar' for grammar/tense/preposition errors and type='vocabulary' for word choice/collocation errors."
         )
 
         messages = [{"role": "system", "content": instruction}]
@@ -310,8 +583,8 @@ class AIService:
                 "correction": correct,
                 "explanation_vi": "Hành động đã kết thúc trong quá khứ cần chia động từ ở thì Quá khứ đơn (Past Simple): 'go' -> 'went', 'eat' -> 'ate'.",
             })
-        elif re.search(r"\b(she|he|it)\s+don't\b", msg_lower):
-            m = re.search(r"\b(she|he|it)\s+don't\b", msg_lower).group(0)
+        elif re.search(r"\b(she|he|it)\s+don't\b(?!\s+has)", msg_lower):
+            m = re.search(r"\b(she|he|it)\s+don't\b(?!\s+has)", msg_lower).group(0)
             corrections.append({
                 "original": m,
                 "correction": m.replace("don't", "doesn't"),
@@ -322,24 +595,28 @@ class AIService:
                 "original": "interested on",
                 "correction": "interested in",
                 "explanation_vi": "Cụm tính từ cố định luôn là 'interested in' (hứng thú với điều gì), không đi kèm giới từ 'on'.",
+                "type": "vocabulary",
             })
         elif re.search(r"\b(depends?)\s+of\b", msg_lower):
             corrections.append({
                 "original": "depend of",
                 "correction": "depend on",
                 "explanation_vi": "Động từ 'depend' đi kèm giới từ 'on' (hoặc 'upon'), không dùng 'of'.",
+                "type": "vocabulary",
             })
         elif re.search(r"\blook\s+forward\s+to\s+hear\b", msg_lower):
             corrections.append({
                 "original": "look forward to hear",
                 "correction": "look forward to hearing",
                 "explanation_vi": "Sau cấu trúc 'look forward to', động từ luôn ở dạng V-ing ('hearing').",
+                "type": "vocabulary",
             })
         elif re.search(r"\bmake\s+homework\b", msg_lower):
             corrections.append({
                 "original": "make homework",
                 "correction": "do homework",
                 "explanation_vi": "Cụm từ cố định chuẩn (collocation) là 'do homework', không dùng 'make homework'.",
+                "type": "vocabulary",
             })
         elif re.search(r"\b(two|many|\d+)\s+childs\b", msg_lower):
             corrections.append({
@@ -372,6 +649,81 @@ class AIService:
                 "original": "I have see",
                 "correction": "I have seen",
                 "explanation_vi": "Sau 'have' trong thì hiện tại hoàn thành, động từ phải ở dạng quá khứ phân từ (V3): 'seen'.",
+            })
+        elif re.search(r"\bi\s+have\s+went\b", msg_lower):
+            corrections.append({
+                "original": "I have went",
+                "correction": "I have gone",
+                "explanation_vi": "Thì hiện tại hoàn thành dùng quá khứ phân từ (V3) của 'go' là 'gone', không dùng 'went'.",
+            })
+        elif re.search(r"\bi\s+(goed|eated|comed)\b", msg_lower):
+            wrong = re.search(r"\bi\s+(goed|eated|comed)\b", msg_lower).group(1)
+            fixed = {"goed": "went", "eated": "ate", "comed": "came"}[wrong]
+            corrections.append({
+                "original": f"I {wrong}",
+                "correction": f"I {fixed}",
+                "explanation_vi": f"Động từ bất quy tắc ở thì Quá khứ đơn: '{wrong}' phải là '{fixed}'.",
+            })
+        elif re.search(r"\bi\s+am\s+living\b.*\bsince\b", msg_lower):
+            corrections.append({
+                "original": "I am living ... since ...",
+                "correction": "I have lived ... since ...",
+                "explanation_vi": "Hành động bắt đầu từ quá khứ và kéo dài đến hiện tại với 'since' phải dùng Hiện tại hoàn thành: 'have lived'.",
+            })
+        elif re.search(r"\b(she|he|it)\s+don't\s+has\b", msg_lower):
+            m = re.search(r"\b(she|he|it)\s+don't\s+has\b", msg_lower).group(0)
+            corrections.append({
+                "original": m,
+                "correction": m.replace("don't has", "doesn't have"),
+                "explanation_vi": "Ngôi thứ ba số ít dùng 'doesn't have', không dùng 'don't has'.",
+            })
+        elif re.search(r"\bi\s+didn't\s+went\b", msg_lower):
+            corrections.append({
+                "original": "I didn't went",
+                "correction": "I didn't go",
+                "explanation_vi": "Sau trợ động từ 'didn't', động từ chính phải ở dạng nguyên mẫu: 'go', không dùng 'went'.",
+            })
+        elif re.search(r"\bdiscuss\s+about\b", msg_lower):
+            corrections.append({
+                "original": "discuss about",
+                "correction": "discuss",
+                "explanation_vi": "'Discuss' là ngoại động từ, đi trực tiếp với tân ngữ; không dùng 'discuss about'.",
+                "type": "vocabulary",
+            })
+        elif re.search(r"\bexplain\s+me\b", msg_lower):
+            corrections.append({
+                "original": "explain me",
+                "correction": "explain to me",
+                "explanation_vi": "Cấu trúc đúng là 'explain something to someone', không dùng 'explain me'.",
+                "type": "vocabulary",
+            })
+        elif re.search(r"\bmarried\s+with\b", msg_lower):
+            corrections.append({
+                "original": "married with",
+                "correction": "married to",
+                "explanation_vi": "Cụm cố định là 'married to someone', không dùng 'married with'.",
+                "type": "vocabulary",
+            })
+        elif re.search(r"\bgood\s+in\b", msg_lower):
+            corrections.append({
+                "original": "good in",
+                "correction": "good at",
+                "explanation_vi": "Khi nói giỏi việc gì, dùng 'good at', không dùng 'good in'.",
+                "type": "vocabulary",
+            })
+        elif re.search(r"\badvices\b", msg_lower):
+            corrections.append({
+                "original": "advices",
+                "correction": "advice",
+                "explanation_vi": "'Advice' là danh từ không đếm được, không thêm 's'.",
+                "type": "vocabulary",
+            })
+        elif re.search(r"\binformations\b", msg_lower):
+            corrections.append({
+                "original": "informations",
+                "correction": "information",
+                "explanation_vi": "'Information' là danh từ không đếm được, không thêm 's'.",
+                "type": "vocabulary",
             })
         return corrections
 
@@ -483,7 +835,7 @@ class AIService:
 
         return {
             "reply": reply,
-            "corrections": corrections,
+            "corrections": cls.normalize_corrections(corrections, user_message),
             "suggested_replies": suggested,
         }
 

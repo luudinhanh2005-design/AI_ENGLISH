@@ -17,8 +17,8 @@ class PlacementTestScreen extends ConsumerWidget {
     final notifier = ref.read(placementProvider.notifier);
 
     if (state.isLoading && state.questions.isEmpty) {
-      return const Scaffold(
-        backgroundColor: AppColors.backgroundDark,
+      return Scaffold(
+        backgroundColor: context.palette.background,
         body: Center(
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
@@ -27,18 +27,20 @@ class PlacementTestScreen extends ConsumerWidget {
 
     if (state.errorMessage != null && state.questions.isEmpty) {
       return Scaffold(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+                const Icon(Icons.error_outline,
+                    color: AppColors.error, size: 48),
                 const SizedBox(height: 16),
                 Text(
                   state.errorMessage!,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimaryDark),
+                  style: AppTextStyles.bodyMedium
+                      .copyWith(color: context.palette.textPrimary),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
@@ -63,12 +65,12 @@ class PlacementTestScreen extends ConsumerWidget {
     final selectedOption = state.selectedAnswers[currentQ.id];
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: AppColors.textSecondaryDark),
+          icon: Icon(Icons.close, color: context.palette.textSecondary),
           tooltip: 'Thoát',
           onPressed: () {
             if (context.canPop()) {
@@ -80,7 +82,8 @@ class PlacementTestScreen extends ConsumerWidget {
         ),
         title: Text(
           'Đánh giá năng lực đầu vào',
-          style: AppTextStyles.titleMedium.copyWith(color: AppColors.textPrimaryDark),
+          style: AppTextStyles.titleMedium
+              .copyWith(color: context.palette.textPrimary),
         ),
         centerTitle: true,
       ),
@@ -96,10 +99,12 @@ class PlacementTestScreen extends ConsumerWidget {
                 children: [
                   Text(
                     'Câu ${currentIdx + 1}/$totalQuestions',
-                    style: AppTextStyles.labelLarge.copyWith(color: AppColors.primary),
+                    style: AppTextStyles.labelLarge
+                        .copyWith(color: AppColors.primary),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(12),
@@ -119,8 +124,9 @@ class PlacementTestScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(8),
                 child: LinearProgressIndicator(
                   value: (currentIdx + 1) / totalQuestions,
-                  backgroundColor: AppColors.surfaceLightDark,
-                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  backgroundColor: context.palette.cardLight,
+                  valueColor:
+                      const AlwaysStoppedAnimation<Color>(AppColors.primary),
                   minHeight: 6,
                 ),
               ),
@@ -134,18 +140,19 @@ class PlacementTestScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Context if any (reading passage)
-                      if (currentQ.contextText != null && currentQ.contextText!.isNotEmpty) ...[
+                      if (currentQ.contextText != null &&
+                          currentQ.contextText!.isNotEmpty) ...[
                         Container(
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceLightDark.withOpacity(0.6),
+                            color: context.palette.cardLight.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: AppColors.borderDark),
+                            border: Border.all(color: context.palette.divider),
                           ),
                           child: Text(
                             currentQ.contextText!,
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                               fontStyle: FontStyle.italic,
                               height: 1.5,
                             ),
@@ -157,7 +164,7 @@ class PlacementTestScreen extends ConsumerWidget {
                       Text(
                         currentQ.questionText,
                         style: AppTextStyles.titleMedium.copyWith(
-                          color: AppColors.textPrimaryDark,
+                          color: context.palette.textPrimary,
                           height: 1.4,
                         ),
                       ),
@@ -166,7 +173,8 @@ class PlacementTestScreen extends ConsumerWidget {
                       // Options
                       ...List.generate(currentQ.options.length, (optIdx) {
                         final isSelected = selectedOption == optIdx;
-                        final optionLetter = String.fromCharCode(65 + optIdx); // A, B, C, D
+                        final optionLetter =
+                            String.fromCharCode(65 + optIdx); // A, B, C, D
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12.0),
@@ -184,12 +192,12 @@ class PlacementTestScreen extends ConsumerWidget {
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? AppColors.primary.withOpacity(0.15)
-                                    : AppColors.surfaceDark,
+                                    : context.palette.surface,
                                 borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
                                   color: isSelected
                                       ? AppColors.primary
-                                      : AppColors.borderDark,
+                                      : context.palette.divider,
                                   width: isSelected ? 1.5 : 1,
                                 ),
                               ),
@@ -203,14 +211,14 @@ class PlacementTestScreen extends ConsumerWidget {
                                       shape: BoxShape.circle,
                                       color: isSelected
                                           ? AppColors.primary
-                                          : AppColors.surfaceLightDark,
+                                          : context.palette.cardLight,
                                     ),
                                     child: Text(
                                       optionLetter,
                                       style: AppTextStyles.labelMedium.copyWith(
                                         color: isSelected
                                             ? Colors.white
-                                            : AppColors.textSecondaryDark,
+                                            : context.palette.textSecondary,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -222,7 +230,7 @@ class PlacementTestScreen extends ConsumerWidget {
                                       style: AppTextStyles.bodyMedium.copyWith(
                                         color: isSelected
                                             ? Colors.white
-                                            : AppColors.textPrimaryDark,
+                                            : context.palette.textPrimary,
                                         fontWeight: isSelected
                                             ? FontWeight.w600
                                             : FontWeight.normal,
@@ -249,8 +257,8 @@ class PlacementTestScreen extends ConsumerWidget {
                       child: OutlinedButton(
                         onPressed: () => notifier.previousQuestion(),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.textSecondaryDark,
-                          side: const BorderSide(color: AppColors.borderDark),
+                          foregroundColor: context.palette.textSecondary,
+                          side: BorderSide(color: context.palette.divider),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),

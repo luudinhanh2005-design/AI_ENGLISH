@@ -34,25 +34,24 @@ final dioProvider = Provider<Dio>((ref) {
 class AuthInterceptor extends Interceptor {
   AuthInterceptor();
 
+  static final List<String> _publicPaths = [
+    ApiEndpoints.login,
+    ApiEndpoints.register,
+    ApiEndpoints.forgotPassword,
+    ApiEndpoints.resetPassword,
+    ApiEndpoints.refreshToken,
+  ];
+
+  static bool _isPublicPath(String path) =>
+      _publicPaths.any((publicPath) => path.contains(publicPath));
+
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
     // Skip auth for public endpoints
-    final publicPaths = [
-      ApiEndpoints.login,
-      ApiEndpoints.register,
-      ApiEndpoints.forgotPassword,
-      ApiEndpoints.resetPassword,
-      ApiEndpoints.refreshToken,
-    ];
-
-    final isPublic = publicPaths.any(
-      (path) => options.path.contains(path),
-    );
-
-    if (!isPublic) {
+    if (!_isPublicPath(options.path)) {
       final token = await StorageService.getAccessToken();
       if (token != null) {
         options.headers['Authorization'] = 'Bearer $token';
@@ -67,8 +66,10 @@ class AuthInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    // Auto-refresh token on 401
-    if (err.response?.statusCode == 401) {
+    // Auto-refresh token on 401, except for public auth endpoints such as
+    // a failed login attempt (wrong password).
+    if (err.response?.statusCode == 401 &&
+        !_isPublicPath(err.requestOptions.path)) {
       try {
         final refreshToken = await StorageService.getRefreshToken();
         if (refreshToken != null) {

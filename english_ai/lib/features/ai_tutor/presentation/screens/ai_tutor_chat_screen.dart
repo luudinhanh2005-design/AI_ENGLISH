@@ -53,7 +53,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     });
 
     try {
-      final translated = await ref.read(aiTutorProvider.notifier).translateText(content);
+      final translated =
+          await ref.read(aiTutorProvider.notifier).translateText(content);
       if (mounted) {
         setState(() {
           _translatingIds.remove(msgId);
@@ -62,7 +63,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             _showTranslationIds.add(msgId);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Không thể dịch lúc này. Vui lòng thử lại!')),
+              const SnackBar(
+                  content: Text('Không thể dịch lúc này. Vui lòng thử lại!')),
             );
           }
         });
@@ -107,7 +109,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Vui lòng cấp quyền Microphone trên trình duyệt/thiết bị để luyện nói!'),
+              content: Text(
+                  'Vui lòng cấp quyền Microphone trên trình duyệt/thiết bị để luyện nói!'),
               backgroundColor: AppColors.error,
             ),
           );
@@ -152,7 +155,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
         if (mounted) {
           await ref.read(aiTutorProvider.notifier).sendAudioMessage(
                 audioBytes,
-                filename: 'speaking_${DateTime.now().millisecondsSinceEpoch}.wav',
+                filename:
+                    'speaking_${DateTime.now().millisecondsSinceEpoch}.wav',
               );
         }
       } else {
@@ -239,19 +243,20 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     final state = ref.watch(aiTutorProvider);
     final notifier = ref.read(aiTutorProvider.notifier);
 
-    ref.listen(aiTutorProvider.select((s) => s.messages.length), (previous, next) {
+    ref.listen(aiTutorProvider.select((s) => s.messages.length),
+        (previous, next) {
       if (previous != next) {
         _scrollToBottom();
       }
     });
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.surfaceDark,
+        backgroundColor: context.palette.surface,
         elevation: 1,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back, color: context.palette.textPrimary),
           onPressed: () {
             if (context.canPop()) {
               context.pop();
@@ -271,7 +276,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                   colors: [AppColors.primary, AppColors.secondary],
                 ),
               ),
-              child: const Icon(Icons.smart_toy_rounded, color: Colors.white, size: 20),
+              child: const Icon(Icons.smart_toy_rounded,
+                  color: Colors.white, size: 20),
             ),
             const SizedBox(width: 10),
             Column(
@@ -280,18 +286,42 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                 Text(
                   'Gia sư AI Tutor',
                   style: AppTextStyles.titleSmall.copyWith(
-                    color: AppColors.textPrimaryDark,
+                    color: context.palette.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   'Luyện nói & Sửa lỗi giọng Mỹ • Whisper AI',
-                  style: AppTextStyles.labelSmall.copyWith(color: AppColors.success),
+                  style: AppTextStyles.labelSmall
+                      .copyWith(color: AppColors.success),
                 ),
               ],
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            tooltip: 'Gọi thoại với AI',
+            icon: Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2ED573).withOpacity(0.18),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: const Color(0xFF2ED573).withOpacity(0.5),
+                ),
+              ),
+              child: const Icon(
+                Icons.phone_in_talk_rounded,
+                color: Color(0xFF2ED573),
+                size: 20,
+              ),
+            ),
+            onPressed: () =>
+                context.push('/ai-tutor/call', extra: state.currentPersona),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -299,12 +329,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             // Persona Switcher Bar
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              color: AppColors.surfaceDark.withOpacity(0.5),
+              color: context.palette.surface.withOpacity(0.5),
               child: Row(
                 children: [
                   Text(
                     'Gia sư:',
-                    style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondaryDark),
+                    style: AppTextStyles.labelMedium
+                        .copyWith(color: context.palette.textSecondary),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
@@ -312,11 +343,17 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          _buildPersonaChip('sarah', 'Sarah (Giọng Mỹ Chuẩn)', state.currentPersona, notifier),
+                          _buildPersonaChip('sarah', 'Sarah (Giọng Mỹ Chuẩn)',
+                              state.currentPersona, notifier),
                           const SizedBox(width: 8),
-                          _buildPersonaChip('harrison', 'Mr. Harrison (Business)', state.currentPersona, notifier),
+                          _buildPersonaChip(
+                              'harrison',
+                              'Mr. Harrison (Business)',
+                              state.currentPersona,
+                              notifier),
                           const SizedBox(width: 8),
-                          _buildPersonaChip('emma', 'Emma (IELTS Chuẩn)', state.currentPersona, notifier),
+                          _buildPersonaChip('emma', 'Emma (IELTS Chuẩn)',
+                              state.currentPersona, notifier),
                         ],
                       ),
                     ),
@@ -329,16 +366,19 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             if (state.errorMessage != null)
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 color: AppColors.error.withOpacity(0.15),
                 child: Row(
                   children: [
-                    const Icon(Icons.info_outline, color: AppColors.error, size: 18),
+                    const Icon(Icons.info_outline,
+                        color: AppColors.error, size: 18),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         state.errorMessage!,
-                        style: AppTextStyles.labelSmall.copyWith(color: AppColors.error),
+                        style: AppTextStyles.labelSmall
+                            .copyWith(color: AppColors.error),
                       ),
                     ),
                   ],
@@ -349,7 +389,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             Expanded(
               child: ListView.builder(
                 controller: _scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 itemCount: state.messages.length +
                     (state.isTranscribing ? 1 : 0) +
                     (state.isLoading ? 1 : 0),
@@ -381,11 +422,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                     return ActionChip(
                       label: Text(
                         suggestion,
-                        style: AppTextStyles.labelSmall.copyWith(color: AppColors.textPrimaryDark),
+                        style: AppTextStyles.labelSmall
+                            .copyWith(color: context.palette.textPrimary),
                       ),
-                      backgroundColor: AppColors.surfaceLightDark,
-                      side: const BorderSide(color: AppColors.borderDark),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      backgroundColor: context.palette.cardLight,
+                      side: BorderSide(color: context.palette.divider),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
                       onPressed: () {
                         notifier.sendMessage(suggestion);
                       },
@@ -407,9 +450,9 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     if (_isRecording) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceDark,
-          border: Border(top: BorderSide(color: AppColors.borderDark)),
+        decoration: BoxDecoration(
+          color: context.palette.surface,
+          border: Border(top: BorderSide(color: context.palette.divider)),
         ),
         child: Row(
           children: [
@@ -440,7 +483,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                   Text(
                     'Đang thu âm: ${_formatDuration(_recordDuration)}',
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -448,7 +491,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                   Text(
                     '• Nói tiếng Anh...',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondaryDark,
+                      color: context.palette.textSecondary,
                     ),
                   ),
                 ],
@@ -460,7 +503,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
               onTap: _stopRecordingAndSend,
               borderRadius: BorderRadius.circular(24),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [AppColors.success, Color(0xFF10B981)],
@@ -497,9 +541,9 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceDark,
-        border: Border(top: BorderSide(color: AppColors.borderDark)),
+      decoration: BoxDecoration(
+        color: context.palette.surface,
+        border: Border(top: BorderSide(color: context.palette.divider)),
       ),
       child: Row(
         children: [
@@ -507,18 +551,21 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.backgroundDark,
+                color: context.palette.background,
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: AppColors.borderDark),
+                border: Border.all(color: context.palette.divider),
               ),
               child: TextField(
                 controller: _textController,
-                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimaryDark),
+                style: AppTextStyles.bodyMedium
+                    .copyWith(color: context.palette.textPrimary),
                 decoration: InputDecoration(
                   hintText: 'Nhắn tin hoặc bấm biểu tượng Mic để nói...',
-                  hintStyle: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondaryDark),
+                  hintStyle: AppTextStyles.bodySmall
+                      .copyWith(color: context.palette.textSecondary),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 ),
                 onSubmitted: (val) {
                   if (val.trim().isNotEmpty) {
@@ -543,7 +590,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                 color: AppColors.accent.withOpacity(0.15),
                 border: Border.all(color: AppColors.accent.withOpacity(0.4)),
               ),
-              child: const Icon(Icons.mic_rounded, color: AppColors.accent, size: 22),
+              child: const Icon(Icons.mic_rounded,
+                  color: AppColors.accent, size: 22),
             ),
           ),
           const SizedBox(width: 8),
@@ -567,7 +615,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                   colors: [AppColors.primary, AppColors.secondary],
                 ),
               ),
-              child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+              child:
+                  const Icon(Icons.send_rounded, color: Colors.white, size: 20),
             ),
           ),
         ],
@@ -586,9 +635,9 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
       label: Text(label),
       selected: isSelected,
       selectedColor: AppColors.primary,
-      backgroundColor: AppColors.surfaceDark,
+      backgroundColor: context.palette.surface,
       labelStyle: AppTextStyles.labelSmall.copyWith(
-        color: isSelected ? Colors.white : AppColors.textSecondaryDark,
+        color: isSelected ? Colors.white : context.palette.textSecondary,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
       ),
       onSelected: (_) => notifier.setPersona(personaKey),
@@ -601,10 +650,12 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Column(
-        crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment:
+                isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (!isUser) ...[
@@ -616,16 +667,16 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                     shape: BoxShape.circle,
                     color: AppColors.primary.withOpacity(0.2),
                   ),
-                  child: const Icon(Icons.auto_awesome, color: AppColors.accent, size: 18),
+                  child: const Icon(Icons.auto_awesome,
+                      color: AppColors.accent, size: 18),
                 ),
               ],
               Flexible(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   decoration: BoxDecoration(
-                    color: isUser
-                        ? AppColors.primary
-                        : AppColors.surfaceDark,
+                    color: isUser ? AppColors.primary : context.palette.surface,
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: const Radius.circular(16),
@@ -633,7 +684,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                       bottomRight: Radius.circular(isUser ? 4 : 16),
                     ),
                     border: Border.all(
-                      color: isUser ? Colors.transparent : AppColors.borderDark,
+                      color:
+                          isUser ? Colors.transparent : context.palette.divider,
                     ),
                   ),
                   child: Column(
@@ -641,13 +693,16 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                     children: [
                       // Prominent Highlighted Grammar Correction Box on top
                       if (!isUser && msg.corrections.isNotEmpty) ...[
-                        ...msg.corrections.map((corr) => _buildHighlightedCorrectionCard(corr)),
+                        ...msg.corrections.map(
+                            (corr) => _buildHighlightedCorrectionCard(corr)),
                         const SizedBox(height: 10),
                       ],
                       Text(
                         msg.content,
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: isUser ? Colors.white : AppColors.textPrimaryDark,
+                          color: isUser
+                              ? Colors.white
+                              : context.palette.textPrimary,
                           height: 1.4,
                         ),
                       ),
@@ -659,19 +714,21 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                           children: [
                             // 1. Audio button
                             InkWell(
-                              onTap: () => _playMessageAudio(msg, ref.read(aiTutorProvider).currentPersona),
+                              onTap: () => _playMessageAudio(msg,
+                                  ref.read(aiTutorProvider).currentPersona),
                               borderRadius: BorderRadius.circular(16),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
                                   color: (_currentlyPlayingId == msg.id)
                                       ? AppColors.primary.withOpacity(0.2)
-                                      : AppColors.surfaceLightDark,
+                                      : context.palette.cardLight,
                                   borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
                                     color: (_currentlyPlayingId == msg.id)
                                         ? AppColors.primary
-                                        : AppColors.borderDark,
+                                        : context.palette.divider,
                                   ),
                                 ),
                                 child: Row(
@@ -684,15 +741,17 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                                       size: 16,
                                       color: (_currentlyPlayingId == msg.id)
                                           ? AppColors.accent
-                                          : AppColors.textSecondaryDark,
+                                          : context.palette.textSecondary,
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                      (_currentlyPlayingId == msg.id) ? 'Đang phát...' : 'Nghe phát âm',
+                                      (_currentlyPlayingId == msg.id)
+                                          ? 'Đang phát...'
+                                          : 'Nghe phát âm',
                                       style: AppTextStyles.labelSmall.copyWith(
                                         color: (_currentlyPlayingId == msg.id)
                                             ? AppColors.accent
-                                            : AppColors.textSecondaryDark,
+                                            : context.palette.textSecondary,
                                         fontSize: 11,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -703,19 +762,21 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                             ),
                             // 2. Translation toggle button
                             InkWell(
-                              onTap: () => _toggleTranslation(msg.id, msg.content),
+                              onTap: () =>
+                                  _toggleTranslation(msg.id, msg.content),
                               borderRadius: BorderRadius.circular(16),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
                                   color: _showTranslationIds.contains(msg.id)
                                       ? AppColors.secondary.withOpacity(0.18)
-                                      : AppColors.surfaceLightDark,
+                                      : context.palette.cardLight,
                                   borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
                                     color: _showTranslationIds.contains(msg.id)
                                         ? AppColors.secondary
-                                        : AppColors.borderDark,
+                                        : context.palette.divider,
                                   ),
                                 ),
                                 child: Row(
@@ -725,12 +786,15 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                                       const SizedBox(
                                         width: 12,
                                         height: 12,
-                                        child: CircularProgressIndicator(strokeWidth: 1.5, color: AppColors.secondary),
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 1.5,
+                                            color: AppColors.secondary),
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
                                         'Đang dịch...',
-                                        style: AppTextStyles.labelSmall.copyWith(
+                                        style:
+                                            AppTextStyles.labelSmall.copyWith(
                                           color: AppColors.secondary,
                                           fontSize: 11,
                                           fontWeight: FontWeight.w600,
@@ -740,17 +804,22 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                                       Icon(
                                         Icons.translate_rounded,
                                         size: 14,
-                                        color: _showTranslationIds.contains(msg.id)
-                                            ? AppColors.secondary
-                                            : AppColors.textSecondaryDark,
+                                        color:
+                                            _showTranslationIds.contains(msg.id)
+                                                ? AppColors.secondary
+                                                : context.palette.textSecondary,
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        _showTranslationIds.contains(msg.id) ? 'Ẩn bản dịch' : 'Dịch tiếng Việt',
-                                        style: AppTextStyles.labelSmall.copyWith(
-                                          color: _showTranslationIds.contains(msg.id)
+                                        _showTranslationIds.contains(msg.id)
+                                            ? 'Ẩn bản dịch'
+                                            : 'Dịch tiếng Việt',
+                                        style:
+                                            AppTextStyles.labelSmall.copyWith(
+                                          color: _showTranslationIds
+                                                  .contains(msg.id)
                                               ? AppColors.secondary
-                                              : AppColors.textSecondaryDark,
+                                              : context.palette.textSecondary,
                                           fontSize: 11,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -763,12 +832,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                           ],
                         ),
                         // Expandable Vietnamese Translation Box
-                        if (_showTranslationIds.contains(msg.id) && _translations.containsKey(msg.id)) ...[
+                        if (_showTranslationIds.contains(msg.id) &&
+                            _translations.containsKey(msg.id)) ...[
                           const SizedBox(height: 8),
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceLightDark.withOpacity(0.7),
+                              color: context.palette.cardLight.withOpacity(0.7),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: AppColors.secondary.withOpacity(0.35),
@@ -785,11 +855,13 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Bản dịch tiếng Việt:',
-                                        style: AppTextStyles.labelSmall.copyWith(
+                                        style:
+                                            AppTextStyles.labelSmall.copyWith(
                                           color: AppColors.secondary,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 10,
@@ -799,7 +871,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                                       Text(
                                         _translations[msg.id]!,
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: AppColors.textPrimaryDark,
+                                          color: context.palette.textPrimary,
                                           height: 1.4,
                                           fontSize: 13,
                                         ),
@@ -818,7 +890,6 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
               ),
             ],
           ),
-
         ],
       ),
     );
@@ -829,45 +900,56 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     final w2 = corr.trim().split(RegExp(r'\s+'));
     if (w1.isEmpty || orig.trim().isEmpty) return [TextSpan(text: orig)];
 
-    String cleanWord(String w) => w.replaceAll(RegExp(r'[^\w]'), '').toLowerCase();
+    String cleanWord(String w) =>
+        w.replaceAll(RegExp(r'[^\w]'), '').toLowerCase();
 
     int start = 0;
-    while (start < w1.length && start < w2.length && cleanWord(w1[start]) == cleanWord(w2[start])) {
+    while (start < w1.length &&
+        start < w2.length &&
+        cleanWord(w1[start]) == cleanWord(w2[start])) {
       start++;
     }
 
     int end1 = w1.length - 1;
     int end2 = w2.length - 1;
-    while (end1 >= start && end2 >= start && cleanWord(w1[end1]) == cleanWord(w2[end2])) {
+    while (end1 >= start &&
+        end2 >= start &&
+        cleanWord(w1[end1]) == cleanWord(w2[end2])) {
       end1--;
       end2--;
     }
 
     final spans = <TextSpan>[];
     if (start > 0) {
-      spans.add(TextSpan(
-        text: '${w1.sublist(0, start).join(' ')} ',
-        style: const TextStyle(color: AppColors.textSecondaryDark),
-      ),);
+      spans.add(
+        TextSpan(
+          text: '${w1.sublist(0, start).join(' ')} ',
+          style: TextStyle(color: context.palette.textSecondary),
+        ),
+      );
     }
     if (start <= end1) {
-      spans.add(TextSpan(
-        text: '${w1.sublist(start, end1 + 1).join(' ')} ',
-        style: const TextStyle(
-          color: Color(0xFFFF6B81),
-          fontWeight: FontWeight.bold,
-          decoration: TextDecoration.lineThrough,
-          decorationColor: Color(0xFFFF4757),
-          decorationThickness: 2.8,
-          backgroundColor: Color(0x33FF4757),
+      spans.add(
+        TextSpan(
+          text: '${w1.sublist(start, end1 + 1).join(' ')} ',
+          style: const TextStyle(
+            color: Color(0xFFFF6B81),
+            fontWeight: FontWeight.bold,
+            decoration: TextDecoration.lineThrough,
+            decorationColor: Color(0xFFFF4757),
+            decorationThickness: 2.8,
+            backgroundColor: Color(0x33FF4757),
+          ),
         ),
-      ),);
+      );
     }
     if (end1 + 1 < w1.length) {
-      spans.add(TextSpan(
-        text: w1.sublist(end1 + 1).join(' '),
-        style: const TextStyle(color: AppColors.textSecondaryDark),
-      ),);
+      spans.add(
+        TextSpan(
+          text: w1.sublist(end1 + 1).join(' '),
+          style: TextStyle(color: context.palette.textSecondary),
+        ),
+      );
     }
     return spans.isEmpty ? [TextSpan(text: orig)] : spans;
   }
@@ -877,60 +959,75 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
     final w2 = corr.trim().split(RegExp(r'\s+'));
     if (w2.isEmpty || corr.trim().isEmpty) return [TextSpan(text: corr)];
 
-    String cleanWord(String w) => w.replaceAll(RegExp(r'[^\w]'), '').toLowerCase();
+    String cleanWord(String w) =>
+        w.replaceAll(RegExp(r'[^\w]'), '').toLowerCase();
 
     int start = 0;
-    while (start < w1.length && start < w2.length && cleanWord(w1[start]) == cleanWord(w2[start])) {
+    while (start < w1.length &&
+        start < w2.length &&
+        cleanWord(w1[start]) == cleanWord(w2[start])) {
       start++;
     }
 
     int end1 = w1.length - 1;
     int end2 = w2.length - 1;
-    while (end1 >= start && end2 >= start && cleanWord(w1[end1]) == cleanWord(w2[end2])) {
+    while (end1 >= start &&
+        end2 >= start &&
+        cleanWord(w1[end1]) == cleanWord(w2[end2])) {
       end1--;
       end2--;
     }
 
     final spans = <TextSpan>[];
     if (start > 0) {
-      spans.add(TextSpan(
-        text: '${w2.sublist(0, start).join(' ')} ',
-        style: const TextStyle(color: Colors.white),
-      ),);
+      spans.add(
+        TextSpan(
+          text: '${w2.sublist(0, start).join(' ')} ',
+          style: TextStyle(color: context.palette.textPrimary),
+        ),
+      );
     }
     if (start <= end2) {
-      spans.add(TextSpan(
-        text: '${w2.sublist(start, end2 + 1).join(' ')} ',
-        style: const TextStyle(
-          color: Color(0xFF2ED573),
-          fontWeight: FontWeight.w900,
-          backgroundColor: Color(0x402ED573),
+      spans.add(
+        TextSpan(
+          text: '${w2.sublist(start, end2 + 1).join(' ')} ',
+          style: const TextStyle(
+            color: Color(0xFF2ED573),
+            fontWeight: FontWeight.w900,
+            backgroundColor: Color(0x402ED573),
+          ),
         ),
-      ),);
+      );
     }
     if (end2 + 1 < w2.length) {
-      spans.add(TextSpan(
-        text: w2.sublist(end2 + 1).join(' '),
-        style: const TextStyle(color: Colors.white),
-      ),);
+      spans.add(
+        TextSpan(
+          text: w2.sublist(end2 + 1).join(' '),
+          style: TextStyle(color: context.palette.textPrimary),
+        ),
+      );
     }
     return spans.isEmpty ? [TextSpan(text: corr)] : spans;
   }
 
   Widget _buildHighlightedCorrectionCard(AICorrectionModel corr) {
+    final isVocabulary = corr.type == 'vocabulary';
+    final accentColor =
+        isVocabulary ? const Color(0xFF3B82F6) : AppColors.warning;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF131726),
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: const Color(0xFFFFA502).withValues(alpha: 0.6),
+          color: accentColor.withValues(alpha: 0.6),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.4),
+            color: Colors.black.withValues(alpha: 0.12),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -945,16 +1042,24 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFA502).withValues(alpha: 0.2),
+                  color: accentColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: const Icon(Icons.spellcheck_rounded, color: Color(0xFFFFA502), size: 16),
+                child: Icon(
+                  isVocabulary
+                      ? Icons.translate_rounded
+                      : Icons.spellcheck_rounded,
+                  color: accentColor,
+                  size: 16,
+                ),
               ),
               const SizedBox(width: 8),
               Text(
-                'SỬA LỖI NGỮ PHÁP (GRAMMAR CHECK):',
+                isVocabulary
+                    ? 'SỬA TỪ VỰNG (VOCABULARY):'
+                    : 'SỬA LỖI NGỮ PHÁP (GRAMMAR CHECK):',
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: const Color(0xFFFFA502),
+                  color: accentColor,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
                   fontSize: 11,
@@ -971,25 +1076,28 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             decoration: BoxDecoration(
               color: AppColors.error.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.error.withValues(alpha: 0.35)),
+              border:
+                  Border.all(color: AppColors.error.withValues(alpha: 0.35)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 2.0),
-                  child: Icon(Icons.cancel_rounded, color: AppColors.error, size: 16),
+                  child: Icon(Icons.cancel_rounded,
+                      color: AppColors.error, size: 16),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text.rich(
                     TextSpan(
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textPrimaryDark,
+                        color: context.palette.textPrimary,
                         fontSize: 13.5,
                         height: 1.4,
                       ),
-                      children: _buildOriginalSpans(corr.original, corr.correction),
+                      children:
+                          _buildOriginalSpans(corr.original, corr.correction),
                     ),
                   ),
                 ),
@@ -1004,12 +1112,12 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color(0xFF003820),
+              color: AppColors.success.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFF2ED573), width: 1.5),
+              border: Border.all(color: AppColors.success, width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF2ED573).withValues(alpha: 0.3),
+                  color: AppColors.success.withValues(alpha: 0.15),
                   blurRadius: 8,
                   spreadRadius: 1,
                 ),
@@ -1020,19 +1128,21 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
               children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 2.0),
-                  child: Icon(Icons.check_circle_rounded, color: Color(0xFF2ED573), size: 16),
+                  child: Icon(Icons.check_circle_rounded,
+                      color: AppColors.success, size: 16),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text.rich(
                     TextSpan(
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.white,
+                        color: context.palette.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         height: 1.4,
                       ),
-                      children: _buildCorrectedSpans(corr.original, corr.correction),
+                      children:
+                          _buildCorrectedSpans(corr.original, corr.correction),
                     ),
                   ),
                 ),
@@ -1046,7 +1156,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.surfaceLightDark.withValues(alpha: 0.6),
+                color: context.palette.cardLight.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Row(
@@ -1054,14 +1164,15 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(top: 2.0),
-                    child: Icon(Icons.lightbulb_rounded, color: AppColors.warning, size: 14),
+                    child: Icon(Icons.lightbulb_rounded,
+                        color: AppColors.warning, size: 14),
                   ),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
                       corr.explanationVi,
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.textSecondaryDark,
+                        color: context.palette.textSecondary,
                         height: 1.35,
                         fontSize: 11.5,
                       ),
@@ -1105,7 +1216,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                 const SizedBox(
                   width: 14,
                   height: 14,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
+                  child: CircularProgressIndicator(
+                      strokeWidth: 2, color: AppColors.accent),
                 ),
               ],
             ),
@@ -1128,14 +1240,15 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
               shape: BoxShape.circle,
               color: AppColors.primary.withOpacity(0.2),
             ),
-            child: const Icon(Icons.auto_awesome, color: AppColors.accent, size: 18),
+            child: const Icon(Icons.auto_awesome,
+                color: AppColors.accent, size: 18),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: AppColors.surfaceDark,
+              color: context.palette.surface,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.borderDark),
+              border: Border.all(color: context.palette.divider),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -1143,7 +1256,7 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                 Text(
                   'Gia sư đang suy nghĩ...',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondaryDark,
+                    color: context.palette.textSecondary,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -1151,7 +1264,8 @@ class _AiTutorChatScreenState extends ConsumerState<AiTutorChatScreen>
                 const SizedBox(
                   width: 14,
                   height: 14,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                  child: CircularProgressIndicator(
+                      strokeWidth: 2, color: AppColors.primary),
                 ),
               ],
             ),

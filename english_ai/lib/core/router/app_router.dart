@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../theme/app_colors.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/ai_tutor/presentation/screens/ai_tutor_chat_screen.dart';
 import '../../features/auth/presentation/screens/forgot_password_screen.dart';
@@ -20,18 +21,38 @@ import '../../features/practice/presentation/screens/writing_practice_screen.dar
 import '../../features/learn/presentation/screens/listening_screen.dart';
 import '../../features/learn/presentation/screens/reading_screen.dart';
 import '../../features/learn/presentation/screens/grammar_screen.dart';
+import '../../features/pronunciation/presentation/screens/pronunciation_home_screen.dart';
+import '../../features/pronunciation/presentation/screens/pronunciation_practice_screen.dart';
+import '../../features/ai_tutor/presentation/screens/voice_call_screen.dart';
+import '../../features/ai_tutor/presentation/screens/voice_call_summary_screen.dart';
+import '../../features/writing/presentation/screens/writing_editor_screen.dart';
+import '../../features/writing/presentation/screens/writing_result_screen.dart';
+import '../../features/grammar/presentation/screens/grammar_lesson_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import 'route_names.dart';
 
 /// GoRouter configuration with authentication-aware redirect logic.
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authStateProvider);
+  final refreshNotifier = ValueNotifier<int>(0);
+  ref.onDispose(refreshNotifier.dispose);
+
+  // Re-run redirects when auth state changes without recreating the router.
+  ref.listen(authStateProvider, (_, __) {
+    refreshNotifier.value++;
+  });
 
   return GoRouter(
     initialLocation: '/splash',
     debugLogDiagnostics: true,
+    refreshListenable: refreshNotifier,
     redirect: (context, state) {
-      final isLoggedIn = authState.valueOrNull != null;
+      final authState = ref.read(authStateProvider);
+
+      // Keep the current screen while login/register is in progress.
+      if (authState.isLoading) return null;
+
+      final user = authState.valueOrNull;
+      final isLoggedIn = user != null;
       final isAuthRoute = state.matchedLocation == '/login' ||
           state.matchedLocation == '/register' ||
           state.matchedLocation == '/forgot-password';
@@ -47,7 +68,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // Logged in and on auth route â†’ go to home
       if (isLoggedIn && isAuthRoute) {
-        return '/';
+        return user.hasCompletedOnboarding ? '/' : '/onboarding';
       }
 
       return null;
@@ -81,7 +102,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/onboarding',
         name: RouteNames.onboarding,
-        builder: (context, state) => const OnboardingScreen(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: OnboardingScreen()),
       ),
 
       // â”€â”€ Phase 2 Learning Routes â”€â”€
@@ -107,7 +129,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/writing-practice',
-        name: RouteNames.writing,
         builder: (context, state) => const WritingPracticeScreen(),
       ),
       GoRoute(
@@ -130,9 +151,50 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
 
       // â”€â”€ Main App with Bottom Navigation â”€â”€
-      StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) {
-          return MainScaffold(navigationShell: navigationShell);
+      GoRoute(
+        path: '/pronunciation',
+        builder: (context, state) => const PronunciationHomeScreen(),
+      ),
+      GoRoute(
+        path: '/pronunciation/practice',
+        builder: (context, state) => const PronunciationPracticeScreen(),
+      ),
+      GoRoute(
+        path: '/ai-tutor/call',
+        builder: (context, state) => VoiceCallScreen(
+          persona: state.extra as String? ?? 'sarah',
+        ),
+      ),
+      GoRoute(
+        path: '/ai-tutor/call/summary',
+        builder: (context, state) => const VoiceCallSummaryScreen(),
+      ),
+      GoRoute(
+        path: '/writing',
+        name: RouteNames.writing,
+        builder: (context, state) => const WritingEditorScreen(),
+      ),
+      GoRoute(
+        path: '/writing/feedback',
+        name: RouteNames.writingFeedback,
+        builder: (context, state) => const WritingResultScreen(),
+      ),
+      GoRoute(
+        path: '/grammar/lesson/:id',
+        name: RouteNames.grammarLesson,
+        builder: (context, state) => GrammarLessonScreen(
+          lessonId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+
+      StatefulShellRoute(
+        pageBuilder: (context, state, navigationShell) =>
+            NoTransitionPage(child: navigationShell),
+        navigatorContainerBuilder: (context, navigationShell, children) {
+          return MainScaffold(
+            navigationShell: navigationShell,
+            children: children,
+          );
         },
         branches: [
           // Home Tab
@@ -141,7 +203,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/',
                 name: RouteNames.home,
-                builder: (context, state) => const HomeScreen(),
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: HomeScreen()),
               ),
             ],
           ),
@@ -205,7 +268,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
 // ---------------------------------------------// Placeholder Screens for tabs (Phase 1)
 // ---------------------------------------------
-  /// Splash screen — checks auth state and navigates accordingly.
+/// Splash screen — checks auth state and navigates accordingly.
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
@@ -281,14 +344,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF0F0F23),
-              Color(0xFF1A1A2E),
-              Color(0xFF16213E),
+              context.palette.background,
+              context.palette.surface,
+              context.palette.card,
             ],
           ),
         ),
@@ -332,19 +395,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       // App name
                       Text(
                         'EnglishAI',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge
-                            ?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -1,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: -1,
+                                ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Your AI English Learning Assistant',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: const Color(0xFFB0B0C8),
+                              color: context.palette.textSecondary,
                             ),
                       ),
                     ],
@@ -358,4 +419,3 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     );
   }
 }
-

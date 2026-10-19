@@ -94,13 +94,13 @@ class _ReadingScreenState extends State<ReadingScreen> {
     final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Thoát',
           onPressed: () {
             if (context.canPop()) {
@@ -113,7 +113,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
         title: Text(
           'Luyện Đọc Hiểu (Reading)',
           style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimaryDark,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -181,7 +181,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   Text(
                     'Kho bài đọc (${readingArticlesData.length} bài viết)',
                     style: AppTextStyles.labelLarge.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -209,9 +209,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.darkCard,
+        color: context.palette.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.darkDivider),
+        border: Border.all(color: context.palette.divider),
       ),
       child: Material(
         color: Colors.transparent,
@@ -246,7 +246,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                             child: Text(
                               article.title,
                               style: AppTextStyles.labelMedium.copyWith(
-                                color: AppColors.textPrimaryDark,
+                                color: context.palette.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -281,7 +281,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                       Text(
                         article.summaryVi,
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textSecondaryDark,
+                          color: context.palette.textSecondary,
                           fontSize: 12,
                         ),
                         maxLines: 2,
@@ -291,34 +291,34 @@ class _ReadingScreenState extends State<ReadingScreen> {
                       Row(
                         children: [
                           Icon(Icons.schedule_rounded,
-                              size: 13, color: AppColors.textSecondaryDark),
+                              size: 13, color: context.palette.textSecondary),
                           const SizedBox(width: 4),
                           Text(
                             '~${article.readTimeMinutes} phút đọc',
                             style: TextStyle(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                               fontSize: 11,
                             ),
                           ),
                           const SizedBox(width: 14),
                           Icon(Icons.text_fields_rounded,
-                              size: 13, color: AppColors.textSecondaryDark),
+                              size: 13, color: context.palette.textSecondary),
                           const SizedBox(width: 4),
                           Text(
                             '${article.wordCount} từ',
                             style: TextStyle(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                               fontSize: 11,
                             ),
                           ),
                           const SizedBox(width: 14),
                           Icon(Icons.quiz_outlined,
-                              size: 13, color: AppColors.textSecondaryDark),
+                              size: 13, color: context.palette.textSecondary),
                           const SizedBox(width: 4),
                           Text(
                             '${article.questions.length} câu hỏi',
                             style: TextStyle(
-                              color: AppColors.textSecondaryDark,
+                              color: context.palette.textSecondary,
                               fontSize: 11,
                             ),
                           ),
@@ -328,10 +328,10 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 14,
-                  color: AppColors.darkTextHint,
+                  color: context.palette.textHint,
                 ),
               ],
             ),
@@ -349,13 +349,13 @@ class _ReadingScreenState extends State<ReadingScreen> {
     final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           tooltip: 'Quay lại',
           onPressed: _backToArticleList,
         ),
@@ -364,7 +364,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
             Text(
               article.title,
               style: AppTextStyles.titleSmall.copyWith(
-                color: AppColors.textPrimaryDark,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -380,8 +380,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.close_rounded,
-                color: AppColors.textSecondaryDark),
+            icon:
+                Icon(Icons.close_rounded, color: context.palette.textSecondary),
             tooltip: 'Thoát',
             onPressed: () {
               if (context.canPop()) {
@@ -445,7 +445,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
       child: Material(
         color: isSelected
             ? AppColors.reading.withOpacity(0.2)
-            : AppColors.darkCard,
+            : context.palette.card,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
@@ -459,7 +459,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isSelected ? AppColors.reading : AppColors.darkDivider,
+                color: isSelected ? AppColors.reading : context.palette.divider,
               ),
             ),
             child: Row(
@@ -470,7 +470,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   size: 16,
                   color: isSelected
                       ? AppColors.reading
-                      : AppColors.textSecondaryDark,
+                      : context.palette.textSecondary,
                 ),
                 const SizedBox(width: 6),
                 Text(
@@ -478,7 +478,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   style: TextStyle(
                     color: isSelected
                         ? AppColors.reading
-                        : AppColors.textSecondaryDark,
+                        : context.palette.textSecondary,
                     fontWeight:
                         isSelected ? FontWeight.bold : FontWeight.normal,
                     fontSize: 12,
@@ -503,9 +503,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: AppColors.darkCard,
+            color: context.palette.card,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.darkDivider),
+            border: Border.all(color: context.palette.divider),
           ),
           child: Row(
             children: [
@@ -514,8 +514,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
               const SizedBox(width: 8),
               Text(
                 'Chủ đề: ${article.topic}',
-                style: const TextStyle(
-                  color: AppColors.textPrimaryDark,
+                style: TextStyle(
+                  color: context.palette.textPrimary,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -524,7 +524,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
               Text(
                 '${article.wordCount} words • ~${article.readTimeMinutes} min',
                 style: TextStyle(
-                  color: AppColors.textSecondaryDark,
+                  color: context.palette.textSecondary,
                   fontSize: 11,
                 ),
               ),
@@ -544,11 +544,11 @@ class _ReadingScreenState extends State<ReadingScreen> {
             decoration: BoxDecoration(
               color: isPlayingThis
                   ? AppColors.reading.withOpacity(0.12)
-                  : AppColors.darkCard,
+                  : context.palette.card,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color:
-                    isPlayingThis ? AppColors.reading : AppColors.darkDivider,
+                    isPlayingThis ? AppColors.reading : context.palette.divider,
                 width: isPlayingThis ? 1.5 : 1,
               ),
             ),
@@ -584,7 +584,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                 Text(
                   pText,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textPrimaryDark,
+                    color: context.palette.textPrimary,
                     fontSize: 15,
                     height: 1.6,
                   ),
@@ -611,9 +611,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.darkCard,
+            color: context.palette.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.darkDivider),
+            border: Border.all(color: context.palette.divider),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -634,7 +634,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                         Text(
                           vocab.phonetic,
                           style: TextStyle(
-                            color: AppColors.textSecondaryDark,
+                            color: context.palette.textSecondary,
                             fontSize: 13,
                           ),
                         ),
@@ -649,11 +649,11 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   ),
                 ],
               ),
-              const Divider(color: AppColors.darkDivider, height: 16),
+              Divider(color: context.palette.divider, height: 16),
               Text(
                 'Nghĩa: ${vocab.meaning}',
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textPrimaryDark,
+                  color: context.palette.textPrimary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -661,7 +661,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
               Text(
                 'Ngữ cảnh: "${vocab.contextSentence}"',
                 style: TextStyle(
-                  color: AppColors.textSecondaryDark,
+                  color: context.palette.textSecondary,
                   fontSize: 13,
                   fontStyle: FontStyle.italic,
                 ),
@@ -731,9 +731,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
             margin: const EdgeInsets.only(bottom: 16),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.darkCard,
+              color: context.palette.card,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.darkDivider),
+              border: Border.all(color: context.palette.divider),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -741,7 +741,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                 Text(
                   'Câu ${qIdx + 1}: ${q.question}',
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textPrimaryDark,
+                    color: context.palette.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -749,7 +749,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                 Text(
                   q.questionVi,
                   style: TextStyle(
-                    color: AppColors.textSecondaryDark,
+                    color: context.palette.textSecondary,
                     fontSize: 12,
                   ),
                 ),
@@ -759,9 +759,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   final isThisSelected = selected == optIdx;
                   final isCorrect = optIdx == q.correctIndex;
 
-                  Color optBg = AppColors.backgroundDark;
-                  Color optBorder = AppColors.darkDivider;
-                  Color optTextColor = AppColors.textPrimaryDark;
+                  Color optBg = context.palette.background;
+                  Color optBorder = context.palette.divider;
+                  Color optTextColor = context.palette.textPrimary;
 
                   if (isAnswered) {
                     if (isCorrect) {
@@ -833,7 +833,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: AppColors.backgroundDark,
+                      color: context.palette.background,
                       borderRadius: BorderRadius.circular(10),
                       border:
                           Border.all(color: AppColors.reading.withOpacity(0.3)),
@@ -847,8 +847,8 @@ class _ReadingScreenState extends State<ReadingScreen> {
                         Expanded(
                           child: Text(
                             'Giải thích: ${q.explanation}',
-                            style: const TextStyle(
-                              color: AppColors.textPrimaryDark,
+                            style: TextStyle(
+                              color: context.palette.textPrimary,
                               fontSize: 12,
                             ),
                           ),

@@ -88,13 +88,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF0F0F23),
-              Color(0xFF1A1A2E),
+              context.palette.background,
+              context.palette.surface,
             ],
           ),
         ),
@@ -114,9 +114,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             curve: Curves.easeInOutCubic,
                           );
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_back_ios_rounded,
-                          color: AppColors.darkTextPrimary,
+                          color: context.palette.textPrimary,
                           size: 20,
                         ),
                       )
@@ -126,12 +126,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     SmoothPageIndicator(
                       controller: _pageController,
                       count: 3,
-                      effect: const ExpandingDotsEffect(
+                      effect: ExpandingDotsEffect(
                         dotWidth: 8,
                         dotHeight: 8,
                         expansionFactor: 3,
                         spacing: 6,
-                        dotColor: AppColors.darkDivider,
+                        dotColor: context.palette.divider,
                         activeDotColor: AppColors.primary,
                       ),
                     ),
@@ -141,7 +141,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       child: Text(
                         'Skip',
                         style: AppTextStyles.labelSmall.copyWith(
-                          color: AppColors.darkTextHint,
+                          color: context.palette.textHint,
                         ),
                       ),
                     ),
@@ -205,7 +205,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
 // ---------------------------------------------// Step 1: Learning Goal
 // ---------------------------------------------
-  class _GoalPage extends StatelessWidget {
+class _GoalPage extends StatelessWidget {
   final String? selectedGoal;
   final ValueChanged<String> onSelected;
 
@@ -237,14 +237,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           Text(
             'Why do you want to\nlearn English?',
             style: AppTextStyles.h1.copyWith(
-              color: AppColors.darkTextPrimary,
+              color: context.palette.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'This helps us personalize your learning path',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.darkTextSecondary,
+              color: context.palette.textSecondary,
             ),
           ),
           const SizedBox(height: 32),
@@ -274,7 +274,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
 // ---------------------------------------------// Step 2: Daily Time
 // ---------------------------------------------
-  class _TimePage extends StatelessWidget {
+class _TimePage extends StatelessWidget {
   final int selectedMinutes;
   final ValueChanged<int> onSelected;
 
@@ -310,14 +310,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           Text(
             'How much time can you\nstudy each day?',
             style: AppTextStyles.h1.copyWith(
-              color: AppColors.darkTextPrimary,
+              color: context.palette.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'We\'ll create a daily plan that fits your schedule',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.darkTextSecondary,
+              color: context.palette.textSecondary,
             ),
           ),
           const SizedBox(height: 32),
@@ -347,7 +347,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
 // ---------------------------------------------// Step 3: Topics
 // ---------------------------------------------
-  class _TopicPage extends StatelessWidget {
+class _TopicPage extends StatelessWidget {
   final Set<String> selectedTopics;
   final ValueChanged<String> onToggle;
 
@@ -391,14 +391,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           Text(
             'What topics interest you?',
             style: AppTextStyles.h1.copyWith(
-              color: AppColors.darkTextPrimary,
+              color: context.palette.textPrimary,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Select all that apply — we\'ll customize your content',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.darkTextSecondary,
+              color: context.palette.textSecondary,
             ),
           ),
           const SizedBox(height: 32),
@@ -415,8 +415,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 final topic = AppConstants.topics[index];
                 final isSelected = selectedTopics.contains(topic);
                 final color = _topicColors[index % _topicColors.length];
-                final icon =
-                    _topicIcons[topic] ?? Icons.category_rounded;
+                final icon = _topicIcons[topic] ?? Icons.category_rounded;
 
                 return GestureDetector(
                   onTap: () => onToggle(topic),
@@ -425,14 +424,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     decoration: BoxDecoration(
                       color: isSelected
                           ? color.withOpacity(0.15)
-                          : AppColors.darkCard,
+                          : context.palette.card,
                       borderRadius: BorderRadius.circular(
                         AppDimensions.radiusLg,
                       ),
                       border: Border.all(
-                        color: isSelected
-                            ? color
-                            : AppColors.darkDivider,
+                        color: isSelected ? color : context.palette.divider,
                         width: isSelected ? 2 : 1,
                       ),
                     ),
@@ -441,9 +438,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       children: [
                         Icon(
                           icon,
-                          color: isSelected
-                              ? color
-                              : AppColors.darkTextHint,
+                          color: isSelected ? color : context.palette.textHint,
                           size: 28,
                         ),
                         const SizedBox(height: 8),
@@ -452,7 +447,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           style: AppTextStyles.labelMedium.copyWith(
                             color: isSelected
                                 ? color
-                                : AppColors.darkTextSecondary,
+                                : context.palette.textSecondary,
                           ),
                         ),
                       ],
@@ -470,7 +465,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
 // ---------------------------------------------// Shared Selection Tile
 // ---------------------------------------------
-  class _SelectionTile extends StatelessWidget {
+class _SelectionTile extends StatelessWidget {
   final IconData icon;
   final String text;
   final String? subtitle;
@@ -495,12 +490,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withOpacity(0.1)
-              : AppColors.darkCard,
+              : context.palette.card,
           borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
           border: Border.all(
-            color: isSelected
-                ? AppColors.primary
-                : AppColors.darkDivider,
+            color: isSelected ? AppColors.primary : context.palette.divider,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -512,14 +505,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               decoration: BoxDecoration(
                 color: isSelected
                     ? AppColors.primary.withOpacity(0.2)
-                    : AppColors.darkCardLight,
+                    : context.palette.cardLight,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
-                color: isSelected
-                    ? AppColors.primary
-                    : AppColors.darkTextHint,
+                color:
+                    isSelected ? AppColors.primary : context.palette.textHint,
                 size: 22,
               ),
             ),
@@ -533,7 +525,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     style: AppTextStyles.labelLarge.copyWith(
                       color: isSelected
                           ? AppColors.primary
-                          : AppColors.darkTextPrimary,
+                          : context.palette.textPrimary,
                     ),
                   ),
                   if (subtitle != null) ...[
@@ -541,7 +533,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     Text(
                       subtitle!,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.darkTextHint,
+                        color: context.palette.textHint,
                       ),
                     ),
                   ],
@@ -554,13 +546,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isSelected
-                    ? AppColors.primary
-                    : Colors.transparent,
+                color: isSelected ? AppColors.primary : Colors.transparent,
                 border: Border.all(
-                  color: isSelected
-                      ? AppColors.primary
-                      : AppColors.darkDivider,
+                  color:
+                      isSelected ? AppColors.primary : context.palette.divider,
                   width: 2,
                 ),
               ),

@@ -8,7 +8,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from ...database import get_db, IS_DB_CONNECTED
+from ...database import get_db, is_db_connected
 from ...models.learning import UserWordProgress, VocabularyTopic, VocabularyWord
 from ...models.user import User
 from ...schemas.learning import (
@@ -79,7 +79,7 @@ async def list_topics(
     current_user: Optional[User] = Depends(get_optional_user),
 ):
     """Retrieve all active vocabulary topics."""
-    if IS_DB_CONNECTED:
+    if is_db_connected():
         try:
             result = await db.execute(
                 select(VocabularyTopic)
@@ -101,7 +101,7 @@ async def get_topic_words(
     current_user: Optional[User] = Depends(get_optional_user),
 ):
     """Retrieve all words belonging to a specific topic."""
-    if IS_DB_CONNECTED:
+    if is_db_connected():
         try:
             result = await db.execute(
                 select(VocabularyWord).where(VocabularyWord.topic_id == topic_id)
@@ -126,7 +126,7 @@ async def get_due_words(
     """
     now = datetime.now(timezone.utc)
 
-    if IS_DB_CONNECTED and current_user:
+    if is_db_connected() and current_user:
         try:
             # 1. Fetch due reviews for this user
             result = await db.execute(
@@ -201,7 +201,7 @@ async def submit_word_review(
     """
     # Verify word exists
     word = None
-    if IS_DB_CONNECTED:
+    if is_db_connected():
         try:
             w_res = await db.execute(
                 select(VocabularyWord).where(VocabularyWord.id == word_id)
@@ -222,7 +222,7 @@ async def submit_word_review(
     # Find existing progress or initialize new
     progress = None
     user_id = current_user.id if current_user else _DEFAULT_DEMO_ID
-    if IS_DB_CONNECTED and current_user:
+    if is_db_connected() and current_user:
         try:
             p_res = await db.execute(
                 select(UserWordProgress).where(
@@ -265,7 +265,7 @@ async def submit_word_review(
             last_reviewed_at=datetime.now(timezone.utc),
             status=status_str,
         )
-        if IS_DB_CONNECTED and current_user:
+        if is_db_connected() and current_user:
             try:
                 db.add(progress)
             except Exception:
@@ -280,7 +280,7 @@ async def submit_word_review(
 
     if current_user:
         current_user.total_xp = (current_user.total_xp or 0) + 10
-        if IS_DB_CONNECTED:
+        if is_db_connected():
             try:
                 await db.flush()
             except Exception:

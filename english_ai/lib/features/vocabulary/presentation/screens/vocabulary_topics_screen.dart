@@ -34,11 +34,12 @@ class VocabularyTopicsScreen extends ConsumerWidget {
     WidgetRef ref,
     VocabularyTopicModel topic,
   ) {
-    final words = buildTopicWords(topic.slug.isNotEmpty ? topic.slug : topic.id);
+    final words =
+        buildTopicWords(topic.slug.isNotEmpty ? topic.slug : topic.id);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.darkCard,
+      backgroundColor: context.palette.card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -58,13 +59,14 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                     width: 44,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: AppColors.darkDivider,
+                      color: context.palette.divider,
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   child: Row(
                     children: [
                       Container(
@@ -87,7 +89,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                             Text(
                               topic.title,
                               style: AppTextStyles.titleMedium.copyWith(
-                                color: AppColors.darkTextPrimary,
+                                color: context.palette.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -101,13 +103,14 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close, color: AppColors.darkTextSecondary),
+                        icon: Icon(Icons.close,
+                            color: context.palette.textSecondary),
                         onPressed: () => Navigator.pop(ctx),
                       ),
                     ],
                   ),
                 ),
-                const Divider(color: AppColors.darkDivider, height: 1),
+                Divider(color: context.palette.divider, height: 1),
                 // Flashcard CTA button
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
@@ -116,7 +119,9 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         Navigator.pop(ctx);
-                        ref.read(flashcardSessionProvider.notifier).startTopicSession(topic.id, topic.title);
+                        ref
+                            .read(flashcardSessionProvider.notifier)
+                            .startTopicSession(topic.id, topic.title);
                         context.pushNamed(RouteNames.vocabularyReview);
                       },
                       icon: const Icon(Icons.style_rounded, size: 20),
@@ -125,7 +130,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14)),
                       ),
                     ),
                   ),
@@ -133,7 +139,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                 Expanded(
                   child: ListView.separated(
                     controller: scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
                     itemCount: words.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 10),
                     itemBuilder: (_, idx) {
@@ -141,14 +148,15 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                       return Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceDark,
+                          color: context.palette.surface,
                           borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppColors.darkDivider),
+                          border: Border.all(color: context.palette.divider),
                         ),
                         child: Row(
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.volume_up_rounded, color: AppColors.secondary),
+                              icon: const Icon(Icons.volume_up_rounded,
+                                  color: AppColors.secondary),
                               tooltip: 'Nghe phát âm',
                               onPressed: () => SpeechService.speak(w.word),
                             ),
@@ -161,8 +169,9 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                     children: [
                                       Text(
                                         w.word,
-                                        style: AppTextStyles.labelLarge.copyWith(
-                                          color: AppColors.darkTextPrimary,
+                                        style:
+                                            AppTextStyles.labelLarge.copyWith(
+                                          color: context.palette.textPrimary,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -170,7 +179,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                       Text(
                                         w.phonetic,
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: AppColors.darkTextHint,
+                                          color: context.palette.textHint,
                                           fontStyle: FontStyle.italic,
                                         ),
                                       ),
@@ -188,7 +197,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                   Text(
                                     w.exampleSentence,
                                     style: AppTextStyles.bodySmall.copyWith(
-                                      color: AppColors.darkTextSecondary,
+                                      color: context.palette.textSecondary,
                                     ),
                                   ),
                                 ],
@@ -215,12 +224,12 @@ class VocabularyTopicsScreen extends ConsumerWidget {
     final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back, color: context.palette.textPrimary),
           onPressed: () {
             if (context.canPop()) {
               context.pop();
@@ -231,7 +240,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
         ),
         title: Text(
           'Kho từ vựng & Flashcards',
-          style: AppTextStyles.titleMedium.copyWith(color: AppColors.textPrimaryDark),
+          style: AppTextStyles.titleMedium
+              .copyWith(color: context.palette.textPrimary),
         ),
         centerTitle: true,
       ),
@@ -241,7 +251,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -303,7 +314,9 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                         const SizedBox(width: 8),
                         ElevatedButton(
                           onPressed: () {
-                            ref.read(flashcardSessionProvider.notifier).loadDueWords();
+                            ref
+                                .read(flashcardSessionProvider.notifier)
+                                .loadDueWords();
                             context.pushNamed(RouteNames.vocabularyReview);
                           },
                           style: ElevatedButton.styleFrom(
@@ -312,10 +325,12 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 10),
                             minimumSize: const Size(0, 40),
                           ),
-                          child: const Text('Luyện ngay', style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: const Text('Luyện ngay',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
@@ -329,7 +344,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceDark,
+                        color: context.palette.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                             color: const Color(0xFF6C5CE7).withOpacity(0.5)),
@@ -364,7 +379,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                 Text(
                                   'Từ vựng & Lật thẻ Toàn Diện',
                                   style: AppTextStyles.titleSmall.copyWith(
-                                    color: AppColors.textPrimaryDark,
+                                    color: context.palette.textPrimary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -372,7 +387,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                 Text(
                                   'Xem toàn bộ kho từ • Tra từ điển • Lật thẻ A1 - C1',
                                   style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.textSecondaryDark,
+                                    color: context.palette.textSecondary,
                                   ),
                                 ),
                               ],
@@ -393,7 +408,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                   Text(
                     'Chủ đề từ vựng cốt lõi',
                     style: AppTextStyles.titleMedium.copyWith(
-                      color: AppColors.textPrimaryDark,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -401,19 +416,20 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                   Text(
                     'Chạm vào chủ đề để xem danh sách từ và luyện Flashcards ngay',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textSecondaryDark,
+                      color: context.palette.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 14),
 
                   // Topic cards list
-                  ...(topicsAsync.valueOrNull ?? buildStaticTopics()).map((topic) {
+                  ...(topicsAsync.valueOrNull ?? buildStaticTopics())
+                      .map((topic) {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 12),
                       decoration: BoxDecoration(
-                        color: AppColors.darkCard,
+                        color: context.palette.card,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.darkDivider),
+                        border: Border.all(color: context.palette.divider),
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -440,28 +456,34 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           Expanded(
                                             child: Text(
                                               topic.title,
-                                              style: AppTextStyles.titleSmall.copyWith(
-                                                color: AppColors.textPrimaryDark,
+                                              style: AppTextStyles.titleSmall
+                                                  .copyWith(
+                                                color:
+                                                    context.palette.textPrimary,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ),
                                           Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 2),
                                             decoration: BoxDecoration(
-                                              color: AppColors.surfaceLightDark,
-                                              borderRadius: BorderRadius.circular(6),
+                                              color: context.palette.cardLight,
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
                                             ),
                                             child: Text(
                                               topic.level,
-                                              style: AppTextStyles.labelSmall.copyWith(
+                                              style: AppTextStyles.labelSmall
+                                                  .copyWith(
                                                 color: AppColors.secondary,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -471,9 +493,10 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                       ),
                                       const SizedBox(height: 6),
                                       Text(
-                                        topic.description ?? '${topic.totalWords} từ vựng then chốt',
+                                        topic.description ??
+                                            '${topic.totalWords} từ vựng then chốt',
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: AppColors.textSecondaryDark,
+                                          color: context.palette.textSecondary,
                                         ),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
@@ -482,9 +505,9 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                const Icon(
+                                Icon(
                                   Icons.chevron_right_rounded,
-                                  color: AppColors.textSecondaryDark,
+                                  color: context.palette.textSecondary,
                                 ),
                               ],
                             ),

@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+import asyncio
 import logging
 
 import uvicorn
@@ -25,20 +26,34 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifecycle manager for startup and shutdown events."""
-    logger.info(f"ðŸš€ Starting {settings.app_name} v{settings.app_version}")
+    logger.info(
+        f"Starting {settings.app_name} v{settings.app_version} "
+        f"(env={settings.environment}, debug={settings.debug})"
+    )
+    if settings.debug and settings.environment.lower() == "production":
+        logger.warning("DEBUG is enabled in a production environment.")
+    if settings.enable_demo_accounts and settings.environment.lower() == "production":
+        logger.warning("Demo accounts are enabled in a production environment.")
     try:
-        # Create tables (use Alembic migrations in production)
-        await init_db()
+        # Dev: auto-create tables. Production: run `alembic upgrade head`.
+        await init_db(create_tables=settings.environment == "development")
         logger.info("Database initialized")
-        # Local LLM will be lazy-loaded on demand if requested
         logger.info("Server startup complete")
     except Exception as e:
         logger.warning(
-            f"âš ï¸ Could not connect to database on startup: {e}. "
+            f"Could not connect to database on startup: {e}. "
             "The server will continue running, but DB-dependent endpoints require a running PostgreSQL instance."
         )
+
+    if settings.local_llm_preload and settings.local_llm_enabled:
+        from app.services.local_llm_service import local_llm_service
+
+        logger.info("Preloading local LLM in background...")
+        asyncio.create_task(asyncio.to_thread(local_llm_service.load_model))
+    else:
+        logger.info("Local LLM will be lazy-loaded on demand")
     yield
-    logger.info("ðŸ‘‹ Shutting down...")
+    logger.info("Shutting down...")
 
 
 def create_app() -> FastAPI:
@@ -47,8 +62,8 @@ def create_app() -> FastAPI:
         title=settings.app_name,
         version=settings.app_version,
         description="EnglishAI â€” Personalized AI English Learning Assistant API",
-        docs_url="/docs" if settings.debug else None,
-        redoc_url="/redoc" if settings.debug else None,
+        docs_url="/docs" if settings.docs_enabled else None,
+        redoc_url="/redoc" if settings.docs_enabled else None,
         lifespan=lifespan,
     )
 

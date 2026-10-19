@@ -32,6 +32,10 @@ class RefreshTokenRequest(BaseModel):
     refresh_token: str
 
 
+class GoogleAuthRequest(BaseModel):
+    id_token: str
+
+
 class OnboardingRequest(BaseModel):
     learning_goal: str
     daily_learning_minutes: int = Field(..., ge=5, le=120)

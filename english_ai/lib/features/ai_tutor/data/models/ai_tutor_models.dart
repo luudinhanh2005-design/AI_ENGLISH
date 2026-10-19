@@ -2,11 +2,13 @@ class AICorrectionModel {
   final String original;
   final String correction;
   final String explanationVi;
+  final String type;
 
   const AICorrectionModel({
     required this.original,
     required this.correction,
     required this.explanationVi,
+    this.type = 'grammar',
   });
 
   factory AICorrectionModel.fromJson(Map<String, dynamic> json) {
@@ -14,6 +16,7 @@ class AICorrectionModel {
       original: json['original'] as String? ?? '',
       correction: json['correction'] as String? ?? '',
       explanationVi: json['explanation_vi'] as String? ?? '',
+      type: json['type'] as String? ?? 'grammar',
     );
   }
 }
@@ -44,7 +47,8 @@ class ChatMessageModel {
       role: json['role'] as String? ?? 'assistant',
       content: json['content'] as String? ?? '',
       corrections: rawCorrections
-          .map((c) => AICorrectionModel.fromJson(c as Map<String, dynamic>))
+          .whereType<Map<String, dynamic>>()
+          .map(AICorrectionModel.fromJson)
           .toList(),
       suggestedReplies: rawSuggestions.map((s) => s.toString()).toList(),
       createdAt: json['created_at'] != null

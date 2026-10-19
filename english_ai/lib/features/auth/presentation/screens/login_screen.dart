@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/errors/exceptions.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -9,6 +10,7 @@ import '../../../../core/utils/validators.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/google_sign_in_button.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -75,19 +77,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             email: _emailController.text.trim(),
             password: _passwordController.text,
           );
-
-      if (mounted) {
-        final user = ref.read(authStateProvider).valueOrNull;
-        if (user != null && !user.hasCompletedOnboarding) {
-          context.go('/onboarding');
+      // Đăng nhập đúng: router tự chuyển trang, không cần điều hướng thủ công.
+    } catch (e) {
+      String friendlyMessage;
+      if (e is AuthException) {
+        friendlyMessage = e.message;
+      } else {
+        final err = e.toString();
+        if (err.contains('401') ||
+            err.contains('Invalid') ||
+            err.contains('không chính xác')) {
+          friendlyMessage = 'Tài khoản hoặc mật khẩu không chính xác!';
+        } else if (err.contains('403') || err.contains('khóa')) {
+          friendlyMessage = 'Tài khoản đã bị tạm khóa!';
+        } else if (err.contains('NetworkException') ||
+            err.contains('No internet') ||
+            err.contains('timed out') ||
+            err.contains('connection refused') ||
+            err.contains('Failed to fetch')) {
+          friendlyMessage =
+              'Không thể kết nối đến máy chủ. Vui lòng thử lại sau!';
         } else {
-          context.go('/');
+          friendlyMessage = err
+              .replaceAll('AuthException: ', '')
+              .replaceAll('ServerException: ', '')
+              .replaceAll('Exception: ', '');
         }
       }
-    } catch (e) {
-      setState(() {
-        _errorMessage = e.toString().replaceAll('Exception: ', '');
-      });
+
+      _setError(friendlyMessage);
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -95,17 +113,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     }
   }
 
+  void _setError(String message) {
+    if (!mounted) return;
+    setState(() => _errorMessage = message);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF0F0F23),
-              Color(0xFF1A1A2E),
+              context.palette.background,
+              context.palette.surface,
             ],
           ),
         ),
@@ -155,7 +178,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                         child: Text(
                           'Welcome Back',
                           style: AppTextStyles.h1.copyWith(
-                            color: AppColors.darkTextPrimary,
+                            color: context.palette.textPrimary,
                           ),
                         ),
                       ),
@@ -164,11 +187,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                         child: Text(
                           'Sign in to continue learning',
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.darkTextSecondary,
+                            color: context.palette.textSecondary,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 48),
+                      const SizedBox(height: 28),
 
                       // Error message
                       if (_errorMessage != null) ...[
@@ -257,9 +280,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       // Divider
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Divider(
-                              color: AppColors.darkDivider,
+                              color: context.palette.divider,
                             ),
                           ),
                           Padding(
@@ -269,32 +292,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                             child: Text(
                               'or',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.darkTextHint,
+                                color: context.palette.textHint,
                               ),
                             ),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Divider(
-                              color: AppColors.darkDivider,
+                              color: context.palette.divider,
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 24),
 
-                      // Google login (placeholder)
-                      AppButton(
-                        text: 'Continue with Google',
-                        isOutlined: true,
-                        icon: Icons.g_mobiledata_rounded,
-                        onPressed: () {
-                          // TODO: Implement Google Sign-In in Phase 5
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Google Sign-In coming soon!'),
-                            ),
-                          );
+                      // Google login
+                      GoogleSignInButton(
+                        isLoading: _isLoading,
+                        onIdToken: (idToken) async {
+                          await ref
+                              .read(authStateProvider.notifier)
+                              .loginWithGoogle(idToken: idToken);
                         },
+                        onError: (error) => _setError(
+                          'Đăng nhập Google thất bại: $error',
+                        ),
                       ),
                       const SizedBox(height: 32),
 
@@ -306,7 +327,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                             Text(
                               "Don't have an account? ",
                               style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.darkTextSecondary,
+                                color: context.palette.textSecondary,
                               ),
                             ),
                             GestureDetector(

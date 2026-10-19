@@ -6,6 +6,7 @@ import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../shared/widgets/app_card.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
+
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
   @override
@@ -34,14 +35,14 @@ class HomeScreen extends ConsumerWidget {
                         Text(
                           '$greeting 👋',
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.darkTextSecondary,
+                            color: context.palette.textSecondary,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           userName,
                           style: AppTextStyles.h2.copyWith(
-                            color: AppColors.darkTextPrimary,
+                            color: context.palette.textPrimary,
                           ),
                         ),
                       ],
@@ -69,7 +70,8 @@ class HomeScreen extends ConsumerWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.local_fire_department_rounded, color: Colors.white, size: 18),
+                        const Icon(Icons.local_fire_department_rounded,
+                            color: Colors.white, size: 18),
                         const SizedBox(width: 6),
                         Text(
                           '${user?.streak ?? 0}',
@@ -96,7 +98,8 @@ class HomeScreen extends ConsumerWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.bolt_rounded, color: Colors.white, size: 18),
+                        const Icon(Icons.bolt_rounded,
+                            color: Colors.white, size: 18),
                         const SizedBox(width: 4),
                         Text(
                           '${user?.totalXp ?? 0}',
@@ -160,7 +163,8 @@ class HomeScreen extends ConsumerWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: LinearProgressIndicator(
-                        value: ((user?.totalXp ?? 15) % 100 / 60.0).clamp(0.15, 1.0),
+                        value: ((user?.totalXp ?? 15) % 100 / 60.0)
+                            .clamp(0.15, 1.0),
                         minHeight: 10,
                         backgroundColor: Colors.white.withOpacity(0.2),
                         valueColor: const AlwaysStoppedAnimation<Color>(
@@ -184,12 +188,21 @@ class HomeScreen extends ConsumerWidget {
               Text(
                 'Quick Actions',
                 style: AppTextStyles.h4.copyWith(
-                  color: AppColors.darkTextPrimary,
+                  color: context.palette.textPrimary,
                 ),
               ),
               const SizedBox(height: 12),
               Row(
                 children: [
+                  Expanded(
+                    child: _QuickActionCard(
+                      icon: Icons.record_voice_over_rounded,
+                      label: 'Phát âm\nAI',
+                      color: AppColors.speaking,
+                      onTap: () => context.push('/pronunciation'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: _QuickActionCard(
                       icon: Icons.menu_book_rounded,
@@ -198,22 +211,22 @@ class HomeScreen extends ConsumerWidget {
                       onTap: () => context.push('/vocabulary'),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _QuickActionCard(
-                      icon: Icons.assignment_turned_in_rounded,
-                      label: 'Kiểm tra\nĐầu vào',
-                      color: AppColors.speaking,
-                      onTap: () => context.push('/placement'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: _QuickActionCard(
                       icon: Icons.smart_toy_rounded,
                       label: 'AI\nTutor',
                       color: AppColors.primary,
                       onTap: () => context.go('/ai-tutor'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _QuickActionCard(
+                      icon: Icons.assignment_turned_in_rounded,
+                      label: 'Đầu vào\nTest',
+                      color: AppColors.accent,
+                      onTap: () => context.push('/placement'),
                     ),
                   ),
                 ],
@@ -234,7 +247,8 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.psychology_rounded, color: Colors.white, size: 36),
+                        const Icon(Icons.psychology_rounded,
+                            color: Colors.white, size: 36),
                         const SizedBox(width: 14),
                         Expanded(
                           child: Column(
@@ -257,7 +271,8 @@ class HomeScreen extends ConsumerWidget {
                             ],
                           ),
                         ),
-                        const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white70, size: 16),
+                        const Icon(Icons.arrow_forward_ios_rounded,
+                            color: Colors.white70, size: 16),
                       ],
                     ),
                   ),
@@ -271,8 +286,8 @@ class HomeScreen extends ConsumerWidget {
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
-                          color: _levelColor(user!.currentLevel!)
-                              .withOpacity(0.1),
+                          color:
+                              _levelColor(user!.currentLevel!).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Center(
@@ -292,21 +307,21 @@ class HomeScreen extends ConsumerWidget {
                             Text(
                               'Your Level',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.darkTextHint,
+                                color: context.palette.textHint,
                               ),
                             ),
                             Text(
                               _levelName(user.currentLevel!),
                               style: AppTextStyles.labelLarge.copyWith(
-                                color: AppColors.darkTextPrimary,
+                                color: context.palette.textPrimary,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward_ios_rounded,
-                        color: AppColors.darkTextHint,
+                        color: context.palette.textHint,
                         size: 16,
                       ),
                     ],
@@ -318,10 +333,34 @@ class HomeScreen extends ConsumerWidget {
               Text(
                 'Recommended for You',
                 style: AppTextStyles.h4.copyWith(
-                  color: AppColors.darkTextPrimary,
+                  color: context.palette.textPrimary,
                 ),
               ),
               const SizedBox(height: 12),
+              _RecommendationCard(
+                icon: Icons.record_voice_over_rounded,
+                title: 'Luyện Phát Âm AI',
+                subtitle: 'Chấm điểm phát âm & nhận phản hồi chi tiết',
+                color: AppColors.speaking,
+                onTap: () => context.push('/pronunciation'),
+              ),
+              const SizedBox(height: 8),
+              _RecommendationCard(
+                icon: Icons.phone_in_talk_rounded,
+                title: 'Gọi Thoại Với AI',
+                subtitle: 'Đàm thoại 2 chiều thời gian thực cùng Sarah',
+                color: const Color(0xFF2ED573),
+                onTap: () => context.push('/ai-tutor/call'),
+              ),
+              const SizedBox(height: 8),
+              _RecommendationCard(
+                icon: Icons.edit_note_rounded,
+                title: 'Luyện Viết & Chấm AI',
+                subtitle: 'Chấm điểm bài luận IELTS, sửa lỗi & nâng cấp câu',
+                color: const Color(0xFF5352ED),
+                onTap: () => context.push('/writing'),
+              ),
+              const SizedBox(height: 8),
               _RecommendationCard(
                 icon: Icons.headphones_rounded,
                 title: 'Listening Practice',
@@ -352,17 +391,20 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
+
   String _getGoalMessage(int xp) {
     if (xp > 80) return 'Tuyệt vời, bạn sắp hoàn thành mục tiêu!';
     if (xp > 30) return 'Đang học rất tốt, tiếp tục phát huy!';
     return 'Bắt đầu bài học đầu tiên hôm nay nào!';
   }
+
   String _getgreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) return 'Good morning';
     if (hour < 17) return 'Good afternoon';
     return 'Good evening';
   }
+
   Color _levelColor(String level) {
     switch (level) {
       case 'A1':
@@ -379,6 +421,7 @@ class HomeScreen extends ConsumerWidget {
         return AppColors.primary;
     }
   }
+
   String _levelName(String level) {
     switch (level) {
       case 'A1':
@@ -396,6 +439,7 @@ class HomeScreen extends ConsumerWidget {
     }
   }
 }
+
 class _QuickActionCard extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -445,6 +489,7 @@ class _QuickActionCard extends StatelessWidget {
     );
   }
 }
+
 class _RecommendationCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -465,10 +510,10 @@ class _RecommendationCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppColors.darkCard,
+          color: context.palette.card,
           borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
           border: Border.all(
-            color: AppColors.darkDivider.withOpacity(0.5),
+            color: context.palette.divider.withOpacity(0.5),
           ),
         ),
         child: Row(
@@ -490,14 +535,14 @@ class _RecommendationCard extends StatelessWidget {
                   Text(
                     title,
                     style: AppTextStyles.labelMedium.copyWith(
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.darkTextHint,
+                      color: context.palette.textHint,
                     ),
                   ),
                 ],

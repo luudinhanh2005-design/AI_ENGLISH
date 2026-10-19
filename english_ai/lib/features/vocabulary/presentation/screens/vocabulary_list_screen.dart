@@ -44,13 +44,13 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
     final contentWidth = screenWidth > 900 ? 900.0 : screenWidth;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDark,
+        backgroundColor: context.palette.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: AppColors.textPrimaryDark),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: context.palette.textPrimary),
           onPressed: () {
             if (context.canPop()) {
               context.pop();
@@ -62,7 +62,7 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
         title: Text(
           'Kho Từ Vựng',
           style: AppTextStyles.titleMedium.copyWith(
-            color: AppColors.textPrimaryDark,
+            color: context.palette.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -104,15 +104,16 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
                             controller: _searchController,
                             onChanged: (v) => setState(() {}),
                             style: AppTextStyles.bodyMedium
-                                .copyWith(color: AppColors.textPrimaryDark),
+                                .copyWith(color: context.palette.textPrimary),
                             decoration: InputDecoration(
                               hintText: 'Search word...',
-                              hintStyle: AppTextStyles.bodySmall
-                                  .copyWith(color: AppColors.textSecondaryDark),
-                              prefixIcon: const Icon(Icons.search,
-                                  color: AppColors.textSecondaryDark, size: 20),
+                              hintStyle: AppTextStyles.bodySmall.copyWith(
+                                  color: context.palette.textSecondary),
+                              prefixIcon: Icon(Icons.search,
+                                  color: context.palette.textSecondary,
+                                  size: 20),
                               filled: true,
-                              fillColor: AppColors.surfaceDark,
+                              fillColor: context.palette.surface,
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 10),
                               border: OutlineInputBorder(
@@ -127,25 +128,26 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 3),
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceDark,
+                            color: context.palette.surface,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               value: _selectedLevel,
-                              dropdownColor: AppColors.surfaceDark,
+                              dropdownColor: context.palette.surface,
                               style: AppTextStyles.labelSmall
-                                  .copyWith(color: AppColors.textPrimaryDark),
-                              icon: const Icon(Icons.expand_more,
-                                  color: AppColors.textSecondaryDark, size: 18),
+                                  .copyWith(color: context.palette.textPrimary),
+                              icon: Icon(Icons.expand_more,
+                                  color: context.palette.textSecondary,
+                                  size: 18),
                               items: _levels
                                   .map((l) => DropdownMenuItem(
                                       value: l,
                                       child: Text(l,
                                           style: AppTextStyles.labelSmall
                                               .copyWith(
-                                                  color: AppColors
-                                                      .textPrimaryDark))))
+                                                  color: context
+                                                      .palette.textPrimary))))
                                   .toList(),
                               onChanged: (v) {
                                 if (v != null)
@@ -209,14 +211,14 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.search_off,
-                                    color: AppColors.textSecondaryDark,
+                                Icon(Icons.search_off,
+                                    color: context.palette.textSecondary,
                                     size: 48),
                                 const SizedBox(height: 12),
                                 Text(
                                   'Không tìm thấy từ nào',
                                   style: AppTextStyles.bodyMedium.copyWith(
-                                      color: AppColors.textSecondaryDark),
+                                      color: context.palette.textSecondary),
                                 ),
                               ],
                             ),
@@ -242,7 +244,7 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
                             Text(
                               'Không thể tải từ vựng',
                               style: AppTextStyles.bodyMedium
-                                  .copyWith(color: AppColors.textPrimaryDark),
+                                  .copyWith(color: context.palette.textPrimary),
                             ),
                             const SizedBox(height: 12),
                             TextButton(
@@ -316,9 +318,9 @@ class _WordCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
+        color: context.palette.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.borderDark.withOpacity(0.5)),
+        border: Border.all(color: context.palette.divider.withOpacity(0.5)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -342,7 +344,7 @@ class _WordCard extends StatelessWidget {
           Text(
             word.meaningVi as String,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textPrimaryDark,
+              color: context.palette.textPrimary,
               fontWeight: FontWeight.w500,
             ),
             maxLines: 1,
@@ -352,7 +354,7 @@ class _WordCard extends StatelessWidget {
           Text(
             word.exampleSentence as String,
             style: AppTextStyles.labelSmall.copyWith(
-              color: AppColors.textSecondaryDark,
+              color: context.palette.textSecondary,
               fontStyle: FontStyle.italic,
             ),
             maxLines: 2,

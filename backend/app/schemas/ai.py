@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Literal, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -13,6 +13,7 @@ class AICorrectionItem(BaseModel):
     original: str
     correction: str
     explanation_vi: str
+    type: Literal["grammar", "vocabulary", "pronunciation"] = "grammar"
 
 
 class AIChatRequest(BaseModel):

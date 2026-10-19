@@ -25,10 +25,25 @@ english_ai/english_ai.iml
 backend/.env
 .env
 
-# Generated Media / Audio Storage
-backend/storage/audio/*.mp3
-backend/storage/audio/*.wav
+# Generated media / runtime storage (audio uploads, TTS output, etc.)
+backend/storage/
+storage/
+*.mp3
+*.wav
+*.webm
+*.ogg
+
+# Large model artifacts (use Git LFS via .gitattributes for *.safetensors)
+backend/ai_models/**/*.bin
+backend/ai_models/**/*.pt
+backend/ai_models/**/*.onnx
+
+# Local backups / old project copies
+.local_backup/
+AI ENGLISH/
 
 # System files
 .DS_Store
 Thumbs.db
+
+AI ENGLISH/

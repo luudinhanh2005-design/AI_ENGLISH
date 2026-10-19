@@ -1,17 +1,14 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'app_config.dart';
+
 /// API configuration constants.
-/// In production, these should come from environment configuration.
+/// The base URL is resolved centrally in [AppConfig] and can be overridden
+/// at build time with `--dart-define=API_BASE_URL=...`.
 class ApiEndpoints {
   ApiEndpoints._();
 
-  // Base URL — change to your backend URL
-  static String get baseUrl => kIsWeb ? 'http://localhost:8000/api/v1' : 'http://10.0.2.2:8000/api/v1';
-  // Use 'http://localhost:8000/api/v1' for iOS simulator
-  // Use 'http://10.0.2.2:8000/api/v1' for Android emulator
-  // Use your actual IP for physical device
+  static String get baseUrl => AppConfig.apiBaseUrlV1;
 
-  // ---------------------------------------------// Auth
-  // ---------------------------------------------
+  // ── Auth ──────────────────────────────────────
   static const String register = '/auth/register';
   static const String login = '/auth/login';
   static const String logout = '/auth/logout';
@@ -20,70 +17,43 @@ class ApiEndpoints {
   static const String resetPassword = '/auth/reset-password';
   static const String googleAuth = '/auth/google';
 
-  // ---------------------------------------------// User
-  // ---------------------------------------------
+  // ── User ──────────────────────────────────────
   static const String userMe = '/users/me';
   static const String userOnboarding = '/users/me/onboarding';
 
-  // ---------------------------------------------// Placement Test
-  // ---------------------------------------------
+  // ── Placement Test ────────────────────────────
   static const String placementQuestions = '/placement/questions';
   static const String placementSubmit = '/placement/submit';
 
-  // ---------------------------------------------// Vocabulary & Spaced Repetition (SM-2)
-  // ---------------------------------------------
+  // ── Vocabulary & Spaced Repetition (SM-2) ─────
   static const String vocabularyTopics = '/vocabulary/topics';
-  static String vocabularyTopicWords(String topicId) => '/vocabulary/topics/$topicId/words';
+  static String vocabularyTopicWords(String topicId) =>
+      '/vocabulary/topics/$topicId/words';
   static const String vocabularyDue = '/vocabulary/due';
-  static String vocabularyReviewWord(String wordId) => '/vocabulary/words/$wordId/review';
+  static String vocabularyReviewWord(String wordId) =>
+      '/vocabulary/words/$wordId/review';
 
-  // ---------------------------------------------// Grammar Lessons
-  // ---------------------------------------------
+  // ── Grammar Lessons ───────────────────────────
   static const String grammarLessons = '/grammar/lessons';
   static String grammarLessonById(String id) => '/grammar/lessons/$id';
   static String grammarSubmitLesson(String id) => '/grammar/lessons/$id/submit';
 
-  // ---------------------------------------------// Exercises
-  // ---------------------------------------------
-  static const String exerciseGenerate = '/exercises/generate';
-  static String exerciseById(String id) => '/exercises/$id';
-  static String exerciseSubmit(String id) => '/exercises/$id/submit';
-
-  // ---------------------------------------------// Speaking
-  // ---------------------------------------------
-  static const String speakingSession = '/speaking/session';
-  static const String speakingTranscribe = '/speaking/transcribe';
-  static const String speakingRespond = '/speaking/respond';
-  static const String speakingScenarios = '/speaking/scenarios';
-  static String speakingReport(String id) => '/speaking/session/$id/report';
-
-  // ---------------------------------------------// Pronunciation
-  // ---------------------------------------------
-  static const String pronunciationAnalyze = '/pronunciation/analyze';
-
-  // ---------------------------------------------// Writing
-  // ---------------------------------------------
-  static const String writingPrompts = '/writing/prompts';
-  static const String writingSubmit = '/writing/submit';
-  static String writingFeedback(String id) => '/writing/$id/feedback';
-
-  // ---------------------------------------------// AI Tutor
-  // ---------------------------------------------
+  // ── AI Tutor & Intelligent Engine ─────────────
+  static const String aiStatus = '/ai/status';
   static const String aiChat = '/ai/chat';
-  static const String aiConversations = '/ai/conversations';
-  static String aiConversationById(String id) => '/ai/conversations/$id';
+  static const String aiTranslate = '/ai/translate';
+  static const String aiSessions = '/ai/sessions';
+  static String aiSessionMessages(String sessionId) =>
+      '/ai/sessions/$sessionId/messages';
+  static const String aiGenerateExercises = '/ai/generate-exercises';
+  static const String aiEvaluateWriting = '/ai/evaluate-writing';
 
-  // ---------------------------------------------// Learning Path
-  // ---------------------------------------------
-  static const String learningPath = '/learning-path';
-  static const String learningPathGenerate = '/learning-path/generate';
-  static const String dailyPlan = '/daily-plan';
-
-  // ---------------------------------------------// Progress
-  // ---------------------------------------------
-  static const String progress = '/progress';
-  static const String progressSkills = '/progress/skills';
-  static const String progressStreak = '/progress/streak';
-  static const String progressAchievements = '/progress/achievements';
-  static const String progressAnalytics = '/progress/analytics';
+  // ── Speech AI & Pronunciation ─────────────────
+  static const String speechAssess = '/speech/assess';
+  static const String speechTranscribe = '/speech/transcribe';
+  static const String speechTts = '/speech/tts';
+  static const String speechPractice = '/speech/practice';
+  static const String speechDrills = '/speech/drills';
+  static const String speechHistory = '/speech/history';
+  static const String speechStats = '/speech/stats';
 }

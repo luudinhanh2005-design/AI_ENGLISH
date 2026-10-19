@@ -14,7 +14,7 @@ class LearnScreen extends ConsumerWidget {
     final user = ref.watch(authStateProvider).valueOrNull;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
+      backgroundColor: context.palette.background,
       body: SafeArea(
         child: Align(
           alignment: Alignment.topCenter,
@@ -37,7 +37,7 @@ class LearnScreen extends ConsumerWidget {
                             Text(
                               'Lộ Trình Học Tập 🧭',
                               style: AppTextStyles.h2.copyWith(
-                                color: AppColors.darkTextPrimary,
+                                color: context.palette.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -45,7 +45,7 @@ class LearnScreen extends ConsumerWidget {
                             Text(
                               'Học bài bản theo chuẩn CEFR quốc tế (A1 → B2)',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.darkTextSecondary,
+                                color: context.palette.textSecondary,
                               ),
                             ),
                           ],
@@ -156,8 +156,8 @@ class LearnScreen extends ConsumerWidget {
                           child: LinearProgressIndicator(
                             value: 0.6,
                             backgroundColor: Colors.white.withOpacity(0.2),
-                            valueColor:
-                                const AlwaysStoppedAnimation<Color>(Color(0xFF2ED573)),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFF2ED573)),
                             minHeight: 6,
                           ),
                         ),
@@ -167,7 +167,8 @@ class LearnScreen extends ConsumerWidget {
                           child: ElevatedButton.icon(
                             onPressed: () =>
                                 context.push('/grammar?id=present_perfect'),
-                            icon: const Icon(Icons.play_arrow_rounded, size: 18),
+                            icon:
+                                const Icon(Icons.play_arrow_rounded, size: 18),
                             label: const Text('Học ngay ➔'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
@@ -177,7 +178,8 @@ class LearnScreen extends ConsumerWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                              textStyle:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -194,14 +196,14 @@ class LearnScreen extends ConsumerWidget {
                       Text(
                         'Kỹ Năng Cốt Lõi 🎯',
                         style: AppTextStyles.h4.copyWith(
-                          color: AppColors.darkTextPrimary,
+                          color: context.palette.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '4 học phần',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.darkTextSecondary,
+                          color: context.palette.textSecondary,
                         ),
                       ),
                     ],
@@ -268,7 +270,7 @@ class LearnScreen extends ConsumerWidget {
                   Text(
                     'Lộ Trình Cấp Độ CEFR 📈',
                     style: AppTextStyles.h4.copyWith(
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -276,7 +278,7 @@ class LearnScreen extends ConsumerWidget {
                   Text(
                     'Lựa chọn trình độ để mở danh sách bài học và bài tập trắc nghiệm',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.darkTextSecondary,
+                      color: context.palette.textSecondary,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -292,14 +294,15 @@ class LearnScreen extends ConsumerWidget {
                       Text(
                         'Bài Học Ngữ Pháp Trọng Tâm 📖',
                         style: AppTextStyles.h4.copyWith(
-                          color: AppColors.darkTextPrimary,
+                          color: context.palette.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       TextButton(
                         onPressed: () => context.push('/grammar'),
                         child: const Text('Xem tất cả ➔',
-                            style: TextStyle(color: AppColors.primary, fontSize: 13)),
+                            style: TextStyle(
+                                color: AppColors.primary, fontSize: 13)),
                       ),
                     ],
                   ),
@@ -425,7 +428,7 @@ class _CefrCard extends StatelessWidget {
         width: 160,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.darkCard,
+          color: context.palette.card,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: color.withOpacity(0.3)),
         ),
@@ -451,7 +454,7 @@ class _CefrCard extends StatelessWidget {
             Text(
               title,
               style: AppTextStyles.labelMedium.copyWith(
-                color: AppColors.darkTextPrimary,
+                color: context.palette.textPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -459,7 +462,7 @@ class _CefrCard extends StatelessWidget {
             Text(
               description,
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.darkTextSecondary,
+                color: context.palette.textSecondary,
                 fontSize: 11,
               ),
               maxLines: 2,
@@ -547,7 +550,7 @@ class _SkillCard extends StatelessWidget {
                   Text(
                     title,
                     style: AppTextStyles.labelLarge.copyWith(
-                      color: AppColors.darkTextPrimary,
+                      color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -555,7 +558,7 @@ class _SkillCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.darkTextSecondary,
+                      color: context.palette.textSecondary,
                     ),
                   ),
                 ],
@@ -590,7 +593,7 @@ class _FeaturedLessonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.darkCard,
+      color: context.palette.card,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
@@ -599,7 +602,7 @@ class _FeaturedLessonCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.darkDivider),
+            border: Border.all(color: context.palette.divider),
           ),
           child: Row(
             children: [
@@ -623,7 +626,7 @@ class _FeaturedLessonCard extends StatelessWidget {
                           child: Text(
                             subtitle,
                             style: AppTextStyles.labelMedium.copyWith(
-                              color: AppColors.darkTextPrimary,
+                              color: context.palette.textPrimary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -660,7 +663,7 @@ class _FeaturedLessonCard extends StatelessWidget {
                     Text(
                       description,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.darkTextSecondary,
+                        color: context.palette.textSecondary,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -669,10 +672,10 @@ class _FeaturedLessonCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 14,
-                color: AppColors.darkTextHint,
+                color: context.palette.textHint,
               ),
             ],
           ),
