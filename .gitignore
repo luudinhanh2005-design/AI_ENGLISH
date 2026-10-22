@@ -1,6 +1,5 @@
-# VS Code history and temp
+# VS Code local history (the shared .vscode/ config IS committed)
 .history/
-.vscode/
 
 # Python Virtual Environments & Cache
 backend/venv/
@@ -20,6 +19,7 @@ english_ai/.flutter-plugins-dependencies
 english_ai/.idea/
 english_ai/build/
 english_ai/english_ai.iml
+english_ai/android/.kotlin/
 
 # Secrets
 backend/.env
@@ -45,6 +45,7 @@ AI ENGLISH/
 # System files
 .DS_Store
 Thumbs.db
+*.log
 
 AI ENGLISH/
 

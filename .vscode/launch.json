@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter (Android emulator)",
+      "type": "dart",
+      "request": "launch",
+      "program": "${workspaceFolder}/english_ai/lib/main.dart",
+      "cwd": "${workspaceFolder}/english_ai",
+      "flutterMode": "debug",
+      "args": [
+        "--dart-define=GOOGLE_CLIENT_ID=116869668249-h8j2sit4nft1mrt08rdi993m2rcntapn.apps.googleusercontent.com"
+      ],
+      "preLaunchTask": "android: ensure emulator"
+    },
+    {
+      "name": "Flutter (Web / Chrome)",
+      "type": "dart",
+      "request": "launch",
+      "program": "${workspaceFolder}/english_ai/lib/main.dart",
+      "cwd": "${workspaceFolder}/english_ai",
+      "deviceId": "chrome",
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Backend (FastAPI)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["main:app", "--port", "8000"],
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full stack (Backend + Flutter)",
+      "configurations": ["Backend (FastAPI)", "Flutter (Android emulator)"],
+      "stopAll": true
+    }
+  ]
+}

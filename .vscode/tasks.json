@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "android: ensure emulator",
+      "type": "shell",
+      "command": "bash",
+      "args": ["${workspaceFolder}/scripts/android_ensure_emulator.sh"],
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "${workspaceFolder}/scripts/android_ensure_emulator.ps1"
+        ]
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "backend: start",
+      "type": "shell",
+      "command": "python",
+      "args": ["-m", "uvicorn", "main:app", "--reload", "--port", "8000"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": [
+          {
+            "regexp": "^$"
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Started server process|Will watch for changes",
+          "endsPattern": "Application startup complete|Uvicorn running on"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ]
+}
