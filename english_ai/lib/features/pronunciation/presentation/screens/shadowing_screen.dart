@@ -8,7 +8,7 @@ import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/utils/speech_web.dart';
+import '../../../../core/utils/speech_service.dart';
 import '../../../practice/presentation/providers/mistake_notebook_provider.dart';
 
 class ShadowingScreen extends ConsumerStatefulWidget {
@@ -169,7 +169,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     if (_drills.isEmpty) return;
     final drill = _drills[_currentDrillIndex];
     setState(() => _isPlayingNative = true);
-    webSpeak(drill['text'].toString(), _playbackSpeed).then((_) {
+    SpeechService.speak(drill['text'].toString(), rate: _playbackSpeed).then((_) {
       if (mounted) setState(() => _isPlayingNative = false);
     });
   }
@@ -199,7 +199,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
 
     final drill = _drills[_currentDrillIndex];
     // Start native audio simultaneously
-    webSpeak(drill['text'].toString(), _playbackSpeed);
+    SpeechService.speak(drill['text'].toString(), rate: _playbackSpeed);
 
     // Auto complete after duration based on length
     final durationSeconds = (drill['text'].toString().length * 0.08 / _playbackSpeed).ceil() + 3;

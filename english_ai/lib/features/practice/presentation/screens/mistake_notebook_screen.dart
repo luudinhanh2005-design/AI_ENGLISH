@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/utils/speech_web.dart';
+import '../../../../core/utils/speech_service.dart';
 import '../providers/mistake_notebook_provider.dart';
 
 class MistakeNotebookScreen extends ConsumerStatefulWidget {
@@ -48,7 +48,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
   }
 
   void _speakSentence(String text) {
-    webSpeak(text, 0.95);
+    SpeechService.speak(text, rate: 0.95);
   }
 
   void _showAddMistakeDialog(BuildContext context) {
