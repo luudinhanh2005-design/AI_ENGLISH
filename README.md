@@ -24,10 +24,11 @@ AI_ENGLISH/
 │   └── main.py
 ├── scripts/
 │   ├── android_ensure_emulator.ps1   # Windows
-│   └── android_ensure_emulator.sh    # macOS / Linux
+│   ├── android_ensure_emulator.sh    # macOS / Linux
+│   └── run_phone.ps1                 # Real-phone runner
 ├── .vscode/                    # Shared launch/task config (F5 works out of the box)
 ├── docker-compose.yml
-└── run.bat / run.ps1 / run.sh
+└── run.bat / run.ps1 / run.sh / run_phone.bat
 ```
 
 ---
@@ -138,18 +139,38 @@ The script creates `englishai_light` automatically on the first run and picks a
 profile that matches the host hardware. Android reaches the host backend through
 `10.0.2.2` automatically — no configuration needed.
 
-#### Option 3 — Real phone (fastest on old laptops)
+#### Option 3 — Real phone (one command)
+
+**Android over USB (recommended):**
 
 1. Enable **Developer options → USB debugging** on the phone.
-2. Connect by USB and check `flutter devices`.
-3. Run with your computer's LAN IP:
+2. Connect the USB cable and accept the RSA prompt.
+3. From the repository root:
 
-```bash
-flutter run --dart-define=API_BASE_URL=http://192.168.1.10:8000
+```bat
+run_phone.bat
+```
+
+The script starts the backend if needed, runs `adb reverse`, and launches Flutter
+with `API_BASE_URL=http://127.0.0.1:8000`.
+
+**Wi-Fi (Android or iPhone):**
+
+```bat
+run_phone.bat --wifi
+```
+
+It auto-detects the computer's LAN IPv4. Override it when necessary:
+
+```bat
+run_phone.bat --wifi 192.168.1.10
+run_phone.bat --wifi --device "iPhone cua Minh"
 ```
 
 > The phone and the computer must be on the same network. Allow port 8000 in the
-> firewall. The API base URL is resolved centrally in
+> firewall. For Wi-Fi the backend must listen on `0.0.0.0`; the script starts it
+> that way and warns you if an already-running backend only listens on localhost.
+> The API base URL is resolved centrally in
 > `english_ai/lib/core/constants/app_config.dart`; no code edits needed.
 
 ### VS Code: one key
@@ -246,7 +267,8 @@ The app reads the backend URL from `AppConfig`:
 |---|---|
 | Web / desktop | `http://localhost:8000` |
 | Android emulator | `http://10.0.2.2:8000` |
-| Real device | set `--dart-define=API_BASE_URL=http://<LAN_IP>:8000` |
+| Real device (USB) | `run_phone.bat` — `http://127.0.0.1:8000` via `adb reverse` |
+| Real device (Wi-Fi) | `run_phone.bat --wifi` — `http://<LAN_IP>:8000` |
 
 Backend secrets live in `backend/.env` (git-ignored). Start from
 `backend/.env.example`. `JWT_SECRET_KEY` is required in production; in
