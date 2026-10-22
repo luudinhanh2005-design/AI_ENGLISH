@@ -6,92 +6,290 @@
 
 - **Frontend**: Flutter + Dart (Riverpod, GoRouter, Dio)
 - **Backend**: Python + FastAPI (async SQLAlchemy)
-- **Database**: PostgreSQL / Supabase
-- **AI**: LLM API + RAG + Speech-to-Text + Text-to-Speech
+- **Database**: PostgreSQL / Supabase (in-memory fallback for quick local runs)
+- **AI**: Local LLM + optional Gemini/OpenAI fallback, Speech-to-Text + Text-to-Speech
 
-## 📁 Project Structure
+## 📁 Project structure
 
 ```
-AI ENGLISH/
-├── english_ai/          # Flutter mobile app
+AI_ENGLISH/
+├── english_ai/                 # Flutter app
 │   ├── lib/
-│   │   ├── core/        # Theme, network, router, services
-│   │   ├── features/    # Auth, onboarding, home, etc.
-│   │   └── shared/      # Reusable widgets
+│   │   ├── core/               # Theme, network, router, services
+│   │   ├── features/           # Auth, onboarding, home, ...
+│   │   └── shared/             # Reusable widgets
 │   └── pubspec.yaml
-│
-└── backend/             # FastAPI server
-    ├── app/
-    │   ├── api/         # Endpoints
-    │   ├── models/      # SQLAlchemy models
-    │   ├── schemas/     # Pydantic validation
-    │   └── utils/       # Security, helpers
-    └── main.py
+├── backend/                    # FastAPI server
+│   ├── app/
+│   └── main.py
+├── scripts/
+│   ├── android_ensure_emulator.ps1   # Windows
+│   └── android_ensure_emulator.sh    # macOS / Linux
+├── .vscode/                    # Shared launch/task config (F5 works out of the box)
+├── docker-compose.yml
+└── run.bat / run.ps1 / run.sh
 ```
 
-## 🚀 Quick Start
+---
 
-### Backend
+## 🚀 Quick start for new contributors
+
+### 0. Prerequisites
+
+| Tool | Version | Needed for |
+|---|---|---|
+| Flutter SDK | stable, 3.24+ (Dart 3.1+) | App |
+| Python | 3.10+ | Backend |
+| Git + **Git LFS** | any recent | Cloning (the AI model is 114 MB in LFS) |
+| Android SDK | platform-tools, emulator, **platforms;android-36**, **build-tools;36.0.0** | Android build |
+| Android system image | API 29 `default` (`x86_64` or `arm64-v8a`) | Emulator |
+| JDK | 17 (bundled with Android Studio) | Android build |
+| Docker Desktop | optional, recommended | Backend + PostgreSQL + Redis |
+
+> **Git LFS is required.** Install it once **before** cloning:
+> `git lfs install`
+> Without LFS the model file is only a 130-byte pointer and AI Tutor features fail.
+
+### 1. Clone
 
 ```bash
-cd backend
-python -m venv venv
-.\venv\Scripts\activate  # Windows
-pip install -r requirements.txt      # core API + auth + DB
-pip install -r requirements-ai.txt   # optional: AI Tutor + Speech
-# Copy .env.example to .env and fill in real values
-# Create PostgreSQL database named "english_ai" (or use Supabase)
-alembic upgrade head                 # create/update the schema
-python main.py                       # runs on http://localhost:8000
+git lfs install
+git clone https://github.com/luudinhanh2005-design/AI_ENGLISH.git
+cd AI_ENGLISH
 ```
 
-> The heavy AI Tutor and Speech stack (torch, transformers, faster-whisper,
-> edge-tts, ...) lives in `requirements-ai.txt` and is only needed for those
-> features. For a GPU build of torch, see the note at the top of that file.
-> In `development` the server also auto-creates tables on startup; in
-> `production` run `alembic upgrade head` (the app then only checks the
-> connection).
-
-### Flutter
+If you cloned before installing Git LFS:
 
 ```bash
-cd english_ai
-flutter pub get
-
-# Web (defaults to http://localhost:8000)
-flutter run -d edge
-
-# Android emulator (auto-uses 10.0.2.2) or a physical device:
-flutter run --dart-define=API_BASE_URL=http://<YOUR_LAN_IP>:8000
+git lfs install && git lfs pull
 ```
 
-The backend base URL is resolved centrally in
-`english_ai/lib/core/constants/app_config.dart` and can be overridden at build
-time with `--dart-define=API_BASE_URL=...` (no code edits needed).
+### 2. Start the backend
 
-### Docker (backend + Postgres + Redis)
-
-From the repository root:
+**Option A — Docker (recommended: includes PostgreSQL + Redis)**
 
 ```bash
 docker compose up --build
 ```
 
-This starts PostgreSQL, Redis and the API (running `alembic upgrade head` on
-boot) at `http://localhost:8000`. Copy `backend/.env.example` values into the
-compose `environment` block or a `backend/.env` file as needed. Build the image
-with the AI/Speech stack via `--build-arg REQUIREMENTS=requirements-ai.txt`.
+**Option B — Local Python**
+
+```bash
+cd backend
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+# macOS / Linux
+source venv/bin/activate
+
+pip install -r requirements.txt
+cp .env.example .env          # optional: defaults work in development
+python main.py                # http://localhost:8000
+```
+
+Check it:
+
+```bash
+curl http://localhost:8000/health
+# {"status":"healthy","app":"EnglishAI","version":"1.0.0"}
+```
+
+> No PostgreSQL running? The API starts anyway and uses **in-memory storage**.
+> Everything works, but accounts/data reset when the server stops. Use Docker
+> (or set `DATABASE_URL`) if you need persistence.
+>
+> AI Tutor / Speech need the heavier stack: `pip install -r requirements-ai.txt`.
+> Core auth, learning features and the API work without it.
+
+### 3. Run the Flutter app
+
+```bash
+cd english_ai
+flutter pub get
+```
+
+Pick **one** of the three options below.
+
+#### Option 1 — Web (lightest, no Android SDK needed)
+
+```bash
+flutter run -d chrome     # or: flutter run -d edge
+```
+
+The backend URL defaults to `http://localhost:8000` on web.
+
+#### Option 2 — Android emulator
+
+```bash
+# Windows
+powershell -ExecutionPolicy Bypass -File ..\scripts\android_ensure_emulator.ps1
+
+# macOS / Linux
+chmod +x ../scripts/android_ensure_emulator.sh
+../scripts/android_ensure_emulator.sh
+
+cd ..
+cd english_ai
+flutter run -d emulator-5554
+```
+
+The script creates `englishai_light` automatically on the first run and picks a
+profile that matches the host hardware. Android reaches the host backend through
+`10.0.2.2` automatically — no configuration needed.
+
+#### Option 3 — Real phone (fastest on old laptops)
+
+1. Enable **Developer options → USB debugging** on the phone.
+2. Connect by USB and check `flutter devices`.
+3. Run with your computer's LAN IP:
+
+```bash
+flutter run --dart-define=API_BASE_URL=http://192.168.1.10:8000
+```
+
+> The phone and the computer must be on the same network. Allow port 8000 in the
+> firewall. The API base URL is resolved centrally in
+> `english_ai/lib/core/constants/app_config.dart`; no code edits needed.
+
+### VS Code: one key
+
+Open the repository in VS Code and press **F5**:
+
+- **Full stack (Backend + Flutter)** — starts the backend and the emulator, then runs the app.
+- **Flutter (Web / Chrome)** — web without the emulator.
+- **Backend (FastAPI)** — backend only.
+
+`.vscode/` is committed, so no manual setup is required. Select your Python
+interpreter (`backend/venv`) the first time.
+
+---
+
+## 🤖 Android emulator guide
+
+### Hardware requirements
+
+| Component | Requirement |
+|---|---|
+| CPU | VT-x (Intel) or AMD-V/SVM, **enabled in BIOS** |
+| Virtualisation layer | AEHD or Windows Hypervisor Platform (Windows), KVM (Linux), Hypervisor.framework (macOS) |
+| RAM | 8 GB minimum, 16 GB comfortable |
+| Disk | SSD strongly recommended (HDD makes Gradle/emulator painfully slow) |
+| GPU | **No dedicated GPU required** — Intel/AMD integrated graphics are enough; the script falls back to software rendering if needed |
+
+The script runs `emulator -accel-check` first and stops with instructions if
+virtualisation is unavailable, instead of hanging for minutes.
+
+### What the script does
+
+- Reuses an already-running emulator instead of killing other instances.
+- Creates `englishai_light` from API 29 if it does not exist.
+- Picks a light profile:
+
+  | Host | Cores | RAM | Resolution |
+  |---|---:|---:|---|
+  | ≥ 8 logical CPUs, ≥ 8 GB RAM | 4 | 2048 MB | 720×1280 @ 320 dpi |
+  | ≤ 4 logical CPUs or < 8 GB RAM | 2 | 1536 MB | 540×960 @ 240 dpi |
+
+- Uses the host GPU (`-gpu auto`), so integrated graphics are fine.
+- **Disables quick-boot snapshots by default.** Emulator 36 otherwise writes a
+  ~2 GB RAM snapshot on first boot. Pass `-Snapshot` (PowerShell) or
+  `--snapshot` (bash) to opt back in for faster boots.
+- No SD card partition.
+
+Useful options:
+
+```powershell
+# Windows
+powershell -ExecutionPolicy Bypass -File scripts\android_ensure_emulator.ps1 -Gpu host
+powershell -ExecutionPolicy Bypass -File scripts\android_ensure_emulator.ps1 -Headless
+powershell -ExecutionPolicy Bypass -File scripts\android_ensure_emulator.ps1 -ForceCreate
+```
+
+```bash
+# macOS / Linux
+./scripts/android_ensure_emulator.sh --gpu host
+./scripts/android_ensure_emulator.sh --headless
+./scripts/android_ensure_emulator.sh --force-create
+```
+
+> The data partition reports **6 GB logical** in `df`, but the image is sparse:
+> a fresh AVD with the app installed uses **~400 MB on disk**. Do not try to
+> shrink it through `disk.dataPartition.size` — emulator 36 ignores that key and
+> recreates a 6 GB file.
+
+### Installing the Android SDK pieces manually
+
+```bash
+sdkmanager --install \
+  "platform-tools" "emulator" "cmdline-tools;latest" \
+  "platforms;android-36" "build-tools;36.0.0" \
+  "system-images;android-29;default;x86_64"
+```
+
+On **Apple Silicon** replace the last line with:
+
+```bash
+"system-images;android-29;default;arm64-v8a"
+```
+
+`platforms;android-36` is required: the project forces `compileSdk 36` for all
+subprojects (see `english_ai/android/build.gradle.kts`).
+
+---
+
+## 🔐 Configuration
+
+The app reads the backend URL from `AppConfig`:
+
+| Platform | Default |
+|---|---|
+| Web / desktop | `http://localhost:8000` |
+| Android emulator | `http://10.0.2.2:8000` |
+| Real device | set `--dart-define=API_BASE_URL=http://<LAN_IP>:8000` |
+
+Backend secrets live in `backend/.env` (git-ignored). Start from
+`backend/.env.example`. `JWT_SECRET_KEY` is required in production; in
+development a random one is generated (tokens are invalidated on restart).
 
 ### Google Sign-In (optional)
 
-1. Backend: set `GOOGLE_OAUTH_CLIENT_ID` in `backend/.env` to your Google
-   **Web** OAuth client ID. The `/api/v1/auth/google` endpoint verifies the
-   ID token and creates/links the local account.
+1. Backend: set `GOOGLE_OAUTH_CLIENT_ID` in `backend/.env`.
 2. Flutter: run with
-   `--dart-define=GOOGLE_CLIENT_ID=<web-client-id>.apps.googleusercontent.com`
-   (the same value). The button is disabled until it is configured.
+   `--dart-define=GOOGLE_CLIENT_ID=<web-client-id>.apps.googleusercontent.com`.
+3. For Android, register the debug SHA-1 of **your** machine in Google Cloud
+   Console, otherwise you get `ApiException: 12500`.
 
-## 📋 Development Phases
+Email/password login works without any of this. The emulator image used here
+(`default`) has no Google Play Services, so Google Sign-In cannot work on it.
+
+### What is not in the repository
+
+- `backend/.env`, database credentials, Supabase keys
+- Python virtualenv, Flutter build output, Gradle caches
+- AVDs and Android system images (they live outside the repo, on each machine)
+
+---
+
+## 🧪 Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `record_linux` / `record_platform_interface` version conflict | `flutter pub get` — `pubspec.lock` pins `record 6.x`; run `flutter clean` if stale |
+| Kotlin daemon / cache errors | Already mitigated (`kotlin.incremental=false`); run `flutter clean` and rebuild |
+| `compileSdk` mismatch | Install `platforms;android-36`; the root build script forces `compileSdk 36` |
+| App stuck on the splash screen | Start the backend first: `GET /health` must return 200 |
+| Emulator very slow | Use `-Gpu host`, close other apps, and run `flutter run --profile` |
+| `Emulator did not come online` | Check `%TEMP%\englishai-emulator\stderr.log` (Windows) or `/tmp/englishai-emulator/stdout.log` |
+| `Hardware acceleration is NOT available` | Enable VT-x/AMD-V in BIOS; install AEHD or enable Windows Hypervisor Platform |
+| Model file is 130 bytes | `git lfs install && git lfs pull` |
+| Port 8000 busy | Run on another port and pass `--dart-define=API_BASE_URL=http://localhost:<port>` |
+| Google Sign-In fails with 12500 | Missing Play Services image or unregistered SHA-1; use email/password |
+| `Attempted to add an invalid command to the render pass` | Impeller warning on the emulator; harmless |
+
+---
+
+## 📋 Development phases
 
 | Phase | Status | Focus |
 |---|---|---|
@@ -100,15 +298,6 @@ with the AI/Speech stack via `--build-arg REQUIREMENTS=requirements-ai.txt`.
 | Phase 3 | ✅ Complete | AI — Tutor chat, Exercise Gen, Writing Eval (local LLM + Gemini/OpenAI fallback) |
 | Phase 4 | ✅ Complete | Speech — STT, TTS, Voice conversation, Pronunciation |
 | Phase 5 | 🚧 In progress | Optimization — CI/CD, Alembic migrations, Docker, hardening |
-
-### Environment & security notes
-
-- `backend/.env` is git-ignored. Never commit real secrets; `JWT_SECRET_KEY`
-  is required in production (the app refuses to start without a strong value).
-- Demo/offline accounts (`test@gmail.com`, `admin@gmail.com`) are gated by
-  `ENABLE_DEMO_ACCOUNTS` and **must be disabled in production**.
-- Generated audio and large model weights are not tracked (see `.gitignore`;
-  `*.safetensors` uses Git LFS).
 
 ## 📄 License
 
