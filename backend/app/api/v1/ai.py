@@ -568,7 +568,7 @@ async def review_mistake(
         repetition_count=rep_count,
         ease_factor=ef,
         interval_days=interval,
-        rating=request.rating,
+        quality=request.rating,
     )
 
     target["repetition_count"] = new_rep

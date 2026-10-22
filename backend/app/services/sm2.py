@@ -23,7 +23,8 @@ class SM2Calculator:
         repetition_count: int,
         ease_factor: float,
         interval_days: int,
-        quality: int,
+        quality: int | None = None,
+        rating: int | None = None,
     ) -> tuple[int, float, int, datetime, str]:
         """
         Calculate the next repetition, interval, and ease factor.
@@ -31,8 +32,11 @@ class SM2Calculator:
         Returns:
             (new_repetition, new_ease_factor, new_interval_days, next_review_at, new_status)
         """
+        # Accept quality or rating for flexibility
+        actual_rating = quality if quality is not None else (rating if rating is not None else 3)
+
         # Clamp quality to 0-5
-        q = max(0, min(5, quality))
+        q = max(0, min(5, actual_rating))
         
         # Calculate new ease factor
         # EF' = EF + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
