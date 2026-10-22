@@ -110,6 +110,11 @@ cd english_ai
 flutter pub get
 ```
 
+> **Windows shortcut:** from the repository root, `run.bat` starts the backend if
+> needed and restarts the Flutter web server in one command. It is safe to run
+> again: a healthy backend is reused and an old Flutter server on port 5173 is
+> stopped automatically.
+
 Pick **one** of the three options below.
 
 #### Option 1 — Web (lightest, no Android SDK needed)
