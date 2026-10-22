@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -115,13 +115,67 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
   Timer? _durationTimer;
   String? _chatSessionId;
   StreamSubscription? _playerCompleteSubscription;
+  StreamSubscription? _amplitudeSubscription;
+
+  // Voice-activity detection tuning
+  static const double _speechThresholdDb = -38;
+  static const Duration _silenceToSend = Duration(milliseconds: 1600);
+  static const Duration _maxTurn = Duration(seconds: 30);
 
   VoiceCallNotifier(this._dio) : super(const VoiceCallState()) {
     _playerCompleteSubscription = _audioPlayer.onPlayerComplete.listen((_) {
       if (state.status == CallStateEnum.speaking) {
-        state = state.copyWith(status: CallStateEnum.listening);
+        _beginListening();
       }
     });
+  }
+
+  /// Starts the mic and watches the volume: once the user has spoken and then
+  /// stays quiet for [_silenceToSend], the turn is sent automatically.
+  Future<void> _beginListening() async {
+    if (state.status == CallStateEnum.ended) return;
+    if (state.isMuted) {
+      state = state.copyWith(status: CallStateEnum.listening);
+      return;
+    }
+    await _stopAmplitudeWatch();
+    try {
+      await _recordingService.cancelRecording();
+      await _recordingService.startRecording();
+      state = state.copyWith(status: CallStateEnum.listening, clearError: true);
+    } catch (e) {
+      debugPrint('Mic start error: $e');
+      state = state.copyWith(
+        status: CallStateEnum.listening,
+        errorMessage:
+            'Không thể mở micro. Hãy cho phép quyền microphone trên trình duyệt.',
+      );
+      return;
+    }
+
+    var hasSpoken = false;
+    final turnStart = DateTime.now();
+    var lastVoice = turnStart;
+    _amplitudeSubscription =
+        _recordingService.amplitudeStream().listen((amp) {
+      if (state.status != CallStateEnum.listening) return;
+      final now = DateTime.now();
+      if (amp.current > _speechThresholdDb) {
+        hasSpoken = true;
+        lastVoice = now;
+      }
+      final silentFor = now.difference(lastVoice);
+      if ((hasSpoken && silentFor >= _silenceToSend) ||
+          now.difference(turnStart) >= _maxTurn) {
+        _stopAmplitudeWatch();
+        stopSpeakingAndProcess();
+      }
+    });
+  }
+
+  Future<void> _stopAmplitudeWatch() async {
+    await _amplitudeSubscription?.cancel();
+    _amplitudeSubscription = null;
   }
 
   Future<void> startCall(String persona) async {
@@ -167,32 +221,23 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
 
   Future<void> startSpeaking() async {
     if (state.isMuted) return;
-    try {
-      await _audioPlayer.stop();
-      await _recordingService.startRecording();
-      state = state.copyWith(
-        status: CallStateEnum.listening,
-        clearError: true,
-      );
-    } catch (e) {
-      state = state.copyWith(
-        errorMessage: 'Không thể mở micro. Hãy kiểm tra quyền truy cập microphone.',
-      );
-    }
+    await _audioPlayer.stop();
+    await _beginListening();
   }
 
   Future<void> stopSpeakingAndProcess() async {
     if (state.status != CallStateEnum.listening) return;
 
+    await _stopAmplitudeWatch();
     state = state.copyWith(status: CallStateEnum.thinking);
 
     try {
       final audioBytes = await _recordingService.stopRecording();
       if (audioBytes == null || audioBytes.isEmpty) {
         state = state.copyWith(
-          status: CallStateEnum.listening,
           errorMessage: 'Chưa thu được âm thanh. Hãy thử nói lại nhé!',
         );
+        await _beginListening();
         return;
       }
 
@@ -200,9 +245,9 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
       final userText = await _transcribeAudio(audioBytes);
       if (userText == null || userText.trim().isEmpty) {
         state = state.copyWith(
-          status: CallStateEnum.listening,
           errorMessage: 'Không nhận diện được giọng nói. Bạn hãy nói to hơn chút nhé!',
         );
+        await _beginListening();
         return;
       }
 
@@ -254,9 +299,9 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
     } catch (e) {
       debugPrint('Voice call process error: $e');
       state = state.copyWith(
-        status: CallStateEnum.listening,
         errorMessage: 'Lỗi kết nối đàm thoại. Vui lòng thử lại.',
       );
+      await _beginListening();
     }
   }
 
@@ -297,16 +342,20 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
     // If TTS fails, automatically switch to listening after brief simulated duration
     await Future.delayed(const Duration(seconds: 3));
     if (state.status == CallStateEnum.speaking) {
-      state = state.copyWith(status: CallStateEnum.listening);
+      await _beginListening();
     }
   }
 
   void toggleMute() {
     final newMuted = !state.isMuted;
     if (newMuted && state.status == CallStateEnum.listening) {
+      _stopAmplitudeWatch();
       _recordingService.cancelRecording();
     }
     state = state.copyWith(isMuted: newMuted);
+    if (!newMuted && state.status == CallStateEnum.listening) {
+      _beginListening();
+    }
   }
 
   void toggleSubtitles() {
@@ -344,6 +393,7 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
   void endCall() {
     _durationTimer?.cancel();
     _durationTimer = null;
+    _stopAmplitudeWatch();
     _audioPlayer.stop();
     _recordingService.cancelRecording();
 
@@ -383,6 +433,7 @@ class VoiceCallNotifier extends StateNotifier<VoiceCallState> {
   void dispose() {
     _durationTimer?.cancel();
     _playerCompleteSubscription?.cancel();
+    _amplitudeSubscription?.cancel();
     _audioPlayer.dispose();
     _recordingService.dispose();
     super.dispose();

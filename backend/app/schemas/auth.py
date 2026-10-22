@@ -42,6 +42,15 @@ class OnboardingRequest(BaseModel):
     interested_topics: List[str]
 
 
+class UpdateProfileRequest(BaseModel):
+    name: Optional[str] = None
+    avatar_url: Optional[str] = None
+    daily_learning_minutes: Optional[int] = None
+    target_level: Optional[str] = None
+    current_level: Optional[str] = None
+    learning_goal: Optional[str] = None
+
+
 # ──────────────────────────────────────────────
 # Response Schemas
 # ──────────────────────────────────────────────

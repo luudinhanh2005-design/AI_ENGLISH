@@ -199,22 +199,25 @@ class SpeechAIService:
         speed: float = 1.0,
     ) -> dict:
         import edge_tts
-        import tempfile
+        import unicodedata
 
-        # Map voices to high-quality Microsoft Edge Neural TTS voices
+        # Map voices to Microsoft's latest ultra-natural Neural TTS voices
         edge_voice_map = {
-            "sarah": "en-US-JennyNeural",         # Natural US English Female
-            "harrison": "en-US-GuyNeural",        # Professional US English Male
-            "emma": "en-GB-SoniaNeural",          # Academic UK English Female
-            "en-US-Standard-C": "en-US-JennyNeural",
+            "sarah": "en-US-AvaNeural",           # Warm, expressive, natural conversational US Female
+            "harrison": "en-US-AndrewNeural",     # Confident, polished, executive US Male
+            "emma": "en-GB-SoniaNeural",          # Elegant, articulate British IELTS examiner Female
+            "en-US-Standard-C": "en-US-AvaNeural",
             "en-US-Standard-A": "en-US-AvaNeural",
-            "en-US-Standard-B": "en-US-GuyNeural",
+            "en-US-Standard-B": "en-US-AndrewNeural",
             "en-GB-Standard-A": "en-GB-SoniaNeural",
         }
         voice_lower = voice.lower()
-        en_voice = edge_voice_map.get(voice, edge_voice_map.get(voice_lower, "en-US-JennyNeural"))
-        # Use male Vietnamese voice if Harrison, female Vietnamese voice otherwise
-        vi_voice = "vi-VN-NamMinhNeural" if ("guy" in en_voice.lower() or "harrison" in voice_lower) else "vi-VN-HoaiMyNeural"
+        en_voice = edge_voice_map.get(voice, edge_voice_map.get(voice_lower, "en-US-AvaNeural"))
+        vi_voice = (
+            "vi-VN-NamMinhNeural"
+            if ("andrew" in en_voice.lower() or "guy" in en_voice.lower() or "harrison" in voice_lower)
+            else "vi-VN-HoaiMyNeural"
+        )
 
         rate_percent = int((speed - 1.0) * 100)
         rate_str = f"{rate_percent:+d}%"
@@ -222,12 +225,26 @@ class SpeechAIService:
         filename = f"{uuid.uuid4().hex}.mp3"
         filepath = AUDIO_DIR / filename
 
-        # Strip emojis from spoken text to avoid awkward robotic pronunciation
-        cleaned_text = re.sub(r'[\U00010000-\U0010ffff]', '', text).strip()
-        if not cleaned_text:
-            cleaned_text = text.strip()
+        # 1. Clean markdown, emojis, asterisks, code ticks, and special phonetic characters
+        cleaned = re.sub(r'[\U00010000-\U0010ffff]', '', text)
+        cleaned = re.sub(r'[\u2600-\u26FF\u2700-\u27BF]', '', cleaned)
+        cleaned = re.sub(r'\*{1,3}([^*]+)\*{1,3}', r'\1', cleaned)
+        cleaned = re.sub(r'_{1,3}([^_]+)_{1,3}', r'\1', cleaned)
+        cleaned = re.sub(r'`+([^`]+)`+', r'\1', cleaned)
+        cleaned = re.sub(r'#+\s*', '', cleaned)
+        cleaned = re.sub(r'(?:^|\s)/[^/\n]{2,}/(?:\s|$)', ' ', cleaned)
+        cleaned = re.sub(r'^\s*[-*•]\s+', '', cleaned, flags=re.MULTILINE)
+        cleaned = re.sub(r'^\s*\d+[\.\)]\s+', '', cleaned, flags=re.MULTILINE)
+        # Strip surrounding quotation marks around words without breaking contractions (e.g. "went" -> went, don't kept)
+        cleaned = re.sub(r'(^|\s)["\'“”‘’`]+', r'\1', cleaned)
+        cleaned = re.sub(r'["\'“”‘’`]+(\s|[.,!?;]|$)', r'\1', cleaned)
+        # Clean letter-by-letter hyphens e.g. w-e-n-t -> went
+        cleaned = re.sub(r'\b([a-zA-Z])\s*-\s*([a-zA-Z])\s*-\s*([a-zA-Z])\b', r'\1\2\3', cleaned)
+        cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+        if not cleaned:
+            cleaned = text.strip()
 
-        # Regex strictly for Vietnamese diacritics
+        # 2. Strict Vietnamese diacritics pattern
         vietnamese_pattern = re.compile(
             r'[\u00E0\u00E1\u00E2\u00E3\u00E8\u00E9\u00EA\u00EC\u00ED\u00F2\u00F3\u00F4\u00F5\u00F9\u00FA\u00FD'
             r'\u0103\u0111\u0129\u0169\u01A1\u01B0\u1EA0-\u1EF9'
@@ -236,65 +253,30 @@ class SpeechAIService:
             re.IGNORECASE
         )
 
-        # 1. If text has ZERO Vietnamese diacritics -> 100% Native English voice (US / UK)
-        if not vietnamese_pattern.search(cleaned_text):
-            communicate = edge_tts.Communicate(cleaned_text, en_voice, rate=rate_str)
-            await communicate.save(str(filepath))
+        # 3. Detect language: Is it predominantly Vietnamese or predominantly English?
+        words = [w for w in cleaned.split() if re.search(r'[a-zA-Z\u00C0-\u1EF9]', w)]
+        vi_word_count = len([w for w in words if vietnamese_pattern.search(w)]) if words else 0
+        is_predominantly_vi = (vi_word_count / len(words) >= 0.45) if words else False
+
+        if not is_predominantly_vi:
+            # PREDOMINANTLY ENGLISH:
+            # Normalize accented characters in proper names (e.g. "Hoàng" -> "Hoang")
+            # so the native English neural voice speaks continuously without spelling out.
+            def _strip_diacritics(s: str) -> str:
+                s = s.replace('đ', 'd').replace('Đ', 'D')
+                nfkd = unicodedata.normalize('NFKD', s)
+                return ''.join([c for c in nfkd if not unicodedata.combining(c)])
+
+            spoken_text = _strip_diacritics(cleaned)
+            selected_voice = en_voice
         else:
-            # 2. Mixed Vietnamese & English: split by lines and quoted English phrases
-            raw_lines = [l.strip() for l in cleaned_text.splitlines() if l.strip()]
-            chunks = []
-            for line in raw_lines:
-                q_pat = r'("[^"]{2,}"|`[^`]{2,}`|\'[^\']{3,}\')'
-                matches = list(re.finditer(q_pat, line))
-                if vietnamese_pattern.search(line) and matches:
-                    last_idx = 0
-                    for m in matches:
-                        clean_q = m.group(0).strip('"\'`').strip()
-                        if not vietnamese_pattern.search(clean_q) and re.search(r'[a-zA-Z]{2,}', clean_q):
-                            before = line[last_idx:m.start()].strip()
-                            if before:
-                                chunks.append((before, vi_voice if vietnamese_pattern.search(before) else en_voice))
-                            chunks.append((clean_q, en_voice))
-                            last_idx = m.end()
-                    after = line[last_idx:].strip()
-                    if after:
-                        chunks.append((after, vi_voice if vietnamese_pattern.search(after) else en_voice))
-                else:
-                    if not vietnamese_pattern.search(line) and re.search(r'[a-zA-Z]{2,}', line):
-                        chunks.append((line, en_voice))
-                    else:
-                        chunks.append((line, vi_voice))
+            # PREDOMINANTLY VIETNAMESE (e.g. grammar explanation or translation):
+            spoken_text = cleaned
+            selected_voice = vi_voice
 
-            temp_files = []
-            combined_bytes = b""
-            try:
-                for chunk_text, chunk_voice in chunks:
-                    c_clean = chunk_text.strip()
-                    if not c_clean:
-                        continue
-                    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp:
-                        tmp_path = tmp.name
-                    temp_files.append(tmp_path)
-                    try:
-                        await edge_tts.Communicate(c_clean, chunk_voice, rate=rate_str).save(tmp_path)
-                        with open(tmp_path, "rb") as tf:
-                            combined_bytes += tf.read()
-                    except Exception as e:
-                        logger.warning(f"Error synthesizing chunk: {e}")
-
-                if not combined_bytes:
-                    await edge_tts.Communicate(cleaned_text, vi_voice, rate=rate_str).save(str(filepath))
-                else:
-                    with open(str(filepath), "wb") as f_out:
-                        f_out.write(combined_bytes)
-            finally:
-                for tf in temp_files:
-                    try:
-                        if os.path.exists(tf):
-                            os.remove(tf)
-                    except Exception:
-                        pass
+        # 4. Synthesize in a single fluent stream (no choppy chunking)
+        communicate = edge_tts.Communicate(spoken_text, selected_voice, rate=rate_str)
+        await communicate.save(str(filepath))
 
         audio_url = f"/api/v1/speech/audio/{filename}"
         return {
@@ -302,7 +284,7 @@ class SpeechAIService:
             "audio_url": audio_url,
             "duration_seconds": round(len(text.split()) / (2.5 * speed), 1),
             "format": "mp3",
-            "voice": en_voice,
+            "voice": selected_voice,
             "filename": filename,
         }
 
@@ -791,7 +773,7 @@ class SpeechAIService:
         try:
             return await cls._local_edge_tts(text, voice, speed)
         except Exception as e:
-            logger.warning(f"Local Edge TTS failed, trying cloud: {e}")
+            logger.warning(f"Local Edge TTS failed, trying cloud/fallback: {e}")
 
         # 1. Try OpenAI TTS
         if settings.openai_api_key:
@@ -807,7 +789,13 @@ class SpeechAIService:
             except Exception as e:
                 logger.warning(f"Google TTS failed: {e}")
 
-        # 3. Fallback
+        # 3. Guaranteed zero-key Google Translate TTS fallback
+        try:
+            return await cls._google_translate_tts(text, voice)
+        except Exception as e:
+            logger.warning(f"Google Translate TTS fallback failed: {e}")
+
+        # 4. Fallback
         return cls._fallback_tts(text, voice)
 
     @classmethod
@@ -896,6 +884,41 @@ class SpeechAIService:
                 "voice": voice,
                 "duration_seconds": None,
             }
+
+    @classmethod
+    async def _google_translate_tts(cls, text: str, voice: str) -> dict[str, Any]:
+        """Free Google Translate TTS fallback ensuring audio ALWAYS plays."""
+        import urllib.parse
+        import unicodedata
+        cleaned = re.sub(r'[\U00010000-\U0010ffff]', '', text).strip()[:500] or text[:500]
+        vietnamese_pattern = re.compile(
+            r'[\u00E0\u00E1\u00E2\u00E3\u00E8\u00E9\u00EA\u00EC\u00ED\u00F2\u00F3\u00F4\u00F5\u00F9\u00FA\u00FD'
+            r'\u0103\u0111\u0129\u0169\u01A1\u01B0\u1EA0-\u1EF9]',
+            re.IGNORECASE
+        )
+        words = [w for w in cleaned.split() if re.search(r'[a-zA-Z\u00C0-\u1EF9]', w)]
+        vi_word_count = len([w for w in words if vietnamese_pattern.search(w)]) if words else 0
+        is_predominantly_vi = (vi_word_count / len(words) >= 0.45) if words else False
+        lang = "vi" if is_predominantly_vi else "en"
+        if lang == "en":
+            s = cleaned.replace('đ', 'd').replace('Đ', 'D')
+            nfkd = unicodedata.normalize('NFKD', s)
+            cleaned = ''.join([c for c in nfkd if not unicodedata.combining(c)])
+        url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={urllib.parse.quote(cleaned)}&tl={lang}&client=tw-ob"
+        async with httpx.AsyncClient(timeout=10.0, headers={"User-Agent": "Mozilla/5.0"}) as client:
+            resp = await client.get(url)
+            resp.raise_for_status()
+            audio_bytes = resp.content
+
+        filename = f"tts_{uuid.uuid4().hex[:12]}.mp3"
+        filepath = AUDIO_DIR / filename
+        filepath.write_bytes(audio_bytes)
+        return {
+            "audio_url": f"/api/v1/speech/audio/{filename}",
+            "text": text,
+            "voice": voice,
+            "duration_seconds": None,
+        }
 
     @classmethod
     def _fallback_tts(cls, text: str, voice: str) -> dict[str, Any]:

@@ -103,4 +103,29 @@ class AuthRemoteDataSource {
       response.data as Map<String, dynamic>,
     );
   }
+
+  Future<UserModel> updateProfile({
+    String? name,
+    String? avatarUrl,
+    int? dailyLearningMinutes,
+    String? targetLevel,
+    String? currentLevel,
+    String? learningGoal,
+  }) async {
+    final response = await _dio.put(
+      ApiEndpoints.userMe,
+      data: {
+        if (name != null) 'name': name,
+        if (avatarUrl != null) 'avatar_url': avatarUrl,
+        if (dailyLearningMinutes != null)
+          'daily_learning_minutes': dailyLearningMinutes,
+        if (targetLevel != null) 'target_level': targetLevel,
+        if (currentLevel != null) 'current_level': currentLevel,
+        if (learningGoal != null) 'learning_goal': learningGoal,
+      },
+    );
+    return UserModel.fromJson(
+      response.data as Map<String, dynamic>,
+    );
+  }
 }

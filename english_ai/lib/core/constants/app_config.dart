@@ -27,12 +27,16 @@ class AppConfig {
   /// Base URL for versioned API calls, e.g. `http://10.0.2.2:8000/api/v1`.
   static String get apiBaseUrlV1 => '$apiBaseUrl/api/v1';
 
-  /// Google OAuth Web client ID, supplied at build time with
-  /// `--dart-define=GOOGLE_CLIENT_ID=xxxx.apps.googleusercontent.com`.
-  /// Must match the backend's `GOOGLE_OAUTH_CLIENT_ID`.
-  static const String googleClientId = String.fromEnvironment('GOOGLE_CLIENT_ID');
+  static const String _defaultGoogleClientId =
+      '116869668249-h8j2sit4nft1mrt08rdi993m2rcntapn.apps.googleusercontent.com';
+  static const String _envGoogleClientId =
+      String.fromEnvironment('GOOGLE_CLIENT_ID');
 
-  /// Whether Google Sign-In has been configured at build time.
+  /// Google OAuth Web client ID.
+  static String get googleClientId =>
+      _envGoogleClientId.isNotEmpty ? _envGoogleClientId : _defaultGoogleClientId;
+
+  /// Whether Google Sign-In has been configured.
   static bool get isGoogleSignInConfigured => googleClientId.isNotEmpty;
 
   /// Resolve a server-relative media path (e.g. `/speech/audio/x.mp3`)

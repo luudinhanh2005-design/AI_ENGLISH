@@ -47,3 +47,7 @@ AI ENGLISH/
 Thumbs.db
 
 AI ENGLISH/
+
+# Offline user store (contains password hashes)
+backend/storage/users.json
+backend/.env

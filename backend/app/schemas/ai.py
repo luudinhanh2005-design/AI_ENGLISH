@@ -60,6 +60,7 @@ class AITutorSessionSummary(BaseModel):
 
 class AIExerciseGenerateRequest(BaseModel):
     skill: Optional[str] = Field(default=None, description="vocabulary, grammar, reading")
+    topic: Optional[str] = Field(default=None, max_length=100, description="e.g. travel, business")
     count: int = Field(default=3, ge=1, le=10)
 
 

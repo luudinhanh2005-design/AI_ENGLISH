@@ -38,7 +38,9 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
 
     # Google Sign-In (OAuth client ID used to verify ID tokens)
-    google_oauth_client_id: str | None = None
+    google_oauth_client_id: str | None = (
+        "116869668249-h8j2sit4nft1mrt08rdi993m2rcntapn.apps.googleusercontent.com"
+    )
 
     # CORS
     cors_origins: List[str] = ["http://localhost:3000", "http://localhost:8080"]
@@ -46,8 +48,8 @@ class Settings(BaseSettings):
     # AI Services (Phase 3)
     openai_api_key: str | None = None
     google_ai_api_key: str | None = None
-    ai_provider: str = "local"  # "local", "gemini", "openai", or "hybrid"
-    ai_model_name: str = "gemini-1.5-flash"
+    ai_provider: str = "gemini"  # "local", "gemini", "openai", or "hybrid"
+    ai_model_name: str = "gemini-2.5-flash"
     ai_cloud_fallback: bool = True
     local_llm_enabled: bool = True
     local_llm_preload: bool = True

@@ -56,4 +56,26 @@ class ApiEndpoints {
   static const String speechDrills = '/speech/drills';
   static const String speechHistory = '/speech/history';
   static const String speechStats = '/speech/stats';
+
+  // ── 4 New Advanced Features ───────────────────
+  // 1. IELTS Speaking Mock Test
+  static const String ieltsPrompt = '/ai/ielts/prompt';
+  static const String ieltsEvaluate = '/ai/ielts/evaluate';
+
+  // 2. Mistake Notebook & SM-2
+  static const String aiMistakes = '/ai/mistakes';
+  static String aiMistakeReview(String mistakeId) =>
+      '/ai/mistakes/$mistakeId/review';
+  static String aiMistakeDelete(String mistakeId) =>
+      '/ai/mistakes/$mistakeId';
+
+  // 3. Shadowing Technique
+  static const String shadowingDrills = '/speech/shadowing-drills';
+  static const String shadowingAssess = '/speech/shadowing-assess';
+
+  // 4. Leaderboard & Gamified Badges
+  static const String userLeaderboard = '/users/leaderboard';
+  static const String userBadges = '/users/badges';
+  static String userBadgeClaim(String badgeId) =>
+      '/users/badges/$badgeId/claim';
 }

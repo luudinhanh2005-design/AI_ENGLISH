@@ -28,6 +28,10 @@ import '../../features/ai_tutor/presentation/screens/voice_call_summary_screen.d
 import '../../features/writing/presentation/screens/writing_editor_screen.dart';
 import '../../features/writing/presentation/screens/writing_result_screen.dart';
 import '../../features/grammar/presentation/screens/grammar_lesson_screen.dart';
+import '../../features/practice/presentation/screens/ielts_speaking_mock_screen.dart';
+import '../../features/practice/presentation/screens/mistake_notebook_screen.dart';
+import '../../features/pronunciation/presentation/screens/shadowing_screen.dart';
+import '../../features/profile/presentation/screens/leaderboard_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import 'route_names.dart';
 
@@ -185,6 +189,39 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => GrammarLessonScreen(
           lessonId: state.pathParameters['id'] ?? '',
         ),
+      ),
+      // ── 4 New Advanced Features ──
+      GoRoute(
+        path: '/practice/ielts-speaking',
+        builder: (context, state) => const IeltsSpeakingMockScreen(),
+      ),
+      GoRoute(
+        path: '/ielts-speaking',
+        redirect: (context, state) => '/practice/ielts-speaking',
+      ),
+      GoRoute(
+        path: '/mistake-notebook',
+        builder: (context, state) => const MistakeNotebookScreen(),
+      ),
+      GoRoute(
+        path: '/practice/mistakes',
+        redirect: (context, state) => '/mistake-notebook',
+      ),
+      GoRoute(
+        path: '/pronunciation/shadowing',
+        builder: (context, state) => const ShadowingScreen(),
+      ),
+      GoRoute(
+        path: '/practice/shadowing',
+        redirect: (context, state) => '/pronunciation/shadowing',
+      ),
+      GoRoute(
+        path: '/leaderboard',
+        builder: (context, state) => const LeaderboardScreen(),
+      ),
+      GoRoute(
+        path: '/home',
+        redirect: (context, state) => '/',
       ),
 
       StatefulShellRoute(

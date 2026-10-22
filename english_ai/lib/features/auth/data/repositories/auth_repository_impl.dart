@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../../core/services/storage_service.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -89,7 +91,12 @@ class AuthRepositoryImpl implements AuthRepository {
       await StorageService.saveUserData(user.toJson());
       return user;
     } catch (e) {
-      // Fall back to cached user data
+      // Token rejected (expired / server secret changed): log out cleanly.
+      if (e is DioException && e.response?.statusCode == 401) {
+        await StorageService.clearAll();
+        return null;
+      }
+      // Otherwise (server offline) fall back to cached user data
       final cached = StorageService.getUserData();
       if (cached != null) {
         return User(
@@ -143,5 +150,27 @@ class AuthRepositoryImpl implements AuthRepository {
 
     await StorageService.saveUserData(user.toJson());
     await StorageService.setOnboardingComplete();
+  }
+
+  @override
+  Future<User> updateProfile({
+    String? name,
+    String? avatarUrl,
+    int? dailyLearningMinutes,
+    String? targetLevel,
+    String? currentLevel,
+    String? learningGoal,
+  }) async {
+    final user = await _remoteDataSource.updateProfile(
+      name: name,
+      avatarUrl: avatarUrl,
+      dailyLearningMinutes: dailyLearningMinutes,
+      targetLevel: targetLevel,
+      currentLevel: currentLevel,
+      learningGoal: learningGoal,
+    );
+
+    await StorageService.saveUserData(user.toJson());
+    return user;
   }
 }

@@ -31,4 +31,13 @@ abstract class AuthRepository {
     required int dailyMinutes,
     required List<String> topics,
   });
+
+  Future<User> updateProfile({
+    String? name,
+    String? avatarUrl,
+    int? dailyLearningMinutes,
+    String? targetLevel,
+    String? currentLevel,
+    String? learningGoal,
+  });
 }

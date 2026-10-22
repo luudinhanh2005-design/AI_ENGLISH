@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../data/models/voice_call_models.dart';
 import '../providers/voice_call_provider.dart';
+import '../../../practice/presentation/providers/mistake_notebook_provider.dart';
 
 class VoiceCallSummaryScreen extends ConsumerWidget {
   const VoiceCallSummaryScreen({super.key});
@@ -31,7 +32,7 @@ class VoiceCallSummaryScreen extends ConsumerWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.close_rounded, color: context.palette.textPrimary),
-          onPressed: () => context.go('/home'),
+          onPressed: () => context.go('/'),
         ),
         title: Text(
           'Tổng kết cuộc gọi thoại',
@@ -304,7 +305,61 @@ class VoiceCallSummaryScreen extends ConsumerWidget {
                   ),
                 ),
 
-              const SizedBox(height: 32),
+              if (summary.allCorrections.isNotEmpty) ...[
+                const SizedBox(height: 14),
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6C5CE7),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    onPressed: () {
+                      final items = summary.allCorrections
+                          .map((c) => {
+                                'original': c.original,
+                                'corrected': c.correction,
+                                'explanation': c.explanationVi,
+                                'type': 'grammar',
+                              })
+                          .toList();
+
+                      ref
+                          .read(mistakeNotebookProvider.notifier)
+                          .addBatchMistakes(
+                            items,
+                            source: 'voice_call',
+                          );
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              '🎉 Đã lưu ${items.length} lỗi vào Sổ tay ôn tập (Flashcard SM-2)!'),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: const Color(0xFF2ED573),
+                          action: SnackBarAction(
+                            label: 'Mở Sổ Tay',
+                            textColor: Colors.white,
+                            onPressed: () => context.push('/mistake-notebook'),
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.bookmark_add_rounded, size: 18),
+                    label: Text(
+                      'Lưu ${summary.allCorrections.length} lỗi này vào Sổ tay ôn tập (SM-2) 📓',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13),
+                    ),
+                  ),
+                ),
+              ],
+
+              const SizedBox(height: 28),
 
               // ── Action Buttons ──
               Row(
@@ -351,7 +406,7 @@ class VoiceCallSummaryScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: () => context.go('/home'),
+                onPressed: () => context.go('/'),
                 child: Text(
                   'Về trang chủ',
                   style: TextStyle(color: context.palette.textSecondary),

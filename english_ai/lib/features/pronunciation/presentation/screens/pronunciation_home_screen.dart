@@ -249,6 +249,29 @@ class _PronunciationHomeScreenState
               ),
             ),
           ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => context.push('/pronunciation/shadowing'),
+              icon: const Icon(Icons.mic_external_on_rounded,
+                  size: 20, color: Color(0xFF00CEC9)),
+              label: const Text(
+                'Chế độ Luyện Nhại Giọng (Shadowing) 🎙️',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Color(0xFF00CEC9),
+                ),
+              ),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFF00CEC9), width: 1.5),
+                padding: const EdgeInsets.symmetric(vertical: 13),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14)),
+              ),
+            ),
+          ),
         ],
       ),
     );

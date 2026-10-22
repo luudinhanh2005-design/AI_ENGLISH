@@ -10,4 +10,4 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$ScriptDir\ba
 
 Write-Host "[2/2] Đang khởi động Frontend Flutter (Giao diện App trên Edge)..." -ForegroundColor Yellow
 Set-Location "$ScriptDir\english_ai"
-flutter run -d edge
+flutter run -d edge --web-hostname localhost --web-port 5000 --dart-define=GOOGLE_CLIENT_ID=116869668249-h8j2sit4nft1mrt08rdi993m2rcntapn.apps.googleusercontent.com

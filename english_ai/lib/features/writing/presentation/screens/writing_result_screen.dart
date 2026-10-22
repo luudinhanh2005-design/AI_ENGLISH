@@ -7,6 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../data/models/writing_models.dart';
 import '../providers/writing_provider.dart';
+import '../../../practice/presentation/providers/mistake_notebook_provider.dart';
 
 class WritingResultScreen extends ConsumerStatefulWidget {
   const WritingResultScreen({super.key});
@@ -264,7 +265,7 @@ class _WritingResultScreenState extends ConsumerState<WritingResultScreen>
                       ),
                       icon: const Icon(Icons.home_rounded),
                       label: const Text('Về trang chủ'),
-                      onPressed: () => context.go('/home'),
+                      onPressed: () => context.go('/'),
                     ),
                   ),
                 ],
@@ -418,6 +419,58 @@ class _WritingResultScreenState extends ConsumerState<WritingResultScreen>
               ),
             ),
           ),
+        if (result.grammarFeedback.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6C5CE7),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+              ),
+              onPressed: () {
+                final items = result.grammarFeedback
+                    .map((g) => {
+                          'original': g.original,
+                          'corrected': g.correction,
+                          'explanation': g.explanationVi,
+                          'type': 'grammar',
+                        })
+                    .toList();
+
+                ref.read(mistakeNotebookProvider.notifier).addBatchMistakes(
+                      items,
+                      source: 'writing',
+                    );
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        '🎉 Đã lưu ${items.length} lỗi bài viết vào Sổ tay ôn tập (Flashcard SM-2)!'),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: const Color(0xFF2ED573),
+                    action: SnackBarAction(
+                      label: 'Mở Sổ Tay',
+                      textColor: Colors.white,
+                      onPressed: () => context.push('/mistake-notebook'),
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.bookmark_add_rounded, size: 18),
+              label: Text(
+                'Lưu ${result.grammarFeedback.length} lỗi này vào Sổ tay (SM-2) 📓',
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
       ],
     );
   }

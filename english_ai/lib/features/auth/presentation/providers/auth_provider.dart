@@ -110,6 +110,30 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<User?>> {
     await _init();
   }
 
+  Future<void> refreshUser() async {
+    await _init();
+  }
+
+  Future<User> updateProfile({
+    String? name,
+    String? avatarUrl,
+    int? dailyLearningMinutes,
+    String? targetLevel,
+    String? currentLevel,
+    String? learningGoal,
+  }) async {
+    final updated = await _repository.updateProfile(
+      name: name,
+      avatarUrl: avatarUrl,
+      dailyLearningMinutes: dailyLearningMinutes,
+      targetLevel: targetLevel,
+      currentLevel: currentLevel,
+      learningGoal: learningGoal,
+    );
+    state = AsyncValue.data(updated);
+    return updated;
+  }
+
   void updateUser(User user) {
     state = AsyncValue.data(user);
   }

@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -232,10 +232,22 @@ class WritingNotifier extends StateNotifier<WritingState> {
       );
       return true;
     } catch (e) {
-      state = state.copyWith(
-        isEvaluating: false,
-        errorMessage: 'Lỗi chấm bài từ máy chủ AI. Vui lòng kiểm tra kết nối và thử lại!',
-      );
+      String message =
+          'Lỗi chấm bài từ máy chủ AI. Vui lòng kiểm tra kết nối và thử lại!';
+      if (e is DioException) {
+        final code = e.response?.statusCode;
+        if (code == 401 || code == 403) {
+          message = 'Phiên đăng nhập đã hết hạn. Hãy đăng nhập lại rồi nộp bài nhé!';
+        } else if (e.type == DioExceptionType.receiveTimeout ||
+            e.type == DioExceptionType.connectionTimeout) {
+          message = 'AI chấm bài quá lâu. Hãy thử lại sau ít giây.';
+        } else if (e.type == DioExceptionType.connectionError) {
+          message = 'Không kết nối được backend (cổng 8000). Hãy kiểm tra server đang chạy.';
+        } else if (code != null) {
+          message = 'Máy chủ lỗi ($code). Xem log backend để biết chi tiết.';
+        }
+      }
+      state = state.copyWith(isEvaluating: false, errorMessage: message);
       return false;
     }
   }

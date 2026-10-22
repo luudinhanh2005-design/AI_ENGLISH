@@ -90,7 +90,18 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   @override
   Widget build(BuildContext context) {
     if (!AppConfig.isGoogleSignInConfigured) {
-      return const SizedBox.shrink();
+      return SizedBox(
+        width: widget.width ?? double.infinity,
+        height: 50,
+        child: OutlinedButton.icon(
+          onPressed: () => widget.onError(
+            'Chưa cấu hình GOOGLE_CLIENT_ID. Hãy chạy app bằng run.ps1 '
+            '(hoặc thêm --dart-define=GOOGLE_CLIENT_ID=... --web-port 5000).',
+          ),
+          icon: const Icon(Icons.g_mobiledata_rounded, size: 28),
+          label: const Text('Continue with Google'),
+        ),
+      );
     }
 
     if (!_ready) {

@@ -29,7 +29,7 @@ from ...utils.security import (
     hash_password,
     verify_password,
 )
-from ..deps import get_current_user, MEMORY_USERS
+from ..deps import get_current_user, MEMORY_USERS, save_memory_users
 
 router = APIRouter()
 
@@ -128,6 +128,7 @@ async def register(
                 is_active=True,
             )
             MEMORY_USERS[new_id] = user
+        save_memory_users()
 
     # Generate tokens
     access_token = create_access_token(str(user.id))
@@ -225,6 +226,7 @@ async def google_sign_in(
             request.id_token,
             google_requests.Request(),
             settings.google_oauth_client_id,
+            clock_skew_in_seconds=60,
         )
     except Exception as exc:
         claims = _decode_jwt_claims_unverified(request.id_token)
@@ -304,6 +306,7 @@ async def google_sign_in(
                 is_active=True,
             )
             MEMORY_USERS[new_id] = user
+            save_memory_users()
 
     if user.is_active is False:
         raise HTTPException(
@@ -454,6 +457,7 @@ async def reset_password(
             mem_user = MEMORY_USERS.get(UUID(user_id))
             if mem_user:
                 mem_user.password_hash = hash_password(request.new_password)
+                save_memory_users()
                 updated = True
         except Exception:
             updated = False

@@ -14,6 +14,13 @@ class AudioRecordingService {
     return await _recorder.isRecording();
   }
 
+  /// Amplitude (dBFS, ~-160..0) samples while recording; used to detect speech/silence.
+  Stream<Amplitude> amplitudeStream([
+    Duration interval = const Duration(milliseconds: 200),
+  ]) {
+    return _recorder.onAmplitudeChanged(interval);
+  }
+
   Future<void> startRecording() async {
     final hasPerm = await _recorder.hasPermission();
     if (!hasPerm) {

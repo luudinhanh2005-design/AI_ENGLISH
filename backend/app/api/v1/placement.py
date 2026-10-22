@@ -184,6 +184,9 @@ async def submit_placement_test(
     except Exception:
         pass
 
+    from ..deps import save_memory_users
+    save_memory_users()
+
     return PlacementResultResponse(
         total_questions=total_count,
         correct_count=correct_count,

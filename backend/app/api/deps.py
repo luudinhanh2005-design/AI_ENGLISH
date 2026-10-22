@@ -1,3 +1,6 @@
+import json
+import logging
+from pathlib import Path
 from typing import Optional
 from uuid import UUID, uuid4
 
@@ -13,6 +16,7 @@ from ..utils.security import decode_token, hash_password
 
 # Bearer token scheme
 security = HTTPBearer()
+logger = logging.getLogger(__name__)
 
 # In-memory user store for demo/offline fallback.
 # Only populated when ENABLE_DEMO_ACCOUNTS=true (must be disabled in production).
@@ -58,6 +62,49 @@ def _build_memory_users() -> dict[UUID, User]:
 
 
 MEMORY_USERS: dict[UUID, User] = _build_memory_users()
+
+# ── Persistence for offline accounts ──
+# Without a running PostgreSQL, accounts live in MEMORY_USERS. Save them to a
+# JSON file so registered users are not lost every time the backend restarts.
+_USERS_FILE = Path("storage/users.json")
+_PERSIST_FIELDS = (
+    "email", "password_hash", "name", "avatar_url", "current_level",
+    "target_level", "learning_goal", "daily_learning_minutes", "streak",
+    "total_xp", "has_completed_onboarding", "is_active",
+)
+_DEMO_IDS = {_DEFAULT_DEMO_ID, _DEMO_ADMIN_ID}
+
+
+def save_memory_users() -> None:
+    """Write non-demo in-memory users to disk (best effort)."""
+    try:
+        data = {
+            str(uid): {f: getattr(u, f, None) for f in _PERSIST_FIELDS}
+            for uid, u in MEMORY_USERS.items()
+            if uid not in _DEMO_IDS
+        }
+        _USERS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        tmp = _USERS_FILE.with_suffix(".tmp")
+        tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        tmp.replace(_USERS_FILE)
+    except Exception:
+        logger.exception("Could not persist offline users")
+
+
+def _load_memory_users() -> None:
+    if not _USERS_FILE.exists():
+        return
+    try:
+        data = json.loads(_USERS_FILE.read_text(encoding="utf-8"))
+        for uid, fields in data.items():
+            uuid_ = UUID(uid)
+            MEMORY_USERS[uuid_] = User(id=uuid_, **fields)
+        logger.info("Loaded %d offline users from %s", len(data), _USERS_FILE)
+    except Exception:
+        logger.exception("Could not load offline users")
+
+
+_load_memory_users()
 
 
 async def get_current_user(

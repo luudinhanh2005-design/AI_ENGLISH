@@ -23,7 +23,7 @@ from ...schemas.ai import (
     AIWritingSubmitRequest,
 )
 from ...services.ai_service import AIService
-from ..deps import get_current_user
+from ..deps import get_current_user, get_optional_user
 
 router = APIRouter()
 
@@ -261,7 +261,7 @@ async def chat_with_ai_tutor(
     return AIChatResponse(
         session_id=session_id,
         reply=reply_text,
-        corrections=[AICorrectionItem(**c) for c in corrections_raw],
+        corrections=[AICorrectionItem.model_validate(c) for c in corrections_raw],
         suggested_replies=suggested_replies,
     )
 
@@ -371,6 +371,8 @@ async def generate_adaptive_exercises(
         user_level=user_level,
         weaknesses=weaknesses,
         count=request.count,
+        skill=request.skill,
+        topic=request.topic,
     )
 
     return AIExerciseGenerateResponse(
@@ -424,3 +426,170 @@ async def evaluate_writing(
         current_user.total_xp = (current_user.total_xp or 0) + 25
 
     return AIWritingResponse(**eval_result)
+
+
+# ──────────────────────────────────────────────
+# 4. IELTS Speaking Mock Test
+# ──────────────────────────────────────────────
+
+class IELTSPartQA(BaseModel):
+    question: str
+    answer: str
+
+class IELTSSpeakingSubmitRequest(BaseModel):
+    topic: str
+    part1_qa: list[IELTSPartQA]
+    part2_answer: str
+    part3_qa: list[IELTSPartQA]
+
+@router.get("/ielts/prompt")
+async def get_ielts_prompt(topic_id: str | None = None):
+    """Retrieve an IELTS Speaking mock test prompt."""
+    return AIService.get_ielts_speaking_prompt(topic_id)
+
+@router.post("/ielts/evaluate")
+async def evaluate_ielts_speaking(
+    request: IELTSSpeakingSubmitRequest,
+    current_user: User | None = Depends(get_optional_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Evaluate candidate's full 3-part IELTS Speaking Mock Test.
+    Grades Band 1.0 - 9.0 across Fluency, Lexical, Grammar, Pronunciation.
+    Awards +50 XP to the user if authenticated.
+    """
+    user_level = (current_user.current_level if current_user else None) or "B2"
+    result = await AIService.evaluate_ielts_speaking(
+        topic=request.topic,
+        part1_qa=[item.model_dump() for item in request.part1_qa],
+        part2_answer=request.part2_answer,
+        part3_qa=[item.model_dump() for item in request.part3_qa],
+        user_level=user_level,
+    )
+
+    # Award XP if user is logged in
+    if current_user:
+        try:
+            current_user.total_xp = (current_user.total_xp or 0) + 50
+            await db.flush()
+        except Exception:
+            current_user.total_xp = (current_user.total_xp or 0) + 50
+
+    return result
+
+
+# ──────────────────────────────────────────────
+# 5. Mistake Notebook & SM-2 Spaced Repetition
+# ──────────────────────────────────────────────
+
+_DEFAULT_GUEST_ID = UUID("00000000-0000-0000-0000-000000000001")
+_MEMORY_MISTAKES: dict[UUID, list[dict]] = {}
+
+class MistakeCreateItem(BaseModel):
+    original_text: str
+    corrected_text: str
+    explanation: str
+    type: str = "grammar"  # grammar, vocabulary, pronunciation
+    source: str = "practice"  # voice_call, writing, ielts, practice
+
+class MistakeReviewSubmit(BaseModel):
+    rating: int  # 0 to 5
+
+@router.get("/mistakes")
+async def get_mistakes(
+    type: str | None = None,
+    current_user: User | None = Depends(get_optional_user),
+):
+    """Get all saved mistakes in the user's notebook."""
+    user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
+    items = _MEMORY_MISTAKES.get(user_id, [])
+    if type and type != "all":
+        items = [m for m in items if m.get("type") == type]
+    return items
+
+@router.post("/mistakes")
+async def save_mistakes(
+    mistakes: list[MistakeCreateItem],
+    current_user: User | None = Depends(get_optional_user),
+):
+    """Save a list of mistakes to the user's notebook."""
+    user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
+    if user_id not in _MEMORY_MISTAKES:
+        _MEMORY_MISTAKES[user_id] = []
+
+    now = datetime.now(timezone.utc).isoformat()
+    saved = []
+    for item in mistakes:
+        # Avoid duplicate exact originals
+        if any(m["original_text"].strip().lower() == item.original_text.strip().lower() for m in _MEMORY_MISTAKES[user_id]):
+            continue
+        entry = {
+            "id": str(uuid.uuid4()),
+            "original_text": item.original_text,
+            "corrected_text": item.corrected_text,
+            "explanation": item.explanation,
+            "type": item.type,
+            "source": item.source,
+            "created_at": now,
+            "repetition_count": 0,
+            "interval_days": 1,
+            "ease_factor": 2.5,
+            "next_review_at": now,
+            "status": "new",  # new, learning, mastered
+        }
+        _MEMORY_MISTAKES[user_id].insert(0, entry)
+        saved.append(entry)
+
+    return {"message": f"Saved {len(saved)} mistakes", "saved": saved}
+
+@router.post("/mistakes/{mistake_id}/review")
+async def review_mistake(
+    mistake_id: str,
+    request: MistakeReviewSubmit,
+    current_user: User | None = Depends(get_optional_user),
+):
+    """
+    Review a mistake using the SM-2 algorithm.
+    Rating 0-2 = repeat, 3-5 = interval increases.
+    """
+    from ...services.sm2 import SM2Calculator
+
+    user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
+    items = _MEMORY_MISTAKES.get(user_id, [])
+    target = next((m for m in items if m["id"] == mistake_id), None)
+    if not target:
+        raise HTTPException(status_code=404, detail="Mistake item not found")
+
+    rep_count = target.get("repetition_count", 0)
+    ef = target.get("ease_factor", 2.5)
+    interval = target.get("interval_days", 1)
+
+    new_rep, new_ef, new_interval, next_review, status_str = SM2Calculator.calculate_next_review(
+        repetition_count=rep_count,
+        ease_factor=ef,
+        interval_days=interval,
+        rating=request.rating,
+    )
+
+    target["repetition_count"] = new_rep
+    target["ease_factor"] = new_ef
+    target["interval_days"] = new_interval
+    target["next_review_at"] = next_review.isoformat()
+    target["status"] = status_str
+
+    # Reward XP for review if logged in
+    if current_user:
+        current_user.total_xp = (current_user.total_xp or 0) + 10
+
+    return target
+
+@router.delete("/mistakes/{mistake_id}")
+async def delete_mistake(
+    mistake_id: str,
+    current_user: User | None = Depends(get_optional_user),
+):
+    """Remove a mistake from the notebook."""
+    user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
+    if user_id in _MEMORY_MISTAKES:
+        _MEMORY_MISTAKES[user_id] = [m for m in _MEMORY_MISTAKES[user_id] if m["id"] != mistake_id]
+    return {"message": "Deleted successfully"}

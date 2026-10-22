@@ -309,9 +309,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       GoogleSignInButton(
                         isLoading: _isLoading,
                         onIdToken: (idToken) async {
-                          await ref
-                              .read(authStateProvider.notifier)
-                              .loginWithGoogle(idToken: idToken);
+                          try {
+                            setState(() {
+                              _isLoading = true;
+                              _errorMessage = null;
+                            });
+                            await ref
+                                .read(authStateProvider.notifier)
+                                .loginWithGoogle(idToken: idToken);
+                          } catch (e) {
+                            _setError('Đăng nhập Google thất bại: $e');
+                          } finally {
+                            if (mounted) setState(() => _isLoading = false);
+                          }
                         },
                         onError: (error) => _setError(
                           'Đăng nhập Google thất bại: $error',

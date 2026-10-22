@@ -48,66 +48,72 @@ class HomeScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  // Streak badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: AppColors.streakGradient,
-                      borderRadius: BorderRadius.circular(
-                        AppDimensions.radiusFull,
+                  // Streak badge (Clickable to Leaderboard)
+                  GestureDetector(
+                    onTap: () => context.push('/leaderboard'),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.accent.withOpacity(0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.streakGradient,
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusFull,
                         ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.local_fire_department_rounded,
-                            color: Colors.white, size: 18),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${user?.streak ?? 0}',
-                          style: AppTextStyles.labelLarge.copyWith(
-                            color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.accent.withOpacity(0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.local_fire_department_rounded,
+                              color: Colors.white, size: 18),
+                          const SizedBox(width: 6),
+                          Text(
+                            '${user?.streak ?? 0}',
+                            style: AppTextStyles.labelLarge.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
-                  // XP badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: AppColors.xpGradient,
-                      borderRadius: BorderRadius.circular(
-                        AppDimensions.radiusFull,
+                  // XP badge (Clickable to Leaderboard)
+                  GestureDetector(
+                    onTap: () => context.push('/leaderboard'),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
                       ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.bolt_rounded,
-                            color: Colors.white, size: 18),
-                        const SizedBox(width: 4),
-                        Text(
-                          '${user?.totalXp ?? 0}',
-                          style: AppTextStyles.labelMedium.copyWith(
-                            color: Colors.white,
-                          ),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.xpGradient,
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusFull,
                         ),
-                      ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.bolt_rounded,
+                              color: Colors.white, size: 18),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${user?.totalXp ?? 0}',
+                            style: AppTextStyles.labelMedium.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -354,11 +360,35 @@ class HomeScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               _RecommendationCard(
-                icon: Icons.edit_note_rounded,
-                title: 'Luyện Viết & Chấm AI',
-                subtitle: 'Chấm điểm bài luận IELTS, sửa lỗi & nâng cấp câu',
-                color: const Color(0xFF5352ED),
-                onTap: () => context.push('/writing'),
+                icon: Icons.military_tech_rounded,
+                title: 'Thi Thử IELTS Speaking (Emma) 🏆',
+                subtitle: 'Phòng thi chuẩn 3 phần, giám khảo Emma chấm điểm Band 1.0 - 9.0',
+                color: const Color(0xFFF39C12),
+                onTap: () => context.push('/practice/ielts-speaking'),
+              ),
+              const SizedBox(height: 8),
+              _RecommendationCard(
+                icon: Icons.auto_stories_rounded,
+                title: 'Sổ Tay Lỗi Sai & Từ Vựng 📓',
+                subtitle: 'Ghi nhớ triệt để bằng phương pháp Lặp Lại Ngắt Quãng SM-2',
+                color: const Color(0xFF6C5CE7),
+                onTap: () => context.push('/mistake-notebook'),
+              ),
+              const SizedBox(height: 8),
+              _RecommendationCard(
+                icon: Icons.mic_external_on_rounded,
+                title: 'Luyện Nhại Giọng (Shadowing) 🎙️',
+                subtitle: 'Làm chủ ngữ điệu & phản xạ tự nhiên như người bản ngữ',
+                color: const Color(0xFF00CEC9),
+                onTap: () => context.push('/pronunciation/shadowing'),
+              ),
+              const SizedBox(height: 8),
+              _RecommendationCard(
+                icon: Icons.leaderboard_rounded,
+                title: 'Bảng Xếp Hạng & Danh Hiệu 🥇',
+                subtitle: 'Giải đấu hàng tuần, thăng hạng & nhận thưởng huy hiệu',
+                color: const Color(0xFFE84393),
+                onTap: () => context.push('/leaderboard'),
               ),
               const SizedBox(height: 8),
               _RecommendationCard(
