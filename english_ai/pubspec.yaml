@@ -51,6 +51,7 @@ dependencies:
   logger: ^2.0.2+1
   http: ^1.6.0
   http_parser: ^4.1.2
+  path_provider: ^2.1.6
 
 dev_dependencies:
   flutter_test:

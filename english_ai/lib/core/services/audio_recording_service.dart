@@ -1,6 +1,7 @@
 import 'dart:io' show File;
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
 class AudioRecordingService {
@@ -37,9 +38,18 @@ class AudioRecordingService {
       noiseSuppress: true,
     );
 
+    // record yêu cầu đường dẫn file thật trên Android/iOS/desktop.
+    // Trên web, plugin dùng MediaRecorder và bỏ qua path.
+    var path = '';
+    if (!kIsWeb) {
+      final directory = await getTemporaryDirectory();
+      path =
+          '${directory.path}/pronunciation_${DateTime.now().millisecondsSinceEpoch}.wav';
+    }
+
     await _recorder.start(
       config,
-      path: '',
+      path: path,
     );
   }
 
@@ -54,7 +64,12 @@ class AudioRecordingService {
       try {
         final file = File(path);
         if (await file.exists()) {
-          return await file.readAsBytes();
+          final bytes = await file.readAsBytes();
+          // Dọn file tạm sau khi đã đọc xong.
+          try {
+            await file.delete();
+          } catch (_) {}
+          return bytes;
         }
       } catch (e) {
         debugPrint('Error reading recorded file: $e');

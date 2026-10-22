@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/constants/app_config.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import 'package:audioplayers/audioplayers.dart';
 import '../../../../core/utils/speech_service.dart';
 import '../../data/models/pronunciation_models.dart';
 import '../providers/pronunciation_provider.dart';
@@ -36,10 +36,13 @@ class _PronunciationPracticeScreenState
   Timer? _recordTimer;
   static const int _maxRecordSeconds = 15;
 
-  // Audio playback (simple web audio via url_launcher fallback)
+  // Reference audio playback
   final AudioPlayer _audioPlayer = AudioPlayer();
-  String? _ttsUrl;
-  bool _ttsRequested = false;
+  final Map<String, String> _ttsCache = {};
+  bool _isPlayingReference = false;
+  bool _isStartingRecording = false;
+  bool _isStoppingRecording = false;
+  int _playSession = 0;
 
   @override
   void initState() {
@@ -79,7 +82,7 @@ class _PronunciationPracticeScreenState
 
   void _startTimer() {
     _recordTimer?.cancel();
-    _audioPlayer.dispose();
+    unawaited(_audioPlayer.stop());
     _recordTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       ref.read(pronunciationProvider.notifier).tickRecordDuration();
       final dur = ref.read(pronunciationProvider).recordDuration;
@@ -91,19 +94,38 @@ class _PronunciationPracticeScreenState
 
   void _stopTimer() {
     _recordTimer?.cancel();
-    _audioPlayer.dispose();
     _recordTimer = null;
   }
 
   Future<void> _startRecording() async {
-    await ref.read(pronunciationProvider.notifier).startRecording();
-    _startTimer();
+    if (_isStartingRecording) return;
+    _isStartingRecording = true;
+    try {
+      await _stopReference();
+      await ref.read(pronunciationProvider.notifier).startRecording();
+      if (!mounted) return;
+      if (ref.read(pronunciationProvider).phase ==
+          PronunciationPhase.recording) {
+        _startTimer();
+      }
+    } finally {
+      _isStartingRecording = false;
+    }
   }
 
   Future<void> _stopAndAssess() async {
-    _stopTimer();
-    await ref.read(pronunciationProvider.notifier).stopAndAssess();
-    _scoreCtrl.forward(from: 0);
+    if (_isStoppingRecording) return;
+    _isStoppingRecording = true;
+    try {
+      _stopTimer();
+      await ref.read(pronunciationProvider.notifier).stopAndAssess();
+      if (!mounted) return;
+      if (ref.read(pronunciationProvider).phase == PronunciationPhase.result) {
+        _scoreCtrl.forward(from: 0);
+      }
+    } finally {
+      _isStoppingRecording = false;
+    }
   }
 
   Future<void> _cancelRecording() async {
@@ -111,33 +133,131 @@ class _PronunciationPracticeScreenState
     await ref.read(pronunciationProvider.notifier).cancelRecording();
   }
 
+  Future<void> _stopReference() async {
+    _playSession++;
+    if (mounted) {
+      setState(() => _isPlayingReference = false);
+    }
+    SpeechService.stop();
+    await _audioPlayer.stop();
+  }
+
   Future<void> _playReference() async {
-    final sentence = ref.read(pronunciationProvider).currentSentence;
-    if (sentence == null) return;
-
-    // 1. Pht m tr?c ti?p qua Web Speech ngay l?p t?c (khng b? tr?)
-    SpeechService.speak(sentence.text);
-
-    // 2. ??ng th?i g?i Backend ?? t?i v? audio chu?n Studio Edge-TTS n?u c
-    if (_ttsUrl == null && !_ttsRequested) {
-      _ttsRequested = true;
-      final url = await ref
-          .read(pronunciationProvider.notifier)
-          .getReferenceTTSUrl(sentence.text);
-      if (url != null && mounted) {
-        setState(() => _ttsUrl = url);
-      }
+    if (_isPlayingReference) {
+      await _stopReference();
+      return;
     }
 
-    if (_ttsUrl != null && _ttsUrl!.isNotEmpty) {
-      final fullUrl = AppConfig.resolveMediaUrl(_ttsUrl!);
-      try {
-        await _audioPlayer.stop();
-        await _audioPlayer.play(UrlSource(fullUrl));
-      } catch (e) {
-        SpeechService.speak(sentence.text);
+    final provider = ref.read(pronunciationProvider);
+    final sentence = provider.currentSentence;
+    if (sentence == null || provider.isPlayingTTS) return;
+
+    final notifier = ref.read(pronunciationProvider.notifier);
+    final cacheKey =
+        '${sentence.text}|${provider.voiceId}|${provider.speechSpeed}';
+    final session = ++_playSession;
+    if (mounted) setState(() => _isPlayingReference = true);
+
+    try {
+      var url = _ttsCache[cacheKey];
+      url ??= await notifier.getReferenceTTSUrl(
+        sentence.text,
+        voice: provider.voiceId,
+        speed: provider.speechSpeed,
+      );
+
+      if (!mounted || session != _playSession) return;
+
+      if (url == null || url.isEmpty) {
+        await SpeechService.speak(sentence.text, rate: provider.speechSpeed);
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              kIsWeb
+                  ? 'Không tải được audio chuẩn, đang dùng giọng trình duyệt.'
+                  : 'Không tải được audio mẫu. Hãy kiểm tra backend.',
+            ),
+          ),
+        );
+        return;
+      }
+
+      _ttsCache[cacheKey] = url;
+      await _audioPlayer.stop();
+      final completed = _audioPlayer.onPlayerComplete.first;
+      await _audioPlayer.play(UrlSource(url));
+      await completed.timeout(
+        const Duration(seconds: 45),
+        onTimeout: () {},
+      );
+    } catch (_) {
+      _ttsCache.remove(cacheKey);
+      if (!mounted || session != _playSession) return;
+      await SpeechService.speak(sentence.text, rate: provider.speechSpeed);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            kIsWeb
+                ? 'Không phát được audio mẫu, đang dùng giọng trình duyệt.'
+                : 'Không phát được audio mẫu. Hãy kiểm tra backend.',
+          ),
+        ),
+      );
+    } finally {
+      if (mounted && session == _playSession) {
+        setState(() => _isPlayingReference = false);
       }
     }
+  }
+
+  Future<void> _selectVoice(String voiceId) async {
+    await _stopReference();
+    if (!mounted) return;
+    ref.read(pronunciationProvider.notifier).setVoice(voiceId);
+  }
+
+  Future<void> _selectSpeed(double speed) async {
+    await _stopReference();
+    if (!mounted) return;
+    ref.read(pronunciationProvider.notifier).setSpeechSpeed(speed);
+  }
+
+  Future<void> _selectReads(int reads) async {
+    await _stopReference();
+    if (!mounted) return;
+    _scoreCtrl.reset();
+    ref.read(pronunciationProvider.notifier).setRequiredReads(reads);
+  }
+
+  Future<void> _retryLastAttempt() async {
+    await _stopReference();
+    if (!mounted) return;
+    _scoreCtrl.reset();
+    ref.read(pronunciationProvider.notifier).retryLastAttempt();
+  }
+
+  Future<void> _continueNextAttempt() async {
+    await _stopReference();
+    if (!mounted) return;
+    _scoreCtrl.reset();
+    ref.read(pronunciationProvider.notifier).startNextAttempt();
+  }
+
+  Future<void> _restartSession() async {
+    await _stopReference();
+    if (!mounted) return;
+    _scoreCtrl.reset();
+    ref.read(pronunciationProvider.notifier).restartSession();
+  }
+
+  Future<void> _goToNextSentence() async {
+    await _stopReference();
+    if (!mounted) return;
+    _scoreCtrl.reset();
+    _ttsCache.clear();
+    ref.read(pronunciationProvider.notifier).nextRandomSentence();
   }
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -215,9 +335,16 @@ class _PronunciationPracticeScreenState
           IconButton(
             icon: Icon(Icons.arrow_back_rounded,
                 color: context.palette.textPrimary),
-            onPressed: () {
+            onPressed: () async {
               _stopTimer();
-              context.pop();
+              if (ref.read(pronunciationProvider).phase ==
+                  PronunciationPhase.recording) {
+                await ref
+                    .read(pronunciationProvider.notifier)
+                    .cancelRecording();
+              }
+              await _stopReference();
+              if (mounted) context.pop();
             },
           ),
           Expanded(
@@ -273,7 +400,8 @@ class _PronunciationPracticeScreenState
       case PronunciationPhase.ready:
         return _buildReadyPhase(sentence, state, key: const ValueKey('ready'));
       case PronunciationPhase.recording:
-        return _buildRecordingPhase(state, key: const ValueKey('recording'));
+        return _buildRecordingPhase(state, sentence,
+            key: const ValueKey('recording'));
       case PronunciationPhase.analyzing:
         return _buildAnalyzingPhase(key: const ValueKey('analyzing'));
       case PronunciationPhase.result:
@@ -290,6 +418,7 @@ class _PronunciationPracticeScreenState
     PronunciationState state, {
     required Key key,
   }) {
+    final needsRetry = state.errorMessage?.contains('Chưa nghe rõ') ?? false;
     return SingleChildScrollView(
       key: key,
       padding: const EdgeInsets.all(24),
@@ -403,7 +532,12 @@ class _PronunciationPracticeScreenState
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
+
+          // Speech settings
+          _buildSpeechSettings(state),
+
+          const SizedBox(height: 16),
 
           // Error message
           if (state.errorMessage != null)
@@ -443,10 +577,18 @@ class _PronunciationPracticeScreenState
                   icon: Icon(
                     state.isPlayingTTS
                         ? Icons.hourglass_top_rounded
-                        : Icons.volume_up_rounded,
+                        : _isPlayingReference
+                            ? Icons.stop_circle_outlined
+                            : Icons.volume_up_rounded,
                     size: 20,
                   ),
-                  label: Text(state.isPlayingTTS ? 'Đang tải...' : 'Nghe mẫu'),
+                  label: Text(
+                    state.isPlayingTTS
+                        ? 'Đang tải...'
+                        : _isPlayingReference
+                            ? 'Dừng'
+                            : 'Nghe mẫu',
+                  ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.secondary,
                     side: const BorderSide(color: AppColors.secondary),
@@ -457,30 +599,29 @@ class _PronunciationPracticeScreenState
                 ),
               ),
               const SizedBox(width: 12),
-              // Bắt đầu đọc
+              // Bắt đầu đọc (không còn animation pulse)
               Expanded(
                 flex: 2,
-                child: AnimatedBuilder(
-                  animation: _pulseAnim,
-                  builder: (context, child) => Transform.scale(
-                    scale: _pulseAnim.value,
-                    child: child,
+                child: ElevatedButton.icon(
+                  key: const Key('btn_start_recording'),
+                  onPressed: _startRecording,
+                  icon: const Icon(Icons.mic_rounded, size: 22),
+                  label: Text(
+                    needsRetry
+                        ? 'Đọc lại'
+                        : state.requiredReads > 1
+                            ? 'Đọc lần ${state.nextAttemptNumber}/${state.requiredReads}'
+                            : 'Bắt đầu đọc',
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  child: ElevatedButton.icon(
-                    key: const Key('btn_start_recording'),
-                    onPressed: _startRecording,
-                    icon: const Icon(Icons.mic_rounded, size: 22),
-                    label: const Text('Bắt đầu đọc',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.error,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14)),
-                      elevation: 0,
-                    ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.error,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
+                    elevation: 0,
                   ),
                 ),
               ),
@@ -500,143 +641,379 @@ class _PronunciationPracticeScreenState
     );
   }
 
+  Widget _buildSpeechSettings(PronunciationState state) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: context.palette.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.palette.divider),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.tune_rounded,
+                  size: 19, color: AppColors.primary),
+              const SizedBox(width: 8),
+              Text(
+                'Tùy chỉnh giọng đọc',
+                style: AppTextStyles.labelMedium.copyWith(
+                  color: context.palette.textPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'Giọng đọc',
+            style: AppTextStyles.labelSmall
+                .copyWith(color: context.palette.textSecondary),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _buildSettingChip(
+                'Sarah • US nữ',
+                state.voiceId == 'sarah',
+                () => _selectVoice('sarah'),
+              ),
+              _buildSettingChip(
+                'Harrison • US nam',
+                state.voiceId == 'harrison',
+                () => _selectVoice('harrison'),
+              ),
+              _buildSettingChip(
+                'Emma • UK nữ',
+                state.voiceId == 'emma',
+                () => _selectVoice('emma'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'Tốc độ đọc',
+            style: AppTextStyles.labelSmall
+                .copyWith(color: context.palette.textSecondary),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final speed in const [0.75, 1.0, 1.25])
+                _buildSettingChip(
+                  '${speed}x',
+                  (state.speechSpeed - speed).abs() < 0.001,
+                  () => _selectSpeed(speed),
+                ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'Số lần đọc',
+            style: AppTextStyles.labelSmall
+                .copyWith(color: context.palette.textSecondary),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final reads in const [1, 2, 3])
+                _buildSettingChip(
+                  '$reads lần',
+                  state.requiredReads == reads,
+                  () => _selectReads(reads),
+                ),
+            ],
+          ),
+          if (state.requiredReads > 1) ...[
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.repeat_rounded,
+                      size: 18, color: AppColors.primary),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      state.isSessionComplete
+                          ? 'Đã hoàn thành ${state.requiredReads} lần đọc'
+                          : 'Lần ${state.nextAttemptNumber}/${state.requiredReads} • Đã chấm ${state.attemptsDone} lần',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: context.palette.textSecondary,
+                      ),
+                    ),
+                  ),
+                  if (state.attemptResults.isNotEmpty)
+                    Text(
+                      'TB ${state.averageAttemptScore.toStringAsFixed(0)}',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSettingChip(String label, bool selected, VoidCallback onTap) {
+    return ChoiceChip(
+      label: Text(label),
+      selected: selected,
+      onSelected: (_) => onTap(),
+      labelStyle: AppTextStyles.labelSmall.copyWith(
+        color:
+            selected ? AppColors.primaryLight : context.palette.textSecondary,
+        fontWeight: selected ? FontWeight.bold : FontWeight.w500,
+      ),
+      selectedColor: AppColors.primary.withValues(alpha: 0.2),
+      backgroundColor: context.palette.card,
+      side: BorderSide(
+        color: selected
+            ? AppColors.primary.withValues(alpha: 0.6)
+            : context.palette.divider,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      showCheckmark: false,
+      visualDensity: VisualDensity.compact,
+    );
+  }
+
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // GIAI ĐOẠN 2: RECORDING
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Widget _buildRecordingPhase(PronunciationState state, {required Key key}) {
+  Widget _buildRecordingPhase(
+    PronunciationState state,
+    PracticeSentenceModel sentence, {
+    required Key key,
+  }) {
     final remaining = _maxRecordSeconds - state.recordDuration;
     final progress = state.recordDuration / _maxRecordSeconds;
 
-    return Center(
+    return LayoutBuilder(
       key: key,
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Waveform animation
-            SizedBox(
-              height: 80,
-              child: AnimatedBuilder(
-                animation: _waveCtrl,
-                builder: (context, _) => CustomPaint(
-                  size: const Size(double.infinity, 80),
-                  painter: _WaveformPainter(_waveCtrl.value),
+      builder: (context, constraints) => SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: math.max(0, constraints.maxHeight - 40),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Câu cần đọc vẫn hiển thị trong lúc ghi âm
+              _buildRecordingSentenceCard(sentence, state),
+              const SizedBox(height: 24),
+
+              // Waveform animation
+              SizedBox(
+                height: 64,
+                child: AnimatedBuilder(
+                  animation: _waveCtrl,
+                  builder: (context, _) => CustomPaint(
+                    size: const Size(double.infinity, 64),
+                    painter: _WaveformPainter(_waveCtrl.value),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 32),
+              const SizedBox(height: 20),
 
-            // Mic pulse ring
-            AnimatedBuilder(
-              animation: _pulseAnim,
-              builder: (context, child) => Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: 120 * _pulseAnim.value,
-                    height: 120 * _pulseAnim.value,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.error.withValues(alpha: 0.15),
+              // Mic pulse ring
+              AnimatedBuilder(
+                animation: _pulseAnim,
+                builder: (context, child) => Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 104 * _pulseAnim.value,
+                      height: 104 * _pulseAnim.value,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.error.withValues(alpha: 0.15),
+                      ),
                     ),
-                  ),
-                  child!,
-                ],
-              ),
-              child: Container(
-                width: 90,
-                height: 90,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFFF4757), Color(0xFFFF6B81)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.error.withValues(alpha: 0.5),
-                      blurRadius: 24,
-                      spreadRadius: 4,
-                    ),
+                    child!,
                   ],
                 ),
-                child: const Icon(Icons.mic_rounded,
-                    color: Colors.white, size: 40),
-              ),
-            ),
-
-            const SizedBox(height: 24),
-            Text(
-              'Đang thu âm...',
-              style: AppTextStyles.h4.copyWith(
-                  color: context.palette.textPrimary,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Còn lại $remaining giây',
-              style: AppTextStyles.bodySmall
-                  .copyWith(color: context.palette.textSecondary),
-            ),
-            const SizedBox(height: 16),
-
-            // Progress bar
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: LinearProgressIndicator(
-                value: progress,
-                backgroundColor: context.palette.divider,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  progress > 0.8 ? AppColors.error : AppColors.success,
+                child: Container(
+                  width: 78,
+                  height: 78,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF4757), Color(0xFFFF6B81)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.error.withValues(alpha: 0.5),
+                        blurRadius: 22,
+                        spreadRadius: 3,
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.mic_rounded,
+                      color: Colors.white, size: 34),
                 ),
-                minHeight: 6,
               ),
-            ),
 
-            const SizedBox(height: 32),
+              const SizedBox(height: 18),
+              Text(
+                'Đang thu âm...',
+                style: AppTextStyles.h4.copyWith(
+                    color: context.palette.textPrimary,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Còn lại $remaining giây',
+                style: AppTextStyles.bodySmall
+                    .copyWith(color: context.palette.textSecondary),
+              ),
+              const SizedBox(height: 14),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Hủy
-                OutlinedButton.icon(
-                  key: const Key('btn_cancel_recording'),
-                  onPressed: _cancelRecording,
-                  icon: const Icon(Icons.close_rounded),
-                  label: const Text('Hủy'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: context.palette.textSecondary,
-                    side: BorderSide(color: context.palette.divider),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
+              // Progress bar
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: context.palette.divider,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    progress > 0.8 ? AppColors.error : AppColors.success,
+                  ),
+                  minHeight: 6,
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                alignment: WrapAlignment.center,
+                children: [
+                  // Hủy
+                  OutlinedButton.icon(
+                    key: const Key('btn_cancel_recording'),
+                    onPressed: _cancelRecording,
+                    icon: const Icon(Icons.close_rounded),
+                    label: const Text('Hủy'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: context.palette.textSecondary,
+                      side: BorderSide(color: context.palette.divider),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
+                  ),
+                  // Xong
+                  ElevatedButton.icon(
+                    key: const Key('btn_stop_recording'),
+                    onPressed: _stopAndAssess,
+                    icon: const Icon(Icons.check_rounded),
+                    label: const Text('Xong & Chấm điểm',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.success,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      elevation: 0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRecordingSentenceCard(
+      PracticeSentenceModel sentence, PronunciationState state) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: context.palette.card,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.35)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                      color: AppColors.primary.withValues(alpha: 0.5)),
+                ),
+                child: Text(
+                  'Câu cần đọc',
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.primaryLight,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 16),
-                // Xong
-                ElevatedButton.icon(
-                  key: const Key('btn_stop_recording'),
-                  onPressed: _stopAndAssess,
-                  icon: const Icon(Icons.check_rounded),
-                  label: const Text('Xong & Chấm điểm',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.success,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 14),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    elevation: 0,
+              ),
+              const Spacer(),
+              if (state.requiredReads > 1)
+                Text(
+                  'Lần ${state.nextAttemptNumber}/${state.requiredReads}',
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.secondary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            sentence.text,
+            style: AppTextStyles.h4.copyWith(
+              color: context.palette.textPrimary,
+              height: 1.45,
+            ),
+          ),
+          if (sentence.ipaTranscription.isNotEmpty) ...[
+            const SizedBox(height: 6),
+            Text(
+              sentence.ipaTranscription,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.secondary,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -758,27 +1135,157 @@ class _PronunciationPracticeScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // ── A. Overall Score Ring ──
+            // ── A. Multi-read progress / summary ──
+            if (state.requiredReads > 1) ...[
+              _buildAttemptSummary(state),
+              const SizedBox(height: 16),
+            ],
+
+            // ── B. Overall Score Ring ──
             _buildOverallScoreCard(result),
             const SizedBox(height: 16),
 
-            // ── B. 4 Sub-scores ──
+            // ── C. 4 Sub-scores ──
             _buildSubscoresCard(result),
             const SizedBox(height: 16),
 
-            // ── C. Word-level highlights ──
+            // ── D. Word-level highlights ──
             _buildWordHighlightsCard(result, sentence),
             const SizedBox(height: 16),
 
-            // ── D. AI Feedback ──
+            // ── E. AI Feedback ──
             if (result.feedbackVi.isNotEmpty) _buildFeedbackCard(result),
 
             if (result.feedbackVi.isNotEmpty) const SizedBox(height: 16),
 
-            // ── E. Actions ──
-            _buildResultActions(),
+            // ── F. Actions ──
+            _buildResultActions(state),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildAttemptSummary(PronunciationState state) {
+    final complete = state.isSessionComplete;
+    final results = state.attemptResults;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primary.withValues(alpha: 0.12),
+            AppColors.secondary.withValues(alpha: 0.05),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                complete ? Icons.emoji_events_rounded : Icons.repeat_rounded,
+                size: 20,
+                color: AppColors.primaryLight,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                complete
+                    ? 'Tổng kết ${state.requiredReads} lần đọc'
+                    : 'Tiến độ: ${state.attemptsDone}/${state.requiredReads} lần',
+                style: AppTextStyles.labelMedium.copyWith(
+                  color: AppColors.primaryLight,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          if (complete) ...[
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                _buildSummaryStat(
+                  'Trung bình',
+                  state.averageAttemptScore,
+                  AppColors.secondary,
+                ),
+                Container(
+                  width: 1,
+                  height: 38,
+                  color: context.palette.divider,
+                ),
+                _buildSummaryStat(
+                  'Cao nhất',
+                  state.bestAttemptScore,
+                  AppColors.success,
+                ),
+              ],
+            ),
+          ],
+          if (results.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (var i = 0; i < results.length; i++)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: context.palette.card,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: context.palette.divider),
+                    ),
+                    child: Text(
+                      'Lần ${i + 1}: ${results[i].overallScore.toStringAsFixed(0)}',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: context.palette.textSecondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+          if (!complete) ...[
+            const SizedBox(height: 8),
+            Text(
+              'Còn ${state.requiredReads - state.attemptsDone} lần đọc nữa để hoàn thành.',
+              style: AppTextStyles.labelSmall.copyWith(
+                color: context.palette.textSecondary,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummaryStat(String label, double value, Color color) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            value.toStringAsFixed(0),
+            style: AppTextStyles.h3.copyWith(
+              color: color,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          Text(
+            label,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: context.palette.textSecondary,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1126,76 +1633,76 @@ class _PronunciationPracticeScreenState
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: context.palette.divider,
-                  borderRadius: BorderRadius.circular(2),
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: context.palette.divider,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              '"${ws.word}"',
-              style: AppTextStyles.h3.copyWith(
-                  color: AppColors.error, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Điểm phát âm: ${ws.score.toStringAsFixed(0)}/100',
-              style: AppTextStyles.bodySmall
-                  .copyWith(color: context.palette.textSecondary),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: AppColors.warning.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                border:
-                    Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
+              const SizedBox(height: 20),
+              Text(
+                '"${ws.word}"',
+                style: AppTextStyles.h3.copyWith(
+                    color: AppColors.error, fontWeight: FontWeight.bold),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.lightbulb_rounded,
-                          color: AppColors.warning, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Mẹo phát âm',
-                        style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.warning,
-                          fontWeight: FontWeight.bold,
+              const SizedBox(height: 8),
+              Text(
+                'Điểm phát âm: ${ws.score.toStringAsFixed(0)}/100',
+                style: AppTextStyles.bodySmall
+                    .copyWith(color: context.palette.textSecondary),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppColors.warning.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                      color: AppColors.warning.withValues(alpha: 0.3)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.lightbulb_rounded,
+                            color: AppColors.warning, size: 18),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Mẹo phát âm',
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: AppColors.warning,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    ws.errorType == 'Omission'
-                        ? 'Bạn đã bỏ qua từ này. Hãy đọc lại toàn bộ câu, chú ý phát âm từng từ một.'
-                        : ws.errorType == 'Insertion'
-                            ? 'Bạn đọc thêm từ không có trong câu. Hãy đọc sát theo văn bản.'
-                            : 'Hãy tập trung vào từng âm tiết của từ này, đọc chậm rồi tăng dần tốc độ.',
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: context.palette.textPrimary,
-                      height: 1.4,
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      ws.errorType == 'Omission'
+                          ? 'Bạn đã bỏ qua từ này. Hãy đọc lại toàn bộ câu, chú ý phát âm từng từ một.'
+                          : ws.errorType == 'Insertion'
+                              ? 'Bạn đọc thêm từ không có trong câu. Hãy đọc sát theo văn bản.'
+                              : 'Hãy tập trung vào từng âm tiết của từ này, đọc chậm rồi tăng dần tốc độ.',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: context.palette.textPrimary,
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
-          ],
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildFeedbackCard(PronunciationResultModel result) {
     return Container(
@@ -1275,7 +1782,56 @@ class _PronunciationPracticeScreenState
     );
   }
 
-  Widget _buildResultActions() {
+  Widget _buildResultActions(PronunciationState state) {
+    if (!state.isSessionComplete) {
+      return Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  key: const Key('btn_retry_last_attempt'),
+                  onPressed: _retryLastAttempt,
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: const Text('Đọc lại lần này'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: context.palette.textSecondary,
+                    side: BorderSide(color: context.palette.divider),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                flex: 2,
+                child: ElevatedButton.icon(
+                  key: const Key('btn_continue_next_attempt'),
+                  onPressed: _continueNextAttempt,
+                  icon: const Icon(Icons.mic_rounded),
+                  label: Text(
+                    'Đọc tiếp (${state.nextAttemptNumber}/${state.requiredReads})',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    elevation: 0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          _buildHomeButton(),
+        ],
+      );
+    }
+
     return Column(
       children: [
         Row(
@@ -1283,15 +1839,11 @@ class _PronunciationPracticeScreenState
             Expanded(
               child: OutlinedButton.icon(
                 key: const Key('btn_retry_pronunciation'),
-                onPressed: () {
-                  _ttsUrl = null;
-                  _ttsRequested = false;
-                  ref
-                      .read(pronunciationProvider.notifier)
-                      .retryCurrentSentence();
-                },
+                onPressed: _restartSession,
                 icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Đọc lại'),
+                label: Text(
+                  state.requiredReads > 1 ? 'Đọc lại từ đầu' : 'Đọc lại',
+                ),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: context.palette.textSecondary,
                   side: BorderSide(color: context.palette.divider),
@@ -1306,11 +1858,7 @@ class _PronunciationPracticeScreenState
               flex: 2,
               child: ElevatedButton.icon(
                 key: const Key('btn_next_sentence'),
-                onPressed: () {
-                  _ttsUrl = null;
-                  _ttsRequested = false;
-                  ref.read(pronunciationProvider.notifier).nextRandomSentence();
-                },
+                onPressed: _goToNextSentence,
                 icon: const Icon(Icons.arrow_forward_rounded),
                 label: const Text('Câu tiếp theo',
                     style: TextStyle(fontWeight: FontWeight.bold)),
@@ -1327,16 +1875,23 @@ class _PronunciationPracticeScreenState
           ],
         ),
         const SizedBox(height: 10),
-        TextButton.icon(
-          key: const Key('btn_back_to_pronunciation_home'),
-          onPressed: () => context.pop(),
-          icon: const Icon(Icons.home_rounded, size: 18),
-          label: const Text('Về trang luyện phát âm'),
-          style: TextButton.styleFrom(
-            foregroundColor: context.palette.textSecondary,
-          ),
-        ),
+        _buildHomeButton(),
       ],
+    );
+  }
+
+  Widget _buildHomeButton() {
+    return TextButton.icon(
+      key: const Key('btn_back_to_pronunciation_home'),
+      onPressed: () async {
+        await _stopReference();
+        if (mounted) context.pop();
+      },
+      icon: const Icon(Icons.home_rounded, size: 18),
+      label: const Text('Về trang luyện phát âm'),
+      style: TextButton.styleFrom(
+        foregroundColor: context.palette.textSecondary,
+      ),
     );
   }
 }
