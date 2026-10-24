@@ -72,6 +72,12 @@ class _PronunciationPracticeScreenState
     _scoreAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _scoreCtrl, curve: Curves.easeOutCubic),
     );
+
+    // Warm the TTS URL cache so choosing a listen count can start playback
+    // immediately, without a network round-trip after the tap.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) unawaited(_prefetchReference());
+    });
   }
 
   @override
@@ -265,6 +271,35 @@ class _PronunciationPracticeScreenState
     }
   }
 
+  Future<void> _prefetchReference() async {
+    final provider = ref.read(pronunciationProvider);
+    final sentence = provider.currentSentence;
+    if (sentence == null) return;
+
+    final cacheKey =
+        '${sentence.text}|${provider.voiceId}|${provider.speechSpeed}';
+    if (_ttsCache.containsKey(cacheKey)) return;
+
+    final url =
+        await ref.read(pronunciationProvider.notifier).getReferenceTTSUrl(
+              sentence.text,
+              voice: provider.voiceId,
+              speed: provider.speechSpeed,
+              showLoading: false,
+            );
+    if (!mounted || url == null || url.isEmpty) return;
+
+    // The user may have changed sentence/voice/speed while we were waiting.
+    final latest = ref.read(pronunciationProvider);
+    final latestSentence = latest.currentSentence;
+    final latestKey = latestSentence == null
+        ? null
+        : '${latestSentence.text}|${latest.voiceId}|${latest.speechSpeed}';
+    if (latestKey == cacheKey) {
+      _ttsCache[cacheKey] = url;
+    }
+  }
+
   Future<void> _handleReferenceFailure(int session) async {
     if (session != _playSession) return;
     final failureSession = ++_playSession;
@@ -300,12 +335,14 @@ class _PronunciationPracticeScreenState
     await _stopReference();
     if (!mounted) return;
     ref.read(pronunciationProvider.notifier).setVoice(voiceId);
+    unawaited(_prefetchReference());
   }
 
   Future<void> _selectSpeed(double speed) async {
     await _stopReference();
     if (!mounted) return;
     ref.read(pronunciationProvider.notifier).setSpeechSpeed(speed);
+    unawaited(_prefetchReference());
   }
 
   Future<void> _selectListenCount(int count) async {
@@ -328,6 +365,7 @@ class _PronunciationPracticeScreenState
     _scoreCtrl.reset();
     _ttsCache.clear();
     ref.read(pronunciationProvider.notifier).nextRandomSentence();
+    unawaited(_prefetchReference());
   }
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -661,7 +699,9 @@ class _PronunciationPracticeScreenState
                             ? 'Dừng'
                             : _referenceFailed
                                 ? 'Nghe lại'
-                                : 'Nghe mẫu',
+                                : state.listenCount > 1
+                                    ? 'Nghe mẫu ×${state.listenCount}'
+                                    : 'Nghe mẫu',
                   ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.secondary,

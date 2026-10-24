@@ -1,0 +1,62 @@
+{
+  "duration_seconds": 840,
+  "part1": {
+    "topics": [
+      {
+        "id": "P1-T1",
+        "topic": "Neighbours",
+        "questions": [
+          "Do you have good neighbours?",
+          "What do you usually talk about with them?",
+          "Would you like more neighbours to visit your home?",
+          "Do you get along with your neighbours?"
+        ]
+      },
+      {
+        "id": "P1-T2",
+        "topic": "Daily routine",
+        "questions": [
+          "What time do you usually wake up?",
+          "Do you prefer to plan your day in advance?",
+          "How often do you exercise?",
+          "Do you ever change your routine on weekends?"
+        ]
+      },
+      {
+        "id": "P1-T3",
+        "topic": "Food",
+        "questions": [
+          "What is your favourite food?",
+          "Do you often cook at home?",
+          "Have you tried cooking a new cuisine recently?",
+          "Do you prefer cooking or eating out?"
+        ]
+      }
+    ]
+  },
+  "part2": {
+    "cue_card": "Describe a website or app you use regularly that helps you learn or practise something.",
+    "prompts": [
+      "What the website/app is",
+      "How you first heard about it",
+      "What you use it for",
+      "Why you find it useful"
+    ],
+    "prep_seconds": 60,
+    "speak_seconds": 120,
+    "follow_ups": [
+      "Do you think this kind of learning will become more popular?",
+      "Would you pay for a version of it?"
+    ]
+  },
+  "part3": {
+    "questions": [
+      "Why do you think some people prefer learning from screens?",
+      "How can schools combine online and offline learning?",
+      "What are the risks of relying too much on technology for learning?",
+      "How could governments support self-directed learners?",
+      "Do you think language learning apps are effective for adults?",
+      "What could teachers do to make online lessons more engaging?"
+    ]
+  }
+}

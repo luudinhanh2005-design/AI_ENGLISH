@@ -80,21 +80,28 @@ class VocabularyTopicModel {
 class DueReviewItemModel {
   final VocabularyWordModel word;
   final int intervalDays;
+  final int repetitionCount;
+  final double easeFactor;
   final String status;
 
   const DueReviewItemModel({
     required this.word,
     this.intervalDays = 0,
+    this.repetitionCount = 0,
+    this.easeFactor = 2.5,
     this.status = 'new',
   });
 
   factory DueReviewItemModel.fromJson(Map<String, dynamic> json) {
-    final word = VocabularyWordModel.fromJson(json['word'] as Map<String, dynamic>);
+    final word =
+        VocabularyWordModel.fromJson(json['word'] as Map<String, dynamic>);
     final progress = json['progress'] as Map<String, dynamic>?;
 
     return DueReviewItemModel(
       word: word,
       intervalDays: progress?['interval_days'] as int? ?? 0,
+      repetitionCount: progress?['repetition_count'] as int? ?? 0,
+      easeFactor: (progress?['ease_factor'] as num?)?.toDouble() ?? 2.5,
       status: progress?['status'] as String? ?? 'new',
     );
   }

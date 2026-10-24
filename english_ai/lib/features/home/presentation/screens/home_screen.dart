@@ -361,10 +361,11 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 8),
               _RecommendationCard(
                 icon: Icons.military_tech_rounded,
-                title: 'Thi Thử IELTS Speaking (Emma) 🏆',
-                subtitle: 'Phòng thi chuẩn 3 phần, giám khảo Emma chấm điểm Band 1.0 - 9.0',
+                title: 'Thi Thử IELTS 4 Kỹ Năng 🏆',
+                subtitle:
+                    'Listening • Reading • Writing • Speaking, chấm Band 1.0 - 9.0',
                 color: const Color(0xFFF39C12),
-                onTap: () => context.push('/practice/ielts-speaking'),
+                onTap: () => context.push('/mock-test'),
               ),
               const SizedBox(height: 8),
               _RecommendationCard(
@@ -447,6 +448,8 @@ class HomeScreen extends ConsumerWidget {
         return AppColors.levelB2;
       case 'C1':
         return AppColors.levelC1;
+      case 'C2':
+        return AppColors.levelC2;
       default:
         return AppColors.primary;
     }
@@ -464,6 +467,8 @@ class HomeScreen extends ConsumerWidget {
         return 'Upper Intermediate';
       case 'C1':
         return 'Advanced';
+      case 'C2':
+        return 'Proficiency';
       default:
         return level;
     }

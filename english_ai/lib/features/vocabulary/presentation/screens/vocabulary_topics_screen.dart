@@ -30,11 +30,11 @@ class VocabularyTopicsScreen extends ConsumerWidget {
 
   void _openTopicDetails(
     BuildContext context,
-    WidgetRef ref,
     VocabularyTopicModel topic,
   ) {
-    final words =
+    final fallbackWords =
         buildTopicWords(topic.slug.isNotEmpty ? topic.slug : topic.id);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -43,172 +43,193 @@ class VocabularyTopicsScreen extends ConsumerWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) {
-        return DraggableScrollableSheet(
-          initialChildSize: 0.85,
-          minChildSize: 0.5,
-          maxChildSize: 0.95,
-          expand: false,
-          builder: (_, scrollController) {
-            return Column(
-              children: [
-                // Handle bar
-                Center(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 12, bottom: 8),
-                    width: 44,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: context.palette.divider,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
+        return Consumer(
+          builder: (context, sheetRef, _) {
+            final wordsAsync = sheetRef.watch(topicWordsProvider(topic.id));
+            final apiWords = wordsAsync.valueOrNull;
+            final words = (apiWords != null && apiWords.isNotEmpty)
+                ? apiWords
+                : fallbackWords;
+
+            return DraggableScrollableSheet(
+              initialChildSize: 0.85,
+              minChildSize: 0.5,
+              maxChildSize: 0.95,
+              expand: false,
+              builder: (_, scrollController) {
+                return Column(
+                  children: [
+                    // Handle bar
+                    Center(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 12, bottom: 8),
+                        width: 44,
+                        height: 5,
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(12),
+                          color: context.palette.divider,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(
-                          _getIconData(topic.iconName),
-                          color: AppColors.primary,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              topic.title,
-                              style: AppTextStyles.titleMedium.copyWith(
-                                color: context.palette.textPrimary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '${topic.level} • ${words.length} từ vựng',
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.close,
-                            color: context.palette.textSecondary),
-                        onPressed: () => Navigator.pop(ctx),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(color: context.palette.divider, height: 1),
-                // Flashcard CTA button
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                        ref
-                            .read(flashcardSessionProvider.notifier)
-                            .startTopicSession(topic.id, topic.title);
-                        context.pushNamed(RouteNames.vocabularyReview);
-                      },
-                      icon: const Icon(Icons.style_rounded, size: 20),
-                      label: const Text('Luyện Flashcard Chủ Đề Này (SM-2)'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14)),
                       ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    controller: scrollController,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    itemCount: words.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 10),
-                    itemBuilder: (_, idx) {
-                      final w = words[idx];
-                      return Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: context.palette.surface,
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: context.palette.divider),
-                        ),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.volume_up_rounded,
-                                  color: AppColors.secondary),
-                              tooltip: 'Nghe phát âm',
-                              onPressed: () => SpeechService.speak(w.word),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            const SizedBox(width: 6),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                            child: Icon(
+                              _getIconData(topic.iconName),
+                              color: AppColors.primary,
+                              size: 24,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  topic.title,
+                                  style: AppTextStyles.titleMedium.copyWith(
+                                    color: context.palette.textPrimary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '${topic.level} • ${words.length} từ vựng',
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.close,
+                                color: context.palette.textSecondary),
+                            onPressed: () => Navigator.pop(ctx),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(color: context.palette.divider, height: 1),
+                    // Flashcard CTA button
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: words.isEmpty
+                              ? null
+                              : () async {
+                                  Navigator.pop(ctx);
+                                  await sheetRef
+                                      .read(flashcardSessionProvider.notifier)
+                                      .startWordsSession(words, topic.title);
+                                  if (context.mounted) {
+                                    context.pushNamed(
+                                        RouteNames.vocabularyReview);
+                                  }
+                                },
+                          icon: const Icon(Icons.style_rounded, size: 20),
+                          label:
+                              const Text('Luyện Flashcard Chủ Đề Này (SM-2)'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 12),
+                        itemCount: words.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 10),
+                        itemBuilder: (_, idx) {
+                          final w = words[idx];
+                          return Container(
+                            padding: const EdgeInsets.all(14),
+                            decoration: BoxDecoration(
+                              color: context.palette.surface,
+                              borderRadius: BorderRadius.circular(14),
+                              border:
+                                  Border.all(color: context.palette.divider),
+                            ),
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.volume_up_rounded,
+                                      color: AppColors.secondary),
+                                  tooltip: 'Nghe phát âm',
+                                  onPressed: () => SpeechService.speak(w.word),
+                                ),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            w.word,
+                                            style: AppTextStyles.labelLarge
+                                                .copyWith(
+                                              color:
+                                                  context.palette.textPrimary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            w.phonetic,
+                                            style: AppTextStyles.bodySmall
+                                                .copyWith(
+                                              color: context.palette.textHint,
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 2),
                                       Text(
-                                        w.word,
-                                        style:
-                                            AppTextStyles.labelLarge.copyWith(
-                                          color: context.palette.textPrimary,
-                                          fontWeight: FontWeight.bold,
+                                        w.meaningVi,
+                                        style: AppTextStyles.bodyMedium.copyWith(
+                                          color: AppColors.secondary,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      const SizedBox(width: 8),
+                                      const SizedBox(height: 4),
                                       Text(
-                                        w.phonetic,
+                                        w.exampleSentence,
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: context.palette.textHint,
-                                          fontStyle: FontStyle.italic,
+                                          color:
+                                              context.palette.textSecondary,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    w.meaningVi,
-                                    style: AppTextStyles.bodyMedium.copyWith(
-                                      color: AppColors.secondary,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    w.exampleSentence,
-                                    style: AppTextStyles.bodySmall.copyWith(
-                                      color: context.palette.textSecondary,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
             );
           },
         );
@@ -432,7 +453,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(16),
-                          onTap: () => _openTopicDetails(context, ref, topic),
+                          onTap: () => _openTopicDetails(context, topic),
                           child: Padding(
                             padding: const EdgeInsets.all(16),
                             child: Row(

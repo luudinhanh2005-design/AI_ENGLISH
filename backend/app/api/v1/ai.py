@@ -3,13 +3,16 @@ import uuid
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import desc, select
+from pydantic import BaseModel, Field
+from sqlalchemy import desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...config import settings
-from ...database import get_db
+from ...database import get_db, is_db_connected
 from ...models.ai import AITutorMessage, AITutorSession, AIWritingSubmission
+from ...models.learning import UserMistake
 from ...models.user import User, UserProfile
+from ...services.sm2 import SM2Calculator
 from ...schemas.ai import (
     AIChatRequest,
     AIChatResponse,
@@ -483,113 +486,273 @@ async def evaluate_ielts_speaking(
 # ──────────────────────────────────────────────
 
 _DEFAULT_GUEST_ID = UUID("00000000-0000-0000-0000-000000000001")
-_MEMORY_MISTAKES: dict[UUID, list[dict]] = {}
+# Offline fallback only. When PostgreSQL is available mistakes are stored in
+# the `user_mistakes` table so they survive backend restarts.
+_MEMORY_MISTAKES: dict[UUID, list[UserMistake]] = {}
+
 
 class MistakeCreateItem(BaseModel):
+    # Client-generated UUID so local and server rows keep the same identity.
+    id: UUID | None = None
     original_text: str
-    corrected_text: str
-    explanation: str
+    corrected_text: str = ""
+    explanation: str = ""
     type: str = "grammar"  # grammar, vocabulary, pronunciation
-    source: str = "practice"  # voice_call, writing, ielts, practice
+    source: str = "practice"  # voice_call, writing, ielts, practice, custom
+
 
 class MistakeReviewSubmit(BaseModel):
-    rating: int  # 0 to 5
+    rating: int = Field(..., ge=0, le=5)
+
+
+def _mistake_to_dict(item: UserMistake) -> dict:
+    created = item.created_at or datetime.now(timezone.utc)
+    next_review = item.next_review_at or datetime.now(timezone.utc)
+    return {
+        "id": str(item.id),
+        "original_text": item.original_text,
+        "corrected_text": item.corrected_text,
+        "explanation": item.explanation,
+        "type": item.type,
+        "source": item.source,
+        "created_at": created.isoformat(),
+        "repetition_count": item.repetition_count or 0,
+        "interval_days": item.interval_days or 1,
+        "ease_factor": item.ease_factor or 2.5,
+        "next_review_at": next_review.isoformat(),
+        "last_reviewed_at": item.last_reviewed_at.isoformat()
+        if item.last_reviewed_at
+        else None,
+        "status": item.status or "new",
+    }
+
+
+def _memory_items(user_id: UUID) -> list[UserMistake]:
+    return _MEMORY_MISTAKES.setdefault(user_id, [])
+
 
 @router.get("/mistakes")
 async def get_mistakes(
     type: str | None = None,
     current_user: User | None = Depends(get_optional_user),
+    db: AsyncSession = Depends(get_db),
 ):
-    """Get all saved mistakes in the user's notebook."""
+    """Get all saved mistakes in the user's notebook (newest first)."""
     user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
-    items = _MEMORY_MISTAKES.get(user_id, [])
+
+    if is_db_connected() and current_user and db is not None:
+        try:
+            stmt = (
+                select(UserMistake)
+                .where(UserMistake.user_id == user_id)
+                .order_by(desc(UserMistake.created_at))
+            )
+            if type and type != "all":
+                stmt = stmt.where(UserMistake.type == type)
+            result = await db.execute(stmt)
+            return [_mistake_to_dict(m) for m in result.scalars().all()]
+        except Exception:
+            await db.rollback()
+
+    items = _memory_items(user_id)
     if type and type != "all":
-        items = [m for m in items if m.get("type") == type]
-    return items
+        items = [m for m in items if m.type == type]
+    return [_mistake_to_dict(m) for m in items]
+
 
 @router.post("/mistakes")
 async def save_mistakes(
     mistakes: list[MistakeCreateItem],
     current_user: User | None = Depends(get_optional_user),
+    db: AsyncSession = Depends(get_db),
 ):
-    """Save a list of mistakes to the user's notebook."""
-    user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
-    if user_id not in _MEMORY_MISTAKES:
-        _MEMORY_MISTAKES[user_id] = []
+    """Save a list of mistakes to the user's notebook.
 
-    now = datetime.now(timezone.utc).isoformat()
-    saved = []
+    The client may send a stable ``id`` (UUID v4). The same id is returned so
+    follow-up review/delete calls always target the correct row.
+    """
+    user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
+    saved: list[UserMistake] = []
+    now = datetime.now(timezone.utc)
+
+    if is_db_connected() and current_user and db is not None:
+        try:
+            for item in mistakes:
+                original = item.original_text.strip()
+                if not original:
+                    continue
+
+                # Deduplicate by content (case-insensitive) for this user.
+                existing_res = await db.execute(
+                    select(UserMistake).where(
+                        UserMistake.user_id == user_id,
+                        func.lower(UserMistake.original_text) == original.lower(),
+                    )
+                )
+                existing = existing_res.scalars().first()
+                if existing is not None:
+                    # Duplicate content: return the canonical server row so the
+                    # client can replace its local id with the server id.
+                    saved.append(existing)
+                    continue
+
+                entry = UserMistake(
+                    id=item.id or uuid.uuid4(),
+                    user_id=user_id,
+                    original_text=original,
+                    corrected_text=item.corrected_text.strip(),
+                    explanation=item.explanation.strip(),
+                    type=item.type,
+                    source=item.source,
+                    repetition_count=0,
+                    interval_days=1,
+                    ease_factor=SM2Calculator.DEFAULT_EASE_FACTOR,
+                    next_review_at=now,
+                    status="new",
+                    created_at=now,
+                    updated_at=now,
+                )
+                db.add(entry)
+                await db.flush()
+                saved.append(entry)
+
+            return {
+                "message": f"Saved {len(saved)} mistakes",
+                "saved": [_mistake_to_dict(m) for m in saved],
+            }
+        except Exception:
+            # Never poison the request session; fall back to memory storage.
+            await db.rollback()
+            saved = []
+
+    items = _memory_items(user_id)
     for item in mistakes:
-        # Avoid duplicate exact originals
-        if any(m["original_text"].strip().lower() == item.original_text.strip().lower() for m in _MEMORY_MISTAKES[user_id]):
+        original = item.original_text.strip()
+        if not original:
             continue
-        entry = {
-            "id": str(uuid.uuid4()),
-            "original_text": item.original_text,
-            "corrected_text": item.corrected_text,
-            "explanation": item.explanation,
-            "type": item.type,
-            "source": item.source,
-            "created_at": now,
-            "repetition_count": 0,
-            "interval_days": 1,
-            "ease_factor": 2.5,
-            "next_review_at": now,
-            "status": "new",  # new, learning, mastered
-        }
-        _MEMORY_MISTAKES[user_id].insert(0, entry)
+        if any(m.original_text.strip().lower() == original.lower() for m in items):
+            continue
+        entry = UserMistake(
+            id=item.id or uuid.uuid4(),
+            user_id=user_id,
+            original_text=original,
+            corrected_text=item.corrected_text.strip(),
+            explanation=item.explanation.strip(),
+            type=item.type,
+            source=item.source,
+            repetition_count=0,
+            interval_days=1,
+            ease_factor=SM2Calculator.DEFAULT_EASE_FACTOR,
+            next_review_at=now,
+            status="new",
+            created_at=now,
+            updated_at=now,
+        )
+        items.insert(0, entry)
         saved.append(entry)
 
-    return {"message": f"Saved {len(saved)} mistakes", "saved": saved}
+    return {
+        "message": f"Saved {len(saved)} mistakes",
+        "saved": [_mistake_to_dict(m) for m in saved],
+    }
+
 
 @router.post("/mistakes/{mistake_id}/review")
 async def review_mistake(
-    mistake_id: str,
+    mistake_id: UUID,
     request: MistakeReviewSubmit,
     current_user: User | None = Depends(get_optional_user),
+    db: AsyncSession = Depends(get_db),
 ):
-    """
-    Review a mistake using the SM-2 algorithm.
-    Rating 0-2 = repeat, 3-5 = interval increases.
-    """
-    from ...services.sm2 import SM2Calculator
-
+    """Review a mistake using the SM-2 algorithm (rating 0-5)."""
     user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
-    items = _MEMORY_MISTAKES.get(user_id, [])
-    target = next((m for m in items if m["id"] == mistake_id), None)
-    if not target:
+    target: UserMistake | None = None
+    target_from_db = False
+
+    if is_db_connected() and current_user and db is not None:
+        try:
+            result = await db.execute(
+                select(UserMistake).where(
+                    UserMistake.id == mistake_id,
+                    UserMistake.user_id == user_id,
+                )
+            )
+            target = result.scalar_one_or_none()
+            target_from_db = target is not None
+        except Exception:
+            await db.rollback()
+            target = None
+
+    if target is None:
+        target = next(
+            (m for m in _memory_items(user_id) if str(m.id) == str(mistake_id)),
+            None,
+        )
+
+    if target is None:
         raise HTTPException(status_code=404, detail="Mistake item not found")
 
-    rep_count = target.get("repetition_count", 0)
-    ef = target.get("ease_factor", 2.5)
-    interval = target.get("interval_days", 1)
-
-    new_rep, new_ef, new_interval, next_review, status_str = SM2Calculator.calculate_next_review(
-        repetition_count=rep_count,
-        ease_factor=ef,
-        interval_days=interval,
-        quality=request.rating,
+    new_rep, new_ef, new_interval, next_review, status_str = (
+        SM2Calculator.calculate_next_review(
+            repetition_count=target.repetition_count or 0,
+            ease_factor=target.ease_factor or SM2Calculator.DEFAULT_EASE_FACTOR,
+            interval_days=target.interval_days or 1,
+            quality=request.rating,
+        )
     )
 
-    target["repetition_count"] = new_rep
-    target["ease_factor"] = new_ef
-    target["interval_days"] = new_interval
-    target["next_review_at"] = next_review.isoformat()
-    target["status"] = status_str
+    target.repetition_count = new_rep
+    target.ease_factor = new_ef
+    target.interval_days = new_interval
+    target.next_review_at = next_review
+    target.last_reviewed_at = datetime.now(timezone.utc)
+    target.status = status_str
+    target.updated_at = datetime.now(timezone.utc)
 
-    # Reward XP for review if logged in
-    if current_user:
-        current_user.total_xp = (current_user.total_xp or 0) + 10
+    # Reward XP for a successful review.
+    if current_user and target_from_db and is_db_connected() and db is not None:
+        try:
+            current_user.total_xp = (current_user.total_xp or 0) + 10
+            await db.flush()
+        except Exception:
+            pass
 
-    return target
+    return _mistake_to_dict(target)
+
 
 @router.delete("/mistakes/{mistake_id}")
 async def delete_mistake(
-    mistake_id: str,
+    mistake_id: UUID,
     current_user: User | None = Depends(get_optional_user),
+    db: AsyncSession = Depends(get_db),
 ):
     """Remove a mistake from the notebook."""
     user_id = current_user.id if current_user else _DEFAULT_GUEST_ID
-    if user_id in _MEMORY_MISTAKES:
-        _MEMORY_MISTAKES[user_id] = [m for m in _MEMORY_MISTAKES[user_id] if m["id"] != mistake_id]
+    deleted = False
+
+    if is_db_connected() and current_user and db is not None:
+        try:
+            result = await db.execute(
+                select(UserMistake).where(
+                    UserMistake.id == mistake_id,
+                    UserMistake.user_id == user_id,
+                )
+            )
+            row = result.scalar_one_or_none()
+            if row is not None:
+                await db.delete(row)
+                await db.flush()
+                deleted = True
+        except Exception:
+            await db.rollback()
+
+    items = _memory_items(user_id)
+    remaining = [m for m in items if str(m.id) != str(mistake_id)]
+    if len(remaining) != len(items):
+        _MEMORY_MISTAKES[user_id] = remaining
+        deleted = True
+
+    if not deleted:
+        # Idempotent delete: the client already removed it locally.
+        return {"message": "Deleted successfully"}
     return {"message": "Deleted successfully"}

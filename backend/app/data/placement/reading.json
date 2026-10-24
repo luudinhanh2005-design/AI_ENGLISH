@@ -1,0 +1,816 @@
+{
+  "skill": "reading",
+  "version": "2.0.0",
+  "items": [
+    {
+      "id": "rd_a1_01",
+      "skill": "reading",
+      "level": "A1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -2.1,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 60,
+      "passage": {
+        "title": "Tom's Day",
+        "text": "Tom gets up at six o'clock every morning. He has breakfast at six thirty. After breakfast, he goes to work by bus. He starts work at eight o'clock and finishes at five. In the evening, he cooks dinner and reads a book. He goes to bed at ten.",
+        "word_count": 48
+      },
+      "stem": "What does Tom do after breakfast?",
+      "options": [
+        {"key": "A", "text": "He goes to work."},
+        {"key": "B", "text": "He reads a book."},
+        {"key": "C", "text": "He cooks dinner."},
+        {"key": "D", "text": "He goes to bed."}
+      ],
+      "answer": ["A"],
+      "explanation_vi": "Sau bữa sáng, Tom đi làm bằng xe buýt.",
+      "tags": ["daily routine"]
+    },
+    {
+      "id": "rd_a1_02",
+      "skill": "reading",
+      "level": "A1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -2.0,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 60,
+      "passage": {
+        "title": "The Town Library",
+        "text": "The town library is open from Monday to Saturday. It opens at nine in the morning and closes at six in the evening. It is closed on Sunday. Students can borrow three books at a time. There is also a quiet room for reading and studying.",
+        "word_count": 48
+      },
+      "stem": "When is the library closed?",
+      "options": [
+        {"key": "A", "text": "On Monday"},
+        {"key": "B", "text": "On Friday"},
+        {"key": "C", "text": "On Saturday"},
+        {"key": "D", "text": "On Sunday"}
+      ],
+      "answer": ["D"],
+      "explanation_vi": "Đoạn văn nói thư viện đóng cửa vào Chủ nhật.",
+      "tags": ["places", "schedule"]
+    },
+    {
+      "id": "rd_a1_03",
+      "skill": "reading",
+      "level": "A1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -2.15,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 60,
+      "passage": {
+        "title": "A Family Picnic",
+        "text": "Last Sunday, Anna and her family had a picnic by the lake. They brought sandwiches, fruit, and juice. The children played football after lunch. In the afternoon, it started to rain, so they went home.",
+        "word_count": 39
+      },
+      "stem": "Where did the family have lunch?",
+      "options": [
+        {"key": "A", "text": "At home"},
+        {"key": "B", "text": "By the lake"},
+        {"key": "C", "text": "In a restaurant"},
+        {"key": "D", "text": "At school"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Gia đình đi picnic 'by the lake' (bên hồ).",
+      "tags": ["family", "past events"]
+    },
+    {
+      "id": "rd_a1_04",
+      "skill": "reading",
+      "level": "A1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -1.95,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 60,
+      "passage": {
+        "title": "My Dog Max",
+        "text": "My dog Max is three years old. He is brown and white. He loves playing fetch in the park. Every evening, I take him for a walk after dinner. Max is friendly and never barks at people.",
+        "word_count": 39
+      },
+      "stem": "What does Max like doing?",
+      "options": [
+        {"key": "A", "text": "Sleeping all day"},
+        {"key": "B", "text": "Playing fetch"},
+        {"key": "C", "text": "Barking at people"},
+        {"key": "D", "text": "Swimming in the sea"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Max thích 'playing fetch' (chơi ném bắt bóng).",
+      "tags": ["pets", "daily life"]
+    },
+    {
+      "id": "rd_a1_05",
+      "skill": "reading",
+      "level": "A1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -2.05,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 60,
+      "passage": {
+        "title": "A School Trip",
+        "text": "The students visited the science museum on Friday. They travelled by bus and arrived at ten o'clock. They saw a robot exhibition and watched a short film about space. Everyone enjoyed the trip.",
+        "word_count": 37
+      },
+      "stem": "How did the students travel?",
+      "options": [
+        {"key": "A", "text": "By train"},
+        {"key": "B", "text": "By bus"},
+        {"key": "C", "text": "By car"},
+        {"key": "D", "text": "By plane"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Học sinh đi bằng xe buýt ('travelled by bus').",
+      "tags": ["school", "travel"]
+    },
+    {
+      "id": "rd_a2_01",
+      "skill": "reading",
+      "level": "A2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -1.35,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 75,
+      "passage": {
+        "title": "Shopping Online",
+        "text": "More people are shopping online because it is convenient. You can compare prices, read reviews, and order at any time of day. However, you cannot try on clothes before you buy them, and delivery can take several days. Some people also worry about returning items that do not fit.",
+        "word_count": 55
+      },
+      "stem": "What is the main advantage of online shopping mentioned in the text?",
+      "options": [
+        {"key": "A", "text": "You can try on clothes."},
+        {"key": "B", "text": "It is convenient."},
+        {"key": "C", "text": "Delivery is always instant."},
+        {"key": "D", "text": "Returns are never a problem."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Câu đầu nêu lý do chính: mua sắm online thuận tiện.",
+      "tags": ["shopping", "technology"]
+    },
+    {
+      "id": "rd_a2_02",
+      "skill": "reading",
+      "level": "A2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -1.25,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 75,
+      "passage": {
+        "title": "The New Gym",
+        "text": "The new gym offers a swimming pool, a sauna, and daily fitness classes. Membership includes use of all these facilities. Personal training is available for an extra fee. The gym is open from 6 a.m. to 10 p.m. every day.",
+        "word_count": 45
+      },
+      "stem": "What is included in the gym membership?",
+      "options": [
+        {"key": "A", "text": "Personal training"},
+        {"key": "B", "text": "The pool, sauna, and classes"},
+        {"key": "C", "text": "Only the swimming pool"},
+        {"key": "D", "text": "A private locker"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Membership bao gồm hồ bơi, sauna và các lớp học.",
+      "tags": ["fitness", "services"]
+    },
+    {
+      "id": "rd_a2_03",
+      "skill": "reading",
+      "level": "A2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -1.4,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 75,
+      "passage": {
+        "title": "When to Visit",
+        "text": "The city is hottest in July and August, when temperatures can reach 35 degrees. The best time to visit is spring, from March to May, when the weather is warm and pleasant. Autumn is also comfortable, but it rains more often. Winter is cold and many attractions close early.",
+        "word_count": 54
+      },
+      "stem": "When is the best time to visit the city?",
+      "options": [
+        {"key": "A", "text": "In spring"},
+        {"key": "B", "text": "In summer"},
+        {"key": "C", "text": "In autumn"},
+        {"key": "D", "text": "In winter"}
+      ],
+      "answer": ["A"],
+      "explanation_vi": "Đoạn văn nói rõ mùa xuân là thời điểm tốt nhất để đến.",
+      "tags": ["travel", "weather"]
+    },
+    {
+      "id": "rd_a2_04",
+      "skill": "reading",
+      "level": "A2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -1.2,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 80,
+      "passage": {
+        "title": "Part-time Job",
+        "text": "The café is looking for a part-time assistant. You must be at least 18 years old, available on weekends, and able to work in a fast-paced environment. Experience is helpful but not required, because training is provided. Apply in person before Friday.",
+        "word_count": 47
+      },
+      "stem": "What is a requirement for the job?",
+      "options": [
+        {"key": "A", "text": "Previous experience"},
+        {"key": "B", "text": "Availability on weekends"},
+        {"key": "C", "text": "A university degree"},
+        {"key": "D", "text": "A driving licence"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Yêu cầu bắt buộc là có thể làm việc cuối tuần.",
+      "tags": ["jobs", "requirements"]
+    },
+    {
+      "id": "rd_a2_05",
+      "skill": "reading",
+      "level": "A2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -1.3,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 75,
+      "passage": {
+        "title": "Community Clean-up Day",
+        "text": "The town is holding a community clean-up day next Saturday. Volunteers will meet at the park at 8 a.m. Gloves and bags will be provided. Everyone is welcome, including children with an adult. Lunch is free for all volunteers.",
+        "word_count": 43
+      },
+      "stem": "What is the purpose of the event?",
+      "options": [
+        {"key": "A", "text": "To raise money for a school"},
+        {"key": "B", "text": "To clean up the town"},
+        {"key": "C", "text": "To celebrate a festival"},
+        {"key": "D", "text": "To open a new park"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Đây là 'community clean-up day' – ngày dọn dẹp cộng đồng.",
+      "tags": ["community", "events"]
+    },
+    {
+      "id": "rd_b1_01",
+      "skill": "reading",
+      "level": "B1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -0.55,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 100,
+      "passage": {
+        "title": "Sleep and Learning",
+        "text": "Sleep is essential for learning. During deep sleep, the brain processes and stores information from the day, helping us remember what we have studied. Research shows that students who sleep well before an exam perform better than those who stay up late revising. However, many teenagers do not get enough sleep because of screens, homework, and early school starts. Experts suggest keeping a regular bedtime and avoiding phones for an hour before sleep.",
+        "word_count": 76
+      },
+      "stem": "What is the main idea of the passage?",
+      "options": [
+        {"key": "A", "text": "Students should study all night before exams."},
+        {"key": "B", "text": "Sleep plays an important role in learning and memory."},
+        {"key": "C", "text": "Teenagers need more homework."},
+        {"key": "D", "text": "Phones help students sleep better."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Toàn đoạn nhấn mạnh vai trò của giấc ngủ với học tập và ghi nhớ.",
+      "tags": ["education", "health"]
+    },
+    {
+      "id": "rd_b1_02",
+      "skill": "reading",
+      "level": "B1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -0.45,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 100,
+      "passage": {
+        "title": "Bus Route 12",
+        "text": "Route 12 will be diverted from Monday because of roadworks on Bridge Street. During this period, the bus will not stop at the library or the market. Passengers should use the temporary stop outside the station instead. The diversion is expected to last two weeks. Please allow an extra fifteen minutes for your journey.",
+        "word_count": 57
+      },
+      "stem": "What should passengers do during the roadworks?",
+      "options": [
+        {"key": "A", "text": "Take a different bus company"},
+        {"key": "B", "text": "Use the temporary stop and allow extra time"},
+        {"key": "C", "text": "Wait at the library"},
+        {"key": "D", "text": "Avoid travelling for two weeks"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Thông báo yêu cầu dùng bến tạm và dự trù thêm 15 phút.",
+      "tags": ["notices", "transport"]
+    },
+    {
+      "id": "rd_b1_03",
+      "skill": "reading",
+      "level": "B1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -0.6,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 100,
+      "passage": {
+        "title": "Why Volunteer?",
+        "text": "Volunteering at the local animal shelter is a rewarding experience. Volunteers help feed the animals, clean their areas, and take dogs for walks. In return, they learn practical skills, meet new people, and feel good about helping the community. Many volunteers say the experience has improved their confidence and even helped them find paid work.",
+        "word_count": 58
+      },
+      "stem": "Which benefit of volunteering is mentioned in the passage?",
+      "options": [
+        {"key": "A", "text": "Free food"},
+        {"key": "B", "text": "Improved confidence"},
+        {"key": "C", "text": "A guaranteed job"},
+        {"key": "D", "text": "Free travel"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Đoạn văn nêu volunteering giúp tăng sự tự tin.",
+      "tags": ["volunteering", "community"]
+    },
+    {
+      "id": "rd_b1_04",
+      "skill": "reading",
+      "level": "B1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -0.5,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 100,
+      "passage": {
+        "title": "Meeting Update",
+        "text": "Hi team, the meeting has been moved from Tuesday to Thursday at 2 p.m. in Room 4. Please send your monthly reports to me by Wednesday noon so that I can prepare the summary. We will discuss the budget for next quarter. If you cannot attend, let me know as soon as possible.",
+        "word_count": 55
+      },
+      "stem": "What is the writer asking the team to do?",
+      "options": [
+        {"key": "A", "text": "Book a larger room"},
+        {"key": "B", "text": "Send reports by Wednesday noon"},
+        {"key": "C", "text": "Attend a meeting on Tuesday"},
+        {"key": "D", "text": "Prepare the budget alone"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Người viết yêu cầu gửi báo cáo trước trưa thứ Tư.",
+      "tags": ["email", "workplace"]
+    },
+    {
+      "id": "rd_b1_05",
+      "skill": "reading",
+      "level": "B1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": -0.35,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 100,
+      "passage": {
+        "title": "Plastic in the Ocean",
+        "text": "Every year, millions of tonnes of plastic waste end up in the ocean, harming fish, birds, and other wildlife. Some cities have banned single-use plastic bags and encouraged shoppers to bring reusable bags. Others have introduced recycling programmes and deposit schemes for bottles. Experts say that reducing plastic at the source is more effective than cleaning it up later.",
+        "word_count": 61
+      },
+      "stem": "What solution does the passage mention?",
+      "options": [
+        {"key": "A", "text": "Banning all plastic production"},
+        {"key": "B", "text": "Using reusable bags and recycling"},
+        {"key": "C", "text": "Cleaning the ocean only"},
+        {"key": "D", "text": "Encouraging more plastic use"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Đoạn văn nêu việc cấm túi dùng một lần và dùng túi tái sử dụng, tái chế.",
+      "tags": ["environment", "solutions"]
+    },
+    {
+      "id": "rd_b2_01",
+      "skill": "reading",
+      "level": "B2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 0.3,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 120,
+      "passage": {
+        "title": "AI in Hiring",
+        "text": "Employers increasingly use artificial intelligence to screen CVs and rank candidates. Supporters argue that automated systems save time and reduce human bias, allowing recruiters to focus on interviews. Critics, however, warn that algorithms can reproduce existing inequalities if they are trained on biased historical data. Several countries are now considering rules that would require companies to audit their hiring tools and explain how decisions are made.",
+        "word_count": 67
+      },
+      "stem": "What is the main concern about AI in hiring?",
+      "options": [
+        {"key": "A", "text": "It is too expensive to use."},
+        {"key": "B", "text": "It may reproduce existing bias."},
+        {"key": "C", "text": "It slows down recruitment."},
+        {"key": "D", "text": "It eliminates all interviews."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Giới phê bình lo thuật toán có thể tái tạo bất bình đẳng từ dữ liệu cũ.",
+      "tags": ["technology", "employment"]
+    },
+    {
+      "id": "rd_b2_02",
+      "skill": "reading",
+      "level": "B2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 0.45,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 120,
+      "passage": {
+        "title": "The Value of Urban Parks",
+        "text": "Urban parks are often viewed as pleasant extras, but research suggests they are essential infrastructure. They improve mental health, reduce temperatures during heatwaves, and provide habitats for wildlife. Yet access to green space is uneven: wealthier neighbourhoods tend to have more parks, while poorer areas often lack safe, well-maintained public spaces. Some city planners now argue that green space should be treated as a public health priority rather than a luxury.",
+        "word_count": 72
+      },
+      "stem": "What is the author's view?",
+      "options": [
+        {"key": "A", "text": "Parks are unnecessary in modern cities."},
+        {"key": "B", "text": "Green spaces are valuable but unequally distributed."},
+        {"key": "C", "text": "Wealthy areas need more parks than poor areas."},
+        {"key": "D", "text": "Parks should be replaced by housing."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả nêu lợi ích của công viên nhưng nhấn mạnh sự phân bố không đều.",
+      "tags": ["urban planning", "health"]
+    },
+    {
+      "id": "rd_b2_03",
+      "skill": "reading",
+      "level": "B2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 0.35,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 120,
+      "passage": {
+        "title": "Life in the Gig Economy",
+        "text": "Platform workers, from delivery riders to freelance designers, value the flexibility of choosing when and where they work. However, many also face unpredictable income, limited access to sick pay, and little protection if they are dismissed. As the gig economy expands, governments are under pressure to update labour laws so that flexibility does not come at the cost of basic security.",
+        "word_count": 65
+      },
+      "stem": "What can be inferred from the passage?",
+      "options": [
+        {"key": "A", "text": "Gig workers have complete job security."},
+        {"key": "B", "text": "Labour laws may need to be updated."},
+        {"key": "C", "text": "Gig work is always poorly paid."},
+        {"key": "D", "text": "Governments have banned gig work."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Đoạn văn nêu áp lực cập nhật luật lao động cho kinh tế gig.",
+      "tags": ["work", "inference"]
+    },
+    {
+      "id": "rd_b2_04",
+      "skill": "reading",
+      "level": "B2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 0.5,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 120,
+      "passage": {
+        "title": "Can Adults Learn Languages?",
+        "text": "A common belief is that only children can learn a foreign language well. Yet recent studies suggest that adults can make rapid progress when they receive comprehensible input, regular speaking practice, and constructive feedback. Motivation and consistency appear to matter more than age. Adults may find pronunciation harder to master, but they often learn grammar and vocabulary faster because of their existing knowledge and study skills.",
+        "word_count": 68
+      },
+      "stem": "What do recent studies suggest?",
+      "options": [
+        {"key": "A", "text": "Only children can learn languages."},
+        {"key": "B", "text": "Adults can learn well with the right methods."},
+        {"key": "C", "text": "Pronunciation is always easy for adults."},
+        {"key": "D", "text": "Grammar is harder for adults than children."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Nghiên cứu cho thấy người lớn học tốt nếu có phương pháp phù hợp.",
+      "tags": ["language learning", "education"]
+    },
+    {
+      "id": "rd_b2_05",
+      "skill": "reading",
+      "level": "B2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 0.25,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 120,
+      "passage": {
+        "title": "The Problem with Overtourism",
+        "text": "Tourism can bring income and jobs, but too many visitors can damage the places they come to see. Historic cities such as Venice have suffered from overcrowding, rising rents, and environmental pressure. Some destinations now limit the number of cruise ships or introduce visitor fees. Others are promoting community-based tourism, which aims to spread benefits to local people while protecting cultural and natural heritage.",
+        "word_count": 66
+      },
+      "stem": "What does the passage recommend?",
+      "options": [
+        {"key": "A", "text": "Encouraging unlimited tourism"},
+        {"key": "B", "text": "Limiting visitor numbers and supporting local communities"},
+        {"key": "C", "text": "Closing all historic cities"},
+        {"key": "D", "text": "Banning cruise ships everywhere"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Đoạn văn nêu các giải pháp giới hạn du khách và phát triển du lịch cộng đồng.",
+      "tags": ["tourism", "sustainability"]
+    },
+    {
+      "id": "rd_c1_01",
+      "skill": "reading",
+      "level": "C1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.15,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 150,
+      "passage": {
+        "title": "Privacy and Security",
+        "text": "Governments often justify expanded surveillance by pointing to the need to prevent terrorism and serious crime. Yet the argument that innocent citizens have nothing to fear overlooks the way surveillance can chill dissent and normalise intrusion into private life. The relevant question is not whether security matters, but whether particular measures are proportionate, necessary, and subject to independent oversight. Without such safeguards, the balance between liberty and security is likely to tilt in favour of the state, often irreversibly.",
+        "word_count": 80
+      },
+      "stem": "What is the author's main argument?",
+      "options": [
+        {"key": "A", "text": "Surveillance should be abolished entirely."},
+        {"key": "B", "text": "Security is more important than privacy."},
+        {"key": "C", "text": "Surveillance must be proportionate and independently overseen."},
+        {"key": "D", "text": "Citizens should not worry about surveillance."}
+      ],
+      "answer": ["C"],
+      "explanation_vi": "Tác giả yêu cầu các biện pháp giám sát phải tương xứng và có giám sát độc lập.",
+      "tags": ["privacy", "argument"]
+    },
+    {
+      "id": "rd_c1_02",
+      "skill": "reading",
+      "level": "C1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.05,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 150,
+      "passage": {
+        "title": "The Ethics of Gene Editing",
+        "text": "CRISPR has transformed biomedical research, offering hope for treating inherited diseases. Somatic gene therapy, which affects only the patient, is widely regarded as ethically acceptable under strict safeguards. Germline editing, by contrast, alters DNA that can be passed to future generations. Because the long-term consequences are uncertain and informed consent from future generations is impossible, most scientists support a moratorium on heritable editing while basic research continues.",
+        "word_count": 71
+      },
+      "stem": "What is the author's position on gene editing?",
+      "options": [
+        {"key": "A", "text": "All gene editing should be banned."},
+        {"key": "B", "text": "Somatic therapy is promising, but heritable editing needs caution."},
+        {"key": "C", "text": "Germline editing is completely safe."},
+        {"key": "D", "text": "CRISPR has no medical value."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả phân biệt liệu pháp somatic với chỉnh sửa dòng mầm và ủng hộ thận trọng.",
+      "tags": ["bioethics", "science"]
+    },
+    {
+      "id": "rd_c1_03",
+      "skill": "reading",
+      "level": "C1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.2,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 150,
+      "passage": {
+        "title": "Remote Work and Productivity",
+        "text": "The evidence on remote work is mixed. For focused, individual tasks, employees often report higher productivity at home, largely because they face fewer interruptions. For creative and complex collaboration, however, spontaneous interaction matters, and fully remote teams can struggle to build trust. Rather than treating remote work as either a panacea or a threat, many organisations are adopting hybrid arrangements that combine the advantages of both.",
+        "word_count": 69
+      },
+      "stem": "What is the implication of the passage?",
+      "options": [
+        {"key": "A", "text": "Remote work is always more productive."},
+        {"key": "B", "text": "Hybrid work may balance the trade-offs."},
+        {"key": "C", "text": "Office work should be abolished."},
+        {"key": "D", "text": "Collaboration is impossible online."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả cho rằng mô hình hybrid cân bằng ưu nhược điểm.",
+      "tags": ["work", "productivity"]
+    },
+    {
+      "id": "rd_c1_04",
+      "skill": "reading",
+      "level": "C1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.1,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 150,
+      "passage": {
+        "title": "Whose Heritage?",
+        "text": "The debate over returning cultural artefacts to their countries of origin is often framed as a conflict between universal museums and national ownership. In reality, the issue is more nuanced. Many objects were acquired through colonial coercion, yet they have also become part of the cultural fabric of the museums that hold them. A more productive approach may be shared stewardship: long-term loans, joint research, and repatriation agreements that recognise both historical injustice and the value of international access.",
+        "word_count": 78
+      },
+      "stem": "What is the author's stance on repatriation?",
+      "options": [
+        {"key": "A", "text": "Museums should never return any objects."},
+        {"key": "B", "text": "All objects should be returned immediately."},
+        {"key": "C", "text": "Shared stewardship and negotiated agreements are preferable."},
+        {"key": "D", "text": "The debate is simple and one-sided."}
+      ],
+      "answer": ["C"],
+      "explanation_vi": "Tác giả đề xuất mô hình đồng quản lý, cho vay dài hạn và thỏa thuận hồi hương.",
+      "tags": ["culture", "heritage"]
+    },
+    {
+      "id": "rd_c1_05",
+      "skill": "reading",
+      "level": "C1",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.25,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 150,
+      "passage": {
+        "title": "Inequality of Opportunity",
+        "text": "Economic inequality is often measured in terms of income, but the more troubling gap may be inequality of opportunity. Children born into poor families face worse schools, less stable housing, and limited access to networks that help others succeed. Because these disadvantages compound over time, policies that focus only on redistributing income after the fact may leave the underlying mechanisms intact. Investing in early education and social mobility is therefore not merely a matter of fairness; it is also a condition for long-term prosperity.",
+        "word_count": 83
+      },
+      "stem": "What is the main claim of the passage?",
+      "options": [
+        {"key": "A", "text": "Income inequality is the only problem."},
+        {"key": "B", "text": "Inequality of opportunity must be addressed early."},
+        {"key": "C", "text": "Redistribution alone is sufficient."},
+        {"key": "D", "text": "Social mobility is impossible."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả nhấn mạnh bất bình đẳng cơ hội và đầu tư giáo dục sớm.",
+      "tags": ["economics", "education"]
+    },
+    {
+      "id": "rd_c2_01",
+      "skill": "reading",
+      "level": "C2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.95,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 180,
+      "passage": {
+        "title": "The Myth of Meritocracy",
+        "text": "The meritocratic ideal holds that success should be determined by talent and effort rather than birth. Yet the distinction between earned and inherited advantage is less stable than it appears. Talents are themselves partly the product of upbringing, education, and social networks; effort is shaped by circumstances that no one chooses. This does not make merit irrelevant, but it does undermine the claim that winners deserve their fortunes in any robust moral sense. A society that treats success as proof of virtue risks confusing luck with desert and may become less willing to support those who fall behind.",
+        "word_count": 95
+      },
+      "stem": "What is the author's critique of meritocracy?",
+      "options": [
+        {"key": "A", "text": "Talent and effort never matter."},
+        {"key": "B", "text": "It ignores the role of luck and inherited advantage."},
+        {"key": "C", "text": "It gives too much support to the poor."},
+        {"key": "D", "text": "It is the only fair system."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả cho rằng meritocracy bỏ qua may mắn và lợi thế thừa hưởng.",
+      "tags": ["philosophy", "society"]
+    },
+    {
+      "id": "rd_c2_02",
+      "skill": "reading",
+      "level": "C2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 2.05,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 180,
+      "passage": {
+        "title": "Climate Litigation",
+        "text": "Courts are increasingly being asked to hold governments and corporations accountable for climate inaction. Advocates argue that litigation can succeed where politics has stalled, forcing emissions targets into the open and giving citizens a voice. Critics counter that judges lack the expertise and democratic mandate to make complex policy choices, and that judicial intervention may undermine the separation of powers. The debate is not simply about climate science; it is about who has the authority to decide how the burden of transition should be distributed.",
+        "word_count": 86
+      },
+      "stem": "What can be inferred about climate litigation?",
+      "options": [
+        {"key": "A", "text": "It is universally accepted as the best solution."},
+        {"key": "B", "text": "It raises questions about democratic legitimacy."},
+        {"key": "C", "text": "It has no impact on policy."},
+        {"key": "D", "text": "It replaces the need for climate science."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Đoạn văn nêu tranh luận về thẩm quyền dân chủ của tòa án.",
+      "tags": ["law", "environment"]
+    },
+    {
+      "id": "rd_c2_03",
+      "skill": "reading",
+      "level": "C2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 1.9,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 180,
+      "passage": {
+        "title": "The Attention Economy",
+        "text": "Digital platforms are often described as free, but their business model depends on monetising attention. Algorithms are designed to maximise engagement, not necessarily to inform or to satisfy. The result is an environment in which outrage travels faster than nuance and where users may find themselves reacting rather than deliberating. Regulators face a dilemma: intervention could protect autonomy, but heavy-handed rules may entrench incumbents and stifle innovation. The question is whether attention should be treated as a resource to be extracted or as a capacity deserving protection.",
+        "word_count": 88
+      },
+      "stem": "What is the rhetorical purpose of the passage?",
+      "options": [
+        {"key": "A", "text": "To advertise digital platforms"},
+        {"key": "B", "text": "To expose the costs of the attention economy"},
+        {"key": "C", "text": "To argue that regulation is always harmful"},
+        {"key": "D", "text": "To celebrate algorithmic engagement"}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả phơi bày mặt trái của nền kinh tế chú ý.",
+      "tags": ["technology", "media"]
+    },
+    {
+      "id": "rd_c2_04",
+      "skill": "reading",
+      "level": "C2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 2.1,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 180,
+      "passage": {
+        "title": "The Limits of Academic Freedom",
+        "text": "Academic freedom is indispensable to the pursuit of knowledge, but it is not absolute. Scholars may be free to investigate unpopular ideas, yet they are also bound by professional standards of evidence, by the rights of colleagues and students, and by the obligations of public accountability. The difficult question is where the boundary lies between legitimate challenge and gratuitous harm. Defenders of free inquiry should resist both external censorship and the temptation to treat intellectual freedom as a licence for contempt.",
+        "word_count": 84
+      },
+      "stem": "What is the author's position on academic freedom?",
+      "options": [
+        {"key": "A", "text": "It should have no limits whatsoever."},
+        {"key": "B", "text": "It must be balanced with professional and ethical responsibilities."},
+        {"key": "C", "text": "It should be abolished."},
+        {"key": "D", "text": "It applies only to scientists."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả khẳng định tự do học thuật cần đi kèm trách nhiệm nghề nghiệp và đạo đức.",
+      "tags": ["education", "ethics"]
+    },
+    {
+      "id": "rd_c2_05",
+      "skill": "reading",
+      "level": "C2",
+      "type": "mcq_single",
+      "status": "active",
+      "version": 1,
+      "difficulty_b": 2.0,
+      "discrimination_a": 1.0,
+      "guessing_c": 0.25,
+      "time_seconds": 180,
+      "passage": {
+        "title": "The Uses of Nostalgia",
+        "text": "Nostalgia can be a source of comfort, but it is also easily weaponised. Political movements frequently invoke an idealised past to delegitimise the present and to promise a restoration that never quite arrives. Such narratives are seductive precisely because they simplify complexity and assign blame with confidence. A more honest engagement with history would acknowledge loss without romanticising it, and would recognise that the past was never as coherent as memory suggests. The task is not to escape nostalgia but to subject it to critical scrutiny.",
+        "word_count": 90
+      },
+      "stem": "What is the main idea of the passage?",
+      "options": [
+        {"key": "A", "text": "Nostalgia is always harmless."},
+        {"key": "B", "text": "Nostalgia should be examined critically because it can distort history."},
+        {"key": "C", "text": "The past was better than the present."},
+        {"key": "D", "text": "Political movements never use the past."}
+      ],
+      "answer": ["B"],
+      "explanation_vi": "Tác giả cho rằng nostalgia có thể bị lợi dụng và cần được nhìn nhận phê phán.",
+      "tags": ["history", "politics"]
+    }
+  ]
+}

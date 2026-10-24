@@ -26,6 +26,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
   bool _isFlipped = false;
   int _reviewedSessionCount = 0;
   bool _sessionComplete = false;
+  final Set<String> _reviewedIds = <String>{};
 
   @override
   void initState() {
@@ -36,6 +37,8 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
         _isFlipped = false;
         _cardIndex = 0;
         _sessionComplete = false;
+        _reviewedSessionCount = 0;
+        _reviewedIds.clear();
       });
     });
   }
@@ -181,12 +184,21 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14)),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (origController.text.trim().isEmpty ||
                               corrController.text.trim().isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Vui lòng nhập câu gốc và câu sửa đúng.'),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
                             return;
                           }
-                          ref.read(mistakeNotebookProvider.notifier).addMistake(
+                          final added = await ref
+                              .read(mistakeNotebookProvider.notifier)
+                              .addMistake(
                                 originalText: origController.text.trim(),
                                 correctedText: corrController.text.trim(),
                                 explanation: explController.text.trim().isEmpty
@@ -195,10 +207,15 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                                 type: selectedType,
                                 source: 'custom',
                               );
+                          if (!mounted) return;
                           Navigator.pop(ctx);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('✅ Đã thêm lỗi vào sổ tay ôn tập!'),
+                            SnackBar(
+                              content: Text(
+                                added
+                                    ? '✅ Đã thêm lỗi vào sổ tay ôn tập!'
+                                    : 'Lỗi này đã có trong sổ tay rồi.',
+                              ),
                               behavior: SnackBarBehavior.floating,
                             ),
                           );
@@ -263,6 +280,12 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
           m.correctedText.toLowerCase().contains(q) ||
           m.explanation.toLowerCase().contains(q);
     }).toList();
+
+    // The review deck only contains cards that are actually due today and not
+    // already rated during this session.
+    final dueItems = state.dueItems
+        .where((m) => !_reviewedIds.contains(m.id))
+        .toList(growable: false);
 
     return Scaffold(
       backgroundColor: context.palette.background,
@@ -417,7 +440,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                       // TAB 1: LIST VIEW
                       _buildListView(context, state, allItems),
                       // TAB 2: FLASHCARD SM-2 REVIEW
-                      _buildFlashcardView(context, state, allItems),
+                      _buildFlashcardView(context, state, dueItems),
                     ],
                   ),
                 ),
@@ -690,10 +713,34 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
               ),
               const SizedBox(width: 4),
               InkWell(
-                onTap: () {
-                  ref
+                onTap: () async {
+                  final confirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Xoá lỗi này?'),
+                      content: Text(
+                        '\"${item.originalText}\"\n\nLỗi sẽ bị xoá khỏi sổ tay và không còn trong lịch ôn SM-2.',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx, false),
+                          child: const Text('Huỷ'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx, true),
+                          child: const Text(
+                            'Xoá',
+                            style: TextStyle(color: Color(0xFFFF4757)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (confirmed != true) return;
+                  await ref
                       .read(mistakeNotebookProvider.notifier)
                       .deleteMistake(item.id);
+                  if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Đã xoá lỗi khỏi sổ tay.'),
@@ -790,16 +837,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
   // ──────────────────────────────────────────────
   Widget _buildFlashcardView(
       BuildContext context, MistakeNotebookState state, List<MistakeItem> items) {
-    if (items.isEmpty) {
-      return Center(
-        child: Text(
-          'Không có thẻ nào cần ôn tập hôm nay! 🎉',
-          style: TextStyle(color: context.palette.textSecondary),
-        ),
-      );
-    }
-
-    if (_sessionComplete || _cardIndex >= items.length) {
+    if (_sessionComplete || (items.isEmpty && _reviewedSessionCount > 0)) {
       return Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -859,7 +897,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                         color: Color(0xFFFFA502), size: 20),
                     SizedBox(width: 6),
                     Text(
-                      '+30 XP Rèn Luyện Tích Lũy',
+                      'Tiến độ đã lưu bằng SM-2',
                       style: TextStyle(
                         color: Color(0xFFFFA502),
                         fontWeight: FontWeight.bold,
@@ -882,12 +920,13 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                     _cardIndex = 0;
                     _isFlipped = false;
                     _sessionComplete = false;
-                    _reviewedSessionCount = 0;
+                    _reviewedIds.clear();
                   });
+                  _tabController.animateTo(0);
                 },
-                icon: const Icon(Icons.replay_rounded, color: Colors.white),
+                icon: const Icon(Icons.list_alt_rounded, color: Colors.white),
                 label: const Text(
-                  'Ôn Tập Lại Từ Đầu',
+                  'Xem Danh Sách Lỗi',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -900,7 +939,21 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
       );
     }
 
-    final currentItem = items[_cardIndex];
+    if (items.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            'Hôm nay không có lỗi nào đến hạn ôn tập. Hãy quay lại vào ngày mai! 🎉',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: context.palette.textSecondary),
+          ),
+        ),
+      );
+    }
+
+    final safeIndex = _cardIndex.clamp(0, items.length - 1);
+    final currentItem = items[safeIndex];
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -911,7 +964,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Thẻ ${_cardIndex + 1}/${items.length}',
+                'Thẻ ${_reviewedSessionCount + 1}/${_reviewedSessionCount + items.length}',
                 style: TextStyle(
                   color: context.palette.textSecondary,
                   fontWeight: FontWeight.bold,
@@ -932,7 +985,8 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: LinearProgressIndicator(
-              value: (_cardIndex + 1) / items.length,
+              value: _reviewedSessionCount /
+                  (_reviewedSessionCount + items.length).clamp(1, 999999),
               minHeight: 6,
               backgroundColor: context.palette.divider,
               valueColor:
@@ -1115,9 +1169,9 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                 Expanded(
                   child: _buildSM2Button(
                     label: 'Khó',
-                    sub: '+1 ngày',
+                    sub: '+${previewSm2Interval(currentItem, 3)} ngày',
                     color: const Color(0xFFFFA502),
-                    rating: 2,
+                    rating: 3,
                     item: currentItem,
                   ),
                 ),
@@ -1125,7 +1179,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                 Expanded(
                   child: _buildSM2Button(
                     label: 'Tốt',
-                    sub: '+3 ngày',
+                    sub: '+${previewSm2Interval(currentItem, 4)} ngày',
                     color: const Color(0xFF00CEC9),
                     rating: 4,
                     item: currentItem,
@@ -1135,7 +1189,7 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
                 Expanded(
                   child: _buildSM2Button(
                     label: 'Rất dễ',
-                    sub: '+7 ngày',
+                    sub: '+${previewSm2Interval(currentItem, 5)} ngày',
                     color: const Color(0xFF2ED573),
                     rating: 5,
                     item: currentItem,
@@ -1187,13 +1241,17 @@ class _MistakeNotebookScreenState extends ConsumerState<MistakeNotebookScreen>
         ),
       ),
       onPressed: () {
+        if (_reviewedIds.contains(item.id)) return;
         ref
             .read(mistakeNotebookProvider.notifier)
             .reviewMistake(item.id, rating);
         setState(() {
           _reviewedSessionCount++;
+          _reviewedIds.add(item.id);
           _isFlipped = false;
-          _cardIndex++;
+          // The reviewed card leaves the due deck, so the next card is always
+          // at the front of the remaining list.
+          _cardIndex = 0;
         });
       },
       child: Column(

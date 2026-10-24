@@ -27,7 +27,11 @@ import '../../features/ai_tutor/presentation/screens/voice_call_screen.dart';
 import '../../features/ai_tutor/presentation/screens/voice_call_summary_screen.dart';
 import '../../features/writing/presentation/screens/writing_editor_screen.dart';
 import '../../features/writing/presentation/screens/writing_result_screen.dart';
-import '../../features/practice/presentation/screens/ielts_speaking_mock_screen.dart';
+import '../../features/mock_test/presentation/screens/mock_test_hub_screen.dart';
+import '../../features/mock_test/presentation/screens/mock_test_intro_screen.dart';
+import '../../features/mock_test/presentation/screens/mock_test_runner_screen.dart';
+import '../../features/mock_test/presentation/screens/mock_test_result_screen.dart';
+import '../../features/mock_test/presentation/screens/mock_test_history_screen.dart';
 import '../../features/practice/presentation/screens/mistake_notebook_screen.dart';
 import '../../features/pronunciation/presentation/screens/shadowing_screen.dart';
 import '../../features/profile/presentation/screens/leaderboard_screen.dart';
@@ -189,14 +193,35 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           initialLessonId: state.pathParameters['id'],
         ),
       ),
-      // ── 4 New Advanced Features ──
+      // ── Full IELTS Mock Test (4 skills) ──
+      GoRoute(
+        path: '/mock-test',
+        builder: (context, state) => const MockTestHubScreen(),
+      ),
+      GoRoute(
+        path: '/mock-test/history',
+        builder: (context, state) => const MockTestHistoryScreen(),
+      ),
+      GoRoute(
+        path: '/mock-test/intro',
+        builder: (context, state) => const MockTestIntroScreen(),
+      ),
+      GoRoute(
+        path: '/mock-test/run',
+        builder: (context, state) => const MockTestRunnerScreen(),
+      ),
+      GoRoute(
+        path: '/mock-test/result',
+        builder: (context, state) => const MockTestResultScreen(),
+      ),
+      // Backward-compatible deep links point at the new hub.
       GoRoute(
         path: '/practice/ielts-speaking',
-        builder: (context, state) => const IeltsSpeakingMockScreen(),
+        redirect: (context, state) => '/mock-test',
       ),
       GoRoute(
         path: '/ielts-speaking',
-        redirect: (context, state) => '/practice/ielts-speaking',
+        redirect: (context, state) => '/mock-test',
       ),
       GoRoute(
         path: '/mistake-notebook',

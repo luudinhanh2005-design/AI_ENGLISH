@@ -343,7 +343,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                       // IELTS Speaking Mock
                       Expanded(
                         child: GestureDetector(
-                          onTap: () => context.push('/practice/ielts-speaking'),
+                          onTap: () => context.push('/mock-test'),
                           child: Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
@@ -388,7 +388,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 const Text(
-                                  'Thi Thử IELTS\nSpeaking',
+                                  'Thi Thử IELTS\n4 Kỹ Năng',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -398,7 +398,7 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  '3 phần thi chuẩn IDP',
+                                  'Full test chuẩn IDP',
                                   style: TextStyle(
                                     color: Colors.white.withOpacity(0.8),
                                     fontSize: 11,

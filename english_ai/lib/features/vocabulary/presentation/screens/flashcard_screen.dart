@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/sm2.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../providers/vocabulary_provider.dart';
 
@@ -126,6 +127,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
 
     // ── Session Finished Screen ──
     if (state.isSessionFinished || state.cards.isEmpty) {
+      final reviewed = state.reviewedCount > 0;
       return Scaffold(
         backgroundColor: context.palette.background,
         appBar: AppBar(
@@ -159,20 +161,30 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                       color: AppColors.success.withOpacity(0.15),
                       border: Border.all(color: AppColors.success, width: 2),
                     ),
-                    child: const Icon(Icons.check_circle_rounded,
-                        color: AppColors.success, size: 54),
+                    child: Icon(
+                      reviewed
+                          ? Icons.check_circle_rounded
+                          : Icons.event_available_rounded,
+                      color: AppColors.success,
+                      size: 54,
+                    ),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Hoàn thành phiên ôn tập!',
+                    reviewed
+                        ? 'Hoàn thành phiên ôn tập!'
+                        : 'Hôm nay không có từ nào đến hạn',
                     style: AppTextStyles.headlineSmall.copyWith(
                       color: context.palette.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Bạn đã hoàn thành củng cố từ vựng vào trí nhớ dài hạn với thuật toán SM-2.',
+                    reviewed
+                        ? 'Bạn đã hoàn thành củng cố từ vựng vào trí nhớ dài hạn với thuật toán SM-2.'
+                        : 'Bạn đã ôn hết các từ đến hạn. Hãy quay lại vào ngày mai hoặc chọn một chủ đề để học thêm.',
                     style: AppTextStyles.bodyMedium
                         .copyWith(color: context.palette.textSecondary),
                     textAlign: TextAlign.center,
@@ -229,6 +241,25 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
     final totalCards = state.cards.length;
     final currentCard = state.cards[state.currentIndex];
     final word = currentCard.word;
+
+    final hardInterval = calculateSm2(
+      repetitionCount: currentCard.repetitionCount,
+      easeFactor: currentCard.easeFactor,
+      intervalDays: currentCard.intervalDays,
+      quality: 3,
+    ).intervalDays;
+    final goodInterval = calculateSm2(
+      repetitionCount: currentCard.repetitionCount,
+      easeFactor: currentCard.easeFactor,
+      intervalDays: currentCard.intervalDays,
+      quality: 4,
+    ).intervalDays;
+    final easyInterval = calculateSm2(
+      repetitionCount: currentCard.repetitionCount,
+      easeFactor: currentCard.easeFactor,
+      intervalDays: currentCard.intervalDays,
+      quality: 5,
+    ).intervalDays;
 
     return Scaffold(
       backgroundColor: context.palette.background,
@@ -316,7 +347,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                     Expanded(
                       child: _buildRatingButton(
                         text: 'Khó',
-                        subtitle: '+1 ngày',
+                        subtitle: '+$hardInterval ngày',
                         color: AppColors.warning,
                         onTap: () {
                           _animController.reset();
@@ -328,7 +359,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                     Expanded(
                       child: _buildRatingButton(
                         text: 'Tốt',
-                        subtitle: '+6 ngày',
+                        subtitle: '+$goodInterval ngày',
                         color: AppColors.secondary,
                         onTap: () {
                           _animController.reset();
@@ -340,7 +371,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                     Expanded(
                       child: _buildRatingButton(
                         text: 'Dễ',
-                        subtitle: '+14 ngày',
+                        subtitle: '+$easyInterval ngày',
                         color: AppColors.success,
                         onTap: () {
                           _animController.reset();

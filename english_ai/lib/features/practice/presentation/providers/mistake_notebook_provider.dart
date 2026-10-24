@@ -1,10 +1,14 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../core/utils/sm2.dart';
+import '../../../../core/utils/uuid.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 
 class MistakeItem {
   final String id;
@@ -12,13 +16,14 @@ class MistakeItem {
   final String correctedText;
   final String explanation;
   final String type; // grammar, vocabulary, pronunciation
-  final String source; // speaking, writing, ielts, practice
+  final String source; // speaking, writing, ielts, practice, custom
   final DateTime createdAt;
   final int repetitionCount;
   final int intervalDays;
   final double easeFactor;
   final DateTime nextReviewAt;
-  final String status; // new, learning, mastered
+  final DateTime? lastReviewedAt;
+  final String status; // new, learning, reviewing, mastered
 
   const MistakeItem({
     required this.id,
@@ -32,10 +37,11 @@ class MistakeItem {
     this.intervalDays = 1,
     this.easeFactor = 2.5,
     required this.nextReviewAt,
+    this.lastReviewedAt,
     this.status = 'new',
   });
 
-  bool get isDue => DateTime.now().isAfter(nextReviewAt);
+  bool get isDue => !DateTime.now().isBefore(nextReviewAt);
 
   MistakeItem copyWith({
     String? id,
@@ -49,6 +55,7 @@ class MistakeItem {
     int? intervalDays,
     double? easeFactor,
     DateTime? nextReviewAt,
+    DateTime? lastReviewedAt,
     String? status,
   }) {
     return MistakeItem(
@@ -63,6 +70,7 @@ class MistakeItem {
       intervalDays: intervalDays ?? this.intervalDays,
       easeFactor: easeFactor ?? this.easeFactor,
       nextReviewAt: nextReviewAt ?? this.nextReviewAt,
+      lastReviewedAt: lastReviewedAt ?? this.lastReviewedAt,
       status: status ?? this.status,
     );
   }
@@ -79,14 +87,28 @@ class MistakeItem {
         'interval_days': intervalDays,
         'ease_factor': easeFactor,
         'next_review_at': nextReviewAt.toIso8601String(),
+        'last_reviewed_at': lastReviewedAt?.toIso8601String(),
         'status': status,
+      };
+
+  /// Payload accepted by `POST /ai/mistakes`.
+  Map<String, dynamic> toCreateJson() => {
+        'id': id,
+        'original_text': originalText,
+        'corrected_text': correctedText,
+        'explanation': explanation,
+        'type': type,
+        'source': source,
       };
 
   factory MistakeItem.fromJson(Map<String, dynamic> json) {
     return MistakeItem(
-      id: json['id'] as String? ?? DateTime.now().microsecondsSinceEpoch.toString(),
-      originalText: json['original_text'] as String? ?? json['original'] as String? ?? '',
-      correctedText: json['corrected_text'] as String? ?? json['corrected'] as String? ?? '',
+      id: json['id'] as String? ?? generateUuidV4(),
+      originalText:
+          json['original_text'] as String? ?? json['original'] as String? ?? '',
+      correctedText: json['corrected_text'] as String? ??
+          json['corrected'] as String? ??
+          '',
       explanation: json['explanation'] as String? ?? '',
       type: json['type'] as String? ?? 'grammar',
       source: json['source'] as String? ?? 'practice',
@@ -97,17 +119,32 @@ class MistakeItem {
       intervalDays: (json['interval_days'] as num?)?.toInt() ?? 1,
       easeFactor: (json['ease_factor'] as num?)?.toDouble() ?? 2.5,
       nextReviewAt: json['next_review_at'] != null
-          ? DateTime.tryParse(json['next_review_at'].toString()) ?? DateTime.now()
+          ? DateTime.tryParse(json['next_review_at'].toString()) ??
+              DateTime.now()
           : DateTime.now(),
+      lastReviewedAt: json['last_reviewed_at'] != null
+          ? DateTime.tryParse(json['last_reviewed_at'].toString())
+          : null,
       status: json['status'] as String? ?? 'new',
     );
   }
 }
 
+/// Preview used by the UI to show the real next interval for each rating.
+int previewSm2Interval(MistakeItem item, int rating) {
+  return calculateSm2(
+    repetitionCount: item.repetitionCount,
+    easeFactor: item.easeFactor,
+    intervalDays: item.intervalDays,
+    quality: rating,
+  ).intervalDays;
+}
+
 class MistakeNotebookState {
   final List<MistakeItem> items;
   final bool isLoading;
-  final String? filterType; // null / 'all', 'grammar', 'vocabulary', 'pronunciation'
+  final String?
+      filterType; // null / 'all', 'grammar', 'vocabulary', 'pronunciation'
 
   const MistakeNotebookState({
     this.items = const [],
@@ -119,8 +156,12 @@ class MistakeNotebookState {
     if (filterType == null || filterType == 'all') {
       return items;
     }
-    return items.where((m) => m.type.toLowerCase() == filterType!.toLowerCase()).toList();
+    return items
+        .where((m) => m.type.toLowerCase() == filterType!.toLowerCase())
+        .toList();
   }
+
+  List<MistakeItem> get dueItems => items.where((m) => m.isDue).toList();
 
   int get totalCount => items.length;
   int get dueCount => items.where((m) => m.isDue).length;
@@ -130,120 +171,193 @@ class MistakeNotebookState {
     List<MistakeItem>? items,
     bool? isLoading,
     String? filterType,
+    bool resetFilter = false,
   }) {
     return MistakeNotebookState(
       items: items ?? this.items,
       isLoading: isLoading ?? this.isLoading,
-      filterType: filterType ?? this.filterType,
+      filterType: resetFilter ? null : (filterType ?? this.filterType),
     );
   }
 }
 
 class MistakeNotebookNotifier extends StateNotifier<MistakeNotebookState> {
   final Dio _dio;
-  static const String _storageKey = 'mistake_notebook_items_v1';
+  final String _userId;
 
-  MistakeNotebookNotifier(this._dio) : super(const MistakeNotebookState()) {
+  MistakeNotebookNotifier(this._dio, {String userId = 'guest'})
+      : _userId = userId,
+        super(const MistakeNotebookState()) {
     _loadMistakes();
   }
+
+  String get _storageKey => 'mistake_notebook_items_v2_$_userId';
+  static const String _legacyStorageKey = 'mistake_notebook_items_v1';
+
+  static String _contentKey(String text) => text.trim().toLowerCase();
 
   Future<void> _loadMistakes() async {
     state = state.copyWith(isLoading: true);
     final prefs = await SharedPreferences.getInstance();
-    final localJson = prefs.getString(_storageKey);
+    final localJson =
+        prefs.getString(_storageKey) ?? prefs.getString(_legacyStorageKey);
 
     List<MistakeItem> loaded = [];
     if (localJson != null && localJson.isNotEmpty) {
       try {
         final list = jsonDecode(localJson) as List<dynamic>;
-        loaded = list.map((e) => MistakeItem.fromJson(e as Map<String, dynamic>)).toList();
-      } catch (_) {}
-    }
-
-    // If local storage is empty, initialize with high-yield realistic mistakes so user can immediately experience the feature!
-    if (loaded.isEmpty) {
-      loaded = [
-        MistakeItem(
-          id: 'seed_1',
-          originalText: 'She don\'t likes working late on weekend.',
-          correctedText: 'She doesn\'t like working late on weekends.',
-          explanation:
-              'Chủ ngữ ngôi thứ 3 số ít "She" đi với trợ động từ phủ định "doesn\'t", và động từ theo sau giữ nguyên thể "like". "On weekends" thêm "s" để chỉ thói quen.',
-          type: 'grammar',
-          source: 'voice_call',
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-          nextReviewAt: DateTime.now(),
-          status: 'new',
-        ),
-        MistakeItem(
-          id: 'seed_2',
-          originalText: 'I am agree with your opinion about modern education.',
-          correctedText: 'I completely agree with your opinion on modern education.',
-          explanation:
-              '"Agree" vốn là động từ thường, KHÔNG dùng "am agree". Hãy nói "I agree" hoặc "I completely agree". Giới từ đi cùng: "opinion on/about".',
-          type: 'vocabulary',
-          source: 'writing',
-          createdAt: DateTime.now().subtract(const Duration(hours: 12)),
-          nextReviewAt: DateTime.now(),
-          status: 'new',
-        ),
-        MistakeItem(
-          id: 'seed_3',
-          originalText: 'Although he is very busy, but he always helps his friends.',
-          correctedText: 'Although he is very busy, he always helps his friends.',
-          explanation:
-              'Trong tiếng Anh, mệnh đề đã dùng "Although" thì TUYỆT ĐỐI không dùng "but" ở mệnh đề chính (tránh lỗi lặp liên từ "mặc dù ... nhưng").',
-          type: 'grammar',
-          source: 'ielts',
-          createdAt: DateTime.now().subtract(const Duration(hours: 4)),
-          nextReviewAt: DateTime.now(),
-          status: 'new',
-        ),
-        MistakeItem(
-          id: 'seed_4',
-          originalText: 'He made an advice to me to improve my pronunciation.',
-          correctedText: 'He gave me some valuable advice on improving my pronunciation.',
-          explanation:
-              '"Advice" là danh từ không đếm được (không dùng "an advice") và đi với cụm động từ "give advice", không dùng "make an advice".',
-          type: 'vocabulary',
-          source: 'speaking',
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-          nextReviewAt: DateTime.now(),
-          status: 'learning',
-        ),
-      ];
-      await prefs.setString(_storageKey, jsonEncode(loaded.map((e) => e.toJson()).toList()));
-    }
-
-    state = state.copyWith(items: loaded, isLoading: false);
-
-    // Try fetching from backend asynchronously
-    try {
-      final res = await _dio.get(ApiEndpoints.aiMistakes);
-      if (res.statusCode == 200 && res.data is List) {
-        final serverList = (res.data as List)
+        loaded = list
             .map((e) => MistakeItem.fromJson(e as Map<String, dynamic>))
             .toList();
-        if (serverList.isNotEmpty) {
-          // Merge unique server items with local items
-          final currentIds = loaded.map((e) => e.id).toSet();
-          for (final s in serverList) {
-            if (!currentIds.contains(s.id)) {
-              loaded.insert(0, s);
-            }
-          }
-          state = state.copyWith(items: loaded);
-          await prefs.setString(_storageKey, jsonEncode(loaded.map((e) => e.toJson()).toList()));
-        }
+      } catch (_) {
+        loaded = [];
       }
-    } catch (_) {}
+    }
+
+    // Remove the demo records that older builds injected as fake user data.
+    loaded =
+        loaded.where((m) => !m.id.startsWith('seed_')).toList(growable: true);
+
+    // Legacy local records used timestamps as ids. Give them a real UUID so
+    // review/delete/sync calls are accepted by the backend.
+    loaded = loaded
+        .map((m) => isUuid(m.id) ? m : m.copyWith(id: generateUuidV4()))
+        .toList(growable: true);
+
+    // Keep a single copy of every mistake even if older storage is dirty.
+    loaded = _mergeCanonical(const [], loaded);
+
+    state = state.copyWith(items: loaded, isLoading: false);
+    if (localJson != null) {
+      await _persist(loaded);
+    }
+
+    // Try syncing with the backend. The server is the source of truth for ids.
+    try {
+      final initial = await _dio.get(ApiEndpoints.aiMistakes);
+      if (initial.statusCode != 200 || initial.data is! List) return;
+
+      final server = (initial.data as List)
+          .map((e) => MistakeItem.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      // Push locally-created mistakes that the server has not seen yet.
+      final pending = _pendingUploads(loaded, server);
+      if (pending.isNotEmpty) {
+        await _dio.post(
+          ApiEndpoints.aiMistakes,
+          data: pending.map((m) => m.toCreateJson()).toList(),
+        );
+      }
+
+      final refreshed =
+          pending.isEmpty ? initial : await _dio.get(ApiEndpoints.aiMistakes);
+      if (refreshed.statusCode == 200 && refreshed.data is List) {
+        final canonical = (refreshed.data as List)
+            .map((e) => MistakeItem.fromJson(e as Map<String, dynamic>))
+            .toList();
+        final merged = _mergeCanonical(canonical, loaded);
+        state = state.copyWith(items: merged);
+        await _persist(merged);
+      }
+    } catch (_) {
+      // Offline: local data remains the source of truth.
+    }
+  }
+
+  List<MistakeItem> _pendingUploads(
+    List<MistakeItem> local,
+    List<MistakeItem> server,
+  ) {
+    final serverIds = server.map((m) => m.id).toSet();
+    final serverContent =
+        server.map((m) => _contentKey(m.originalText)).toSet();
+    return local
+        .where((m) =>
+            !serverIds.contains(m.id) &&
+            !serverContent.contains(_contentKey(m.originalText)))
+        .toList();
+  }
+
+  /// Merges server and local records without creating duplicates.
+  ///
+  /// The server owns the canonical id; the side with the newest review wins the
+  /// SM-2 fields. This keeps reviews made offline when the app reconnects.
+  List<MistakeItem> _mergeCanonical(
+    List<MistakeItem> server,
+    List<MistakeItem> local,
+  ) {
+    final result = <MistakeItem>[];
+
+    DateTime reviewStamp(MistakeItem item) =>
+        item.lastReviewedAt ?? item.createdAt;
+
+    MistakeItem withScheduleOf(MistakeItem target, MistakeItem source) {
+      return target.copyWith(
+        originalText: source.originalText,
+        correctedText: source.correctedText,
+        explanation: source.explanation,
+        type: source.type,
+        source: source.source,
+        createdAt: source.createdAt,
+        repetitionCount: source.repetitionCount,
+        intervalDays: source.intervalDays,
+        easeFactor: source.easeFactor,
+        nextReviewAt: source.nextReviewAt,
+        lastReviewedAt: source.lastReviewedAt,
+        status: source.status,
+      );
+    }
+
+    void add(MistakeItem item) {
+      final content = _contentKey(item.originalText);
+      var index = result.indexWhere((m) => m.id == item.id);
+      if (index == -1) {
+        index = result.indexWhere(
+          (m) => _contentKey(m.originalText) == content,
+        );
+      }
+
+      if (index == -1) {
+        result.add(item);
+        return;
+      }
+
+      final existing = result[index];
+      final newer =
+          reviewStamp(item).isAfter(reviewStamp(existing)) ? item : existing;
+      // Keep the id of the first record added (server records are added first).
+      result[index] = withScheduleOf(existing, newer);
+    }
+
+    for (final item in server) {
+      add(item);
+    }
+    for (final item in local) {
+      add(item);
+    }
+
+    result.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return result;
+  }
+
+  Future<void> _persist(List<MistakeItem> items) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _storageKey,
+      jsonEncode(items.map((e) => e.toJson()).toList()),
+    );
   }
 
   void setFilter(String? type) {
-    state = state.copyWith(filterType: type);
+    state = type == null
+        ? state.copyWith(resetFilter: true)
+        : state.copyWith(filterType: type);
   }
 
-  Future<void> addMistake({
+  /// Adds a mistake locally and (best effort) on the server.
+  /// Returns false when the content is empty or already exists.
+  Future<bool> addMistake({
     required String originalText,
     required String correctedText,
     required String explanation,
@@ -251,15 +365,15 @@ class MistakeNotebookNotifier extends StateNotifier<MistakeNotebookState> {
     String source = 'practice',
   }) async {
     final cleanOriginal = originalText.trim();
-    if (cleanOriginal.isEmpty) return;
+    if (cleanOriginal.isEmpty) return false;
 
-    // Check duplicate
-    if (state.items.any((m) => m.originalText.trim().toLowerCase() == cleanOriginal.toLowerCase())) {
-      return;
-    }
+    final duplicate = state.items.any(
+      (m) => _contentKey(m.originalText) == _contentKey(cleanOriginal),
+    );
+    if (duplicate) return false;
 
     final newItem = MistakeItem(
-      id: 'm_${DateTime.now().millisecondsSinceEpoch}',
+      id: generateUuidV4(),
       originalText: cleanOriginal,
       correctedText: correctedText.trim(),
       explanation: explanation.trim(),
@@ -270,122 +384,132 @@ class MistakeNotebookNotifier extends StateNotifier<MistakeNotebookState> {
       status: 'new',
     );
 
-    final updated = [newItem, ...state.items];
+    var updated = [newItem, ...state.items];
     state = state.copyWith(items: updated);
+    await _persist(updated);
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_storageKey, jsonEncode(updated.map((e) => e.toJson()).toList()));
-
-    // Sync to backend
     try {
-      await _dio.post(
+      final res = await _dio.post(
         ApiEndpoints.aiMistakes,
-        data: [
-          {
-            'original_text': newItem.originalText,
-            'corrected_text': newItem.correctedText,
-            'explanation': newItem.explanation,
-            'type': newItem.type,
-            'source': newItem.source,
-          }
-        ],
+        data: [newItem.toCreateJson()],
       );
-    } catch (_) {}
+      final saved = _savedList(res.data);
+      if (saved.isNotEmpty) {
+        final canonical = MistakeItem.fromJson(saved.first);
+        updated = _mergeCanonical([canonical], state.items)
+            .where((m) => m.id != newItem.id || canonical.id == newItem.id)
+            .toList();
+        state = state.copyWith(items: updated);
+        await _persist(updated);
+      }
+    } catch (_) {
+      // Offline: keep the local copy, it will be uploaded on next launch.
+    }
+    return true;
   }
 
-  Future<int> addBatchMistakes(List<Map<String, dynamic>> items, {String source = 'speaking'}) async {
+  List<Map<String, dynamic>> _savedList(dynamic data) {
+    if (data is Map && data['saved'] is List) {
+      return (data['saved'] as List)
+          .whereType<Map>()
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList();
+    }
+    return const [];
+  }
+
+  Future<int> addBatchMistakes(
+    List<Map<String, dynamic>> items, {
+    String source = 'speaking',
+  }) async {
     int count = 0;
     for (final raw in items) {
-      final orig = raw['original'] ?? raw['original_text'] ?? raw['error'] ?? '';
-      final corr = raw['corrected'] ?? raw['corrected_text'] ?? raw['correction'] ?? '';
+      final orig =
+          raw['original'] ?? raw['original_text'] ?? raw['error'] ?? '';
+      final corr =
+          raw['corrected'] ?? raw['corrected_text'] ?? raw['correction'] ?? '';
       final expl = raw['explanation'] ?? raw['rule'] ?? 'Lỗi cần lưu ý';
       final type = raw['type'] ?? 'grammar';
 
       if (orig.toString().trim().isNotEmpty) {
-        await addMistake(
+        final added = await addMistake(
           originalText: orig.toString(),
           correctedText: corr.toString(),
           explanation: expl.toString(),
           type: type.toString(),
           source: source,
         );
-        count++;
+        if (added) count++;
       }
     }
     return count;
   }
 
-  /// SM-2 Spaced Repetition calculation
+  /// Applies SM-2 locally, then lets the server confirm the canonical schedule.
   Future<void> reviewMistake(String id, int rating) async {
     final index = state.items.indexWhere((m) => m.id == id);
     if (index == -1) return;
 
     final item = state.items[index];
-    int rep = item.repetitionCount;
-    double ef = item.easeFactor;
-    int interval = item.intervalDays;
-
-    if (rating >= 3) {
-      if (rep == 0) {
-        interval = 1;
-      } else if (rep == 1) {
-        interval = 3;
-      } else if (rep == 2) {
-        interval = 7;
-      } else {
-        interval = (interval * ef).round();
-      }
-      rep++;
-    } else {
-      rep = 0;
-      interval = 1;
-    }
-
-    ef = ef + (0.1 - (5 - rating) * (0.08 + (5 - rating) * 0.02));
-    if (ef < 1.3) ef = 1.3;
-
-    final nextReview = DateTime.now().add(Duration(days: interval));
-    final status = rep >= 4 ? 'mastered' : (rep > 0 ? 'learning' : 'new');
-
-    final updatedItem = item.copyWith(
-      repetitionCount: rep,
-      intervalDays: interval,
-      easeFactor: ef,
-      nextReviewAt: nextReview,
-      status: status,
+    final sm2 = calculateSm2(
+      repetitionCount: item.repetitionCount,
+      easeFactor: item.easeFactor,
+      intervalDays: item.intervalDays,
+      quality: rating,
     );
 
-    final updatedList = List<MistakeItem>.from(state.items);
+    final updatedItem = item.copyWith(
+      repetitionCount: sm2.repetitionCount,
+      intervalDays: sm2.intervalDays,
+      easeFactor: sm2.easeFactor,
+      nextReviewAt: sm2.nextReviewAt,
+      lastReviewedAt: DateTime.now(),
+      status: sm2.status,
+    );
+
+    var updatedList = List<MistakeItem>.from(state.items);
     updatedList[index] = updatedItem;
     state = state.copyWith(items: updatedList);
+    await _persist(updatedList);
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_storageKey, jsonEncode(updatedList.map((e) => e.toJson()).toList()));
+    if (!isUuid(id)) return;
 
-    // Sync to backend
     try {
-      await _dio.post(
+      final res = await _dio.post(
         ApiEndpoints.aiMistakeReview(id),
         data: {'rating': rating},
       );
-    } catch (_) {}
+      if (res.statusCode == 200 && res.data is Map) {
+        final canonical =
+            MistakeItem.fromJson(Map<String, dynamic>.from(res.data as Map));
+        updatedList =
+            state.items.map((m) => m.id == id ? canonical : m).toList();
+        updatedList = _mergeCanonical(const [], updatedList);
+        state = state.copyWith(items: updatedList);
+        await _persist(updatedList);
+      }
+    } catch (_) {
+      // Offline: local schedule above is already persisted.
+    }
   }
 
   Future<void> deleteMistake(String id) async {
     final updatedList = state.items.where((m) => m.id != id).toList();
     state = state.copyWith(items: updatedList);
+    await _persist(updatedList);
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_storageKey, jsonEncode(updatedList.map((e) => e.toJson()).toList()));
-
+    if (!isUuid(id)) return;
     try {
       await _dio.delete(ApiEndpoints.aiMistakeDelete(id));
-    } catch (_) {}
+    } catch (_) {
+      // Offline: deletion from local storage is enough for now.
+    }
   }
 }
 
 final mistakeNotebookProvider =
     StateNotifierProvider<MistakeNotebookNotifier, MistakeNotebookState>((ref) {
   final dio = ref.watch(dioProvider);
-  return MistakeNotebookNotifier(dio);
+  final userId = ref.watch(authStateProvider).valueOrNull?.id ?? 'guest';
+  return MistakeNotebookNotifier(dio, userId: userId);
 });

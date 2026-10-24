@@ -389,12 +389,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget _buildFeatureShortcutsSection(BuildContext context) {
     const features = [
       _FeatureShortcut(
-        title: 'Phòng Thi IELTS Speaking',
+        title: 'Phòng Thi IELTS 4 Kỹ Năng',
         subtitle: 'Thi thử 3 Part với Giám khảo AI, chấm Band 1.0 - 9.0',
         icon: Icons.school_rounded,
         color: Color(0xFF6C5CE7),
         badge: 'MỚI 🏆',
-        route: '/practice/ielts-speaking',
+        route: '/mock-test',
       ),
       _FeatureShortcut(
         title: 'Sổ Tay Lỗi Sai & Từ Vựng',

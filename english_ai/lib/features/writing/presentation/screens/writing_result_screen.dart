@@ -432,7 +432,7 @@ class _WritingResultScreenState extends ConsumerState<WritingResultScreen>
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 final items = result.grammarFeedback
                     .map((g) => {
                           'original': g.original,
@@ -442,22 +442,30 @@ class _WritingResultScreenState extends ConsumerState<WritingResultScreen>
                         })
                     .toList();
 
-                ref.read(mistakeNotebookProvider.notifier).addBatchMistakes(
+                final added = await ref
+                    .read(mistakeNotebookProvider.notifier)
+                    .addBatchMistakes(
                       items,
                       source: 'writing',
                     );
 
+                if (!mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                        '🎉 Đã lưu ${items.length} lỗi bài viết vào Sổ tay ôn tập (Flashcard SM-2)!'),
+                      added > 0
+                          ? '🎉 Đã lưu $added lỗi bài viết vào Sổ tay ôn tập (Flashcard SM-2)!'
+                          : 'Các lỗi này đã có trong sổ tay rồi.',
+                    ),
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: const Color(0xFF2ED573),
-                    action: SnackBarAction(
-                      label: 'Mở Sổ Tay',
-                      textColor: Colors.white,
-                      onPressed: () => context.push('/mistake-notebook'),
-                    ),
+                    action: added > 0
+                        ? SnackBarAction(
+                            label: 'Mở Sổ Tay',
+                            textColor: Colors.white,
+                            onPressed: () => context.push('/mistake-notebook'),
+                          )
+                        : null,
                   ),
                 );
               },

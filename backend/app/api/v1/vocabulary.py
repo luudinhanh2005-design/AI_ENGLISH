@@ -26,6 +26,7 @@ router = APIRouter()
 
 # Pre-generate fallback vocabulary data
 _FALLBACK_TOPICS: list[VocabularyTopic] = []
+_FALLBACK_TOPIC_BY_ID: dict[UUID, VocabularyTopic] = {}
 _FALLBACK_TOPIC_WORDS: dict[UUID, list[VocabularyWord]] = {}
 _FALLBACK_ALL_WORDS: list[VocabularyWord] = []
 _FALLBACK_WORDS_MAP: dict[UUID, VocabularyWord] = {}
@@ -70,7 +71,61 @@ for idx, t_raw in enumerate(SAMPLE_VOCABULARY):
     )
     t_obj.words = words_list
     _FALLBACK_TOPICS.append(t_obj)
+    _FALLBACK_TOPIC_BY_ID[t_id] = t_obj
     _FALLBACK_TOPIC_WORDS[t_id] = words_list
+
+
+async def _ensure_word_persisted(db: AsyncSession, word: VocabularyWord) -> None:
+    """Insert a fallback word (and its topic) before tracking progress for it."""
+    topic = _FALLBACK_TOPIC_BY_ID.get(word.topic_id)
+    topic_id = word.topic_id
+
+    if topic is not None:
+        existing_topic = await db.get(VocabularyTopic, topic.id)
+        if existing_topic is None:
+            # A manual/legacy seed may have created the same slug with a
+            # different generated id. Re-use it instead of violating the
+            # unique slug constraint.
+            by_slug = await db.execute(
+                select(VocabularyTopic).where(VocabularyTopic.slug == topic.slug)
+            )
+            existing_topic = by_slug.scalar_one_or_none()
+
+        if existing_topic is None:
+            db.add(
+                VocabularyTopic(
+                    id=topic.id,
+                    slug=topic.slug,
+                    title=topic.title,
+                    description=topic.description,
+                    icon_name=topic.icon_name,
+                    level=topic.level,
+                    total_words=topic.total_words,
+                    order_index=topic.order_index,
+                    is_active=True,
+                )
+            )
+            await db.flush()
+        else:
+            topic_id = existing_topic.id
+
+    db.add(
+        VocabularyWord(
+            id=word.id,
+            topic_id=topic_id,
+            word=word.word,
+            phonetic=word.phonetic,
+            part_of_speech=word.part_of_speech,
+            meaning_vi=word.meaning_vi,
+            meaning_en=word.meaning_en,
+            example_sentence=word.example_sentence,
+            example_translation=word.example_translation,
+            audio_url=word.audio_url,
+            image_url=word.image_url,
+            level=word.level,
+        )
+    )
+    await db.flush()
 
 
 @router.get("/topics", response_model=list[VocabularyTopicResponse])
@@ -114,6 +169,16 @@ async def get_topic_words(
     return _FALLBACK_TOPIC_WORDS.get(topic_id, [])
 
 
+def _fallback_due_items(limit: int) -> list[DueReviewWordItem]:
+    return [
+        DueReviewWordItem(
+            word=VocabularyWordResponse.model_validate(w),
+            progress=None,
+        )
+        for w in _FALLBACK_ALL_WORDS[:limit]
+    ]
+
+
 @router.get("/due", response_model=list[DueReviewWordItem])
 async def get_due_words(
     limit: int = 20,
@@ -127,6 +192,15 @@ async def get_due_words(
     now = datetime.now(timezone.utc)
 
     if is_db_connected() and current_user:
+        try:
+            # If migrations ran but the vocabulary seed did not, use the
+            # in-memory deck instead of showing an empty "all done" screen.
+            has_words = await db.execute(select(VocabularyWord.id).limit(1))
+            if has_words.scalar_one_or_none() is None:
+                return _fallback_due_items(limit)
+        except Exception:
+            await db.rollback()
+
         try:
             # 1. Fetch due reviews for this user
             result = await db.execute(
@@ -163,7 +237,12 @@ async def get_due_words(
                 )
                 new_words_res = await db.execute(
                     select(VocabularyWord)
-                    .where(VocabularyWord.id.not_in(user_words_subquery))
+                    .join(VocabularyTopic, VocabularyWord.topic_id == VocabularyTopic.id)
+                    .where(
+                        VocabularyTopic.is_active == True,
+                        VocabularyWord.id.not_in(user_words_subquery),
+                    )
+                    .order_by(func.random())
                     .limit(remaining)
                 )
                 for w in new_words_res.scalars().all():
@@ -174,18 +253,14 @@ async def get_due_words(
                         )
                     )
 
-            if due_items:
-                return due_items
+            # A successful DB query with an empty list means the user is done
+            # for today. Do not fall back to the same static words, otherwise
+            # every session would repeat them forever.
+            return due_items
         except Exception:
-            pass
+            await db.rollback()
 
-    return [
-        DueReviewWordItem(
-            word=VocabularyWordResponse.model_validate(w),
-            progress=None,
-        )
-        for w in _FALLBACK_ALL_WORDS[:limit]
-    ]
+    return _fallback_due_items(limit)
 
 
 @router.post("/words/{word_id}/review", response_model=WordProgressResponse)
@@ -199,16 +274,16 @@ async def submit_word_review(
     Submit a review rating (0 to 5) for a vocabulary word.
     Applies the SM-2 algorithm to compute next review interval and updates user progress.
     """
+    use_db = bool(is_db_connected() and current_user is not None and db is not None)
+
     # Verify word exists
     word = None
-    if is_db_connected():
+    if use_db:
         try:
-            w_res = await db.execute(
-                select(VocabularyWord).where(VocabularyWord.id == word_id)
-            )
-            word = w_res.scalar_one_or_none()
+            word = await db.get(VocabularyWord, word_id)
         except Exception:
-            pass
+            await db.rollback()
+            use_db = False
 
     if not word:
         word = _FALLBACK_WORDS_MAP.get(word_id)
@@ -219,10 +294,19 @@ async def submit_word_review(
             detail="Vocabulary word not found",
         )
 
+    # Fallback vocabulary lives in memory; persist it before writing progress so
+    # the `user_word_progress.word_id` foreign key is always satisfied.
+    if use_db and not await db.get(VocabularyWord, word.id):
+        try:
+            await _ensure_word_persisted(db, word)
+        except Exception:
+            await db.rollback()
+            use_db = False
+
     # Find existing progress or initialize new
     progress = None
     user_id = current_user.id if current_user else _DEFAULT_DEMO_ID
-    if is_db_connected() and current_user:
+    if use_db:
         try:
             p_res = await db.execute(
                 select(UserWordProgress).where(
@@ -232,7 +316,8 @@ async def submit_word_review(
             )
             progress = p_res.scalar_one_or_none()
         except Exception:
-            pass
+            await db.rollback()
+            use_db = False
 
     if not progress:
         rep_count = 0
@@ -265,11 +350,8 @@ async def submit_word_review(
             last_reviewed_at=datetime.now(timezone.utc),
             status=status_str,
         )
-        if is_db_connected() and current_user:
-            try:
-                db.add(progress)
-            except Exception:
-                pass
+        if use_db:
+            db.add(progress)
     else:
         progress.repetition_count = new_rep
         progress.ease_factor = new_ef
@@ -280,10 +362,10 @@ async def submit_word_review(
 
     if current_user:
         current_user.total_xp = (current_user.total_xp or 0) + 10
-        if is_db_connected():
+        if use_db:
             try:
                 await db.flush()
             except Exception:
-                pass
+                await db.rollback()
 
     return progress

@@ -69,7 +69,7 @@ class LearnScreen extends ConsumerWidget {
                                 color: AppColors.primary, size: 16),
                             const SizedBox(width: 4),
                             Text(
-                              user?.currentLevel ?? 'B1 Intermediate',
+                              user?.currentLevel ?? 'B1',
                               style: AppTextStyles.labelMedium.copyWith(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.bold,

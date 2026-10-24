@@ -355,23 +355,68 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     }
   }
 
-  void _saveToMistakeNotebook() {
+  Future<void> _saveToMistakeNotebook() async {
     if (_drills.isEmpty) return;
+
+    final result = _assessmentResult;
+    if (result == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Hãy đọc và chấm điểm trước khi lưu vào sổ tay.'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
     final drill = _drills[_currentDrillIndex];
-    ref.read(mistakeNotebookProvider.notifier).addMistake(
-          originalText: drill['text'].toString(),
-          correctedText: drill['text'].toString(),
-          explanation:
-              'Bài luyện Shadowing: ${drill['title']}. Chú ý nối âm: ${(drill['connected_speech_notes'] as List).first}',
+    final target = drill['text'].toString().trim();
+    final overall = (result['overall_score'] as num?)?.toDouble() ?? 0.0;
+    final accuracy = (result['accuracy_score'] as num?)?.toDouble();
+    final score = accuracy ?? overall;
+
+    if (score >= 80) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Phát âm đã tốt (từ 80 điểm), không cần lưu lỗi.'),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Color(0xFF2ED573),
+        ),
+      );
+      return;
+    }
+
+    final recognised = ((result['recognised_text'] as String?) ??
+            (result['recognized_text'] as String?) ??
+            '')
+        .trim();
+    final original = recognised.isEmpty ? 'Chưa nhận diện rõ lời đọc' : recognised;
+    final notes = drill['connected_speech_notes'] as List?;
+    final note = (notes != null && notes.isNotEmpty) ? notes.first : '';
+    final feedback = (result['feedback'] as String?)?.trim() ?? '';
+
+    final added = await ref.read(mistakeNotebookProvider.notifier).addMistake(
+          originalText: original,
+          correctedText: target,
+          explanation: [
+            'Shadowing: ${drill['title']} (${score.toStringAsFixed(0)} điểm).',
+            if (feedback.isNotEmpty) feedback,
+            if (note.toString().isNotEmpty) 'Chú ý nối âm: $note',
+          ].join(' '),
           type: 'pronunciation',
           source: 'practice',
         );
 
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('🎉 Đã lưu bài nhại giọng vào Sổ tay ôn tập!'),
+      SnackBar(
+        content: Text(
+          added
+              ? '🎉 Đã lưu lỗi phát âm vào Sổ tay ôn tập!'
+              : 'Lỗi phát âm này đã có trong sổ tay rồi.',
+        ),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: Color(0xFF2ED573),
+        backgroundColor: const Color(0xFF2ED573),
       ),
     );
   }

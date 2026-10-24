@@ -1,0 +1,62 @@
+{
+  "duration_seconds": 840,
+  "part1": {
+    "topics": [
+      {
+        "id": "P1-T1",
+        "topic": "Hometown",
+        "questions": [
+          "Where is your hometown, and what is it like?",
+          "What do you like most about the area where you live?",
+          "Has your hometown changed much in recent years?",
+          "Would you like to settle there in the future? Why or why not?"
+        ]
+      },
+      {
+        "id": "P1-T2",
+        "topic": "Work and study",
+        "questions": [
+          "Do you work, or are you a student at the moment?",
+          "What led you to choose that job or course?",
+          "What is the most interesting part of your work or studies?",
+          "If you could change one thing about your job or course, what would it be?"
+        ]
+      },
+      {
+        "id": "P1-T3",
+        "topic": "Technology",
+        "questions": [
+          "How much of your day do you spend using technology?",
+          "Is there any piece of technology you would find hard to live without?",
+          "Do you ever feel you spend too much time looking at screens?",
+          "Have you learned to use any new technology recently?"
+        ]
+      }
+    ]
+  },
+  "part2": {
+    "cue_card": "Describe a public place in your area that you think is well designed.",
+    "prompts": [
+      "Where this place is and what it looks like",
+      "What people usually do there",
+      "What makes it pleasant or easy to spend time in",
+      "How often you go there and why"
+    ],
+    "prep_seconds": 60,
+    "speak_seconds": 120,
+    "follow_ups": [
+      "Has this place changed since you first started going there?",
+      "Do you think your area needs more places like this?"
+    ]
+  },
+  "part3": {
+    "questions": [
+      "Why do you think some public spaces attract far more people than others?",
+      "Should a city keep land as a park or square when it could be sold for housing?",
+      "Do you agree that thoughtful design can reduce crime and antisocial behaviour in public places?",
+      "How has the way people spend time together in public changed over the past few decades?",
+      "Are privately owned spaces, such as shopping centres, as valuable to a community as genuinely public ones?",
+      "What role should local residents play in deciding how a public space is designed and used?"
+    ]
+  }
+}

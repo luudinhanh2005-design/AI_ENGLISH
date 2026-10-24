@@ -21,9 +21,25 @@ class ApiEndpoints {
   static const String userMe = '/users/me';
   static const String userOnboarding = '/users/me/onboarding';
 
-  // ── Placement Test ────────────────────────────
-  static const String placementQuestions = '/placement/questions';
-  static const String placementSubmit = '/placement/submit';
+  // ── Placement Test (CEFR adaptive v2) ─────────
+  static const String placementConfig = '/placement/config';
+  static const String placementSessions = '/placement/sessions';
+  static const String placementLatestResult = '/placement/results/latest';
+  static const String placementHistory = '/placement/history';
+  static String placementSession(String sessionId) =>
+      '/placement/sessions/$sessionId';
+  static String placementAnswers(String sessionId) =>
+      '/placement/sessions/$sessionId/answers';
+  static String placementCompleteStage(String sessionId) =>
+      '/placement/sessions/$sessionId/stages/complete';
+  static String placementWriting(String sessionId) =>
+      '/placement/sessions/$sessionId/writing';
+  static String placementSpeaking(String sessionId) =>
+      '/placement/sessions/$sessionId/speaking';
+  static String placementSkipSpeaking(String sessionId) =>
+      '/placement/sessions/$sessionId/speaking/skip';
+  static String placementResult(String resultId) =>
+      '/placement/results/$resultId';
 
   // ── Vocabulary & Spaced Repetition (SM-2) ─────
   static const String vocabularyTopics = '/vocabulary/topics';
@@ -65,6 +81,17 @@ class ApiEndpoints {
   // 1. IELTS Speaking Mock Test
   static const String ieltsPrompt = '/ai/ielts/prompt';
   static const String ieltsEvaluate = '/ai/ielts/evaluate';
+
+  // ── Full IELTS Mock Test (4 skills) ───────────
+  static const String mockTests = '/mock-tests';
+  static const String mockTestAttempts = '/mock-tests/attempts';
+  static String mockTestById(String setId) => '/mock-tests/$setId';
+  static String mockTestAttempt(String attemptId) =>
+      '/mock-tests/attempts/$attemptId';
+  static String mockTestSectionSubmit(String attemptId, String skill) =>
+      '/mock-tests/attempts/$attemptId/sections/$skill/submit';
+  static String mockTestComplete(String attemptId) =>
+      '/mock-tests/attempts/$attemptId/complete';
 
   // 2. Mistake Notebook & SM-2
   static const String aiMistakes = '/ai/mistakes';

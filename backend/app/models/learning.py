@@ -244,6 +244,68 @@ class UserWordProgress(Base):
     )
 
 
+class UserMistake(Base):
+    """A mistake saved to the user's notebook for SM-2 review."""
+
+    __tablename__ = "user_mistakes"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    original_text: Mapped[str] = mapped_column(Text, nullable=False)
+    corrected_text: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    explanation: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    type: Mapped[str] = mapped_column(
+        String(30),
+        nullable=False,
+        default="grammar",
+        comment="grammar, vocabulary, pronunciation",
+    )
+    source: Mapped[str] = mapped_column(
+        String(30),
+        nullable=False,
+        default="practice",
+        comment="voice_call, writing, ielts, practice, custom",
+    )
+
+    # SM-2 scheduling state
+    repetition_count: Mapped[int] = mapped_column(Integer, default=0)
+    interval_days: Mapped[int] = mapped_column(Integer, default=1)
+    ease_factor: Mapped[float] = mapped_column(Float, default=2.5)
+    last_reviewed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    next_review_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=func.now(),
+        index=True,
+    )
+    status: Mapped[str] = mapped_column(
+        String(20),
+        default="new",
+        comment="new, learning, reviewing, mastered",
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+
 # ──────────────────────────────────────────────
 # 3. Grammar Lesson Models
 # ──────────────────────────────────────────────

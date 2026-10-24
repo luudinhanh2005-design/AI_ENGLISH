@@ -1,0 +1,34 @@
+{
+  "duration_seconds": 3600,
+  "tasks": [
+    {
+      "id": "W1",
+      "task": 1,
+      "min_words": 150,
+      "recommended_minutes": 20,
+      "prompt": "You have received an email from a holiday company saying that your booking for a sailing holiday in the Greek islands has been cancelled because of an unexpected crew shortage. Write a letter to the customer service department asking for a refund or a replacement holiday.",
+      "visual": null,
+      "guidance": [
+        "Mở bài: nêu rõ hoàn cảnh (đã book, bị cancel).",
+        "Thân bài: cung cấp chi tiết booking (mã, ngày, giá), thái độ, yêu cầu cụ thể (refund hoặc replacement).",
+        "Kết bài: cảm ơn và đề nghị phản hồi sớm."
+      ],
+      "sample_answer": "Dear Customer Service,\n\nI am writing about booking Ref: GT-2291 for a sailing holiday in the Greek islands, which was cancelled last week without a clear explanation. My family booked the seven-day Aegean itinerary for June, and the email said the crew shortage made the departure impossible.\n\nWe were looking forward to this trip for over a year, so we would like to request either a full refund of 2,400 pounds or a replacement sailing departure in August. If a refund is issued, please confirm how it will be returned to our original payment method.\n\nThank you for your attention. We hope to sail with you again soon.\n\nYours faithfully,\nNguyen Van An"
+    },
+    {
+      "id": "W2",
+      "task": 2,
+      "min_words": 250,
+      "recommended_minutes": 40,
+      "prompt": "Some people believe that governments should spend more money improving public transport than building new roads. Discuss both views and give your own opinion.",
+      "visual": null,
+      "guidance": [
+        "Nêu quan điểm cá nhân rõ ràng.",
+        "Phân tích lợi ích kinh tế / môi trường của từng lựa chọn.",
+        "Cung cấp ví dụ thực tế.",
+        "Kết bài khẳng định hoặc phản bác."
+      ],
+      "sample_answer": "Governments around the world face a familiar choice about how to invest limited budgets: expanding public transport or building new roads. While both options have supporters, I believe public transport should receive priority.\n\nThose who favour road construction argue that new highways can quickly relieve congestion in growing cities. In many countries, existing roads are already overcrowded, and building more lanes may seem the fastest solution. However, such projects often take years and attract only long-term benefits that are difficult to justify when public transport can serve more people at lower cost.\n\nPublic transport brings wider advantages. A single bus can carry thirty people, while a single car usually carries one. Electric trams and metro lines reduce air pollution and traffic accidents, and they also offer affordable mobility to low-income residents. Cities such as Curitiba and Copenhagen have shown that investment in rail networks improves both population health and economic productivity.\n\nIn my opinion, improving public transport is the wiser long-term choice. Road projects are necessary in some cases, but they should complement rather than replace investment in trains, buses and cycling infrastructure.\n\nIn conclusion, although road construction may ease short-term pressure, governments should prioritise public transport to build sustainable, inclusive cities."
+    }
+  ]
+}

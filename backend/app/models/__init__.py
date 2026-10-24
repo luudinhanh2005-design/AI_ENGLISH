@@ -5,6 +5,7 @@ from .learning import (
     VocabularyTopic,
     VocabularyWord,
     UserWordProgress,
+    UserMistake,
     GrammarLesson,
     GrammarLessonVersion,
     GrammarAttempt,
@@ -22,6 +23,12 @@ from .speech import (
     AudioRecording,
     PronunciationDrill,
 )
+from .mock_test import MockTestAttempt
+from .placement import (
+    PlacementSessionRecord,
+    PlacementResponseRecord,
+    PlacementResultRecord,
+)
 
 __all__ = [
     "User",
@@ -31,6 +38,7 @@ __all__ = [
     "VocabularyTopic",
     "VocabularyWord",
     "UserWordProgress",
+    "UserMistake",
     "GrammarLesson",
     "GrammarLessonVersion",
     "GrammarAttempt",
@@ -43,4 +51,8 @@ __all__ = [
     "SpeakingSession",
     "AudioRecording",
     "PronunciationDrill",
+    "MockTestAttempt",
+    "PlacementSessionRecord",
+    "PlacementResponseRecord",
+    "PlacementResultRecord",
 ]

@@ -1,0 +1,138 @@
+{
+  "version": "2.0.0",
+  "note": "Diễn giải theo CEFR Companion Volume (2020), dùng cho báo cáo kết quả.",
+  "descriptors": {
+    "A1": {
+      "listening": [
+        "Nhận ra những từ và cụm từ quen thuộc về bản thân, gia đình và nơi ở.",
+        "Hiểu những chỉ dẫn ngắn, đơn giản khi được nói chậm và rõ."
+      ],
+      "reading": [
+        "Hiểu thông báo, biển hiệu và tin nhắn ngắn có nội dung đơn giản.",
+        "Đọc hiểu những đoạn văn ngắn về chủ đề quen thuộc."
+      ],
+      "use_of_english": [
+        "Sử dụng được các thì hiện tại đơn, quá khứ đơn và cấu trúc câu cơ bản.",
+        "Dùng được số đếm, mạo từ, giới từ chỉ thời gian và nơi chốn."
+      ],
+      "writing": [
+        "Viết được tin nhắn hoặc email ngắn về thông tin cá nhân.",
+        "Điền được biểu mẫu đơn giản và viết câu mô tả ngắn."
+      ],
+      "speaking": [
+        "Giới thiệu được bản thân và trả lời câu hỏi đơn giản.",
+        "Sử dụng được những cụm từ cố định trong tình huống giao tiếp cơ bản."
+      ]
+    },
+    "A2": {
+      "listening": [
+        "Hiểu ý chính của những đoạn hội thoại ngắn về chủ đề quen thuộc.",
+        "Nắm được thông tin cụ thể như thời gian, địa điểm, giá cả trong lời nói rõ ràng."
+      ],
+      "reading": [
+        "Hiểu nội dung chính của văn bản ngắn về đời sống hằng ngày.",
+        "Tìm được thông tin cụ thể trong quảng cáo, thông báo và email đơn giản."
+      ],
+      "use_of_english": [
+        "Dùng được các thì cơ bản, so sánh hơn và cấu trúc điều kiện loại 1.",
+        "Sử dụng được lượng từ, giới từ và liên từ thông dụng."
+      ],
+      "writing": [
+        "Viết được email hoặc tin nhắn ngắn để mời, cảm ơn, xin lỗi.",
+        "Viết được đoạn mô tả ngắn về người, nơi chốn hoặc trải nghiệm."
+      ],
+      "speaking": [
+        "Giao tiếp được trong các tình huống đơn giản hằng ngày.",
+        "Mô tả được ngắn gọn sở thích, gia đình và công việc/học tập."
+      ]
+    },
+    "B1": {
+      "listening": [
+        "Hiểu ý chính của bài nói rõ ràng về các vấn đề quen thuộc.",
+        "Theo dõi được hội thoại dài hơn và nhận ra thái độ, quan điểm cơ bản."
+      ],
+      "reading": [
+        "Hiểu ý chính và một số chi tiết trong bài viết về chủ đề quen thuộc.",
+        "Suy luận được nghĩa của từ/cụm từ từ ngữ cảnh."
+      ],
+      "use_of_english": [
+        "Sử dụng được các thì hoàn thành, câu bị động và câu điều kiện loại 2.",
+        "Kiểm soát được mệnh đề quan hệ, động từ khuyết thiếu và liên từ phức."
+      ],
+      "writing": [
+        "Viết được email trang trọng và đoạn văn có bố cục rõ ràng.",
+        "Trình bày được ý kiến và lý do ở mức độ đơn giản."
+      ],
+      "speaking": [
+        "Duy trì được hội thoại về các chủ đề quen thuộc.",
+        "Kể lại được trải nghiệm, sự kiện và giải thích lý do ngắn gọn."
+      ]
+    },
+    "B2": {
+      "listening": [
+        "Hiểu ý chính của bài giảng, phỏng vấn và bản tin có cấu trúc rõ ràng.",
+        "Theo dõi được lập luận và phân biệt được quan điểm của người nói."
+      ],
+      "reading": [
+        "Hiểu văn bản phức tạp về các chủ đề đương đại và học thuật.",
+        "Nhận diện được lập luận, giọng điệu và hàm ý của tác giả."
+      ],
+      "use_of_english": [
+        "Sử dụng chính xác cấu trúc đảo ngữ, câu điều kiện hỗn hợp và mệnh đề phức.",
+        "Lựa chọn được từ vựng học thuật và liên kết văn bản phù hợp."
+      ],
+      "writing": [
+        "Viết được bài luận hoặc báo cáo có bố cục, lập luận và ví dụ rõ ràng.",
+        "Sử dụng được ngôn ngữ trang trọng và liên kết câu hiệu quả."
+      ],
+      "speaking": [
+        "Nói trôi chảy về nhiều chủ đề, kể cả chủ đề trừu tượng.",
+        "Trình bày quan điểm có lý lẽ và phản hồi được câu hỏi phản biện."
+      ]
+    },
+    "C1": {
+      "listening": [
+        "Hiểu được bài nói dài, phức tạp, kể cả khi lập luận không được trình bày rõ ràng.",
+        "Nhận diện được sắc thái, hàm ý và thái độ tinh tế của người nói."
+      ],
+      "reading": [
+        "Hiểu được văn bản dài, phức tạp về học thuật, chuyên môn hoặc văn học.",
+        "Đánh giá được quan điểm, bằng chứng và cấu trúc lập luận của tác giả."
+      ],
+      "use_of_english": [
+        "Sử dụng linh hoạt và chính xác các cấu trúc ngữ pháp nâng cao.",
+        "Chọn được từ ngữ chính xác, tự nhiên và phù hợp phong cách."
+      ],
+      "writing": [
+        "Viết được bài luận, báo cáo hoặc đề xuất mạch lạc, có chiều sâu.",
+        "Điều chỉnh được giọng điệu và phong cách cho phù hợp đối tượng."
+      ],
+      "speaking": [
+        "Diễn đạt trôi chảy, tự nhiên, gần như không phải dừng lại tìm từ.",
+        "Trình bày lập luận phức tạp và thích ứng linh hoạt với ngữ cảnh."
+      ]
+    },
+    "C2": {
+      "listening": [
+        "Hiểu được mọi nội dung nghe, kể cả tốc độ nhanh, giọng vùng miền và chủ đề trừu tượng.",
+        "Cảm nhận được sắc thái tu từ, châm biếm và hàm ý văn hóa."
+      ],
+      "reading": [
+        "Hiểu được văn bản khó, dày đặc thông tin và có cấu trúc phức tạp.",
+        "Đánh giá được chất lượng lập luận và sắc thái biểu đạt tinh tế."
+      ],
+      "use_of_english": [
+        "Sử dụng ngôn ngữ chính xác, tinh tế và linh hoạt ở mọi phong cách.",
+        "Nhận diện và vận dụng được những cấu trúc hiếm, thành ngữ và sắc thái."
+      ],
+      "writing": [
+        "Viết được văn bản phức tạp, có chiều sâu và kiểm soát phong cách cao.",
+        "Tổ chức lập luận chặt chẽ, thuyết phục và phù hợp người đọc."
+      ],
+      "speaking": [
+        "Giao tiếp tự nhiên, chính xác và hiệu quả trong mọi tình huống.",
+        "Diễn đạt được sắc thái, hàm ý và lập luận phức tạp một cách uyển chuyển."
+      ]
+    }
+  }
+}

@@ -537,7 +537,7 @@ class _IeltsSpeakingMockScreenState
     });
   }
 
-  void _saveMistakesToNotebook() {
+  Future<void> _saveMistakesToNotebook() async {
     final corrections = (_resultData?['corrections'] as List?) ?? [];
     if (corrections.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -546,15 +546,21 @@ class _IeltsSpeakingMockScreenState
       return;
     }
 
-    ref.read(mistakeNotebookProvider.notifier).addBatchMistakes(
-          corrections.cast<Map<String, dynamic>>(),
+    final added = await ref
+        .read(mistakeNotebookProvider.notifier)
+        .addBatchMistakes(
+          corrections.whereType<Map>().map((e) => Map<String, dynamic>.from(e)).toList(),
           source: 'ielts',
         );
 
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-            '🎉 Đã lưu ${corrections.length} lỗi vào Sổ tay lỗi sai & Flashcard SM-2!'),
+          added > 0
+              ? '🎉 Đã lưu $added lỗi mới vào Sổ tay lỗi sai & Flashcard SM-2!'
+              : 'Các lỗi này đã có trong sổ tay rồi.',
+        ),
         behavior: SnackBarBehavior.floating,
         backgroundColor: const Color(0xFF2ED573),
       ),

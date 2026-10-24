@@ -1,0 +1,117 @@
+{
+  "version": "2.0.0",
+  "updated_at": "2026-10-24",
+  "description": "EnglishAI Placement Test blueprint (CEFR A1-C2, multi-stage adaptive).",
+  "skill_order": ["listening", "reading", "use_of_english"],
+  "skill_labels": {
+    "listening": "Nghe",
+    "reading": "Đọc",
+    "use_of_english": "Ngữ pháp & Từ vựng",
+    "writing": "Viết",
+    "speaking": "Nói"
+  },
+  "modes": {
+    "quick": {
+      "label": "Quick",
+      "description": "Xếp lớp nhanh với 3 kỹ năng tiếp nhận.",
+      "skills": ["listening", "reading", "use_of_english"],
+      "stages": 2,
+      "items_per_stage": 4,
+      "time_limit_seconds": 1200,
+      "writing_tasks": 0,
+      "speaking_tasks": 0
+    },
+    "standard": {
+      "label": "Standard",
+      "description": "Đánh giá định kỳ: 3 kỹ năng tiếp nhận + 1 bài viết.",
+      "skills": ["listening", "reading", "use_of_english"],
+      "stages": 3,
+      "items_per_stage": 4,
+      "time_limit_seconds": 3300,
+      "writing_tasks": 1,
+      "speaking_tasks": 0
+    },
+    "full": {
+      "label": "Full",
+      "description": "Đánh giá toàn diện 5 kỹ năng theo chuẩn CEFR.",
+      "skills": ["listening", "reading", "use_of_english"],
+      "stages": 3,
+      "items_per_stage": 4,
+      "time_limit_seconds": 5100,
+      "writing_tasks": 2,
+      "speaking_tasks": 3
+    }
+  },
+  "stage_time_seconds": {
+    "listening": 300,
+    "reading": 420,
+    "use_of_english": 240,
+    "writing": 1200,
+    "speaking": 300
+  },
+  "weights": {
+    "listening": 0.25,
+    "reading": 0.25,
+    "use_of_english": 0.2,
+    "writing": 0.15,
+    "speaking": 0.15
+  },
+  "cut_scores": {
+    "A2": -1.5,
+    "B1": -0.75,
+    "B2": 0.0,
+    "C1": 0.75,
+    "C2": 1.5
+  },
+  "level_labels": {
+    "A1": "Beginner",
+    "A2": "Elementary",
+    "B1": "Intermediate",
+    "B2": "Upper Intermediate",
+    "C1": "Advanced",
+    "C2": "Proficiency"
+  },
+  "level_descriptions_vi": {
+    "A1": "Có thể hiểu và sử dụng những cụm từ quen thuộc, câu đơn giản trong giao tiếp hằng ngày.",
+    "A2": "Có thể giao tiếp trong các tình huống đơn giản, quen thuộc và trao đổi thông tin cơ bản.",
+    "B1": "Có thể xử lý hầu hết các tình huống khi đi du lịch và mô tả trải nghiệm, sự kiện, kế hoạch.",
+    "B2": "Có thể giao tiếp trôi chảy, hiểu ý chính của văn bản phức tạp và viết luận rõ ràng.",
+    "C1": "Có thể sử dụng ngôn ngữ linh hoạt, hiệu quả cho mục đích xã hội, học thuật và nghề nghiệp.",
+    "C2": "Có thể hiểu và diễn đạt gần như mọi thứ một cách chính xác, tự nhiên và tinh tế."
+  },
+  "exam_mapping": {
+    "note": "Quy đổi chỉ mang tính tham khảo, không phải chứng chỉ chính thức.",
+    "ielts": {
+      "A1": "2.0",
+      "A2": "3.0",
+      "B1": "4.0-5.0",
+      "B2": "5.5-6.5",
+      "C1": "7.0-8.0",
+      "C2": "8.5-9.0"
+    },
+    "toeic": {
+      "A1": "100-250",
+      "A2": "250-400",
+      "B1": "400-550",
+      "B2": "550-750",
+      "C1": "750-900",
+      "C2": "900-990"
+    },
+    "toefl": {
+      "A1": "<30",
+      "A2": "30-41",
+      "B1": "42-71",
+      "B2": "72-94",
+      "C1": "95-114",
+      "C2": "115-120"
+    },
+    "cambridge": {
+      "A1": "100-119",
+      "A2": "120-139",
+      "B1": "140-159",
+      "B2": "160-179",
+      "C1": "180-199",
+      "C2": "200-230"
+    }
+  }
+}

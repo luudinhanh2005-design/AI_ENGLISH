@@ -7,9 +7,11 @@ Seed initial learning data for EnglishAI:
 
 import asyncio
 import logging
+import uuid
+
 from sqlalchemy import select
 
-from app.database import async_session_factory, init_db
+from app.database import async_session_factory, init_db, is_db_connected
 from app.models.learning import (
     GrammarLesson,
     PlacementQuestion,
@@ -538,9 +540,9 @@ async def seed_data():
         if not topic_count.scalars().first():
             logger.info("Seeding Vocabulary Topics and Words...")
             for t_data in SAMPLE_VOCABULARY:
-                words_data = t_data.pop("words", [])
+                words_data = t_data.get("words", [])
                 topic = VocabularyTopic(
-                    **t_data,
+                    **{k: v for k, v in t_data.items() if k != "words"},
                     total_words=len(words_data),
                 )
                 db.add(topic)
@@ -562,6 +564,61 @@ async def seed_data():
             logger.info("✅ Grammar Lessons seeded.")
 
     logger.info("🎉 All learning data seeded successfully!")
+
+
+def _vocab_topic_id(slug: str) -> uuid.UUID:
+    """Stable id shared by the DB seed and the offline fallback data."""
+    return uuid.uuid5(uuid.NAMESPACE_DNS, f"vocab-topic-{slug}")
+
+
+def _vocab_word_id(word: str) -> uuid.UUID:
+    return uuid.uuid5(uuid.NAMESPACE_DNS, f"vocab-word-{word}")
+
+
+async def seed_vocabulary_if_empty() -> int:
+    """Idempotently seed vocabulary so SM-2 progress always has a valid FK.
+
+    Returns the number of words inserted (0 when the table already has data).
+    """
+    if not is_db_connected():
+        return 0
+
+    async with async_session_factory() as db:
+        existing = await db.execute(select(VocabularyTopic.id).limit(1))
+        if existing.scalar_one_or_none() is not None:
+            return 0
+
+        inserted = 0
+        for t_data in SAMPLE_VOCABULARY:
+            slug = str(t_data["slug"])
+            words_data = t_data.get("words", [])
+            topic_id = _vocab_topic_id(slug)
+            db.add(
+                VocabularyTopic(
+                    id=topic_id,
+                    slug=slug,
+                    title=str(t_data["title"]),
+                    description=t_data.get("description"),
+                    icon_name=str(t_data.get("icon_name", "book")),
+                    level=str(t_data.get("level", "A1")),
+                    total_words=len(words_data),
+                    order_index=int(t_data.get("order_index", inserted)),
+                    is_active=True,
+                )
+            )
+            for w_data in words_data:
+                db.add(
+                    VocabularyWord(
+                        id=_vocab_word_id(str(w_data["word"])),
+                        topic_id=topic_id,
+                        **w_data,
+                    )
+                )
+                inserted += 1
+
+        await db.commit()
+        logger.info("✅ Seeded %d vocabulary words for SM-2", inserted)
+        return inserted
 
 
 if __name__ == "__main__":

@@ -1,0 +1,49 @@
+{
+  "duration_seconds": 3600,
+  "tasks": [
+    {
+      "id": "W1",
+      "task": 1,
+      "min_words": 150,
+      "recommended_minutes": 20,
+      "prompt": "The chart below shows the percentage of electricity generated from renewable sources in four countries in 2015 and 2023. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+      "visual": {
+        "type": "bar_chart",
+        "title": "Share of electricity generated from renewable sources, 2015 and 2023 (%)",
+        "description": "Biểu đồ cột nhóm so sánh tỉ lệ điện được sản xuất từ các nguồn tái tạo (gió, mặt trời, nước, sinh khối) tại bốn quốc gia: Đan Mạch, Đức, Tây Ban Nha và Nhật Bản. Mỗi quốc gia có hai cột, tương ứng với năm 2015 và năm 2023. Đơn vị là phần trăm trên tổng sản lượng điện của quốc gia đó.",
+        "data": [
+          {"label": "Denmark 2015", "value": "51%"},
+          {"label": "Denmark 2023", "value": "74%"},
+          {"label": "Germany 2015", "value": "30%"},
+          {"label": "Germany 2023", "value": "52%"},
+          {"label": "Spain 2015", "value": "35%"},
+          {"label": "Spain 2023", "value": "50%"},
+          {"label": "Japan 2015", "value": "15%"},
+          {"label": "Japan 2023", "value": "22%"}
+        ]
+      },
+      "guidance": [
+        "Mở bài bằng cách paraphrase đề: nêu loại biểu đồ, đối tượng so sánh (4 quốc gia) và mốc thời gian (2015, 2023). Không đưa số liệu vào phần mở bài.",
+        "Viết một đoạn overview rõ ràng: nhóm các nước châu Âu dẫn đầu so với Nhật Bản, và xu hướng tăng ở cả bốn nước. Dùng 'Overall,' và các từ như 'the highest', 'the lowest', 'increased'.",
+        "Chọn số liệu để so sánh thay vì liệt kê: nêu bật Đan Mạch (51% → 74%), mức tăng mạnh nhất của Đức (30% → 52%), và khoảng cách ngày càng lớn giữa Đan Mạch và Nhật Bản.",
+        "Dùng đa dạng cấu trúc miêu tả xu hướng: 'rose from ... to ...', 'almost doubled', 'climbed more modestly', 'overtook'. Tránh lặp lại một mẫu câu cho mọi số liệu."
+      ],
+      "sample_answer": "The bar chart compares the proportion of electricity produced from renewable sources in Denmark, Germany, Spain and Japan in 2015 and 2023.\n\nOverall, renewables supplied a far larger share of electricity in the three European countries than in Japan in both years. Nevertheless, all four nations became more reliant on clean energy over the period, and Denmark remained the clear leader throughout.\n\nIn 2015, Denmark already generated just over half of its electricity (51%) from renewable sources, roughly double the figure for Spain (35%) and well ahead of Germany (30%). Japan, by contrast, produced only 15% of its power in this way. By 2023, the Danish share had risen to 74%, the highest level recorded in the chart, while Spain's had climbed more modestly to 50%.\n\nGermany recorded the most pronounced growth in relative terms, increasing from 30% to 52% and thereby overtaking Spain. Japan's proportion also grew, though only from 15% to 22%, which left it far behind the European countries. Consequently, although progress was universal, the gap between Denmark and Japan widened from 36 to 52 percentage points over the eight-year period."
+    },
+    {
+      "id": "W2",
+      "task": 2,
+      "min_words": 250,
+      "recommended_minutes": 40,
+      "prompt": "Some people think that governments should invest more money in public transport than in building new roads. To what extent do you agree or disagree? Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.",
+      "visual": null,
+      "guidance": [
+        "Bày tỏ quan điểm rõ ràng ngay trong mở bài (ví dụ: 'I largely agree, although roads still have a limited role'), tránh lập trường nửa vời.",
+        "Mỗi đoạn thân bài chỉ nên phát triển một lý do chính, kèm giải thích và ví dụ cụ thể: năng lực vận chuyển của tàu điện/metro so với làn đường mới, hiện tượng 'nhu cầu do đường mới tạo ra'.",
+        "Thêm một đoạn nhượng bộ ngắn để bài cân bằng: đường vẫn cần cho vận tải hàng hoá, xe cứu thương và vùng nông thôn thưa dân.",
+        "Kết bài khẳng định lại quan điểm và nêu hướng ưu tiên đầu tư; dùng đa dạng liên kết câu (Furthermore, By contrast, Nevertheless, Consequently) nhưng không lạm dụng."
+      ],
+      "sample_answer": "It is often argued that public funds set aside for transport would deliver greater benefits if they were channelled into buses, trams and railways rather than into new roads. While I accept that road building still has a role to play, I largely agree with this view, because public transport generates higher social and environmental returns for every unit of money invested.\n\nThe strongest argument concerns capacity. A single metro line or bus corridor can move several times as many people per hour as a lane of urban motorway, yet it costs a fraction of what it takes to widen a road through a built-up area. Extra road space, moreover, tends to generate the very traffic it is meant to relieve: once new lanes open, commuters who previously avoided driving are tempted back into their cars, and congestion returns within a few years. Frequent and reliable services, by contrast, offer a realistic alternative to the private car and can produce a lasting shift in how a city moves.\n\nEnvironmental and social considerations point in the same direction. Transport is a major source of urban air pollution and carbon emissions, and every journey transferred from car to rail or bus reduces both. Public transport also widens access to jobs, education and healthcare for people who cannot afford a vehicle, which makes it a genuinely progressive use of taxpayers' money.\n\nNevertheless, it would be simplistic to treat the two options as rivals. Roads remain indispensable for freight, emergency services and rural communities, where a sparse population makes a dense bus network uneconomic. Governments should therefore prioritise public transport in and around cities, while maintaining existing roads and funding only those new links that serve areas no other mode can reasonably reach.\n\nIn conclusion, although roads cannot simply be abandoned, additional investment should tilt decisively towards public transport, which offers the most efficient, equitable and sustainable way of moving large numbers of people."
+    }
+  ]
+}

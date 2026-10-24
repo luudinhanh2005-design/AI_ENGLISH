@@ -1,0 +1,804 @@
+{
+  "duration_seconds": 1800,
+  "review_seconds": 120,
+  "parts": [
+    {
+      "id": "L1",
+      "title": "Part 1",
+      "audio_url": "/api/v1/speech/audio/ielts_general_01_part1.mp3",
+      "transcript": "NARRATOR: Section 1. You will hear a telephone conversation between a woman called Priya and Dan, the coordinator of a community bicycle workshop. First, you have some time to look at questions 1 to 10.\n\nDAN: Good morning, Harbour Lane Bike Workshop. Dan speaking — how can I help?\n\nPRIYA: Oh, hello. I'm ringing about the repair course you've got on your website, the one for people who want to learn to look after their own bike.\n\nDAN: That'll be our 'Fix Your Own Bike' course. It runs on the first Saturday of the month. Were you thinking of joining us?\n\nPRIYA: Yes, I'd like to book a place, if there's one left. Could I give you my details?\n\nDAN: Of course. Can I take your name first?\n\nPRIYA: It's Priya Raman. That's R-A-M-A-N.\n\nDAN: R-A-M-A-N — thank you. And a contact number?\n\nPRIYA: 07700 412938. I'm away a lot, so it's probably easier to email me, actually.\n\nDAN: No problem, I'll send the confirmation by email. Now, the next course is Saturday the fifth of April, but I should say that one's fully booked; there's a waiting list. The one after that is Saturday the twelfth. Shall I put you down for the twelfth?\n\nPRIYA: The twelfth's better for me anyway, so yes please.\n\nDAN: Right. Now, the fee for the day is forty-five pounds, and that covers all the materials, tea and coffee, and a light lunch. Don't be confused by the fifty-pound figure on the website — that's the advanced maintenance course, which runs over a whole weekend.\n\nPRIYA: Forty-five. That's very reasonable.\n\nDAN: We keep the group small. Eight people is the maximum. When I did my training there were twelve of us, and to be honest it was too many — you spend half the morning queuing for a vice. So eight it is.\n\nPRIYA: Good. Do I need to bring anything with me?\n\nDAN: Just your bike and a helmet. We do keep a box of spare helmets that people can borrow, but the sizes are a bit hit and miss, so bring your own if you've got one. And wear something you don't mind getting oily.\n\nPRIYA: I will. And where exactly is the workshop? I only know the name.\n\nDAN: We're in the old warehouse on Mill Road, the big grey building right beside the canal. It's not the sports centre; that's a hundred metres further along, and people turn into the wrong car park all the time.\n\nPRIYA: Mill Road, got it. Is there anywhere to park?\n\nDAN: There's a small car park at the front, but it fills up quickly on Saturdays, so most people cycle over.\n\nPRIYA: And is it easy to get to by bus?\n\nDAN: The number 24 stops right outside; the stop is called Canal Bridge. Don't take the 12, though. That goes out to the retail park and it's a good twenty-minute walk back.\n\nPRIYA: Thanks. One more thing — how long does the course actually last? I've got to be somewhere in the afternoon.\n\nDAN: We start at nine and finish at twelve, so three hours. People often hang around afterwards for a coffee, but the teaching part is three hours, and we're usually packing up by ten past at the latest.\n\nPRIYA: That's fine. Oh, could I bring a friend? She's thinking of doing the same course.\n\nDAN: She's very welcome to come and watch, but we charge ten pounds for observers — that covers lunch, mainly — and they have to be over sixteen because of the insurance.\n\nPRIYA: She's nineteen, so that's fine. I'll ask her.\n\nDAN: No problem. Anything else?\n\nPRIYA: Yes — are you open at weekends generally? I might come back to buy a second-hand bike for my son.\n\nDAN: We're open Tuesday to Sunday, ten till six. We're closed on Mondays; that's when we do the paperwork and take deliveries. Second-hand bikes go out fast, so it's worth ringing on the Friday to see what we've got in.\n\nPRIYA: I'll do that. And where in the building do we meet?\n\nDAN: We're on the second floor, I'm afraid. The lift has been out of action since the summer, so you'll have to carry the bike up the stairs. Sorry about that.\n\nPRIYA: I'll manage. Thanks very much for your help.\n\nDAN: You're welcome. See you on the twelfth.\n\nNARRATOR: That is the end of Section 1.",
+      "instructions": "Questions 1–10. Complete the booking form below and answer the questions. Write ONE WORD AND/OR A NUMBER for each answer.",
+      "groups": [
+        {
+          "id": "L1-G1",
+          "type": "form_completion",
+          "instructions": "Questions 1–6. Complete the booking form below. Write ONE WORD AND/OR A NUMBER for each answer.",
+          "options": [],
+          "questions": [
+            {
+              "id": "L1-1",
+              "number": 1,
+              "prompt": "HARBOUR LANE BIKE WORKSHOP — COURSE BOOKING FORM\nName of caller: Priya ______",
+              "answer": [
+                "Raman"
+              ],
+              "alternatives": [
+                "Priya Raman",
+                "R-A-M-A-N"
+              ],
+              "explanation": "Người gọi tự đánh vần họ của mình: 'It's Priya Raman. That's R-A-M-A-N.'"
+            },
+            {
+              "id": "L1-2",
+              "number": 2,
+              "prompt": "Date of course: Saturday ______",
+              "answer": [
+                "12 April"
+              ],
+              "alternatives": [
+                "12th April",
+                "April 12",
+                "April 12th",
+                "twelfth of April"
+              ],
+              "explanation": "Khóa ngày 5/4 đã kín chỗ, Dan đề nghị khóa kế tiếp: 'Saturday the twelfth of April'."
+            },
+            {
+              "id": "L1-3",
+              "number": 3,
+              "prompt": "Course fee: £______ (includes materials and lunch)",
+              "answer": [
+                "45"
+              ],
+              "alternatives": [
+                "45 pounds",
+                "forty-five",
+                "£45"
+              ],
+              "explanation": "Học phí là 'forty-five pounds'; con số 50 là khóa nâng cao cuối tuần, còn 10 bảng là phí người đi cùng."
+            },
+            {
+              "id": "L1-4",
+              "number": 4,
+              "prompt": "Maximum number in group: ______",
+              "answer": [
+                "8"
+              ],
+              "alternatives": [
+                "eight"
+              ],
+              "explanation": "Dan nói rõ: 'Eight people is the maximum', và giải thích lớp 12 người trước đây là quá đông."
+            },
+            {
+              "id": "L1-5",
+              "number": 5,
+              "prompt": "What to bring: your bike and a ______",
+              "answer": [
+                "helmet"
+              ],
+              "alternatives": [],
+              "explanation": "Dan dặn: 'Just your bike and a helmet', dù xưởng có mũ bảo hiểm cho mượn."
+            },
+            {
+              "id": "L1-6",
+              "number": 6,
+              "prompt": "Location: the old ______ on Mill Road",
+              "answer": [
+                "warehouse"
+              ],
+              "alternatives": [],
+              "explanation": "Xưởng ở 'the old warehouse on Mill Road', tòa nhà xám cạnh kênh, không phải trung tâm thể thao."
+            }
+          ]
+        },
+        {
+          "id": "L1-G2",
+          "type": "short_answer",
+          "instructions": "Questions 7–10. Answer the questions below. Write ONE WORD AND/OR A NUMBER for each answer.",
+          "options": [],
+          "questions": [
+            {
+              "id": "L1-7",
+              "number": 7,
+              "prompt": "On which day is the workshop closed?",
+              "answer": [
+                "Monday"
+              ],
+              "alternatives": [
+                "Mondays"
+              ],
+              "explanation": "Dan nói: 'We're closed on Mondays; that's when we do the paperwork'."
+            },
+            {
+              "id": "L1-8",
+              "number": 8,
+              "prompt": "How long does the Saturday course last?",
+              "answer": [
+                "3 hours"
+              ],
+              "alternatives": [
+                "three hours",
+                "3 hour",
+                "3hrs"
+              ],
+              "explanation": "Khóa học bắt đầu lúc 9 giờ và kết thúc lúc 12 giờ: 'so three hours'."
+            },
+            {
+              "id": "L1-9",
+              "number": 9,
+              "prompt": "Which floor of the building is the workshop on?",
+              "answer": [
+                "second"
+              ],
+              "alternatives": [
+                "2nd",
+                "second floor",
+                "2"
+              ],
+              "explanation": "Dan trả lời: 'We're on the second floor', và thang máy đã hỏng từ mùa hè."
+            },
+            {
+              "id": "L1-10",
+              "number": 10,
+              "prompt": "Which bus stops outside the building?",
+              "answer": [
+                "24"
+              ],
+              "alternatives": [
+                "number 24",
+                "the 24"
+              ],
+              "explanation": "'The number 24 stops right outside'; tuyến 12 đi ra khu bán lẻ, cách đó 20 phút đi bộ."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "Part 2",
+      "audio_url": "/api/v1/speech/audio/ielts_general_01_part2.mp3",
+      "transcript": "NARRATOR: Section 2. You will hear a talk given by the coordinator of a community garden to a group of new volunteers. First, you have some time to look at questions 11 to 20.\n\nSANDRA: Good morning, everyone, and thank you for coming out on such a cold morning. My name's Sandra Pike and I coordinate the garden here at Kelston. I'm going to spend about ten minutes telling you how the site works, and then we'll walk round together, so do keep your coats on.\n\nFirst, a bit of history, because people always ask. You'd be forgiven for thinking this was once a car park — that tarmac strip by the gate rather gives that impression, and for about five years it was exactly that, for the office block next door. But before the tarmac went down, for thirty years, this was a market garden: cauliflowers and leeks, mostly, grown for the shops in town. When the last grower retired, the land sat empty for a decade, and the council finally leased it to us in 2019. So the soil is good — better than most of us expected, actually.\n\nNow, about volunteering. The one thing I want to say, and I say it to everybody, is that you don't need any experience at all. Some of our best people had never held a spade before they came here. We run a short training session on the second Sunday of every month; it lasts about two hours and covers the basics — tools, compost, and how not to hurt your back lifting. It's popular, but you don't have to come to it before you start. And you don't have to commit to a fixed number of hours either. Some people come every week; others turn up twice a year, and both are genuinely welcome.\n\nThen there's the question of what happens to what we grow. This is the bit I'm proudest of. We did look into selling vegetables to the restaurants on the high street — three or four of them were very keen — and eventually we'd like to supply the café we're hoping to build beside the pond. But for this first year, everything we harvest goes to the food bank on Kelston Road. Last season that came to just under two tonnes, which the food bank told us was their largest single donation of fresh produce.\n\nWhat's our biggest challenge? People assume it's money, and money is always tight, I won't pretend otherwise. Others say vandalism, and we did have a bad winter three years ago when the fence came down. But honestly, the thing that keeps me awake is water. There's no mains supply on site — everything comes from the two rainwater tanks — and in a dry July we're carrying watering cans for three hours a day. So the first thing we're fundraising for is a proper irrigation system.\n\nRight. If you look at the map in your handout, you'll see the site is long and narrow, with the main gate at the bottom and a single path running straight up the middle. Let me take you round it.\n\nComing through the gate, the first thing on your left is the children's garden — raised beds at waist height so the little ones can reach, and a willow tunnel they can crawl through. Opposite that, on the right, is the car park, though as I said, most of you will come on foot or by bike.\n\nIf you follow the path up, about halfway along you'll find the tool shed on your right-hand side. Everything sharp lives in there, so please sign the clipboard when you borrow something. Immediately behind the shed are the three compost bays. That's where all the green waste goes, and there's a rota for turning it, which I'll explain when we get there.\n\nCarry on to the top of the path and you reach the glasshouse. It's the tallest structure on the site, so you really can't miss it, and it's where we raise all our seedlings from February onwards.\n\nThe middle of the site, roughly between the shed and the glasshouse, is taken up by the wildlife pond. It's ringed by a low stone wall, built by a local stonemason who volunteered with us for a whole summer. We do ask people not to let their dogs swim in it.\n\nAnd finally, the top right-hand corner is the orchard — apples, pears and a few plums. It's the quietest part of the garden and a good place to eat your lunch, though the wasps seem to like it as much as we do.\n\nRight, that's probably enough talking for now. Let's go and look at the compost bays first, and then we'll work out what needs doing today.\n\nNARRATOR: That is the end of Section 2.",
+      "instructions": "Questions 11–20. Listen to the talk and answer the questions. Choose the correct letter for Questions 11–14 and label the map for Questions 15–20.",
+      "groups": [
+        {
+          "id": "L2-G1",
+          "type": "mcq",
+          "instructions": "Question 11. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "a market garden"
+            },
+            {
+              "key": "B",
+              "text": "a school playground"
+            },
+            {
+              "key": "C",
+              "text": "a plant nursery"
+            }
+          ],
+          "questions": [
+            {
+              "id": "L2-11",
+              "number": 11,
+              "prompt": "What was the site used for before it became a car park?",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [
+                "a market garden"
+              ],
+              "explanation": "Sandra nói rõ: 'for thirty years, this was a market garden', trước khi khu đất thành bãi đỗ xe cho tòa nhà văn phòng."
+            }
+          ]
+        },
+        {
+          "id": "L2-G2",
+          "type": "mcq",
+          "instructions": "Question 12. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "They must have previous experience."
+            },
+            {
+              "key": "B",
+              "text": "They can choose how often they come."
+            },
+            {
+              "key": "C",
+              "text": "They must attend a training session."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L2-12",
+              "number": 12,
+              "prompt": "What does Sandra say about volunteers?",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [
+                "They can choose how often they come."
+              ],
+              "explanation": "Bà nói 'you don't have to commit to a fixed number of hours', người đến hàng tuần hay hai lần một năm đều được."
+            }
+          ]
+        },
+        {
+          "id": "L2-G3",
+          "type": "mcq",
+          "instructions": "Question 13. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "They will be sold to local restaurants."
+            },
+            {
+              "key": "B",
+              "text": "They will be given to a food bank."
+            },
+            {
+              "key": "C",
+              "text": "They will be used in the garden café."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L2-13",
+              "number": 13,
+              "prompt": "What will happen to the vegetables grown this year?",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [
+                "They will be given to a food bank."
+              ],
+              "explanation": "Năm đầu tiên 'everything we harvest goes to the food bank'; việc bán cho nhà hàng và cung cấp cho quán cà phê chỉ là dự định tương lai."
+            }
+          ]
+        },
+        {
+          "id": "L2-G4",
+          "type": "mcq",
+          "instructions": "Question 14. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "a lack of money"
+            },
+            {
+              "key": "B",
+              "text": "damage by vandals"
+            },
+            {
+              "key": "C",
+              "text": "a shortage of water"
+            }
+          ],
+          "questions": [
+            {
+              "id": "L2-14",
+              "number": 14,
+              "prompt": "What does Sandra identify as the garden's biggest challenge?",
+              "answer": [
+                "C"
+              ],
+              "alternatives": [
+                "a shortage of water"
+              ],
+              "explanation": "Bà khẳng định vấn đề lớn nhất không phải tiền hay kẻ phá hoại mà là nước: 'the thing that keeps me awake is water'."
+            }
+          ]
+        },
+        {
+          "id": "L2-G5",
+          "type": "map_labelling",
+          "instructions": "Questions 15–20. Look at the descriptions of places in Kelston Community Garden. Which place does each description refer to? Choose SIX answers from the options A–F.",
+          "options": [
+            {
+              "key": "A",
+              "text": "the glasshouse"
+            },
+            {
+              "key": "B",
+              "text": "the tool shed"
+            },
+            {
+              "key": "C",
+              "text": "the compost area"
+            },
+            {
+              "key": "D",
+              "text": "the children's garden"
+            },
+            {
+              "key": "E",
+              "text": "the orchard"
+            },
+            {
+              "key": "F",
+              "text": "the pond"
+            }
+          ],
+          "questions": [
+            {
+              "id": "L2-15",
+              "number": 15,
+              "prompt": "the area immediately behind the tool shed",
+              "answer": [
+                "C"
+              ],
+              "alternatives": [
+                "the compost area"
+              ],
+              "explanation": "'Immediately behind the shed are the three compost bays' — khu ủ phân nằm ngay sau nhà kho dụng cụ."
+            },
+            {
+              "id": "L2-16",
+              "number": 16,
+              "prompt": "the feature in the middle of the site, enclosed by a low stone wall",
+              "answer": [
+                "F"
+              ],
+              "alternatives": [
+                "the pond"
+              ],
+              "explanation": "Giữa khu vườn, giữa nhà kho và nhà kính, là ao: 'ringed by a low stone wall'."
+            },
+            {
+              "id": "L2-17",
+              "number": 17,
+              "prompt": "the area in the top right-hand corner of the site",
+              "answer": [
+                "E"
+              ],
+              "alternatives": [
+                "the orchard"
+              ],
+              "explanation": "'the top right-hand corner is the orchard — apples, pears and a few plums'."
+            },
+            {
+              "id": "L2-18",
+              "number": 18,
+              "prompt": "the building at the top of the main path",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [
+                "the glasshouse"
+              ],
+              "explanation": "'Carry on to the top of the path and you reach the glasshouse', công trình cao nhất khu vườn."
+            },
+            {
+              "id": "L2-19",
+              "number": 19,
+              "prompt": "the area on the left just inside the main gate",
+              "answer": [
+                "D"
+              ],
+              "alternatives": [
+                "the children's garden"
+              ],
+              "explanation": "'Coming through the gate, the first thing on your left is the children's garden' với luống cao ngang hông."
+            },
+            {
+              "id": "L2-20",
+              "number": 20,
+              "prompt": "the small building halfway up the path, on the right",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [
+                "the tool shed"
+              ],
+              "explanation": "'about halfway along you'll find the tool shed on your right-hand side'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "Part 3",
+      "audio_url": "/api/v1/speech/audio/ielts_general_01_part3.mp3",
+      "transcript": "NARRATOR: Section 3. You will hear a discussion between two students, Maya and Joel, and their tutor, Dr Marsh, about a project on food waste in the university's dining halls. First, you have some time to look at questions 21 to 30.\n\nTUTOR: Come in, both of you. Sit down. So — the food waste project. You've been weighing for three weeks now, is that right?\n\nMAYA: Just over three. We finished the first round last Friday.\n\nTUTOR: Good. Remind me why you chose the main dining hall for the first survey. I'd have thought the one at the science park was bigger.\n\nMAYA: It is — it serves about twice as many people. But we went for the main hall because the catering team there was happy to let us in before service started. The science park said no, twice, and the hall nearest our department is the smallest of the three, so that wasn't really an option.\n\nTUTOR: Fair enough. And what did the first results show? Anything unexpected?\n\nJOEL: We assumed dinner would be the worst — that's what most of the literature says. But breakfast was far and away the biggest problem. We weighed thirty-eight kilos of waste at breakfast on the first Tuesday, against about twenty at dinner.\n\nMAYA: And a lot of it was untouched — whole rolls, sealed yoghurts. That upset me more than the total, to be honest.\n\nTUTOR: Hmm. And the weighing itself — any difficulties?\n\nJOEL: The scales were fine, surprisingly accurate for what we paid. The batteries went flat on the second morning and we hadn't brought spares, so we lost about an hour. But the real problem was the containers. They were far too small for the dinner waste, so we had to weigh everything in two batches, which doubled the time.\n\nTUTOR: Noted. What about the questionnaire?\n\nMAYA: That was a disaster, frankly. We put it online for ten days and got forty-six responses out of a possible nine hundred. We'd deliberately kept it short — eight questions, mostly tick-box — so length wasn't the issue. A few international students said they'd have preferred a Chinese version, but when we asked, only a handful thought they'd actually have used it.\n\nTUTOR: Forty-six is low, but it's not nothing. You can still report it as a pilot and say what you'd do differently.\n\nJOEL: That's what we thought.\n\nTUTOR: Now, before you start writing up, I want to flag one thing. You've been weighing in the last two weeks of term. Half the students have gone home, the kitchens are running down their stocks, and the menu is shorter. I'd be very careful about generalising from that. It doesn't mean the data is useless — but you must state clearly when it was collected, and compare it with something taken at a normal time.\n\nMAYA: Right. We could use the figures the catering department published in October.\n\nTUTOR: Exactly. Now — what still needs doing, and who's doing what?\n\nMAYA: The photographs of the bins are done. I uploaded all of them on Sunday, so that's finished.\n\nJOEL: The student questionnaire needs rerunning. We're going to put it out again next Monday, in the first week of term, and keep it open for a week. That should get us a much better response.\n\nMAYA: And I'm going to do the comparison with last year's figures. That'll take a while — probably until the end of the month, because the catering office keeps its records in three different spreadsheets and none of them match.\n\nTUTOR: Fine. What about the interview with the catering manager?\n\nJOEL: That's off, I'm afraid. She's on leave until the end of term and her deputy won't speak on the record without her. We'll rely on the questionnaire instead.\n\nTUTOR: Sensible. One more thing — access to the kitchen records. Have you actually been given permission?\n\nMAYA: Not yet. Human Resources said we need written approval from the head of catering, and she's the one who's away. So at the moment it's just a request sitting in someone's inbox.\n\nTUTOR: Then put it in the plan as dependent on approval, and don't assume you'll get it. Right — let's look at your draft timeline.\n\nNARRATOR: That is the end of Section 3.",
+      "instructions": "Questions 21–30. Listen to the discussion and answer the questions. Choose the correct letter for Questions 21–25 and match the tasks for Questions 26–30.",
+      "groups": [
+        {
+          "id": "L3-G1",
+          "type": "mcq",
+          "instructions": "Question 21. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "It is the busiest hall on campus."
+            },
+            {
+              "key": "B",
+              "text": "The staff there agreed to help."
+            },
+            {
+              "key": "C",
+              "text": "It is closest to the students' department."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L3-21",
+              "number": 21,
+              "prompt": "Why did the students choose the main dining hall for the first survey?",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [
+                "The staff there agreed to help."
+              ],
+              "explanation": "Họ chọn hội trường chính vì 'the catering team there was happy to let us in', không phải vì đông nhất (hội trường science park đông gấp đôi)."
+            }
+          ]
+        },
+        {
+          "id": "L3-G2",
+          "type": "mcq",
+          "instructions": "Question 22. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Breakfast produced more waste than dinner."
+            },
+            {
+              "key": "B",
+              "text": "Most of the waste came from the salad bar."
+            },
+            {
+              "key": "C",
+              "text": "Weekend waste was double the weekday figure."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L3-22",
+              "number": 22,
+              "prompt": "What did the students find most surprising about their first results?",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [
+                "Breakfast produced more waste than dinner."
+              ],
+              "explanation": "Họ tưởng bữa tối tệ nhất nhưng 'breakfast was far and away the biggest problem', 38 kg so với 20 kg."
+            }
+          ]
+        },
+        {
+          "id": "L3-G3",
+          "type": "mcq",
+          "instructions": "Question 23. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "They were too small."
+            },
+            {
+              "key": "B",
+              "text": "They were too heavy."
+            },
+            {
+              "key": "C",
+              "text": "They had not been cleaned."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L3-23",
+              "number": 23,
+              "prompt": "What was the main problem with the containers they used?",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [
+                "They were too small."
+              ],
+              "explanation": "'They were far too small for the dinner waste', khiến họ phải cân hai lượt và mất gấp đôi thời gian."
+            }
+          ]
+        },
+        {
+          "id": "L3-G4",
+          "type": "mcq",
+          "instructions": "Question 24. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "It was too long."
+            },
+            {
+              "key": "B",
+              "text": "Too few students completed it."
+            },
+            {
+              "key": "C",
+              "text": "It asked too many personal questions."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L3-24",
+              "number": 24,
+              "prompt": "What do the students say about the questionnaire?",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [
+                "Too few students completed it."
+              ],
+              "explanation": "Họ chỉ nhận được 46 trên 900 phản hồi: 'That was a disaster, frankly'."
+            }
+          ]
+        },
+        {
+          "id": "L3-G5",
+          "type": "mcq",
+          "instructions": "Question 25. Choose the correct letter, A, B or C.",
+          "options": [
+            {
+              "key": "A",
+              "text": "It was collected at the wrong time of year."
+            },
+            {
+              "key": "B",
+              "text": "Too few dining halls were surveyed."
+            },
+            {
+              "key": "C",
+              "text": "The weighing was not accurate enough."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L3-25",
+              "number": 25,
+              "prompt": "What is the tutor's main criticism of their data?",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [
+                "It was collected at the wrong time of year."
+              ],
+              "explanation": "Gia sư cảnh báo họ cân vào 'the last two weeks of term' khi nửa sinh viên đã về, nên khó khái quát hóa."
+            }
+          ]
+        },
+        {
+          "id": "L3-G6",
+          "type": "matching",
+          "instructions": "Questions 26–30. What is the situation with each of the following tasks? Choose FIVE answers from the options A–F.",
+          "options": [
+            {
+              "key": "A",
+              "text": "It has already been completed."
+            },
+            {
+              "key": "B",
+              "text": "It will begin next week."
+            },
+            {
+              "key": "C",
+              "text": "It will take until the end of the month."
+            },
+            {
+              "key": "D",
+              "text": "It has been cancelled."
+            },
+            {
+              "key": "E",
+              "text": "It depends on official approval."
+            },
+            {
+              "key": "F",
+              "text": "It will be done by the tutor."
+            }
+          ],
+          "questions": [
+            {
+              "id": "L3-26",
+              "number": 26,
+              "prompt": "the photographs of the bins",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [
+                "It has already been completed."
+              ],
+              "explanation": "Maya nói: 'I uploaded all of them on Sunday, so that's finished'."
+            },
+            {
+              "id": "L3-27",
+              "number": 27,
+              "prompt": "the student questionnaire",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [
+                "It will begin next week."
+              ],
+              "explanation": "Joel: 'We're going to put it out again next Monday, in the first week of term'."
+            },
+            {
+              "id": "L3-28",
+              "number": 28,
+              "prompt": "the comparison with last year's figures",
+              "answer": [
+                "C"
+              ],
+              "alternatives": [
+                "It will take until the end of the month."
+              ],
+              "explanation": "Maya ước tính 'probably until the end of the month' vì sổ sách nằm rải rác ở ba bảng tính."
+            },
+            {
+              "id": "L3-29",
+              "number": 29,
+              "prompt": "the interview with the catering manager",
+              "answer": [
+                "D"
+              ],
+              "alternatives": [
+                "It has been cancelled."
+              ],
+              "explanation": "Joel: 'That's off, I'm afraid' — bà ấy nghỉ đến cuối học kỳ và cấp phó không chịu phát biểu."
+            },
+            {
+              "id": "L3-30",
+              "number": 30,
+              "prompt": "access to the kitchen records",
+              "answer": [
+                "E"
+              ],
+              "alternatives": [
+                "It depends on official approval."
+              ],
+              "explanation": "Cần 'written approval from the head of catering' nên hiện chỉ là đơn đang chờ, chưa được chấp thuận."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L4",
+      "title": "Part 4",
+      "audio_url": "/api/v1/speech/audio/ielts_general_01_part4.mp3",
+      "transcript": "NARRATOR: Section 4. You will hear part of a lecture on urban heat islands. First, you have some time to look at questions 31 to 40.\n\nLECTURER: Good afternoon. Today I want to look at one of the best-documented effects of urbanisation on climate: the urban heat island. Most of you will have met the term before, but I'd like to go beyond the definition and look at what is actually being done about it, and why progress is slower than the science would suggest.\n\nThe definition first. An urban heat island is simply a city, or part of a city, that is consistently warmer than the countryside around it. The size of the effect varies enormously. In a large city with dense construction, the centre can be seven degrees Celsius warmer than the surrounding rural area. Seven doesn't sound dramatic until you remember that it's an average across the whole summer, and that on individual still nights the gap can be very much larger.\n\nNote that I said 'night'. During the day the difference is much smaller — sometimes only one or two degrees — because the sun heats the fields just as effectively as it heats the streets. It is after sunset that the gap opens up, as the city slowly releases the heat it has stored during the day. So the period that matters for human health is the night, when buildings and bodies have no chance to cool down.\n\nAnd that word 'stored' brings me to the main cause. Buildings and roads are made of materials with a high thermal capacity: they absorb heat during the day and give it back slowly after dark. The worst offenders are the dark surfaces — asphalt in particular, which on a hot afternoon can reach sixty degrees at the surface. Replacing vegetation with asphalt is, in energy terms, rather like installing a storage heater across the whole city.\n\nThe other half of the equation is that we remove the things that used to keep us cool. A mature tree does two jobs. It provides shade, obviously, but it also cools the air through transpiration — water evaporating from its leaves. A single large tree can do the work of several small air-conditioning units, and it does it without using any electricity at all.\n\nSo what can be done? I'd group the solutions into two families: changing surfaces, and adding vegetation.\n\nGreen roofs are the best-known example of the first. A well-designed green roof — one with a proper substrate and drought-tolerant plants — can cut a building's cooling costs by around twenty-five per cent. It also extends the life of the roof membrane, because the plants shield it from ultraviolet light. The catch is weight: older buildings often cannot take the load without reinforcement, and that can double the bill.\n\nPainting roofs white is cheaper and works well in hot, dry cities. In parts of Greece and southern Spain people have done it for centuries. But it is much less effective where pollution levels are high, because the surface darkens quickly and loses its reflectivity. That limitation is well documented in the technical literature and almost entirely absent from the promotional material.\n\nOn the vegetation side the evidence is strong. In Melbourne, a controlled experiment compared a street with mature trees to an identical street without them, and recorded surface temperatures up to four degrees lower in the shaded street. Four degrees at surface level is a substantial difference, and it was achieved in about eight years.\n\nBut — and this is the point I want you to take away — trees on their own are not a solution. In a narrow street with tall buildings on both sides, the air simply doesn't move, and the heat stays trapped at ground level whatever you plant. The most successful projects combine three elements: shade, water, and improved ventilation, so that the cooled air can actually reach the people walking there. Singapore has gone furthest with this; planners there use computer models of wind flow through the street grid to decide where new planting will do the most good.\n\nSo why isn't this happening everywhere? The technology exists and the planning tools exist. In my view the greatest barrier is cost. A green roof costs several times as much as a conventional one to install, and the savings accrue to the building's occupiers over twenty or thirty years, while the bill lands on the developer on day one. Until that mismatch is addressed, progress will be slow, whatever the scientists recommend.\n\nFinally, where is the research going? My own department is part of a study looking at indoor heat. We know a great deal about how heat affects hospital admissions, and quite a lot about outdoor comfort, but very little about productivity in ordinary offices. The early results are striking: a rise of just two degrees above twenty-six appears to reduce output by around eight per cent, mostly through fatigue and small errors. If that holds up, the argument for cooling our cities becomes an economic one, not simply a medical one. Thank you.\n\nNARRATOR: That is the end of Section 4.",
+      "instructions": "Questions 31–40. Complete the notes and the sentences below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+      "groups": [
+        {
+          "id": "L4-G1",
+          "type": "note_completion",
+          "instructions": "Questions 31–36. Complete the notes below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+          "options": [],
+          "questions": [
+            {
+              "id": "L4-31",
+              "number": 31,
+              "prompt": "URBAN HEAT ISLANDS — LECTURE NOTES\n\nTemperature: city centres can be up to ______ °C warmer than the countryside",
+              "answer": [
+                "7"
+              ],
+              "alternatives": [
+                "seven"
+              ],
+              "explanation": "Giảng viên nói trung tâm thành phố có thể ấm hơn 'seven degrees Celsius' so với vùng nông thôn."
+            },
+            {
+              "id": "L4-32",
+              "number": 32,
+              "prompt": "The greatest difference in temperature occurs at ______",
+              "answer": [
+                "night"
+              ],
+              "alternatives": [],
+              "explanation": "Ban ngày chênh lệch chỉ 1–2 độ; 'It is after sunset that the gap opens up', tức là ban đêm."
+            },
+            {
+              "id": "L4-33",
+              "number": 33,
+              "prompt": "Main cause: heat stored in dark surfaces such as ______",
+              "answer": [
+                "asphalt"
+              ],
+              "alternatives": [],
+              "explanation": "'The worst offenders are the dark surfaces — asphalt in particular', có thể lên tới 60 độ trên bề mặt."
+            },
+            {
+              "id": "L4-34",
+              "number": 34,
+              "prompt": "Trees cool the air by a process called ______",
+              "answer": [
+                "transpiration"
+              ],
+              "alternatives": [],
+              "explanation": "Cây làm mát không khí nhờ 'transpiration — water evaporating from its leaves'."
+            },
+            {
+              "id": "L4-35",
+              "number": 35,
+              "prompt": "Green roofs can reduce a building's ______ by about 25%",
+              "answer": [
+                "cooling costs"
+              ],
+              "alternatives": [
+                "cooling cost"
+              ],
+              "explanation": "Mái xanh 'can cut a building's cooling costs by around twenty-five per cent'."
+            },
+            {
+              "id": "L4-36",
+              "number": 36,
+              "prompt": "Successful projects combine shade, water and better ______",
+              "answer": [
+                "ventilation"
+              ],
+              "alternatives": [],
+              "explanation": "'The most successful projects combine three elements: shade, water, and improved ventilation'."
+            }
+          ]
+        },
+        {
+          "id": "L4-G2",
+          "type": "sentence_completion",
+          "instructions": "Questions 37–40. Complete the sentences below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+          "options": [],
+          "questions": [
+            {
+              "id": "L4-37",
+              "number": 37,
+              "prompt": "White roofs become less effective in cities where ______ levels are high.",
+              "answer": [
+                "pollution"
+              ],
+              "alternatives": [],
+              "explanation": "Mái sơn trắng kém hiệu quả nơi 'pollution levels are high' vì bề mặt nhanh bị xỉn màu."
+            },
+            {
+              "id": "L4-38",
+              "number": 38,
+              "prompt": "In Melbourne, streets with mature trees were up to ______ °C cooler at surface level.",
+              "answer": [
+                "4"
+              ],
+              "alternatives": [
+                "four"
+              ],
+              "explanation": "Thí nghiệm ở Melbourne ghi nhận bề mặt mát hơn 'up to four degrees'."
+            },
+            {
+              "id": "L4-39",
+              "number": 39,
+              "prompt": "The lecturer argues that the greatest barrier to green roofs is the ______ involved.",
+              "answer": [
+                "cost"
+              ],
+              "alternatives": [
+                "costs"
+              ],
+              "explanation": "'In my view the greatest barrier is cost' — chi phí lắp đặt thuộc về chủ đầu tư ngay từ đầu."
+            },
+            {
+              "id": "L4-40",
+              "number": 40,
+              "prompt": "Her department's next study will examine the effect of heat on ______ in office workers.",
+              "answer": [
+                "productivity"
+              ],
+              "alternatives": [],
+              "explanation": "Nhóm nghiên cứu sắp tới tìm hiểu 'very little about productivity in ordinary offices'."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

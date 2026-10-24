@@ -1,0 +1,8 @@
+{
+  "id": "academic_01",
+  "type": "academic",
+  "title": "IELTS Academic Mock Test 01",
+  "description": "Full four-skill IELTS Academic mock test: Listening, Reading, Writing and Speaking.",
+  "version": 1,
+  "skills": ["listening", "reading", "writing", "speaking"]
+}

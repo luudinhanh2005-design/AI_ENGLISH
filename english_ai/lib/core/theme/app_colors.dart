@@ -36,6 +36,7 @@ class AppColors {
   static const Color levelB1 = Color(0xFFFFA502);
   static const Color levelB2 = Color(0xFFFF6348);
   static const Color levelC1 = Color(0xFFEE4444);
+  static const Color levelC2 = Color(0xFF8E44AD);
 
   // ---------------------------------------------// Dark Theme Colors
   // ---------------------------------------------// Aliases for compatibility

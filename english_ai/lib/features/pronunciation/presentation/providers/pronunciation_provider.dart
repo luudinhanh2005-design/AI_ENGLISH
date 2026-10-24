@@ -236,8 +236,11 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
     String text, {
     String? voice,
     double? speed,
+    bool showLoading = true,
   }) async {
-    if (mounted) state = state.copyWith(isPlayingTTS: true);
+    if (mounted && showLoading) {
+      state = state.copyWith(isPlayingTTS: true);
+    }
     try {
       final response = await _dio.post(
         '/speech/tts',
@@ -254,7 +257,9 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
     } catch (_) {
       return null;
     } finally {
-      if (mounted) state = state.copyWith(isPlayingTTS: false);
+      if (mounted && showLoading) {
+        state = state.copyWith(isPlayingTTS: false);
+      }
     }
   }
 

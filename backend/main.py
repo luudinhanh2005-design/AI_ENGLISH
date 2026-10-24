@@ -13,7 +13,7 @@ from app.api.middleware import (
 from app.api.v1.router import router as api_router
 from app.admin.router import router as admin_router
 from app.config import settings
-from app.database import engine, init_db
+from app.database import engine, init_db, is_db_connected
 
 # Configure logging
 logging.basicConfig(
@@ -39,6 +39,13 @@ async def lifespan(app: FastAPI):
         # Dev: auto-create tables. Production: run `alembic upgrade head`.
         await init_db(create_tables=settings.environment == "development")
         logger.info("Database initialized")
+        if is_db_connected():
+            from app.utils.seed_learning_data import seed_vocabulary_if_empty
+
+            try:
+                await seed_vocabulary_if_empty()
+            except Exception as exc:  # pragma: no cover - best effort
+                logger.warning("Could not seed vocabulary data: %s", exc)
         logger.info("Server startup complete")
     except Exception as e:
         logger.warning(

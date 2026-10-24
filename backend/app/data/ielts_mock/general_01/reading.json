@@ -1,0 +1,492 @@
+{
+  "duration_seconds": 3600,
+  "passages": [
+    {
+      "id": "R1",
+      "title": "Community Notices",
+      "text": "The Riverside Community Library will hold its annual Book Swap Fair once a month on the second Saturday. Borrowers may exchange up to ten books from their own shelves and children may bring a favourite picture book from home.\n\nThe Old Town Café is opening a poetry open-mic night on the first Friday of every month. Local poets and visitors take the stage to read original work for up to five minutes.\n\nOrganisers of the café event said the night was created to help local writers share their voices and to give readers a reason to gather together in the evening.",
+      "instructions": "You should spend about 20 minutes on Questions 1-13.",
+      "groups": [
+        {
+          "id": "R1-G1",
+          "type": "tfng",
+          "instructions": "Do the following statements agree with the information given in the passage?",
+          "options": [],
+          "questions": [
+            {
+              "id": "R1-1",
+              "number": 1,
+              "prompt": "The library holds the Book Swap Fair every week.",
+              "answer": ["FALSE"],
+              "alternatives": [],
+              "explanation": "Đoạn 1 nêu fair chỉ diễn ra 1 lần/tháng (once a month)."
+            },
+            {
+              "id": "R1-2",
+              "number": 2,
+              "prompt": "The café runs a poetry night twice a year.",
+              "answer": ["FALSE"],
+              "alternatives": [],
+              "explanation": "Đoạn 2 nói night chạy vào mỗi tháng một lần (first Friday of every month)."
+            },
+            {
+              "id": "R1-3",
+              "number": 3,
+              "prompt": "Borrowers may bring as many books as they like to the Book Swap Fair.",
+              "answer": ["NOT GIVEN"],
+              "alternatives": [],
+              "explanation": "Passage không nói rõ giới hạn số lượng khi đưa sách, chỉ nói up to ten books."
+            }
+          ]
+        },
+        {
+          "id": "R1-G2",
+          "type": "short_answer",
+          "instructions": "Answer the questions in your own words.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R1-4",
+              "number": 4,
+              "prompt": "How often is the Book Swap Fair held?",
+              "answer": ["monthly"],
+              "alternatives": [],
+              "explanation": "Đoạn 1: 'once a month on the second Saturday'."
+            },
+            {
+              "id": "R1-5",
+              "number": 5,
+              "prompt": "How many books can one borrower exchange at the Book Swap Fair?",
+              "answer": ["10"],
+              "alternatives": [],
+              "explanation": "Đoạn 1: 'up to ten books'."
+            },
+            {
+              "id": "R1-6",
+              "number": 6,
+              "prompt": "How long may a poet read at the open-mic night?",
+              "answer": ["five"],
+              "alternatives": [],
+              "explanation": "Đoạn 2: 'for up to five minutes'."
+            }
+          ]
+        },
+        {
+          "id": "R1-G3",
+          "type": "sentence_completion",
+          "instructions": "Fill in the missing word(s) with a word or phrase from the passage.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R1-7",
+              "number": 7,
+              "prompt": "The Book Swap Fair is held on the ______ of every month.",
+              "answer": ["second"],
+              "alternatives": [],
+              "explanation": "Đoạn 1: 'second Saturday' — sắp xếp thứ hai trong tháng."
+            },
+            {
+              "id": "R1-8",
+              "number": 8,
+              "prompt": "The poetry night takes place in the café's ______.",
+              "answer": ["main hall"],
+              "alternatives": [],
+              "explanation": "Đoạn 2: 'The Old Town Café is opening a poetry open-mic night...'"
+            },
+            {
+              "id": "R1-9",
+              "number": 9,
+              "prompt": "The library organizes the fair together with the ______ centre.",
+              "answer": ["old town"],
+              "alternatives": [],
+              "explanation": "Suy luận ngữ cảnh: cafe Old Town tổ chức cùng thư viện."
+            }
+          ]
+        },
+        {
+          "id": "R1-G4",
+          "type": "summary_completion",
+          "instructions": "Complete the summary using NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R1-10",
+              "number": 10,
+              "prompt": "Borrowers may bring at most ______ books to the fair.",
+              "answer": ["10"],
+              "alternatives": [],
+              "explanation": "Đoạn 1: up to ten books."
+            },
+            {
+              "id": "R1-11",
+              "number": 11,
+              "prompt": "Each poet may read for ______ minutes.",
+              "answer": ["five"],
+              "alternatives": [],
+              "explanation": "Đoạn 2: up to five minutes."
+            },
+            {
+              "id": "R1-12",
+              "number": 12,
+              "prompt": "The Book Swap Fair happens once every ______.",
+              "answer": ["month"],
+              "alternatives": [],
+              "explanation": "Đoạn 1: once a month."
+            }
+          ]
+        },
+        {
+          "id": "R1-G5",
+          "type": "mcq",
+          "instructions": "Choose the correct letter (A, B, C or D).",
+          "options": [
+            { "key": "A", "text": "The fair is held every two months." },
+            { "key": "B", "text": "The poetry night is open to all writers." },
+            { "key": "C", "text": "The Book Swap Fair accepts donations from local schools." },
+            { "key": "D", "text": "The café poetry night is held weekly." }
+          ],
+          "questions": [
+            {
+              "id": "R1-13",
+              "number": 13,
+              "prompt": "What is the main purpose of the café poetry night?",
+              "answer": ["B"],
+              "alternatives": [],
+              "explanation": "Đoạn 2: night tạo cơ hội chia sẻ tác phẩm cho cộng đồng."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "Riverside Office Handbook: Remote Work",
+      "text": "A employees working from home may set their own hours between eight and six in the evening, provided they respect the core hours between ten and three.\n\nB The company supplies each remote employee with a laptop, a headset and a monthly internet allowance of one hundred and fifty dollars.\n\nC Meetings last no longer than twenty-five minutes unless discussion requires more time.\n\nD Productivity is reviewed quarterly through objectives and key results rather than through daily monitoring.\n\nE Employees who take annual leave of more than two days must inform their manager before the end of the previous month.\n\nF The handbook permits at most two remote days per week unless a special request is approved.\n\nG Any document containing company data must be stored on the corporate virtual private network.",
+      "instructions": "You should spend about 20 minutes on Questions 14-26.",
+      "groups": [
+        {
+          "id": "R2-G1",
+          "type": "mcq",
+          "instructions": "Choose the correct letter (A, B, C or D).",
+          "options": [
+            { "key": "A", "text": "Remote employees must work from the office every other day." },
+            { "key": "B", "text": "The company covers home internet costs monthly." },
+            { "key": "C", "text": "Quarterly reviews measure daily activity automatically." },
+            { "key": "D", "text": "Employees may work remotely for more than three days weekly." }
+          ],
+          "questions": [
+            {
+              "id": "R2-14",
+              "number": 14,
+              "prompt": "How is remote productivity measured?",
+              "answer": ["B"],
+              "alternatives": [],
+              "explanation": "Đoạn D: review hàng quý qua OKR."
+            },
+            {
+              "id": "R2-15",
+              "number": 15,
+              "prompt": "What does the company provide to remote employees?",
+              "answer": ["B"],
+              "alternatives": [],
+              "explanation": "Đoạn B: laptop, headset, allowance."
+            },
+            {
+              "id": "R2-16",
+              "number": 16,
+              "prompt": "How long may a meeting last by default?",
+              "answer": ["C"],
+              "alternatives": [],
+              "explanation": "Đoạn C: tối đa 25 phút."
+            }
+          ]
+        },
+        {
+          "id": "R2-G2",
+          "type": "matching_information",
+          "instructions": "Match the questions on the left with the correct paragraph on the right.",
+          "options": [
+            { "key": "A", "text": "Employees may set their own hours" },
+            { "key": "B", "text": "Internet allowance" },
+            { "key": "C", "text": "Meeting duration" },
+            { "key": "D", "text": "Productivity review" },
+            { "key": "E", "text": "Annual leave notification" },
+            { "key": "F", "text": "Remote day limit" },
+            { "key": "G", "text": "Data storage" }
+          ],
+          "questions": [
+            {
+              "id": "R2-17",
+              "number": 17,
+              "prompt": "Which paragraph explains the internet allowance?",
+              "answer": ["B"],
+              "alternatives": [],
+              "explanation": "Đoạn B."
+            },
+            {
+              "id": "R2-18",
+              "number": 18,
+              "prompt": "Which paragraph states the maximum remote days?",
+              "answer": ["F"],
+              "alternatives": [],
+              "explanation": "Đoạn F: toà 2 ngày/tháng."
+            },
+            {
+              "id": "R2-19",
+              "number": 19,
+              "prompt": "Which paragraph concerns annual leave reporting?",
+              "answer": ["E"],
+              "alternatives": [],
+              "explanation": "Đoạn E."
+            }
+          ]
+        },
+        {
+          "id": "R2-G3",
+          "type": "tfng",
+          "instructions": "Do the following statements agree with the information given in the passage?",
+          "options": [],
+          "questions": [
+            {
+              "id": "R2-20",
+              "number": 20,
+              "prompt": "Employees must work from the office at least three days a week.",
+              "answer": ["FALSE"],
+              "alternatives": [],
+              "explanation": "Đoạn F cho phép tối đa 2 ngày làm từ xa."
+            },
+            {
+              "id": "R2-21",
+              "number": 21,
+              "prompt": "Daily activity screenshots are the main productivity metric.",
+              "answer": ["FALSE"],
+              "alternatives": [],
+              "explanation": "Đoạn D: productivity measured qua quarterly OKR."
+            }
+          ]
+        },
+        {
+          "id": "R2-G4",
+          "type": "short_answer",
+          "instructions": "Answer the questions in your own words.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R2-22",
+              "number": 22,
+              "prompt": "How long is a default meeting?",
+              "answer": ["25"],
+              "alternatives": [],
+              "explanation": "Đoạn C: tối đa 25 phút."
+            },
+            {
+              "id": "R2-23",
+              "number": 23,
+              "prompt": "How much is the monthly internet allowance?",
+              "answer": ["150"],
+              "alternatives": [],
+              "explanation": "Đoạn B: 150 dollars."
+            },
+            {
+              "id": "R2-24",
+              "number": 24,
+              "prompt": "What hours are the core hours?",
+              "answer": ["10 to 3"],
+              "alternatives": [],
+              "explanation": "Đoạn A: core hours 10:00-15:00."
+            }
+          ]
+        },
+        {
+          "id": "R2-G5",
+          "type": "summary_completion",
+          "instructions": "Complete the summary using NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R2-25",
+              "number": 25,
+              "prompt": "Employees may work from the office ______ days a week.",
+              "answer": ["two"],
+              "alternatives": [],
+              "explanation": "Đoạn F: maximum two remote days."
+            },
+            {
+              "id": "R2-26",
+              "number": 26,
+              "prompt": "Company data must stay on the ______.",
+              "answer": ["vpn"],
+              "alternatives": [],
+              "explanation": "Đoạn G: lưu trên corporate VPN."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "The Rise of Urban Rooftop Gardens",
+      "text": "A city farms have been appearing on flat roofs across the harbour district, turning unused terraces into growing spaces.\n\nB entrepreneurs started with a single rooftop bee farm and later added vegetable plots tended by local volunteers.\n\nC architects redesigned roof terraces with lightweight soil trays so no structural change was needed.\n\nD schools began using rooftop gardens for outdoor science lessons about pollination and nutrition.\n\nE residents reported lower noise levels and cooler indoor temperatures during summer heat.\n\nF critics argued that rooftop gardens consume water and labour that could be spent on ground farms.\n\nG the municipal government launched a grant programme to fund up to ten pilot projects in disadvantaged neighbourhoods.",
+      "instructions": "You should spend about 20 minutes on Questions 27-40.",
+      "groups": [
+        {
+          "id": "R3-G1",
+          "type": "ynng",
+          "instructions": "Do the following statements agree with the information given in the passage?",
+          "options": [],
+          "questions": [
+            {
+              "id": "R3-27",
+              "number": 27,
+              "prompt": "Rooftop gardens have already solved the city's food shortage problems.",
+              "answer": ["NO"],
+              "alternatives": [],
+              "explanation": "Đoạn F chỉ ra thách thức về nước và công sức, chưa đạt mức đó."
+            },
+            {
+              "id": "R3-28",
+              "number": 28,
+              "prompt": "The first rooftop farm in the district was a vegetable plot.",
+              "answer": ["NO"],
+              "alternatives": [],
+              "explanation": "Đoạn B: mở đầu bằng apiary (bee farm)."
+            },
+            {
+              "id": "R3-29",
+              "number": 29,
+              "prompt": "The city plans to build thirty rooftop farms this year.",
+              "answer": ["NOT GIVEN"],
+              "alternatives": [],
+              "explanation": "Đoạn G: grant cho tới mười pilot projects."
+            }
+          ]
+        },
+        {
+          "id": "R3-G2",
+          "type": "mcq",
+          "instructions": "Choose the correct letter (A, B, C or D).",
+          "options": [
+            { "key": "A", "text": "Rooftop farms were first created for beekeeping." },
+            { "key": "B", "text": "Architects used lightweight soil trays to avoid structural changes." },
+            { "key": "C", "text": "The municipal grant covers all costs of pilot projects." },
+            { "key": "D", "text": "Residents complained about higher humidity in their homes." }
+          ],
+          "questions": [
+            {
+              "id": "R3-30",
+              "number": 30,
+              "prompt": "Why did architects redesign roof terraces with soil trays?",
+              "answer": ["B"],
+              "alternatives": [],
+              "explanation": "Đoạn C: tránh thay đổi kết cấu."
+            },
+            {
+              "id": "R3-31",
+              "number": 31,
+              "prompt": "What does paragraph C say about the redesign?",
+              "answer": ["B"],
+              "alternatives": [],
+              "explanation": "Đoạn C: lightweight soil trays."
+            },
+            {
+              "id": "R3-32",
+              "number": 32,
+              "prompt": "The pilot projects will be built in which area?",
+              "answer": ["D"],
+              "alternatives": [],
+              "explanation": "Đoạn G: disadvantaged neighbourhoods."
+            }
+          ]
+        },
+        {
+          "id": "R3-G3",
+          "type": "tfng",
+          "instructions": "Do the following statements agree with the information given in the passage?",
+          "options": [],
+          "questions": [
+            {
+              "id": "R3-33",
+              "number": 33,
+              "prompt": "Rooftop gardens increased the noise levels in the city.",
+              "answer": ["FALSE"],
+              "alternatives": [],
+              "explanation": "Đoạn E: residents reported lower noise."
+            },
+            {
+              "id": "R3-34",
+              "number": 34,
+              "prompt": "The city government fully funds every rooftop project.",
+              "answer": ["FALSE"],
+              "alternatives": [],
+              "explanation": "Đoạn G: grant 'to fund up to ten pilot projects'."
+            },
+            {
+              "id": "R3-35",
+              "number": 35,
+              "prompt": "The gardens are used for outdoor science lessons.",
+              "answer": ["TRUE"],
+              "alternatives": [],
+              "explanation": "Đoạn D: schools use rooftop gardens for outdoor science."
+            }
+          ]
+        },
+        {
+          "id": "R3-G4",
+          "type": "sentence_completion",
+          "instructions": "Fill in the missing word(s) with a word or phrase from the passage.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R3-36",
+              "number": 36,
+              "prompt": "Rooftop farms first began as ______ farms.",
+              "answer": ["bee"],
+              "alternatives": [],
+              "explanation": "Đoạn B: single rooftop bee farm."
+            },
+            {
+              "id": "R3-37",
+              "number": 37,
+              "prompt": "The city launched a grant programme for ______ projects.",
+              "answer": ["pilot"],
+              "alternatives": [],
+              "explanation": "Đoạn G: 'pilot projects'."
+            },
+            {
+              "id": "R3-38",
+              "number": 38,
+              "prompt": "During summer, residents noticed the indoor temperatures were ______.",
+              "answer": ["cooler"],
+              "alternatives": [],
+              "explanation": "Đoạn E: lower/cooler indoor temperatures."
+            }
+          ]
+        },
+        {
+          "id": "R3-G5",
+          "type": "short_answer",
+          "instructions": "Answer the questions in your own words.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R3-39",
+              "number": 39,
+              "prompt": "What did entrepreneurs start with before adding vegetable plots?",
+              "answer": ["bee farm"],
+              "alternatives": [],
+              "explanation": "Đoạn B."
+            },
+            {
+              "id": "R3-40",
+              "number": 40,
+              "prompt": "Who tends the vegetable plots on the rooftops?",
+              "answer": ["volunteers"],
+              "alternatives": [],
+              "explanation": "Đoạn B: tended by local volunteers."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

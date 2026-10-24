@@ -1,198 +1,357 @@
-import logging
-from collections import defaultdict
+"""CEFR placement test API (v2).
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+The legacy ``/questions`` + ``/submit`` endpoints are kept only as explicit
+deprecation responses; the app now uses adaptive stages, writing and speaking.
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Optional
+from uuid import UUID
+
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+from sqlalchemy import inspect as sa_inspect
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ...database import get_db, is_db_connected
-from ...models.learning import PlacementQuestion, UserTestSubmission
-from ...models.user import User, UserProfile
-from ...schemas.learning import (
-    PlacementQuestionResponse,
-    PlacementResultResponse,
-    PlacementSubmissionRequest,
+from ...database import get_db
+from ...models.learning import XpTransaction
+from ...models.user import User
+from ...schemas.placement import (
+    PlacementAnswerRequest,
+    PlacementAnswerResponse,
+    PlacementConfigResponse,
+    PlacementHistoryItem,
+    PlacementSessionCreate,
+    PlacementSessionResponse,
+    PlacementSkipSpeakingRequest,
+    PlacementStageCompleteRequest,
+    PlacementWritingRequest,
 )
+from ...services import placement_service as service
 from ..deps import get_current_user
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-import uuid
-from uuid import UUID
-
-from ...utils.seed_learning_data import SAMPLE_QUESTIONS
-
-# Pre-generate fallback placement question models
-_FALLBACK_QUESTIONS = []
-_FALLBACK_QUESTION_MAP = {}
-for q in SAMPLE_QUESTIONS:
-    q_id = uuid.uuid5(uuid.NAMESPACE_DNS, f"placement-{q['order_index']}")
-    q_obj = PlacementQuestion(
-        id=q_id,
-        skill=q["skill"],
-        difficulty_level=q["difficulty_level"],
-        question_text=q["question_text"],
-        context_text=q.get("context_text"),
-        audio_url=q.get("audio_url"),
-        options=q["options"],
-        correct_option=q["correct_option"],
-        explanation=q.get("explanation"),
-        order_index=q["order_index"],
-        is_active=True,
-    )
-    _FALLBACK_QUESTIONS.append(q_obj)
-    _FALLBACK_QUESTION_MAP[q_id] = q_obj
+def _raise_http(exc: service.PlacementError) -> None:
+    if isinstance(exc, service.PlacementNotFound):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
+    if isinstance(exc, service.PlacementAccessDenied):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc))
+    if isinstance(exc, service.PlacementStateError):
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc))
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
 
 
-@router.get("/questions", response_model=list[PlacementQuestionResponse])
-async def get_placement_questions(
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    """Retrieve active placement test questions."""
-    if is_db_connected():
+def _award_xp(
+    db: Optional[AsyncSession],
+    user: User,
+    xp: int,
+    session_id: str,
+) -> None:
+    if xp <= 0:
+        return
+    user.total_xp = int(user.total_xp or 0) + xp
+    try:
+        state = sa_inspect(user)
+    except Exception:
+        state = None
+    if state is None or state.session is None:
         try:
-            result = await db.execute(
-                select(PlacementQuestion)
-                .where(PlacementQuestion.is_active == True)
-                .order_by(PlacementQuestion.order_index)
-            )
-            questions = result.scalars().all()
-            if questions:
-                return questions
+            from ..deps import save_memory_users
+
+            save_memory_users()
         except Exception:
-            pass
+            logger.warning("Could not persist offline placement XP", exc_info=True)
+        return
+    if db is not None:
+        try:
+            db.add(
+                XpTransaction(
+                    user_id=user.id,
+                    source_type="placement",
+                    source_id=UUID(session_id),
+                    amount=xp,
+                )
+            )
+        except Exception:
+            logger.warning("Could not add placement XP ledger entry", exc_info=True)
 
-    return _FALLBACK_QUESTIONS
+
+# ──────────────────────────────────────────────
+# Config
+# ──────────────────────────────────────────────
 
 
-@router.post("/submit", response_model=PlacementResultResponse)
-async def submit_placement_test(
-    submission: PlacementSubmissionRequest,
+@router.get("/config", response_model=PlacementConfigResponse)
+async def get_placement_config():
+    """Public blueprint: modes, CEFR cut scores, exam mapping and can-do data."""
+    return service.get_config()
+
+
+# ──────────────────────────────────────────────
+# Sessions
+# ──────────────────────────────────────────────
+
+
+@router.post("/sessions", response_model=PlacementSessionResponse)
+async def create_placement_session(
+    body: PlacementSessionCreate,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """
-    Evaluate placement test answers, assign CEFR level, 
-    and update learner's profile with AI-assessed skills and weaknesses.
-    """
-    if not submission.answers:
+    try:
+        return await service.create_session(
+            db,
+            current_user,
+            mode=body.mode,
+            target_exam=body.target_exam,
+        )
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    raise HTTPException(status_code=400, detail="Could not create placement session")
+
+
+@router.get("/sessions/{session_id}", response_model=PlacementSessionResponse)
+async def get_placement_session(
+    session_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    try:
+        return await service.get_session(db, session_id, str(current_user.id))
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    raise HTTPException(status_code=404, detail="Placement session not found")
+
+
+@router.post("/sessions/{session_id}/answers", response_model=PlacementAnswerResponse)
+async def save_placement_answer(
+    session_id: str,
+    body: PlacementAnswerRequest,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    try:
+        return await service.save_answer(
+            db,
+            session_id,
+            str(current_user.id),
+            item_id=body.item_id,
+            answer=body.answer,
+            response_time_ms=body.response_time_ms,
+            flagged=body.flagged,
+        )
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    raise HTTPException(status_code=400, detail="Could not save answer")
+
+
+@router.post(
+    "/sessions/{session_id}/stages/complete",
+    response_model=PlacementSessionResponse,
+)
+async def complete_placement_stage(
+    session_id: str,
+    body: Optional[PlacementStageCompleteRequest] = None,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    payload = body.model_dump() if body is not None else {}
+    answers = payload.get("answers")
+    try:
+        result = await service.complete_stage(
+            db,
+            session_id,
+            str(current_user.id),
+            answers=answers,
+            stage_token=payload.get("stage_token"),
+        )
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    first_completion = bool(result.pop("_first_completion", False))
+    if first_completion:
+        _award_xp(
+            db,
+            current_user,
+            int(result.get("xp_awarded") or 0),
+            session_id,
+        )
+    return result
+
+
+@router.post("/sessions/{session_id}/writing", response_model=PlacementSessionResponse)
+async def submit_placement_writing(
+    session_id: str,
+    body: PlacementWritingRequest,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    try:
+        result = await service.submit_writing(
+            db,
+            session_id,
+            str(current_user.id),
+            task_id=body.task_id,
+            text=body.text,
+            response_time_ms=body.response_time_ms,
+        )
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    first_completion = bool(result.pop("_first_completion", False))
+    if first_completion:
+        _award_xp(
+            db,
+            current_user,
+            int(result.get("xp_awarded") or 0),
+            session_id,
+        )
+    return result
+
+
+@router.post("/sessions/{session_id}/speaking", response_model=PlacementSessionResponse)
+async def submit_placement_speaking(
+    session_id: str,
+    task_id: str = Form(...),
+    audio: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    audio_data = await audio.read()
+    if len(audio_data) > 12 * 1024 * 1024:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="At least one answer must be submitted",
+            detail="Audio file quá lớn. Tối đa 12MB.",
         )
-
-    # 1. Fetch questions from DB or fallback
-    question_map = {}
+    if len(audio_data) < 500:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Audio quá ngắn hoặc không hợp lệ.",
+        )
     try:
-        question_ids = [a.question_id for a in submission.answers]
-        result = await db.execute(
-            select(PlacementQuestion).where(PlacementQuestion.id.in_(question_ids))
+        result = await service.submit_speaking(
+            db,
+            session_id,
+            str(current_user.id),
+            task_id=task_id,
+            audio_data=audio_data,
+            filename=audio.filename or "answer.webm",
+            content_type=audio.content_type or "audio/webm",
         )
-        question_map = {q.id: q for q in result.scalars().all()}
-    except Exception:
-        pass
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    first_completion = bool(result.pop("_first_completion", False))
+    if first_completion:
+        _award_xp(
+            db,
+            current_user,
+            int(result.get("xp_awarded") or 0),
+            session_id,
+        )
+    return result
 
-    if not question_map:
-        question_map = _FALLBACK_QUESTION_MAP
 
-    # 2. Score calculations
-    total_count = len(submission.answers)
-    correct_count = 0
-    skill_stats = defaultdict(lambda: {"total": 0, "correct": 0})
-    user_answers_log = []
+@router.post("/sessions/{session_id}/speaking/skip", response_model=PlacementSessionResponse)
+async def skip_placement_speaking(
+    session_id: str,
+    body: PlacementSkipSpeakingRequest,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    try:
+        result = await service.skip_speaking(
+            db,
+            session_id,
+            str(current_user.id),
+            task_id=body.task_id,
+        )
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    first_completion = bool(result.pop("_first_completion", False))
+    if first_completion:
+        _award_xp(
+            db,
+            current_user,
+            int(result.get("xp_awarded") or 0),
+            session_id,
+        )
+    return result
 
-    for item in submission.answers:
-        q = question_map.get(item.question_id)
-        if not q:
-            continue
 
-        is_correct = (item.selected_option == q.correct_option)
-        if is_correct:
-            correct_count += 1
-            skill_stats[q.skill]["correct"] += 1
-        skill_stats[q.skill]["total"] += 1
+@router.delete("/sessions/{session_id}")
+async def abandon_placement_session(
+    session_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    try:
+        await service.abandon_session(db, session_id, str(current_user.id))
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    return {"ok": True}
 
-        user_answers_log.append({
-            "question_id": str(item.question_id),
-            "selected_option": item.selected_option,
-            "correct_option": q.correct_option,
-            "is_correct": is_correct,
-            "skill": q.skill,
-        })
 
-    score_percentage = round((correct_count / total_count) * 100, 1) if total_count > 0 else 0.0
+# ──────────────────────────────────────────────
+# Results / history
+# ──────────────────────────────────────────────
 
-    # 3. Determine CEFR Level
-    # Standard thresholding:
-    # 0-35%: A1, 36-55%: A2, 56-75%: B1, 76-90%: B2, 91-100%: C1
-    if score_percentage <= 35:
-        level = "A1"
-    elif score_percentage <= 55:
-        level = "A2"
-    elif score_percentage <= 75:
-        level = "B1"
-    elif score_percentage <= 90:
-        level = "B2"
-    else:
-        level = "C1"
 
-    # 4. Compute skill breakdown percentages & identify weaknesses
-    skill_breakdown = {}
-    weaknesses = []
-    for skill_name, stats in skill_stats.items():
-        pct = round((stats["correct"] / stats["total"]) * 100, 1) if stats["total"] > 0 else 0.0
-        skill_breakdown[skill_name] = pct
-        if pct < 60.0:
-            weaknesses.append(f"Kỹ năng {skill_name} cần cải thiện ({pct}%)")
+@router.get("/results/latest")
+async def get_latest_placement_result(
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    result = await service.get_latest_result(db, str(current_user.id))
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Chưa có kết quả kiểm tra trình độ.",
+        )
+    return result
 
-    # 5. Recommendation message
-    recommendation = (
-        f"Bạn được xếp vào trình độ {level}. "
-        f"Lộ trình học đã được AI tối ưu hóa để tập trung củng cố {', '.join(weaknesses) if weaknesses else 'kỹ năng giao tiếp nâng cao'}."
+
+@router.get("/results/{result_id}")
+async def get_placement_result(
+    result_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    try:
+        return await service.get_result(db, result_id, str(current_user.id))
+    except service.PlacementError as exc:
+        _raise_http(exc)
+    raise HTTPException(status_code=404, detail="Placement result not found")
+
+
+@router.get("/history", response_model=list[PlacementHistoryItem])
+async def get_placement_history(
+    limit: int = 20,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return await service.list_history(
+        db, str(current_user.id), limit=max(1, min(limit, 50))
     )
 
-    # 6. Save test submission & update profile
-    current_user.current_level = level
-    current_user.total_xp = (current_user.total_xp or 0) + 50  # Reward 50 XP for completing placement
 
-    try:
-        test_record = UserTestSubmission(
-            user_id=current_user.id,
-            total_questions=total_count,
-            correct_count=correct_count,
-            score_percentage=score_percentage,
-            assessed_level=level,
-            skill_breakdown=skill_breakdown,
-            user_answers=user_answers_log,
-        )
-        db.add(test_record)
+# ──────────────────────────────────────────────
+# Legacy (explicitly retired)
+# ──────────────────────────────────────────────
 
-        result_profile = await db.execute(
-            select(UserProfile).where(UserProfile.user_id == current_user.id)
-        )
-        profile = result_profile.scalar_one_or_none()
-        if not profile:
-            profile = UserProfile(user_id=current_user.id)
-            db.add(profile)
 
-        profile.skill_scores = skill_breakdown
-        profile.weaknesses = weaknesses
-        await db.flush()
-    except Exception:
-        pass
+@router.get("/questions", deprecated=True)
+async def legacy_placement_questions():
+    raise HTTPException(
+        status_code=status.HTTP_410_GONE,
+        detail="API cũ đã ngừng. Hãy dùng /placement/config và /placement/sessions.",
+    )
 
-    from ..deps import save_memory_users
-    save_memory_users()
 
-    return PlacementResultResponse(
-        total_questions=total_count,
-        correct_count=correct_count,
-        score_percentage=score_percentage,
-        assessed_level=level,
-        skill_breakdown=skill_breakdown,
-        recommendation=recommendation,
-        weaknesses=weaknesses,
+@router.post("/submit", deprecated=True)
+async def legacy_placement_submit():
+    raise HTTPException(
+        status_code=status.HTTP_410_GONE,
+        detail="API cũ đã ngừng. Hãy dùng /placement/sessions.",
     )

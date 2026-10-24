@@ -1,0 +1,804 @@
+{
+  "duration_seconds": 3600,
+  "passages": [
+    {
+      "id": "R1",
+      "title": "The Heat Beneath the City",
+      "text": "A  On a still summer night, the centre of a large city can be several degrees warmer than the fields beyond its edge. The difference is usually greatest three or four hours after sunset, when rural surfaces have already shed their heat but masonry and asphalt are still releasing what they absorbed during the day. This phenomenon is known as the urban heat island, and it is one of the most thoroughly documented consequences of urbanisation. It is also, in important respects, a matter of design rather than of climate: two cities beneath the same sky can differ by several degrees because of the way their streets, roofs and open spaces are arranged.\n\nB  The physical causes are well understood. Dark materials such as asphalt and slate absorb a high proportion of incoming solar radiation and reflect relatively little, so a city's albedo — the fraction of light it bounces back — is lower than that of grassland or forest. Vegetation cools the air by evapotranspiration, drawing water from the soil and releasing it through leaves; where trees and gardens are replaced by paving, this natural air-conditioning disappears. Tall buildings add a third effect. They trap radiation between them, and narrow streets limit the movement of air, so heat that would otherwise be carried away lingers at ground level. Vehicles, factories and air-conditioning units contribute a fourth: waste heat discharged directly into the streets.\n\nC  Thermal mass explains why the effect peaks after dark. Concrete, brick and stone conduct heat slowly, storing it through the afternoon and giving it up for hours after the sun has gone. Rural ground, by contrast, cools quickly once direct sunlight is removed. The result is a temperature gap that widens at night and can persist until dawn. Because the gap is widest when people are trying to sleep, it has consequences for health that are easily overlooked. It also complicates measurement: satellites record the temperature of surfaces, not of the air, and a roof in direct sunshine may be twenty degrees hotter than the air a metre above it.\n\nD  The health effects fall unevenly. Heat stress and cardiovascular strain are greatest among older people and those already suffering from illness, and upper-floor flats in poorly insulated blocks can remain dangerously warm throughout the night. In many cities the districts with the least tree cover are also the poorest, a pattern documented in surveys from North America to South Asia. Residents there pay more to cool their homes, and some cannot afford to do so at all. Energy demand rises in step with temperature, which increases emissions and reinforces the problem, while water running off hot streets can raise the temperature of streams and rivers enough to harm fish.\n\nE  Responses fall into two broad categories: reducing the heat that enters, and increasing the heat that leaves. Reflective 'cool' roofs and lighter-coloured pavements raise the albedo and can lower indoor temperatures markedly, although bright surfaces may cause glare and offer little benefit in winter. Trees and green roofs provide shade and evaporative cooling at the same time, but they need water and time to become established, and in dense districts there may be nowhere to plant them. Parks, ponds and permeable surfaces help, particularly when they are linked into networks rather than left as isolated patches. No single measure works everywhere in the same way.\n\nF  Planning decisions often matter more than individual buildings. Street orientation determines whether a canyon is ventilated by the prevailing wind or sealed against it, and the height and spacing of blocks determine how much sky a pavement sees at noon. Several cities now require developers to model a project's effect on local temperatures before permission is granted, and a few have adopted canopy targets that specify a minimum proportion of tree cover by a given date. Such rules are easier to announce than to enforce, since canopy takes decades to develop and is vulnerable to drought, disease and the pressure to widen roads.\n\nG  Yet the underlying lesson is encouraging. Because urban heat is largely a product of surfaces and layout, it can be altered by decisions that lie within the control of local government: what is planted, what is built and what is painted white. Cities that have measured the problem carefully, district by district, have generally found that the cheapest gains come from shade and ventilation — the oldest tools of urban design, rediscovered under a new name.",
+      "instructions": "You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.",
+      "groups": [
+        {
+          "id": "R1-G1",
+          "type": "tfng",
+          "instructions": "Do the following statements agree with the information given in Reading Passage 1?\n\nIn boxes 1–7 on your answer sheet, write\n\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+          "options": [],
+          "questions": [
+            {
+              "id": "R1-1",
+              "number": 1,
+              "prompt": "The urban heat island effect is at its strongest in the middle of the afternoon.",
+              "answer": [
+                "FALSE"
+              ],
+              "alternatives": [
+                "F",
+                "NO",
+                "N"
+              ],
+              "explanation": "Đoạn 1 (A) nêu rõ mức chênh lệch lớn nhất thường xuất hiện ba hoặc bốn giờ sau khi mặt trời lặn, không phải giữa buổi chiều."
+            },
+            {
+              "id": "R1-2",
+              "number": 2,
+              "prompt": "Two cities with the same climate can have different temperatures because of the way they are laid out.",
+              "answer": [
+                "TRUE"
+              ],
+              "alternatives": [
+                "T",
+                "YES",
+                "Y"
+              ],
+              "explanation": "Đoạn 1 (A) khẳng định hai thành phố dưới cùng một bầu trời có thể chênh nhau vài độ vì cách bố trí đường phố, mái nhà và không gian mở."
+            },
+            {
+              "id": "R1-3",
+              "number": 3,
+              "prompt": "Satellite images provide an accurate indication of the air temperature at street level.",
+              "answer": [
+                "FALSE"
+              ],
+              "alternatives": [
+                "F",
+                "NO",
+                "N"
+              ],
+              "explanation": "Đoạn 3 (C) giải thích vệ tinh ghi nhiệt độ bề mặt chứ không phải nhiệt độ không khí, nên không phản ánh đúng nhiệt độ không khí trên đường phố."
+            },
+            {
+              "id": "R1-4",
+              "number": 4,
+              "prompt": "Grassland reflects a larger share of the sunlight falling on it than asphalt does.",
+              "answer": [
+                "TRUE"
+              ],
+              "alternatives": [
+                "T",
+                "YES",
+                "Y"
+              ],
+              "explanation": "Đoạn 2 (B) cho biết albedo của thành phố thấp hơn của đồng cỏ hoặc rừng, nghĩa là cỏ phản xạ nhiều ánh sáng hơn nhựa đường."
+            },
+            {
+              "id": "R1-5",
+              "number": 5,
+              "prompt": "Some cities require developers to assess how a new project will affect local temperatures.",
+              "answer": [
+                "TRUE"
+              ],
+              "alternatives": [
+                "T",
+                "YES",
+                "Y"
+              ],
+              "explanation": "Đoạn 6 (F) cho biết một số thành phố yêu cầu chủ đầu tư mô phỏng tác động của dự án lên nhiệt độ địa phương trước khi cấp phép."
+            },
+            {
+              "id": "R1-6",
+              "number": 6,
+              "prompt": "Children are more vulnerable to high temperatures than elderly people are.",
+              "answer": [
+                "NOT GIVEN"
+              ],
+              "alternatives": [
+                "NG",
+                "NOTGIVEN"
+              ],
+              "explanation": "Đoạn 4 (D) chỉ đề cập người cao tuổi và người có bệnh nền; bài không có thông tin so sánh mức độ tổn thương của trẻ em với người già."
+            },
+            {
+              "id": "R1-7",
+              "number": 7,
+              "prompt": "Cities that have studied the problem closely have found shade and ventilation to be the most expensive remedies.",
+              "answer": [
+                "FALSE"
+              ],
+              "alternatives": [
+                "F",
+                "NO",
+                "N"
+              ],
+              "explanation": "Đoạn 7 (G) nói những lợi ích rẻ nhất đến từ bóng râm và thông gió, trái ngược với nhận định 'đắt nhất' trong câu hỏi."
+            }
+          ]
+        },
+        {
+          "id": "R1-G2",
+          "type": "sentence_completion",
+          "instructions": "Complete the sentences below.\n\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\n\nWrite your answers in boxes 8–13 on your answer sheet.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R1-8",
+              "number": 8,
+              "prompt": "The temperature difference between a city and the countryside is usually widest three or four hours after ______.",
+              "answer": [
+                "sunset"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 1 (A): chênh lệch nhiệt độ lớn nhất vào ba hoặc bốn giờ sau 'sunset' (khi mặt trời lặn)."
+            },
+            {
+              "id": "R1-9",
+              "number": 9,
+              "prompt": "Asphalt and similar materials have a low ______, so they reflect little of the sunlight that reaches them.",
+              "answer": [
+                "albedo"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B): vật liệu tối hấp thụ nhiều bức xạ mặt trời, khiến 'albedo' — tỉ lệ ánh sáng phản xạ — của thành phố thấp."
+            },
+            {
+              "id": "R1-10",
+              "number": 10,
+              "prompt": "Trees cool the air through ______, releasing water from their leaves.",
+              "answer": [
+                "evapotranspiration"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B): thảm thực vật làm mát không khí bằng 'evapotranspiration', hút nước từ đất và thoát ra qua lá."
+            },
+            {
+              "id": "R1-11",
+              "number": 11,
+              "prompt": "In narrow streets, the ______ of air is restricted, so heat stays near the ground.",
+              "answer": [
+                "movement"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B): phố hẹp hạn chế 'movement' của không khí nên hơi nóng bị giữ lại ở mặt đất."
+            },
+            {
+              "id": "R1-12",
+              "number": 12,
+              "prompt": "Satellites measure the temperature of ______ rather than the temperature of the air.",
+              "answer": [
+                "surfaces"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 3 (C): vệ tinh ghi nhiệt độ của 'surfaces', không phải nhiệt độ không khí."
+            },
+            {
+              "id": "R1-13",
+              "number": 13,
+              "prompt": "The least costly improvements in hot cities have come from shade and ______.",
+              "answer": [
+                "ventilation"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 7 (G): các thành phố đo đạc kỹ lưỡng nhận thấy lợi ích rẻ nhất đến từ bóng râm và 'ventilation'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "How Paper Travelled West",
+      "text": "A  Paper is so ordinary that its history is rarely examined, yet for more than a thousand years it was the cheapest and most adaptable surface on which to write. Earlier civilisations used clay tablets, stone, bamboo slips and papyrus, and medieval Europe relied on parchment, made from animal skin, which was durable but extremely expensive: a single large Bible could consume the skins of a small herd. The invention of paper is Chinese. Fragments recovered from a tomb at Fangmatan in Gansu province have been dated to the second century BCE, several hundred years before the date traditionally associated with the craft. Chinese accounts credit Cai Lun, a court official, with improving the technique in 105 CE by using tree bark, hemp, rags and old fishing nets; whether he invented the process or standardised an existing one, his name became attached to it.\n\nB  The essential insight was to break plant fibres down in water and then reassemble them as a mat. Hemp, linen rags, mulberry bark and later bamboo were soaked, boiled and beaten into a pulp. A mould — a wooden frame fitted with a fine screen — was dipped into a vat of this pulp and lifted out flat, leaving a thin layer of fibres on the mesh. The sheet was pressed to squeeze out water and then hung to dry. Sizing, made from starch or gelatin, was brushed on afterwards to prevent ink from bleeding into the fibres.\n\nC  Paper travelled east before it travelled west. Buddhist monks carried it to Korea and Japan, where local plants gave rise to distinctive traditions: Korean hanji, made from mulberry, and Japanese washi, valued for its strength and translucency. The westward route was slower and less peaceful. According to tradition, papermakers were among the craftsmen taken from China to Samarkand after a battle in 751, and the craft reached Baghdad within a century. Mills followed in Damascus, Cairo and Fez, supplying administrators, scholars and merchants across the Islamic world.\n\nD  Europe acquired paper through the Iberian peninsula, where a mill was operating at Xàtiva by the eleventh century, and through Italy, where the town of Fabriano became the continent's most innovative centre. Its craftsmen replaced manual beating with water-powered hammers, introduced animal glue sizing and developed the watermark, a design formed by wire sewn onto the screen. These marks identified the maker and, incidentally, allow historians to date undated books. Paper was now far cheaper than parchment, but it was still made from linen rags, and the supply of rags — collected door to door by traders — set a ceiling on production.\n\nE  The printing press transformed the economics of the industry. Movable type had existed in East Asia for centuries, but the combination of a press, oil-based ink and a plentiful supply of paper in fifteenth-century Europe made mass production possible. Demand rose so sharply that mills multiplied along rivers, which provided both the water power for stamping and the water needed for the pulp. By 1500 presses in more than two hundred European towns had produced an estimated twenty million volumes, and the price of books had fallen far enough for ordinary merchants to own them.\n\nF  The nineteenth century brought two changes that still shape the material. In 1803 a machine financed by the Fourdrinier brothers and built by Bryan Donkin produced paper as a continuous web rather than one sheet at a time, and wood replaced rags as the principal source of fibre after methods of grinding and chemically pulping timber were developed. Paper became cheap enough for newspapers with circulations in the hundreds of thousands. The gain had a hidden cost. Groundwood pulp retains lignin, and paper sized with alum forms acids as it ages, so much nineteenth- and twentieth-century paper has yellowed and turned brittle; libraries now spend large sums on deacidification and on copying volumes that are crumbling on the shelf.\n\nG  Paper remains a bulk commodity, with global production of roughly four hundred million tonnes a year. The decline of newspapers in wealthy countries has been offset by the growth of packaging, and recycling now supplies a substantial share of fibre in Europe and North America. Whether that balance holds depends less on technology than on regulation: restrictions on single-use plastic have increased demand for paper bags and wraps, while concerns about forestry and water use push manufacturers towards certification and closed-loop mills. The material that began as a way of reusing rags has become, once again, an exercise in reuse.",
+      "instructions": "You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.",
+      "groups": [
+        {
+          "id": "R2-G1",
+          "type": "matching_headings",
+          "instructions": "Reading Passage 2 has seven paragraphs, A–G.\n\nChoose the correct heading for paragraphs B–G from the list of headings below.\n\nWrite the correct letter, A–G, in boxes 14–19 on your answer sheet.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Materials, tools and the stages of production"
+            },
+            {
+              "key": "B",
+              "text": "The spread of papermaking through Asia and the Islamic world"
+            },
+            {
+              "key": "C",
+              "text": "European mills, watermarks and the supply of rags"
+            },
+            {
+              "key": "D",
+              "text": "Printing and the growth of the paper trade"
+            },
+            {
+              "key": "E",
+              "text": "Machinery, wood pulp and the fragility of paper"
+            },
+            {
+              "key": "F",
+              "text": "Recycling and the changing uses of paper"
+            },
+            {
+              "key": "G",
+              "text": "Competition from parchment and other writing surfaces"
+            }
+          ],
+          "questions": [
+            {
+              "id": "R2-14",
+              "number": 14,
+              "prompt": "Paragraph B",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B) mô tả nguyên liệu và các công đoạn: ngâm, giã thành bột giấy, dùng khuôn có sàng, ép và phơi khô."
+            },
+            {
+              "id": "R2-15",
+              "number": 15,
+              "prompt": "Paragraph C",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 3 (C) kể chuyện giấy lan sang Triều Tiên, Nhật Bản rồi tới Samarkand, Baghdad và các trung tâm của thế giới Hồi giáo."
+            },
+            {
+              "id": "R2-16",
+              "number": 16,
+              "prompt": "Paragraph D",
+              "answer": [
+                "C"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 4 (D) nói về các xưởng giấy ở châu Âu, kỹ thuật watermark và nguồn cung giẻ lanh hạn chế."
+            },
+            {
+              "id": "R2-17",
+              "number": 17,
+              "prompt": "Paragraph E",
+              "answer": [
+                "D"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 5 (E) giải thích máy in làm nhu cầu giấy tăng mạnh và các xưởng giấy mọc lên dọc các con sông."
+            },
+            {
+              "id": "R2-18",
+              "number": 18,
+              "prompt": "Paragraph F",
+              "answer": [
+                "E"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 6 (F) nói về máy Fourdrinier, bột gỗ thay giẻ và tình trạng giấy ố vàng, giòn theo thời gian."
+            },
+            {
+              "id": "R2-19",
+              "number": 19,
+              "prompt": "Paragraph G",
+              "answer": [
+                "F"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 7 (G) bàn về tái chế và nhu cầu bao bì tăng lên khi báo in suy giảm."
+            }
+          ]
+        },
+        {
+          "id": "R2-G2",
+          "type": "summary_completion",
+          "instructions": "Complete the summary below.\n\nChoose ONE WORD ONLY from the passage for each answer.\n\nWrite your answers in boxes 20–23 on your answer sheet.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R2-20",
+              "number": 20,
+              "prompt": "Plant material had to be reduced to a ______ in water before sheets could be formed.",
+              "answer": [
+                "pulp"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B): nguyên liệu thực vật được ngâm, đun và giã thành 'pulp' trong nước trước khi se thành tờ."
+            },
+            {
+              "id": "R2-21",
+              "number": 21,
+              "prompt": "European makers developed a ______, a design formed by wire on the screen, which identified the mill that produced the sheet.",
+              "answer": [
+                "watermark"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 4 (D): thợ thủ công châu Âu tạo 'watermark' bằng dây khâu trên sàng, giúp nhận diện xưởng sản xuất."
+            },
+            {
+              "id": "R2-22",
+              "number": 22,
+              "prompt": "Production was limited by the supply of ______, which traders collected door to door.",
+              "answer": [
+                "rags"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 4 (D): giấy vẫn làm từ giẻ lanh và nguồn 'rags' do người buôn thu gom tận cửa đặt ra giới hạn cho sản lượng."
+            },
+            {
+              "id": "R2-23",
+              "number": 23,
+              "prompt": "Paper made from wood pulp yellowed and became ______ as it aged.",
+              "answer": [
+                "brittle"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 6 (F): bột gỗ giữ lignin và giấy nhiễm axit nên đã ố vàng và trở nên 'brittle' (giòn) theo thời gian."
+            }
+          ]
+        },
+        {
+          "id": "R2-G3",
+          "type": "short_answer",
+          "instructions": "Answer the questions below.\n\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\n\nWrite your answers in boxes 24–26 on your answer sheet.",
+          "options": [],
+          "questions": [
+            {
+              "id": "R2-24",
+              "number": 24,
+              "prompt": "What material did medieval Europe use for writing before paper became available?",
+              "answer": [
+                "parchment"
+              ],
+              "alternatives": [
+                "animal skin"
+              ],
+              "explanation": "Đoạn 1 (A): châu Âu thời trung cổ dùng 'parchment', loại giấy làm từ da động vật."
+            },
+            {
+              "id": "R2-25",
+              "number": 25,
+              "prompt": "At which site were the oldest surviving fragments of paper found?",
+              "answer": [
+                "Fangmatan"
+              ],
+              "alternatives": [
+                "Fangmatan tomb"
+              ],
+              "explanation": "Đoạn 1 (A): những mảnh giấy cổ nhất còn lại được tìm thấy trong một ngôi mộ ở 'Fangmatan', tỉnh Cam Túc."
+            },
+            {
+              "id": "R2-26",
+              "number": 26,
+              "prompt": "Which city did the craft reach within a century of its arrival in Samarkand?",
+              "answer": [
+                "Baghdad"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 3 (C): theo truyền thống, nghề làm giấy đã tới 'Baghdad' trong vòng một thế kỷ sau khi đến Samarkand."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "What the Sleeping Brain Rehearses",
+      "text": "A  Sleep occupies roughly a third of human life, yet for most of the twentieth century it was treated as a passive condition, a switch that turned consciousness off until morning. That view has been replaced by something far more active. Recordings from inside the sleeping brain show patterns of activity that resemble those of learning itself, and the proteins that build connections between neurons are synthesised in greater quantities during sleep than during waking. Sleep is not, however, a single state. It alternates between rapid-eye-movement (REM) sleep and three stages of non-REM sleep, in cycles of about ninety minutes. Slow-wave sleep, the deepest stage, is concentrated in the first half of the night, while REM periods lengthen towards morning.\n\nB  The first experimental hint of a link with memory came in 1924, when two American psychologists, Jenkins and Dallenbach, asked students to learn lists of nonsense syllables and then either sleep or stay awake for the same interval. Retention was markedly better after sleep. The result was striking but hard to interpret, because sleep was then regarded as one undifferentiated state; the researchers could not say which part of it mattered. The discovery of REM sleep by Aserinsky and Kleitman in 1953, and the arrival of brain imaging half a century later, made it possible to ask more precise questions.\n\nC  The strongest evidence concerns declarative memory — facts and events that can be stated in words. During slow-wave sleep, cells in the hippocampus, the structure that first encodes such memories, repeat the sequences of activity recorded during learning. These replays coincide with brief, high-frequency bursts known as sharp-wave ripples, and with slow oscillations in the cortex that appear to coordinate the transfer of information between the two regions. The link is not merely correlational. In a much-cited experiment, volunteers learned the positions of cards on a screen while a particular odour was present; when the same odour was released during slow-wave sleep, their memory for the positions improved, and the effect disappeared when the cue was presented while they were awake.\n\nD  Procedural skills — riding a bicycle, typing, playing a scale — follow a different and less tidy pattern. Many studies report that performance improves overnight without further practice, and some attribute this to REM sleep, during which the brain is chemically and electrically close to waking. Yet the evidence is less consistent than the declarative findings. Improvement has been observed after naps containing no REM, and people who take antidepressant drugs that suppress REM sleep do not display the memory deficits a simple theory would predict. Stage 2 sleep, with its bursts of activity called spindles, now seems at least as important for motor learning as REM does.\n\nE  Spindles deserve attention in their own right. They are short trains of waves at eleven to sixteen hertz, generated in the thalamus, and their density varies widely between individuals and declines with age. Several studies have found that people with more frequent spindles retain more of what they learned the previous day, and that spindle density predicts improvement on some tasks. Naps of sixty to ninety minutes, long enough to include slow-wave sleep, have produced measurable gains in both declarative and procedural tests, although the effects are usually modest and do not appear in every study.\n\nF  Sleep may also perform an emotional function. REM sleep is the only state in which certain stress-related chemicals are almost absent, and imaging studies show that the amygdala, a region central to fear, is less reactive after a night of sleep than after an equivalent period of waking. This has led to the popular claim that REM provides 'overnight therapy', stripping the emotion from difficult memories while preserving their content. The claim is attractive, but the experiments behind it are small and the results have not always been replicated; what can be said is that sleep loss reliably raises emotional reactivity, whatever the mechanism.\n\nG  For students, the practical message is less glamorous than the headlines suggest. Sleep deprivation impairs the hippocampus's ability to encode new material, so a night spent revising is likely to cost more in learning than it gains in hours. Later school start times have been followed by improved attendance and grades in several districts, though such studies are difficult to disentangle from other changes. What the research does not support is the idea of sleep as a download: consolidation is selective, it favours information that is relevant or rewarded, and much of the underlying biology remains uncertain. The most defensible advice is also the oldest — keep regular hours, and do not treat sleep as time that can be borrowed without repayment.",
+      "instructions": "You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.",
+      "groups": [
+        {
+          "id": "R3-G1",
+          "type": "mcq",
+          "instructions": "Choose the correct letter, A, B, C or D.\n\nWrite the correct letter in box 27 on your answer sheet.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Slow-wave sleep is concentrated in the first part of the night."
+            },
+            {
+              "key": "B",
+              "text": "REM periods become shorter as morning approaches."
+            },
+            {
+              "key": "C",
+              "text": "The three non-REM stages occupy equal amounts of time."
+            },
+            {
+              "key": "D",
+              "text": "Each cycle lasts approximately two hours."
+            }
+          ],
+          "questions": [
+            {
+              "id": "R3-27",
+              "number": 27,
+              "prompt": "What does the passage say about the pattern of sleep during a typical night?",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 1 (A): giấc ngủ sóng chậm tập trung vào nửa đầu đêm, còn các giai đoạn REM dài dần về phía sáng.",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Slow-wave sleep is concentrated in the first part of the night."
+                },
+                {
+                  "key": "B",
+                  "text": "REM periods become shorter as morning approaches."
+                },
+                {
+                  "key": "C",
+                  "text": "The three non-REM stages occupy equal amounts of time."
+                },
+                {
+                  "key": "D",
+                  "text": "Each cycle lasts approximately two hours."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R3-G2",
+          "type": "mcq",
+          "instructions": "Choose the correct letter, A, B, C or D.\n\nWrite the correct letter in box 28 on your answer sheet.",
+          "options": [
+            {
+              "key": "A",
+              "text": "It showed that sleep produced better retention than an equal period of waking."
+            },
+            {
+              "key": "B",
+              "text": "It proved that REM sleep is necessary for remembering lists."
+            },
+            {
+              "key": "C",
+              "text": "It demonstrated that nonsense syllables are unusually difficult to learn."
+            },
+            {
+              "key": "D",
+              "text": "It measured the effect of sleep deprivation on attention."
+            }
+          ],
+          "questions": [
+            {
+              "id": "R3-28",
+              "number": 28,
+              "prompt": "Why is the study by Jenkins and Dallenbach mentioned?",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B): thí nghiệm năm 1924 cho thấy khả năng ghi nhớ tốt hơn sau khi ngủ so với một khoảng thời gian thức dài tương đương.",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "It showed that sleep produced better retention than an equal period of waking."
+                },
+                {
+                  "key": "B",
+                  "text": "It proved that REM sleep is necessary for remembering lists."
+                },
+                {
+                  "key": "C",
+                  "text": "It demonstrated that nonsense syllables are unusually difficult to learn."
+                },
+                {
+                  "key": "D",
+                  "text": "It measured the effect of sleep deprivation on attention."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R3-G3",
+          "type": "mcq",
+          "instructions": "Choose the correct letter, A, B, C or D.\n\nWrite the correct letter in box 29 on your answer sheet.",
+          "options": [
+            {
+              "key": "A",
+              "text": "The volunteers woke up more often during the night."
+            },
+            {
+              "key": "B",
+              "text": "Their memory for the positions of the cards improved."
+            },
+            {
+              "key": "C",
+              "text": "The effect was strongest when the cue was given while they were awake."
+            },
+            {
+              "key": "D",
+              "text": "Their sleep became deeper and longer."
+            }
+          ],
+          "questions": [
+            {
+              "id": "R3-29",
+              "number": 29,
+              "prompt": "In the experiment described in paragraph C, what happened when the odour was released during slow-wave sleep?",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 3 (C): khi cùng mùi hương xuất hiện trong giấc ngủ sóng chậm, trí nhớ về vị trí thẻ được cải thiện; hiệu ứng biến mất nếu tín hiệu được đưa ra lúc người tham gia còn thức.",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "The volunteers woke up more often during the night."
+                },
+                {
+                  "key": "B",
+                  "text": "Their memory for the positions of the cards improved."
+                },
+                {
+                  "key": "C",
+                  "text": "The effect was strongest when the cue was given while they were awake."
+                },
+                {
+                  "key": "D",
+                  "text": "Their sleep became deeper and longer."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R3-G4",
+          "type": "mcq",
+          "instructions": "Choose the correct letter, A, B, C or D.\n\nWrite the correct letter in box 30 on your answer sheet.",
+          "options": [
+            {
+              "key": "A",
+              "text": "To prove that REM sleep is unnecessary for memory."
+            },
+            {
+              "key": "B",
+              "text": "To show that the connection between REM sleep and procedural memory is not straightforward."
+            },
+            {
+              "key": "C",
+              "text": "To warn readers about the side effects of common medication."
+            },
+            {
+              "key": "D",
+              "text": "To explain why memory declines with age."
+            }
+          ],
+          "questions": [
+            {
+              "id": "R3-30",
+              "number": 30,
+              "prompt": "Why does the writer mention antidepressant drugs?",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 4 (D): thuốc chống trầm cảm ức chế REM nhưng người dùng không bị suy giảm trí nhớ như lý thuyết đơn giản dự đoán, cho thấy mối liên hệ không rõ ràng.",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "To prove that REM sleep is unnecessary for memory."
+                },
+                {
+                  "key": "B",
+                  "text": "To show that the connection between REM sleep and procedural memory is not straightforward."
+                },
+                {
+                  "key": "C",
+                  "text": "To warn readers about the side effects of common medication."
+                },
+                {
+                  "key": "D",
+                  "text": "To explain why memory declines with age."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R3-G5",
+          "type": "mcq",
+          "instructions": "Choose the correct letter, A, B, C or D.\n\nWrite the correct letter in box 31 on your answer sheet.",
+          "options": [
+            {
+              "key": "A",
+              "text": "It accurately describes how memories are consolidated."
+            },
+            {
+              "key": "B",
+              "text": "It underestimates the importance of REM sleep."
+            },
+            {
+              "key": "C",
+              "text": "It oversimplifies a process that is selective and only partly understood."
+            },
+            {
+              "key": "D",
+              "text": "It has been confirmed by recent replication studies."
+            }
+          ],
+          "questions": [
+            {
+              "id": "R3-31",
+              "number": 31,
+              "prompt": "What is the writer's view of the idea of sleep as a 'download'?",
+              "answer": [
+                "C"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 7 (G): tác giả cho rằng cách ví von này quá đơn giản, vì quá trình cố kết có chọn lọc và phần lớn cơ chế sinh học vẫn chưa chắc chắn.",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "It accurately describes how memories are consolidated."
+                },
+                {
+                  "key": "B",
+                  "text": "It underestimates the importance of REM sleep."
+                },
+                {
+                  "key": "C",
+                  "text": "It oversimplifies a process that is selective and only partly understood."
+                },
+                {
+                  "key": "D",
+                  "text": "It has been confirmed by recent replication studies."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "R3-G6",
+          "type": "matching_information",
+          "instructions": "Which paragraph contains the following information?\n\nWrite the correct letter, A–G, in boxes 32–36 on your answer sheet.\n\nNB You may use any letter more than once.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Paragraph A"
+            },
+            {
+              "key": "B",
+              "text": "Paragraph B"
+            },
+            {
+              "key": "C",
+              "text": "Paragraph C"
+            },
+            {
+              "key": "D",
+              "text": "Paragraph D"
+            },
+            {
+              "key": "E",
+              "text": "Paragraph E"
+            },
+            {
+              "key": "F",
+              "text": "Paragraph F"
+            },
+            {
+              "key": "G",
+              "text": "Paragraph G"
+            }
+          ],
+          "questions": [
+            {
+              "id": "R3-32",
+              "number": 32,
+              "prompt": "a description of how the structure of sleep changes through the night",
+              "answer": [
+                "A"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 1 (A) mô tả chu kỳ khoảng 90 phút và việc giấc ngủ sóng chậm tập trung đầu đêm trong khi REM dài dần về sáng."
+            },
+            {
+              "id": "R3-33",
+              "number": 33,
+              "prompt": "a reference to medication that challenges a simple theory of REM sleep",
+              "answer": [
+                "D"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 4 (D) nhắc đến thuốc chống trầm cảm ức chế REM mà không gây suy giảm trí nhớ như lý thuyết đơn giản dự đoán."
+            },
+            {
+              "id": "R3-34",
+              "number": 34,
+              "prompt": "a warning that improvements in schools may have causes other than later start times",
+              "answer": [
+                "G"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 7 (G) lưu ý rằng các nghiên cứu về giờ vào học muộn khó tách khỏi những thay đổi khác trong trường học."
+            },
+            {
+              "id": "R3-35",
+              "number": 35,
+              "prompt": "an account of an experiment in which a smell was used to influence memory",
+              "answer": [
+                "C"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 3 (C) kể thí nghiệm phát tán mùi hương gắn với việc học trong giấc ngủ sóng chậm để kiểm tra trí nhớ."
+            },
+            {
+              "id": "R3-36",
+              "number": 36,
+              "prompt": "a test in which students memorised lists of nonsense syllables",
+              "answer": [
+                "B"
+              ],
+              "alternatives": [],
+              "explanation": "Đoạn 2 (B): sinh viên học các danh sách âm tiết vô nghĩa rồi hoặc ngủ hoặc thức trong cùng một khoảng thời gian."
+            }
+          ]
+        },
+        {
+          "id": "R3-G7",
+          "type": "ynng",
+          "instructions": "Do the following statements agree with the claims of the writer in Reading Passage 3?\n\nIn boxes 37–40 on your answer sheet, write\n\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+          "options": [],
+          "questions": [
+            {
+              "id": "R3-37",
+              "number": 37,
+              "prompt": "Sleep was widely regarded as a passive state for much of the twentieth century.",
+              "answer": [
+                "YES"
+              ],
+              "alternatives": [
+                "Y",
+                "TRUE",
+                "T"
+              ],
+              "explanation": "Đoạn 1 (A) nói rõ trong phần lớn thế kỷ 20, giấc ngủ bị coi là một trạng thái thụ động."
+            },
+            {
+              "id": "R3-38",
+              "number": 38,
+              "prompt": "The evidence linking REM sleep to procedural learning is stronger than the evidence linking slow-wave sleep to declarative memory.",
+              "answer": [
+                "NO"
+              ],
+              "alternatives": [
+                "N",
+                "FALSE",
+                "F"
+              ],
+              "explanation": "Đoạn 4 (D) nói bằng chứng về REM và kỹ năng vận động 'kém nhất quán hơn' bằng chứng về trí nhớ tường thuật ở đoạn 3 (C), nên câu này trái với ý tác giả."
+            },
+            {
+              "id": "R3-39",
+              "number": 39,
+              "prompt": "An afternoon nap is more beneficial for memory than a full night's sleep.",
+              "answer": [
+                "NOT GIVEN"
+              ],
+              "alternatives": [
+                "NG",
+                "NOTGIVEN"
+              ],
+              "explanation": "Đoạn 5 (E) chỉ nêu giấc ngủ trưa 60–90 phút mang lại lợi ích đo được; bài không so sánh với một đêm ngủ đầy đủ."
+            },
+            {
+              "id": "R3-40",
+              "number": 40,
+              "prompt": "Some popular accounts of sleep research claim more than the evidence supports.",
+              "answer": [
+                "YES"
+              ],
+              "alternatives": [
+                "Y",
+                "TRUE",
+                "T"
+              ],
+              "explanation": "Đoạn 6 (F) và đoạn 7 (G) cho rằng các tuyên bố phổ biến như 'overnight therapy' hay ngủ như một bản tải về vượt quá bằng chứng hiện có."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
