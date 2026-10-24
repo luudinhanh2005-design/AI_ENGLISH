@@ -30,18 +30,31 @@ Future<void> webSpeak(String text, double rate) {
       '''
       (function() {
         if (!('speechSynthesis' in window)) { window._flutterTtsActive = false; return; }
+        clearTimeout(window._flutterTtsTimer);
+        window._flutterTtsTimer = null;
         window.speechSynthesis.cancel();
         if (window.speechSynthesis.paused) {
           window.speechSynthesis.resume();
         }
         var u = new SpeechSynthesisUtterance($literal);
+        var timerId = null;
         u.lang = 'en-US';
         u.rate = $rate;
-        u.onend = function() { window._flutterTtsActive = false; };
-        u.onerror = function() { window._flutterTtsActive = false; };
+        u.onend = function() {
+          if (window._flutterTtsTimer === timerId) window._flutterTtsTimer = null;
+          window._flutterTtsActive = false;
+        };
+        u.onerror = function() {
+          if (window._flutterTtsTimer === timerId) window._flutterTtsTimer = null;
+          window._flutterTtsActive = false;
+        };
         window._flutterTtsUtterance = u;
         window._flutterTtsActive = true;
-        setTimeout(function() { window.speechSynthesis.speak(u); }, 60);
+        timerId = setTimeout(function() {
+          if (window._flutterTtsTimer === timerId) window._flutterTtsTimer = null;
+          window.speechSynthesis.speak(u);
+        }, 60);
+        window._flutterTtsTimer = timerId;
       })()
       '''
     ]);
@@ -92,6 +105,8 @@ void webStop() {
     js.context.callMethod('eval', [
       '''
       (function() {
+        clearTimeout(window._flutterTtsTimer);
+        window._flutterTtsTimer = null;
         if ('speechSynthesis' in window) {
           window._flutterTtsActive = false;
           window.speechSynthesis.cancel();

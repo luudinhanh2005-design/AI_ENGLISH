@@ -35,6 +35,10 @@ class ApiEndpoints {
 
   // ── Grammar Lessons ───────────────────────────
   static const String grammarLessons = '/grammar/lessons';
+  static const String grammarManifest = '/grammar/manifest';
+  static const String grammarBundle = '/grammar/bundle';
+  static const String grammarAttempts = '/grammar/attempts';
+  static const String grammarProgress = '/grammar/progress';
   static String grammarLessonById(String id) => '/grammar/lessons/$id';
   static String grammarSubmitLesson(String id) => '/grammar/lessons/$id/submit';
 

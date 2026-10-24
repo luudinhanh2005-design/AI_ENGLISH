@@ -89,6 +89,17 @@ void main() {
         home: GrammarScreen(),
       ),
     );
+    // Asset loading uses real async I/O; the fake-async pump loop cannot
+    // complete it on its own. Pump while the loading spinner is visible.
+    for (var i = 0;
+        i < 30 &&
+            find.byType(CircularProgressIndicator).evaluate().isNotEmpty;
+        i++) {
+      await tester.runAsync(() async {
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+      });
+      await tester.pump(const Duration(milliseconds: 50));
+    }
     await tester.pumpAndSettle();
     
     expect(find.text('Ngữ Pháp Toàn Diện (Grammar)'), findsOneWidget);

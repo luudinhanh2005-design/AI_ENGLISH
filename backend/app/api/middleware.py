@@ -8,12 +8,25 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def setup_cors(app, origins: list[str] | None = None):
-    """Configure CORS middleware."""
+def setup_cors(
+    app,
+    origins: list[str] | None = None,
+    allow_localhost: bool = True,
+):
+    """Configure CORS middleware.
+
+    Localhost origins are convenient for development but must not be accepted
+    in production. Callers should pass ``allow_localhost=False`` there.
+    """
+    allowed_origins = origins if origins is not None else (["*"] if allow_localhost else [])
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins or ["*"],
-        allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
+        allow_origins=allowed_origins,
+        allow_origin_regex=(
+            r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
+            if allow_localhost
+            else None
+        ),
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

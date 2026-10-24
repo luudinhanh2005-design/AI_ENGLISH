@@ -35,6 +35,7 @@ from ...schemas.speech import (
     TTSResponse,
     WordScore,
 )
+from ...services.pronunciation_scoring import build_assessment
 from ...services.speech_service import SpeechAIService, AUDIO_DIR
 from ..deps import get_current_user, get_optional_user
 
@@ -96,7 +97,14 @@ async def assess_pronunciation(
         audio_data=audio_data,
         reference_text=reference_text,
         user_level=user_level,
+        file_format=file_format,
     )
+
+    if not result.get("scored", True):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Chưa nghe rõ giọng đọc. Hãy đọc to, rõ hơn và thử lại.",
+        )
 
     session_id = uuid.uuid4()
     if current_user and db is not None:
@@ -107,10 +115,10 @@ async def assess_pronunciation(
                 session_type=session_type,
                 reference_text=reference_text,
                 overall_score=result["overall_score"],
-                fluency_score=result["fluency_score"],
+                fluency_score=result.get("fluency_score") or 0.0,
                 accuracy_score=result["accuracy_score"],
                 completeness_score=result["completeness_score"],
-                prosody_score=result["prosody_score"],
+                prosody_score=None,
                 recognised_text=result["recognised_text"],
                 word_scores=result["word_scores"],
                 feedback=result["feedback"],
@@ -146,10 +154,14 @@ async def assess_pronunciation(
         reference_text=reference_text,
         recognised_text=result["recognised_text"],
         overall_score=result["overall_score"],
-        fluency_score=result["fluency_score"],
+        fluency_score=result.get("fluency_score") or 0.0,
         accuracy_score=result["accuracy_score"],
         completeness_score=result["completeness_score"],
-        prosody_score=result["prosody_score"],
+        prosody_score=0.0,
+        prosody_measured=False,
+        fluency_measured=bool(result.get("fluency_measured", False)),
+        scored=True,
+        scoring_notes=result.get("scoring_notes", []),
         word_scores=[WordScore(**ws) for ws in result["word_scores"]],
         feedback=result["feedback"],
         improvement_tips=result["improvement_tips"],
@@ -477,60 +489,187 @@ async def get_shadowing_drills(category: Optional[str] = None, level: Optional[s
         items = [d for d in items if d["level"] == level]
     return items
 
-from pydantic import BaseModel
+def _build_shadowing_feedback(assessment: dict, drill: dict) -> tuple[str, list[str]]:
+    """Build honest feedback + actionable tips from a real assessment result."""
+    score = assessment.get("overall_score") or 0.0
 
-class ShadowingAssessRequest(BaseModel):
-    drill_id: str
-    user_transcript: str
+    if score >= 90:
+        feedback = "Rất sát bản mẫu. Chỉ còn vài điểm nhỏ về tốc độ hoặc từ nối."
+    elif score >= 80:
+        feedback = "Tốt. Bạn đọc đúng phần lớn câu, còn vài từ chưa rõ."
+    elif score >= 65:
+        feedback = "Khá ổn nhưng còn lệch so với câu mẫu. Xem các từ cần luyện bên dưới."
+    elif score >= 50:
+        feedback = "Cần luyện thêm: khá nhiều từ chưa khớp hoặc thiếu."
+    else:
+        feedback = "Chưa khớp câu mẫu. Hãy nghe lại bản mẫu rồi đọc chậm và rõ hơn."
 
-@router.post("/shadowing-assess")
+    word_scores = assessment.get("word_scores") or []
+
+    def _words_with_error(error_type: str) -> list[str]:
+        words: list[str] = []
+        for entry in word_scores:
+            if not isinstance(entry, dict):
+                continue
+            if entry.get("error_type") != error_type:
+                continue
+            word = str(entry.get("word") or "").strip().strip("[]")
+            if word:
+                words.append(word)
+        return words
+
+    metrics = assessment.get("metrics") or {}
+    has_timing = bool(assessment.get("has_timing"))
+    target_wpm = drill.get("speed_wpm") or metrics.get("target_wpm") or 0
+
+    tips: list[str] = []
+
+    mispronounced = _words_with_error("Mispronunciation")
+    if mispronounced:
+        tips.append(f"Luyện lại các từ: {', '.join(mispronounced[:3])}.")
+
+    omitted = _words_with_error("Omission")
+    if omitted:
+        tips.append(f"Bạn bỏ sót các từ: {', '.join(omitted[:3])}.")
+
+    if has_timing and target_wpm > 0:
+        actual_wpm = metrics.get("actual_wpm")
+        if actual_wpm is not None:
+            if actual_wpm < 0.8 * target_wpm:
+                tips.append(
+                    f"Bạn nói chậm hơn nhịp mẫu ({actual_wpm:.0f} so với {target_wpm:.0f} từ/phút)."
+                )
+            elif actual_wpm > 1.25 * target_wpm:
+                tips.append(
+                    f"Bạn nói nhanh hơn nhịp mẫu ({actual_wpm:.0f} so với {target_wpm:.0f} từ/phút)."
+                )
+    elif not has_timing:
+        tips.append("Không đo được tốc độ vì nhận dạng giọng nói không trả timestamp.")
+
+    long_pause_count = metrics.get("long_pause_count") or 0
+    if long_pause_count > 0:
+        tips.append(f"Có {long_pause_count} khoảng ngừng dài — hãy giữ nhịp liền mạch.")
+
+    if not tips:
+        tips.append(
+            "Điểm chỉ dựa trên nhận dạng giọng nói, không phân tích âm học — "
+            "hãy đeo tai nghe khi luyện để tránh thu lại tiếng mẫu."
+        )
+
+    return feedback, tips[:4]
+
+
+@router.post("/shadowing-assess", summary="Assess shadowing from uploaded audio")
 async def assess_shadowing(
-    request: ShadowingAssessRequest,
+    drill_id: str = Form(..., description="ID của bài luyện trong SHADOWING_DRILLS"),
+    audio: Optional[UploadFile] = File(default=None, description="Audio người học (WAV/WebM/MP3)"),
+    user_transcript: Optional[str] = Form(default=None, description="[Legacy] transcript dạng text"),
+    language: str = Form(default="en-US"),
     current_user: Optional[User] = Depends(get_optional_user),
+    db: AsyncSession = Depends(get_db),
 ):
     """
-    Evaluate user's shadowing speech:
-    - Rhythm & Intonation sync
-    - Speed match
-    - Phonetic accuracy
+    Chấm điểm luyện nhại (shadowing) từ audio thật của người học:
+    - So khớp theo thứ tự từ với câu mẫu
+    - Tốc độ / độ trôi chảy chỉ tính khi STT trả timestamp
     """
-    drill = next((d for d in SHADOWING_DRILLS if d["id"] == request.drill_id), SHADOWING_DRILLS[0])
-    target_words = re.findall(r"\b\w+\b", drill["text"].lower())
-    user_words = re.findall(r"\b\w+\b", request.user_transcript.lower())
+    drill = next((d for d in SHADOWING_DRILLS if d["id"] == drill_id), None)
+    if drill is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Không tìm thấy bài luyện.",
+        )
 
-    if not user_words:
-        return {
-            "overall_score": 60,
-            "intonation_match": 65,
-            "rhythm_tempo_score": 60,
-            "accuracy_score": 55,
-            "feedback": "Chưa ghi nhận đủ giọng nói. Hãy mở mic và nhại theo câu mẫu một cách rõ ràng hơn nhé!",
-            "tips": ["Hãy đeo tai nghe để vừa nghe âm thanh mẫu vừa đọc theo."],
-        }
+    stt_words: list = []
 
-    # Accuracy
-    matched = sum(1 for w in user_words if w in target_words)
-    acc = min(96, max(45, int((matched / max(1, len(target_words))) * 100)))
+    if audio is not None:
+        audio_data = await audio.read()
+        if len(audio_data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="File ghi âm rỗng.",
+            )
+        if len(audio_data) > 10 * 1024 * 1024:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Audio quá lớn (tối đa 10MB).",
+            )
 
-    # Rhythm & speed
-    speed_diff = abs(len(user_words) - len(target_words))
-    rhythm = max(50, 95 - speed_diff * 8)
-    intonation = min(95, max(55, acc - 5 + (5 if speed_diff <= 1 else -5)))
+        file_format = "wav"
+        if audio.filename:
+            ext = audio.filename.rsplit(".", 1)[-1].lower()
+            if ext in ("mp3", "webm", "ogg", "m4a"):
+                file_format = ext
 
-    overall = int((acc * 0.4) + (rhythm * 0.3) + (intonation * 0.3))
+        stt = await SpeechAIService.transcribe_audio(
+            audio_data,
+            language,
+            file_format,
+            assessment_mode=True,
+        )
+        transcript = stt.get("transcript", "")
+        stt_words = stt.get("words", [])
+    elif user_transcript and user_transcript.strip():
+        # Legacy: transcript dạng text, không có word timing.
+        transcript = user_transcript.strip()
+        stt_words = []
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Chưa nhận được bản ghi âm. Hãy bấm ghi âm và đọc lại.",
+        )
 
-    tips = []
-    if acc < 75:
-        tips.append("Cố gắng phát âm rõ các từ khóa quan trọng: " + ", ".join(drill["stress_words"][:3]))
-    if speed_diff > 2:
-        tips.append(f"Tốc độ nói của bạn đang bị lệch so với nhịp gốc. Nhịp chuẩn là {drill['speed_wpm']} từ/phút.")
-    tips.append("Luyện nghe 2 lần trước khi bấm nút Shadowing để bắt chước chuẩn ngữ điệu.")
+    assessment = build_assessment(
+        reference_text=drill["text"],
+        recognised_text=transcript,
+        stt_words=stt_words,
+        target_wpm=drill.get("speed_wpm"),
+    )
+
+    if assessment["scored"] is False:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Chưa nghe rõ giọng đọc. Hãy đọc to, rõ hơn và thử lại.",
+        )
+
+    feedback, tips = _build_shadowing_feedback(assessment, drill)
+
+    if current_user and db is not None:
+        try:
+            session = SpeakingSession(
+                user_id=current_user.id,
+                session_type="shadowing",
+                reference_text=drill["text"],
+                overall_score=assessment["overall_score"],
+                fluency_score=assessment["fluency_score"],
+                accuracy_score=assessment["accuracy_score"],
+                completeness_score=assessment["completeness_score"],
+                prosody_score=None,
+                recognised_text=transcript,
+                word_scores=assessment["word_scores"],
+                feedback=feedback,
+                improvement_tips=tips,
+            )
+            db.add(session)
+            await db.flush()
+        except Exception as e:
+            logger.warning(f"Failed to persist shadowing session to DB: {e}")
+            await db.rollback()
 
     return {
-        "overall_score": overall,
-        "intonation_match": int(intonation),
-        "rhythm_tempo_score": int(rhythm),
-        "accuracy_score": int(acc),
-        "feedback": f"Bạn đã hoàn thành tốt bài luyện nhại! Độ chuẩn xác đạt {acc}%. Ngữ điệu rất tự nhiên.",
+        "scored": True,
+        "reference_text": drill["text"],
+        "recognised_text": transcript,
+        "overall_score": assessment["overall_score"],
+        "accuracy_score": assessment["accuracy_score"],
+        "completeness_score": assessment["completeness_score"],
+        "rhythm_tempo_score": assessment["tempo_score"],
+        "fluency_score": assessment["fluency_score"],
+        "intonation_match": None,
+        "intonation_measured": False,
+        "has_timing": assessment["has_timing"],
+        "feedback": feedback,
         "tips": tips,
+        "scoring_notes": assessment["notes"],
+        "word_scores": assessment["word_scores"],
     }

@@ -1,0 +1,1523 @@
+[
+  {
+    "id": "verb_to_be",
+    "title": "Verb To Be (am/is/are)",
+    "title_vi": "Động từ To Be",
+    "level": "A1",
+    "category": "Nền tảng",
+    "description": "Động từ to be là động từ nền tảng dùng để giới thiệu bản thân, miêu tả trạng thái và nói về vị trí. Bài học giúp bạn chia đúng am/is/are với từng chủ ngữ và tạo câu khẳng định, phủ định, nghi vấn.",
+    "formula_affirmative": "S + am/is/are + N/Adj/Place",
+    "formula_negative": "S + am/is/are + not + N/Adj/Place",
+    "formula_question": "Am/Is/Are + S + N/Adj/Place?",
+    "time_markers": [
+      "now (bây giờ)",
+      "today (hôm nay)",
+      "every day (mỗi ngày)",
+      "at the moment (lúc này)",
+      "this year (năm nay)"
+    ],
+    "usage_rules": [
+      "Dùng để giới thiệu tên, tuổi, quốc tịch và nghề nghiệp.",
+      "Dùng để miêu tả tính cách, cảm xúc hoặc trạng thái của người và vật.",
+      "Dùng để nói về vị trí của người hoặc vật.",
+      "Dùng để nói về thời tiết hoặc một sự thật hiển nhiên ở hiện tại."
+    ],
+    "examples": [
+      {
+        "english": "I am a student.",
+        "vietnamese": "Tôi là học sinh.",
+        "note": "Giới thiệu nghề nghiệp, dùng 'am' với 'I'."
+      },
+      {
+        "english": "She is tired today.",
+        "vietnamese": "Hôm nay cô ấy mệt.",
+        "note": "Miêu tả trạng thái, dùng 'is' với ngôi thứ ba số ít."
+      },
+      {
+        "english": "They are from Canada.",
+        "vietnamese": "Họ đến từ Canada.",
+        "note": "Nói về quốc tịch, dùng 'are' với 'they'."
+      },
+      {
+        "english": "The book is on the table.",
+        "vietnamese": "Cuốn sách ở trên bàn.",
+        "note": "Nói về vị trí, dùng 'is' với danh từ số ít."
+      }
+    ],
+    "common_mistakes": [
+      "Bỏ mất động từ to be: 'I happy' → 'I am happy'.",
+      "Chia sai to be với chủ ngữ: 'He are a teacher' → 'He is a teacher'.",
+      "Dùng do/does thay cho to be trong câu hỏi: 'Do you tired?' → 'Are you tired?'.",
+      "Đặt not sai vị trí: 'I not am ready' → 'I am not ready'."
+    ],
+    "quiz": [
+      {
+        "question": "She _____ a doctor.",
+        "options": ["am", "is", "are", "be"],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'She' là ngôi thứ ba số ít nên dùng 'is'."
+      },
+      {
+        "question": "They _____ at home now.",
+        "options": ["am", "is", "are", "be"],
+        "correct_index": 2,
+        "explanation": "Chủ ngữ 'They' là số nhiều nên dùng 'are'."
+      },
+      {
+        "question": "I _____ not tired.",
+        "options": ["am", "is", "are", "be"],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ 'I' luôn đi với 'am', câu phủ định là 'am not'."
+      },
+      {
+        "question": "_____ you from Vietnam?",
+        "options": ["Am", "Is", "Are", "Do"],
+        "correct_index": 2,
+        "explanation": "Câu hỏi với chủ ngữ 'you' dùng 'Are', không dùng trợ động từ 'Do' với to be."
+      },
+      {
+        "question": "Nam and I _____ students.",
+        "options": ["am", "is", "are", "be"],
+        "correct_index": 2,
+        "explanation": "'Nam and I' tương đương 'we', là số nhiều nên dùng 'are'."
+      }
+    ]
+  },
+  {
+    "id": "subject_pronouns_possessives",
+    "title": "Subject Pronouns & Possessive Adjectives",
+    "title_vi": "Đại từ nhân xưng & tính từ sở hữu",
+    "level": "A1",
+    "category": "Nền tảng",
+    "description": "Đại từ nhân xưng đứng ở vị trí chủ ngữ để thay cho tên người hoặc vật. Tính từ sở hữu đứng trước danh từ để cho biết người hoặc vật đó thuộc về ai.",
+    "formula_affirmative": "S + V + O (S = I/you/he/she/it/we/they)",
+    "formula_negative": "S + do/does not + V + O",
+    "formula_question": "Do/Does + S + V + O?",
+    "time_markers": [
+      "every day (mỗi ngày)",
+      "now (bây giờ)",
+      "today (hôm nay)",
+      "at school (ở trường)",
+      "in my family (trong gia đình tôi)"
+    ],
+    "usage_rules": [
+      "Dùng I/you/he/she/it/we/they làm chủ ngữ đứng trước động từ.",
+      "Dùng my/your/his/her/its/our/their trước danh từ để chỉ sự sở hữu.",
+      "Không thêm -s vào sau tính từ sở hữu, vì nó không phải danh từ.",
+      "Phân biệt 'its' (của nó) với 'it's' (it is) khi viết câu."
+    ],
+    "examples": [
+      {
+        "english": "She is my sister.",
+        "vietnamese": "Cô ấy là chị gái tôi.",
+        "note": "'She' là chủ ngữ, 'my' đứng trước danh từ 'sister'."
+      },
+      {
+        "english": "We love our dog.",
+        "vietnamese": "Chúng tôi yêu chú chó của chúng tôi.",
+        "note": "'We' đi với tính từ sở hữu 'our'."
+      },
+      {
+        "english": "Tom and Anna are married. Their house is big.",
+        "vietnamese": "Tom và Anna đã kết hôn. Ngôi nhà của họ rất lớn.",
+        "note": "Dùng 'their' thay cho 'Tom and Anna'."
+      },
+      {
+        "english": "The cat is licking its paw.",
+        "vietnamese": "Con mèo đang liếm chân của nó.",
+        "note": "'its' là tính từ sở hữu của vật, không có dấu nháy đơn."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng đại từ tân ngữ làm chủ ngữ: 'Me am a student' → 'I am a student'.",
+      "Nhầm his/her: 'Mary loves his job' → 'Mary loves her job'.",
+      "Thêm -s vào tính từ sở hữu: 'hers books' → 'her books'.",
+      "Viết 'it's' khi cần 'its': 'The dog wagged it's tail' → 'The dog wagged its tail'."
+    ],
+    "quiz": [
+      {
+        "question": "This is my sister. _____ is ten years old.",
+        "options": ["He", "She", "It", "They"],
+        "correct_index": 1,
+        "explanation": "'My sister' là nữ nên thay bằng đại từ chủ ngữ 'She'."
+      },
+      {
+        "question": "We love our dog. _____ is very friendly.",
+        "options": ["He", "She", "It", "They"],
+        "correct_index": 2,
+        "explanation": "Con vật được thay bằng 'It' khi không nhấn mạnh giới tính."
+      },
+      {
+        "question": "Tom and Anna are married. _____ house is big.",
+        "options": ["His", "Her", "Their", "Our"],
+        "correct_index": 2,
+        "explanation": "Hai người trở lên thuộc ngôi thứ ba số nhiều nên dùng 'Their'."
+      },
+      {
+        "question": "I have a new phone. _____ phone is black.",
+        "options": ["My", "Mine", "Me", "I"],
+        "correct_index": 0,
+        "explanation": "Trước danh từ 'phone' cần tính từ sở hữu 'My'."
+      },
+      {
+        "question": "Mary likes _____ new job.",
+        "options": ["she", "her", "hers", "he"],
+        "correct_index": 1,
+        "explanation": "'Mary' là nữ, trước danh từ 'job' dùng tính từ sở hữu 'her'."
+      }
+    ]
+  },
+  {
+    "id": "articles_basic",
+    "title": "Articles a/an/the (Basic)",
+    "title_vi": "Mạo từ cơ bản",
+    "level": "A1",
+    "category": "Danh từ & Mạo từ",
+    "description": "Mạo từ đứng trước danh từ để cho biết danh từ đó đã xác định hay chưa. 'A/an' dùng cho danh từ đếm được số ít được nhắc lần đầu, còn 'the' dùng khi người nghe đã biết rõ đối tượng.",
+    "formula_affirmative": "S + V + a/an + singular noun | S + V + the + noun",
+    "formula_negative": "S + do/does not + V + a/an + noun | S + be + not + the + noun",
+    "formula_question": "Is there a/an + noun? | Is + S + the + noun?",
+    "time_markers": [
+      "a/an + danh từ số ít đếm được (lần đầu nhắc đến)",
+      "the + danh từ đã xác định (đã nhắc trước đó)",
+      "the + so sánh nhất",
+      "the + tên nhạc cụ",
+      "không mạo từ + danh từ số nhiều/không đếm được (nghĩa chung)"
+    ],
+    "usage_rules": [
+      "Dùng 'a' trước danh từ bắt đầu bằng phụ âm và 'an' trước danh từ bắt đầu bằng nguyên âm.",
+      "Dùng 'the' khi cả người nói và người nghe đều biết đối tượng được nhắc đến.",
+      "Dùng 'the' trước so sánh nhất và trước tên các nhạc cụ.",
+      "Không dùng mạo từ trước danh từ số nhiều hoặc không đếm được khi nói chung chung."
+    ],
+    "examples": [
+      {
+        "english": "I have an apple and a banana.",
+        "vietnamese": "Tôi có một quả táo và một quả chuối.",
+        "note": "'an' đứng trước 'apple' vì bắt đầu bằng nguyên âm."
+      },
+      {
+        "english": "She is an engineer.",
+        "vietnamese": "Cô ấy là một kỹ sư.",
+        "note": "Nghề nghiệp số ít dùng 'a/an'."
+      },
+      {
+        "english": "The sun is very bright today.",
+        "vietnamese": "Hôm nay mặt trời rất sáng.",
+        "note": "Vật duy nhất, đã xác định nên dùng 'the'."
+      },
+      {
+        "english": "I like music.",
+        "vietnamese": "Tôi thích âm nhạc.",
+        "note": "Danh từ không đếm được mang nghĩa chung nên không dùng mạo từ."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'a' trước nguyên âm: 'a apple' → 'an apple'.",
+      "Dùng mạo từ với danh từ không đếm được: 'an information' → 'information'.",
+      "Quên 'the' với vật duy nhất: 'Sun is hot' → 'The sun is hot'.",
+      "Dùng 'the' khi nói chung: 'I like the music' → 'I like music'."
+    ],
+    "quiz": [
+      {
+        "question": "I have _____ apple and _____ banana.",
+        "options": ["a / a", "an / a", "a / an", "an / an"],
+        "correct_index": 1,
+        "explanation": "'Apple' bắt đầu bằng nguyên âm nên dùng 'an', 'banana' dùng 'a'."
+      },
+      {
+        "question": "She is _____ engineer.",
+        "options": ["a", "an", "the", "no article"],
+        "correct_index": 1,
+        "explanation": "'Engineer' bắt đầu bằng nguyên âm và là nghề nghiệp số ít nên dùng 'an'."
+      },
+      {
+        "question": "_____ sun is very bright today.",
+        "options": ["A", "An", "The", "Some"],
+        "correct_index": 2,
+        "explanation": "Mặt trời là vật duy nhất nên dùng mạo từ xác định 'The'."
+      },
+      {
+        "question": "We don't have _____ car.",
+        "options": ["a", "an", "the", "some"],
+        "correct_index": 0,
+        "explanation": "'Car' là danh từ đếm được số ít, câu phủ định dùng 'a'."
+      },
+      {
+        "question": "I like _____ music.",
+        "options": ["a", "an", "the", "no article"],
+        "correct_index": 3,
+        "explanation": "'Music' là danh từ không đếm được nói chung nên không dùng mạo từ."
+      }
+    ]
+  },
+  {
+    "id": "singular_plural_demonstratives",
+    "title": "Singular/Plural & This/That/These/Those",
+    "title_vi": "Danh từ số ít/số nhiều & chỉ định từ",
+    "level": "A1",
+    "category": "Danh từ & Mạo từ",
+    "description": "Danh từ tiếng Anh có dạng số ít và số nhiều, thường được tạo bằng cách thêm -s hoặc -es. Các chỉ định từ this/that/these/those giúp chỉ rõ vật ở gần hay xa và ở dạng số ít hay số nhiều.",
+    "formula_affirmative": "This/That + is + singular noun | These/Those + are + plural noun",
+    "formula_negative": "This/That + is not + singular noun | These/Those + are not + plural noun",
+    "formula_question": "Is this/that + singular noun? | Are these/those + plural noun?",
+    "time_markers": [
+      "this (này - ở gần, số ít)",
+      "that (kia - ở xa, số ít)",
+      "these (những ... này - ở gần, số nhiều)",
+      "those (những ... kia - ở xa, số nhiều)",
+      "every day (mỗi ngày)"
+    ],
+    "usage_rules": [
+      "Thêm -s vào hầu hết danh từ số nhiều, thêm -es sau -s, -sh, -ch, -x, -o.",
+      "Một số danh từ có dạng số nhiều bất quy tắc như child → children, man → men.",
+      "Dùng this/these cho vật ở gần người nói và that/those cho vật ở xa.",
+      "This/that đi với động từ số ít 'is', these/those đi với 'are'."
+    ],
+    "examples": [
+      {
+        "english": "This is my book.",
+        "vietnamese": "Đây là cuốn sách của tôi.",
+        "note": "Vật ở gần, số ít dùng 'This is'."
+      },
+      {
+        "english": "These are my friends.",
+        "vietnamese": "Đây là những người bạn của tôi.",
+        "note": "Nhiều người ở gần dùng 'These are'."
+      },
+      {
+        "english": "Those shoes over there are expensive.",
+        "vietnamese": "Đôi giày ở đằng kia rất đắt.",
+        "note": "Vật ở xa, số nhiều dùng 'Those'."
+      },
+      {
+        "english": "There are two children in the garden.",
+        "vietnamese": "Có hai đứa trẻ trong vườn.",
+        "note": "Số nhiều bất quy tắc của 'child' là 'children'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng sai số ít/số nhiều: 'This books are new' → 'These books are new'.",
+      "Thêm -s vào danh từ bất quy tắc: 'two childs' → 'two children'.",
+      "Dùng 'are' với this/that: 'That are my pen' → 'That is my pen'.",
+      "Dùng 'these' với danh từ số ít: 'these book' → 'this book'."
+    ],
+    "quiz": [
+      {
+        "question": "_____ is my book.",
+        "options": ["This", "These", "Those", "They"],
+        "correct_index": 0,
+        "explanation": "'Book' là số ít và ở gần nên dùng 'This'."
+      },
+      {
+        "question": "_____ are my friends.",
+        "options": ["This", "That", "These", "He"],
+        "correct_index": 2,
+        "explanation": "'Friends' là số nhiều ở gần nên dùng 'These'."
+      },
+      {
+        "question": "There are two _____ in the garden.",
+        "options": ["child", "childs", "children", "childrens"],
+        "correct_index": 2,
+        "explanation": "Số nhiều bất quy tắc của 'child' là 'children'."
+      },
+      {
+        "question": "_____ shoes over there are expensive.",
+        "options": ["This", "That", "These", "Those"],
+        "correct_index": 3,
+        "explanation": "'Shoes' là số nhiều và ở xa nên dùng 'Those'."
+      },
+      {
+        "question": "That _____ a nice car.",
+        "options": ["are", "is", "am", "be"],
+        "correct_index": 1,
+        "explanation": "'That' là số ít nên đi với động từ 'is'."
+      }
+    ]
+  },
+  {
+    "id": "present_simple",
+    "title": "Present Simple",
+    "title_vi": "Thì Hiện Tại Đơn",
+    "level": "A1",
+    "category": "Các Thì",
+    "description": "Thì hiện tại đơn diễn tả thói quen, sự thật hiển nhiên và lịch trình cố định. Đây là thì cơ bản nhất, thường dùng với các trạng từ chỉ tần suất và các cụm từ chỉ thời gian lặp lại.",
+    "formula_affirmative": "S + V(s/es) + O",
+    "formula_negative": "S + do/does not + V + O",
+    "formula_question": "Do/Does + S + V + O?",
+    "time_markers": [
+      "always / usually / often / sometimes / never (luôn luôn / thường / hay / thỉnh thoảng / không bao giờ)",
+      "every day / every week / on Mondays (mỗi ngày / mỗi tuần / vào các ngày thứ Hai)",
+      "in the morning / at night (vào buổi sáng / vào ban đêm)",
+      "once a week / twice a month (một lần một tuần / hai lần một tháng)"
+    ],
+    "usage_rules": [
+      "Dùng cho thói quen lặp đi lặp lại hằng ngày, hằng tuần.",
+      "Dùng cho sự thật hiển nhiên hoặc chân lý.",
+      "Dùng cho lịch trình, thời gian biểu cố định.",
+      "Thêm -s hoặc -es vào động từ khi chủ ngữ là ngôi thứ ba số ít."
+    ],
+    "examples": [
+      {
+        "english": "I study English every evening.",
+        "vietnamese": "Tôi học tiếng Anh mỗi tối.",
+        "note": "Thói quen hằng ngày."
+      },
+      {
+        "english": "Water boils at 100 degrees Celsius.",
+        "vietnamese": "Nước sôi ở 100 độ C.",
+        "note": "Sự thật hiển nhiên."
+      },
+      {
+        "english": "The train leaves at 8 a.m.",
+        "vietnamese": "Tàu khởi hành lúc 8 giờ sáng.",
+        "note": "Lịch trình cố định."
+      },
+      {
+        "english": "My brother plays football on Sundays.",
+        "vietnamese": "Anh trai tôi chơi bóng đá vào các ngày Chủ nhật.",
+        "note": "Chủ ngữ ngôi thứ ba số ít nên động từ thêm -s."
+      }
+    ],
+    "common_mistakes": [
+      "Thêm -s sai: 'He go' → 'He goes'.",
+      "Dùng do với ngôi thứ ba: 'Does he goes?' → 'Does he go?'.",
+      "Quên trạng từ tần suất đúng vị trí: 'I always am happy' → 'I am always happy'.",
+      "Dùng thì hiện tại đơn cho hành động đang diễn ra: 'I study now' → 'I am studying now'."
+    ],
+    "quiz": [
+      {
+        "question": "She _____ to school every day.",
+        "options": ["go", "goes", "going", "gone"],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'She' ngôi thứ ba số ít nên động từ thêm -es: goes."
+      },
+      {
+        "question": "They _____ coffee in the morning.",
+        "options": ["drinks", "drink", "drinking", "drank"],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'They' số nhiều nên dùng động từ nguyên mẫu 'drink'."
+      },
+      {
+        "question": "_____ he play football?",
+        "options": ["Do", "Does", "Is", "Are"],
+        "correct_index": 1,
+        "explanation": "Câu hỏi với chủ ngữ ngôi thứ ba số ít dùng 'Does'."
+      },
+      {
+        "question": "My sister _____ TV every evening.",
+        "options": ["watch", "watches", "watching", "watched"],
+        "correct_index": 1,
+        "explanation": "'My sister' là ngôi thứ ba số ít nên thêm -es: watches."
+      },
+      {
+        "question": "We _____ not work on Sundays.",
+        "options": ["do", "does", "are", "is"],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ 'We' dùng trợ động từ 'do' ở câu phủ định."
+      }
+    ]
+  },
+  {
+    "id": "present_continuous",
+    "title": "Present Continuous",
+    "title_vi": "Thì Hiện Tại Tiếp Diễn",
+    "level": "A1",
+    "category": "Các Thì",
+    "description": "Thì hiện tại tiếp diễn diễn tả hành động đang xảy ra ngay lúc nói hoặc một tình huống tạm thời. Cấu trúc gồm động từ to be và động từ chính thêm -ing.",
+    "formula_affirmative": "S + am/is/are + V-ing + O",
+    "formula_negative": "S + am/is/are + not + V-ing + O",
+    "formula_question": "Am/Is/Are + S + V-ing + O?",
+    "time_markers": [
+      "now (bây giờ)",
+      "right now (ngay bây giờ)",
+      "at the moment (lúc này)",
+      "look! / listen! (nhìn kìa! / nghe kìa!)",
+      "today / this week (hôm nay / tuần này)"
+    ],
+    "usage_rules": [
+      "Dùng cho hành động đang diễn ra ngay tại thời điểm nói.",
+      "Dùng cho hành động hoặc tình huống tạm thời, không kéo dài.",
+      "Dùng cho kế hoạch tương lai gần đã được sắp xếp sẵn.",
+      "Dùng cho xu hướng hoặc thay đổi đang diễn ra.",
+      "Không dùng với các động từ chỉ trạng thái như know, like, want."
+    ],
+    "examples": [
+      {
+        "english": "Look! The baby is crying.",
+        "vietnamese": "Nhìn kìa! Em bé đang khóc.",
+        "note": "Hành động đang diễn ra ngay lúc nói."
+      },
+      {
+        "english": "They are playing football at the moment.",
+        "vietnamese": "Họ đang chơi bóng đá vào lúc này.",
+        "note": "Có 'at the moment' là dấu hiệu của thì tiếp diễn."
+      },
+      {
+        "english": "I am staying with my aunt this week.",
+        "vietnamese": "Tuần này tôi đang ở nhà dì tôi.",
+        "note": "Tình huống tạm thời, không phải thói quen."
+      },
+      {
+        "english": "We are meeting our teacher tomorrow.",
+        "vietnamese": "Ngày mai chúng tôi sẽ gặp giáo viên.",
+        "note": "Kế hoạch tương lai gần đã sắp xếp."
+      }
+    ],
+    "common_mistakes": [
+      "Quên động từ to be: 'She watching TV' → 'She is watching TV'.",
+      "Chia sai đuôi -ing: 'runing' → 'running', 'writeing' → 'writing'.",
+      "Dùng thì tiếp diễn với động từ trạng thái: 'I am knowing him' → 'I know him'.",
+      "Dùng hiện tại đơn cho hành động đang diễn ra: 'She cooks now' → 'She is cooking now'."
+    ],
+    "quiz": [
+      {
+        "question": "Look! The baby _____.",
+        "options": ["cry", "cries", "is crying", "crying"],
+        "correct_index": 2,
+        "explanation": "'Look!' báo hiệu hành động đang diễn ra, cần 'is crying'."
+      },
+      {
+        "question": "They _____ football at the moment.",
+        "options": ["play", "plays", "are playing", "played"],
+        "correct_index": 2,
+        "explanation": "'At the moment' là dấu hiệu của thì hiện tại tiếp diễn, chủ ngữ 'They' dùng 'are playing'."
+      },
+      {
+        "question": "I _____ not working today.",
+        "options": ["am", "is", "are", "do"],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ 'I' đi với 'am' trong cấu trúc 'am not + V-ing'."
+      },
+      {
+        "question": "_____ she studying now?",
+        "options": ["Do", "Does", "Is", "Are"],
+        "correct_index": 2,
+        "explanation": "Câu hỏi tiếp diễn với chủ ngữ 'she' dùng 'Is she + V-ing?'."
+      },
+      {
+        "question": "We _____ dinner right now.",
+        "options": ["have", "has", "are having", "having"],
+        "correct_index": 2,
+        "explanation": "'Right now' chỉ hành động đang diễn ra, dùng 'are having'."
+      }
+    ]
+  },
+  {
+    "id": "present_simple_vs_continuous",
+    "title": "Present Simple vs Present Continuous",
+    "title_vi": "Hiện tại đơn vs Hiện tại tiếp diễn",
+    "level": "A1",
+    "category": "Các Thì",
+    "description": "Hiện tại đơn nói về thói quen và sự thật lâu dài, còn hiện tại tiếp diễn nói về hành động đang xảy ra hoặc tình huống tạm thời. Việc phân biệt hai thì giúp bạn chọn đúng dạng động từ theo ngữ cảnh.",
+    "formula_affirmative": "S + V(s/es) (thói quen) | S + am/is/are + V-ing (đang diễn ra)",
+    "formula_negative": "S + do/does not + V | S + am/is/are + not + V-ing",
+    "formula_question": "Do/Does + S + V? | Am/Is/Are + S + V-ing?",
+    "time_markers": [
+      "every day / usually / often (mỗi ngày / thường / hay) - hiện tại đơn",
+      "now / right now / at the moment (bây giờ / ngay bây giờ / lúc này) - tiếp diễn",
+      "look! / listen! (nhìn kìa! / nghe kìa!) - tiếp diễn",
+      "today / this week (hôm nay / tuần này) - tiếp diễn khi nói tạm thời"
+    ],
+    "usage_rules": [
+      "Dùng hiện tại đơn cho thói quen, sở thích và sự thật ổn định.",
+      "Dùng hiện tại tiếp diễn cho hành động đang diễn ra tại thời điểm nói.",
+      "Dùng hiện tại tiếp diễn cho tình huống tạm thời, khác với bình thường.",
+      "Không dùng hiện tại tiếp diễn với động từ chỉ trạng thái như like, know, want."
+    ],
+    "examples": [
+      {
+        "english": "She usually goes to work by bus.",
+        "vietnamese": "Cô ấy thường đi làm bằng xe buýt.",
+        "note": "Thói quen nên dùng hiện tại đơn."
+      },
+      {
+        "english": "She is going to work by taxi today.",
+        "vietnamese": "Hôm nay cô ấy đang đi làm bằng taxi.",
+        "note": "Tạm thời trong hôm nay nên dùng tiếp diễn."
+      },
+      {
+        "english": "I play tennis every Sunday.",
+        "vietnamese": "Tôi chơi tennis vào mỗi Chủ nhật.",
+        "note": "Hành động lặp lại."
+      },
+      {
+        "english": "Be quiet! The children are sleeping.",
+        "vietnamese": "Hãy im lặng! Bọn trẻ đang ngủ.",
+        "note": "Hành động đang diễn ra ngay lúc nói."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng tiếp diễn cho thói quen: 'I am usually going to school' → 'I usually go to school'.",
+      "Dùng hiện tại đơn cho hành động đang xảy ra: 'Look! It rains' → 'Look! It is raining'.",
+      "Quên -s ở ngôi thứ ba số ít: 'He often go' → 'He often goes'.",
+      "Dùng tiếp diễn với động từ trạng thái: 'I am wanting a drink' → 'I want a drink'."
+    ],
+    "quiz": [
+      {
+        "question": "She usually _____ to work by bus.",
+        "options": ["go", "goes", "is going", "going"],
+        "correct_index": 1,
+        "explanation": "'Usually' chỉ thói quen nên dùng hiện tại đơn, chủ ngữ 'She' thêm -es."
+      },
+      {
+        "question": "Be quiet! The children _____.",
+        "options": ["sleep", "sleeps", "are sleeping", "slept"],
+        "correct_index": 2,
+        "explanation": "Hành động đang diễn ra ngay lúc nói nên dùng 'are sleeping'."
+      },
+      {
+        "question": "I _____ TV every evening.",
+        "options": ["watch", "am watching", "watches", "watching"],
+        "correct_index": 0,
+        "explanation": "'Every evening' chỉ thói quen, chủ ngữ 'I' dùng 'watch'."
+      },
+      {
+        "question": "He _____ today because his car is broken.",
+        "options": ["walks", "is walking", "walk", "walking"],
+        "correct_index": 1,
+        "explanation": "Đây là tình huống tạm thời trong hôm nay nên dùng 'is walking'."
+      },
+      {
+        "question": "_____ you often play tennis?",
+        "options": ["Are", "Do", "Does", "Is"],
+        "correct_index": 1,
+        "explanation": "'Often' chỉ thói quen, câu hỏi hiện tại đơn với 'you' dùng 'Do'."
+      }
+    ]
+  },
+  {
+    "id": "can_cannot_imperatives",
+    "title": "Can/Can't & Imperatives",
+    "title_vi": "Can/Can't & Câu mệnh lệnh",
+    "level": "A1",
+    "category": "Modal & Câu lệnh",
+    "description": "Can dùng để nói về khả năng hoặc xin phép, còn can't diễn tả điều không thể làm. Câu mệnh lệnh dùng động từ nguyên mẫu để yêu cầu, hướng dẫn hoặc ra lệnh cho người khác.",
+    "formula_affirmative": "S + can + V (bare) | V (bare) + O",
+    "formula_negative": "S + cannot/can't + V (bare) | Don't + V + O",
+    "formula_question": "Can + S + V (bare)? | Will you + V (bare)?",
+    "time_markers": [
+      "now (bây giờ)",
+      "today (hôm nay)",
+      "every day (mỗi ngày)",
+      "please (làm ơn)",
+      "in class (trong lớp học)"
+    ],
+    "usage_rules": [
+      "Dùng 'can' để nói ai đó có khả năng làm việc gì.",
+      "Dùng 'can' để xin phép hoặc đưa ra lời đề nghị lịch sự.",
+      "Dùng 'can't' để nói không có khả năng hoặc không được phép.",
+      "Câu mệnh lệnh dùng động từ nguyên mẫu không có chủ ngữ.",
+      "Thêm 'please' để câu mệnh lệnh lịch sự hơn."
+    ],
+    "examples": [
+      {
+        "english": "I can swim, but I can't drive.",
+        "vietnamese": "Tôi biết bơi, nhưng tôi không biết lái xe.",
+        "note": "'Can/can't' + động từ nguyên mẫu."
+      },
+      {
+        "english": "Can you help me, please?",
+        "vietnamese": "Bạn có thể giúp tôi được không?",
+        "note": "Dùng 'Can you...?' để nhờ vả lịch sự."
+      },
+      {
+        "english": "Open the door, please.",
+        "vietnamese": "Làm ơn mở cửa.",
+        "note": "Câu mệnh lệnh khẳng định dùng động từ nguyên mẫu."
+      },
+      {
+        "english": "Don't run in the classroom.",
+        "vietnamese": "Đừng chạy trong lớp học.",
+        "note": "Câu mệnh lệnh phủ định dùng 'Don't + V'."
+      }
+    ],
+    "common_mistakes": [
+      "Thêm 'to' sau can: 'I can to swim' → 'I can swim'.",
+      "Chia can theo chủ ngữ: 'She cans cook' → 'She can cook'.",
+      "Dùng V-ing sau don't: 'Don't running' → 'Don't run'.",
+      "Dùng trợ động từ do với can: 'Do you can help me?' → 'Can you help me?'."
+    ],
+    "quiz": [
+      {
+        "question": "She _____ swim very well.",
+        "options": ["can", "cans", "can to", "is can"],
+        "correct_index": 0,
+        "explanation": "'Can' là modal verb, không chia và đi với động từ nguyên mẫu."
+      },
+      {
+        "question": "I _____ drive a car. I am only 15.",
+        "options": ["can", "can't", "don't can", "not can"],
+        "correct_index": 1,
+        "explanation": "Ở tuổi 15 chưa đủ tuổi lái xe nên dùng 'can't' để chỉ không có khả năng."
+      },
+      {
+        "question": "_____ you help me, please?",
+        "options": ["Can", "Do", "Are", "Is"],
+        "correct_index": 0,
+        "explanation": "Để nhờ vả lịch sự dùng 'Can you + V?'."
+      },
+      {
+        "question": "_____ the door, please.",
+        "options": ["Open", "Opens", "Opening", "To open"],
+        "correct_index": 0,
+        "explanation": "Câu mệnh lệnh dùng động từ nguyên mẫu 'Open'."
+      },
+      {
+        "question": "_____ run in the classroom.",
+        "options": ["Not", "Don't", "Doesn't", "No"],
+        "correct_index": 1,
+        "explanation": "Câu mệnh lệnh phủ định dùng 'Don't + V'."
+      }
+    ]
+  },
+  {
+    "id": "there_is_are_some_any",
+    "title": "There is/are & Some/Any",
+    "title_vi": "There is/are & Some/Any",
+    "level": "A1",
+    "category": "Lượng từ",
+    "description": "Cấu trúc 'There is/There are' dùng để nói có vật gì đó ở đâu. 'Some' thường dùng trong câu khẳng định, còn 'any' thường dùng trong câu phủ định và câu hỏi.",
+    "formula_affirmative": "There is + a/an + singular noun | There are + some + plural noun",
+    "formula_negative": "There is not + a/an + noun | There are not + any + plural noun",
+    "formula_question": "Is there + a/an + noun? | Are there + any + plural noun?",
+    "time_markers": [
+      "some + câu khẳng định (một vài, một ít)",
+      "any + câu phủ định và câu hỏi (nào)",
+      "there is + danh từ số ít (có một ...)",
+      "there are + danh từ số nhiều (có nhiều ...)",
+      "now / today (bây giờ / hôm nay)"
+    ],
+    "usage_rules": [
+      "Dùng 'There is' với danh từ số ít hoặc không đếm được.",
+      "Dùng 'There are' với danh từ đếm được số nhiều.",
+      "Dùng 'some' trong câu khẳng định và lời mời, lời đề nghị.",
+      "Dùng 'any' trong câu phủ định và phần lớn câu hỏi.",
+      "Không dùng 'some' hoặc 'any' trước danh từ số ít đếm được."
+    ],
+    "examples": [
+      {
+        "english": "There is a book on the desk.",
+        "vietnamese": "Có một cuốn sách trên bàn.",
+        "note": "Danh từ số ít nên dùng 'There is'."
+      },
+      {
+        "english": "There are some students in the classroom.",
+        "vietnamese": "Có một vài học sinh trong lớp.",
+        "note": "Câu khẳng định với danh từ số nhiều dùng 'some'."
+      },
+      {
+        "english": "Are there any apples in the fridge?",
+        "vietnamese": "Có quả táo nào trong tủ lạnh không?",
+        "note": "Câu hỏi dùng 'any'."
+      },
+      {
+        "english": "There isn't any milk in the glass.",
+        "vietnamese": "Không có chút sữa nào trong ly.",
+        "note": "Câu phủ định với danh từ không đếm được dùng 'any'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'There is' với danh từ số nhiều: 'There is two books' → 'There are two books'.",
+      "Dùng 'some' trong câu phủ định: 'There aren't some chairs' → 'There aren't any chairs'.",
+      "Dùng 'any' trong câu khẳng định: 'There are any chairs' → 'There are some chairs'.",
+      "Nhầm 'there' với 'their': 'Their is a park near my house' → 'There is a park near my house'."
+    ],
+    "quiz": [
+      {
+        "question": "There _____ a book on the desk.",
+        "options": ["is", "are", "be", "have"],
+        "correct_index": 0,
+        "explanation": "'A book' là danh từ số ít nên dùng 'There is'."
+      },
+      {
+        "question": "There _____ some students in the class.",
+        "options": ["is", "are", "be", "has"],
+        "correct_index": 1,
+        "explanation": "'Students' là số nhiều nên dùng 'There are'."
+      },
+      {
+        "question": "Are there _____ apples in the fridge?",
+        "options": ["some", "any", "a", "much"],
+        "correct_index": 1,
+        "explanation": "Câu hỏi thường dùng 'any' trước danh từ số nhiều."
+      },
+      {
+        "question": "There isn't _____ milk in the glass.",
+        "options": ["some", "any", "many", "a"],
+        "correct_index": 1,
+        "explanation": "Câu phủ định dùng 'any', 'milk' là danh từ không đếm được."
+      },
+      {
+        "question": "There are _____ chairs in the room.",
+        "options": ["any", "a", "some", "much"],
+        "correct_index": 2,
+        "explanation": "Câu khẳng định với danh từ số nhiều dùng 'some'."
+      }
+    ]
+  },
+  {
+    "id": "countable_uncountable_basic",
+    "title": "Countable & Uncountable Nouns (Basic)",
+    "title_vi": "Danh từ đếm được/không đếm được",
+    "level": "A1",
+    "category": "Danh từ & Lượng từ",
+    "description": "Danh từ đếm được có thể đếm bằng số và có dạng số nhiều, còn danh từ không đếm được không đếm trực tiếp và không thêm -s. Bài học giúp bạn dùng đúng many/much, a/an và các đơn vị đo đi kèm.",
+    "formula_affirmative": "S + V + a/an + countable singular | S + V + some/much + uncountable",
+    "formula_negative": "S + do/does not + V + many + countable plural | S + do/does not + V + much + uncountable",
+    "formula_question": "How many + countable plural + ...? | How much + uncountable + ...?",
+    "time_markers": [
+      "many + danh từ đếm được số nhiều (nhiều ...)",
+      "much + danh từ không đếm được (nhiều ...)",
+      "a lot of + cả hai loại (rất nhiều)",
+      "a piece of / a glass of / a bottle of (một miếng / một ly / một chai)",
+      "every day (mỗi ngày)"
+    ],
+    "usage_rules": [
+      "Danh từ đếm được có dạng số ít và số nhiều, có thể dùng a/an với số ít.",
+      "Danh từ không đếm được không có dạng số nhiều và không dùng a/an.",
+      "Dùng 'many' với danh từ đếm được số nhiều, 'much' với danh từ không đếm được.",
+      "Dùng 'a lot of' được với cả hai loại danh từ trong câu khẳng định.",
+      "Dùng đơn vị đo như a glass of, a piece of để đếm danh từ không đếm được."
+    ],
+    "examples": [
+      {
+        "english": "I have two brothers.",
+        "vietnamese": "Tôi có hai anh trai.",
+        "note": "'Brother' là danh từ đếm được, số nhiều thêm -s."
+      },
+      {
+        "english": "There is some water in the bottle.",
+        "vietnamese": "Có một ít nước trong chai.",
+        "note": "'Water' là danh từ không đếm được nên dùng 'some'."
+      },
+      {
+        "english": "How much money do you have?",
+        "vietnamese": "Bạn có bao nhiêu tiền?",
+        "note": "'Money' không đếm được nên dùng 'How much'."
+      },
+      {
+        "english": "We don't have much time.",
+        "vietnamese": "Chúng tôi không có nhiều thời gian.",
+        "note": "'Time' không đếm được nên dùng 'much'."
+      }
+    ],
+    "common_mistakes": [
+      "Thêm -s vào danh từ không đếm được: 'two breads' → 'two loaves of bread'.",
+      "Dùng 'much' với danh từ đếm được: 'much books' → 'many books'.",
+      "Dùng mạo từ với danh từ không đếm được: 'an information' → 'some information'.",
+      "Dùng 'many' với danh từ không đếm được: 'many money' → 'much money'."
+    ],
+    "quiz": [
+      {
+        "question": "How _____ books do you have?",
+        "options": ["much", "many", "some", "any"],
+        "correct_index": 1,
+        "explanation": "'Books' là danh từ đếm được số nhiều nên dùng 'many'."
+      },
+      {
+        "question": "How _____ water do you drink every day?",
+        "options": ["many", "much", "a", "an"],
+        "correct_index": 1,
+        "explanation": "'Water' là danh từ không đếm được nên dùng 'much'."
+      },
+      {
+        "question": "I need _____ information about the course.",
+        "options": ["an", "a", "some", "many"],
+        "correct_index": 2,
+        "explanation": "'Information' không đếm được, không dùng 'a/an' hay 'many', nên dùng 'some'."
+      },
+      {
+        "question": "There are three _____ on the table.",
+        "options": ["bread", "breads", "loaves of bread", "loaf"],
+        "correct_index": 2,
+        "explanation": "'Bread' không đếm được, muốn đếm phải dùng đơn vị 'loaves of bread'."
+      },
+      {
+        "question": "She doesn't have _____ money.",
+        "options": ["many", "much", "a lot", "some"],
+        "correct_index": 1,
+        "explanation": "Câu phủ định với 'money' không đếm được dùng 'much'."
+      }
+    ]
+  },
+  {
+    "id": "prepositions_place",
+    "title": "Prepositions of Place",
+    "title_vi": "Giới từ chỉ nơi chốn",
+    "level": "A1",
+    "category": "Giới từ",
+    "description": "Giới từ chỉ nơi chốn giúp bạn mô tả vị trí của người và vật. Ba giới từ quan trọng nhất là in, on và at, mỗi giới từ dùng trong một kiểu không gian khác nhau.",
+    "formula_affirmative": "S + be + in/on/at/under/next to + place",
+    "formula_negative": "S + be + not + preposition + place",
+    "formula_question": "Is + S + preposition + place?",
+    "time_markers": [
+      "in (trong - không gian kín hoặc khu vực lớn)",
+      "on (trên - bề mặt)",
+      "at (tại - địa điểm cụ thể)",
+      "under (ở dưới)",
+      "between (ở giữa hai vật)",
+      "next to (bên cạnh)"
+    ],
+    "usage_rules": [
+      "Dùng 'in' cho không gian kín như trong phòng, trong hộp, hoặc khu vực lớn như thành phố, quốc gia.",
+      "Dùng 'on' khi vật tiếp xúc với một bề mặt như trên bàn, trên tường.",
+      "Dùng 'at' cho một điểm cụ thể như at home, at school, at the bus stop.",
+      "Dùng 'under', 'behind', 'in front of', 'between', 'next to' để mô tả vị trí tương đối."
+    ],
+    "examples": [
+      {
+        "english": "The book is on the table.",
+        "vietnamese": "Cuốn sách ở trên bàn.",
+        "note": "Sách tiếp xúc với mặt bàn nên dùng 'on'."
+      },
+      {
+        "english": "My father is at home.",
+        "vietnamese": "Bố tôi đang ở nhà.",
+        "note": "'At home' là cụm cố định."
+      },
+      {
+        "english": "She lives in Hanoi.",
+        "vietnamese": "Cô ấy sống ở Hà Nội.",
+        "note": "Thành phố là khu vực lớn nên dùng 'in'."
+      },
+      {
+        "english": "The bank is between the supermarket and the school.",
+        "vietnamese": "Ngân hàng nằm giữa siêu thị và trường học.",
+        "note": "'Between' dùng cho vị trí giữa hai vật."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'in' thay 'on' với bề mặt: 'in the table' → 'on the table'.",
+      "Dùng 'at' thay 'in' với không gian kín: 'at the room' → 'in the room'.",
+      "Nói 'on home' thay vì 'at home'.",
+      "Dùng 'between' cho nhiều hơn hai vật: 'between three shops' → 'among three shops' (ở trình độ A1 nên dùng 'between' với hai vật)."
+    ],
+    "quiz": [
+      {
+        "question": "The book is _____ the table.",
+        "options": ["in", "on", "at", "under"],
+        "correct_index": 1,
+        "explanation": "Sách nằm trên bề mặt bàn nên dùng 'on'."
+      },
+      {
+        "question": "My father is _____ home.",
+        "options": ["in", "on", "at", "to"],
+        "correct_index": 2,
+        "explanation": "'At home' là cụm giới từ cố định."
+      },
+      {
+        "question": "The cat is sleeping _____ the sofa.",
+        "options": ["on", "at", "in", "of"],
+        "correct_index": 0,
+        "explanation": "Con mèo nằm trên bề mặt ghế sofa nên dùng 'on'."
+      },
+      {
+        "question": "She lives _____ Hanoi.",
+        "options": ["at", "on", "in", "to"],
+        "correct_index": 2,
+        "explanation": "Thành phố là khu vực lớn nên dùng 'in'."
+      },
+      {
+        "question": "The bank is _____ the supermarket and the school.",
+        "options": ["between", "on", "in", "at"],
+        "correct_index": 0,
+        "explanation": "Vị trí giữa hai địa điểm dùng 'between'."
+      }
+    ]
+  },
+  {
+    "id": "prepositions_time",
+    "title": "Prepositions of Time",
+    "title_vi": "Giới từ chỉ thời gian",
+    "level": "A1",
+    "category": "Giới từ",
+    "description": "Giới từ chỉ thời gian giúp bạn nói chính xác hành động xảy ra lúc nào. Quy tắc cơ bản là dùng at với giờ, on với thứ và ngày, in với tháng, năm và mùa.",
+    "formula_affirmative": "S + V + at/on/in + time",
+    "formula_negative": "S + do/does not + V + at/on/in + time",
+    "formula_question": "When + do/does + S + V?",
+    "time_markers": [
+      "at + giờ cụ thể (at 7 o'clock)",
+      "on + thứ, ngày (on Monday, on 5 May)",
+      "in + tháng, năm, mùa (in May, in 2020, in summer)",
+      "at night / in the morning / in the afternoon (vào ban đêm / buổi sáng / buổi chiều)",
+      "every day / every week (mỗi ngày / mỗi tuần)"
+    ],
+    "usage_rules": [
+      "Dùng 'at' trước giờ cụ thể và trong các cụm cố định như at night, at noon.",
+      "Dùng 'on' trước các ngày trong tuần và ngày tháng cụ thể.",
+      "Dùng 'in' trước tháng, năm, mùa và các buổi trong ngày (trừ at night).",
+      "Không dùng giới từ trước 'every day', 'next week', 'last year'."
+    ],
+    "examples": [
+      {
+        "english": "The class starts at 8 o'clock.",
+        "vietnamese": "Lớp học bắt đầu lúc 8 giờ.",
+        "note": "Giờ cụ thể dùng 'at'."
+      },
+      {
+        "english": "My birthday is on 5 May.",
+        "vietnamese": "Sinh nhật tôi vào ngày 5 tháng 5.",
+        "note": "Ngày cụ thể dùng 'on'."
+      },
+      {
+        "english": "We often go to Da Lat in summer.",
+        "vietnamese": "Chúng tôi thường đi Đà Lạt vào mùa hè.",
+        "note": "Mùa dùng 'in'."
+      },
+      {
+        "english": "She was born in 2005.",
+        "vietnamese": "Cô ấy sinh năm 2005.",
+        "note": "Năm dùng 'in'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'in' trước giờ: 'in 8 o'clock' → 'at 8 o'clock'.",
+      "Dùng 'at' trước thứ: 'at Monday' → 'on Monday'.",
+      "Dùng 'on' trước năm: 'on 2020' → 'in 2020'.",
+      "Dùng 'in' với night: 'in night' → 'at night'."
+    ],
+    "quiz": [
+      {
+        "question": "The film starts _____ 7 o'clock.",
+        "options": ["in", "on", "at", "for"],
+        "correct_index": 2,
+        "explanation": "Giờ cụ thể dùng giới từ 'at'."
+      },
+      {
+        "question": "My birthday is _____ May.",
+        "options": ["at", "on", "in", "to"],
+        "correct_index": 2,
+        "explanation": "Tháng dùng giới từ 'in'."
+      },
+      {
+        "question": "We have English _____ Monday.",
+        "options": ["in", "on", "at", "for"],
+        "correct_index": 1,
+        "explanation": "Thứ trong tuần dùng giới từ 'on'."
+      },
+      {
+        "question": "She was born _____ 2005.",
+        "options": ["at", "on", "in", "to"],
+        "correct_index": 2,
+        "explanation": "Năm dùng giới từ 'in'."
+      },
+      {
+        "question": "I usually read _____ night.",
+        "options": ["in", "on", "at", "for"],
+        "correct_index": 2,
+        "explanation": "'At night' là cụm cố định, dùng 'at'."
+      }
+    ]
+  },
+  {
+    "id": "past_simple_was_were",
+    "title": "Past Simple: Was/Were",
+    "title_vi": "Quá khứ đơn với Was/Were",
+    "level": "A1",
+    "category": "Các Thì",
+    "description": "Was/were là dạng quá khứ của động từ to be, dùng để nói về trạng thái, nghề nghiệp và vị trí trong quá khứ. Was đi với I/he/she/it, còn were đi với you/we/they.",
+    "formula_affirmative": "S + was/were + N/Adj/Place",
+    "formula_negative": "S + was/were + not + N/Adj/Place",
+    "formula_question": "Was/Were + S + N/Adj/Place?",
+    "time_markers": [
+      "yesterday (hôm qua)",
+      "last night / last week (đêm qua / tuần trước)",
+      "two days ago (hai ngày trước)",
+      "in 2010 (vào năm 2010)",
+      "when I was a child (khi tôi còn nhỏ)"
+    ],
+    "usage_rules": [
+      "Dùng 'was' với chủ ngữ I, he, she, it và danh từ số ít.",
+      "Dùng 'were' với chủ ngữ you, we, they và danh từ số nhiều.",
+      "Dùng để miêu tả trạng thái hoặc tính chất trong quá khứ.",
+      "Dùng để nói về vị trí của người hoặc vật trong quá khứ."
+    ],
+    "examples": [
+      {
+        "english": "I was very tired yesterday.",
+        "vietnamese": "Hôm qua tôi rất mệt.",
+        "note": "Chủ ngữ 'I' đi với 'was'."
+      },
+      {
+        "english": "They were at the cinema last night.",
+        "vietnamese": "Họ ở rạp chiếu phim tối qua.",
+        "note": "Chủ ngữ 'They' đi với 'were'."
+      },
+      {
+        "english": "He was not at school yesterday.",
+        "vietnamese": "Hôm qua cậu ấy không ở trường.",
+        "note": "Câu phủ định thêm 'not' sau 'was'."
+      },
+      {
+        "english": "Were you at home last weekend?",
+        "vietnamese": "Cuối tuần trước bạn có ở nhà không?",
+        "note": "Câu hỏi đảo 'were' lên trước chủ ngữ."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'were' với chủ ngữ số ít: 'I were tired' → 'I was tired'.",
+      "Dùng 'was' với số nhiều: 'They was happy' → 'They were happy'.",
+      "Thêm động từ thường sau to be: 'He was go to school' → 'He went to school'.",
+      "Dùng trợ động từ did với to be: 'Did you were at home?' → 'Were you at home?'."
+    ],
+    "quiz": [
+      {
+        "question": "I _____ very tired yesterday.",
+        "options": ["am", "is", "was", "were"],
+        "correct_index": 2,
+        "explanation": "'Yesterday' chỉ quá khứ, chủ ngữ 'I' dùng 'was'."
+      },
+      {
+        "question": "They _____ at the cinema last night.",
+        "options": ["was", "were", "are", "is"],
+        "correct_index": 1,
+        "explanation": "'They' là số nhiều nên dùng 'were'."
+      },
+      {
+        "question": "He _____ not at school yesterday.",
+        "options": ["was", "were", "is", "did"],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ 'He' số ít nên dùng 'was not'."
+      },
+      {
+        "question": "_____ you at home last weekend?",
+        "options": ["Was", "Were", "Are", "Did"],
+        "correct_index": 1,
+        "explanation": "Câu hỏi quá khứ với 'you' dùng 'Were you...?'."
+      },
+      {
+        "question": "The weather _____ cold last winter.",
+        "options": ["were", "was", "is", "are"],
+        "correct_index": 1,
+        "explanation": "'The weather' là danh từ không đếm được, số ít nên dùng 'was'."
+      }
+    ]
+  },
+  {
+    "id": "past_simple_regular_irregular",
+    "title": "Past Simple: Regular & Irregular Verbs",
+    "title_vi": "Quá khứ đơn: động từ có quy tắc & bất quy tắc",
+    "level": "A1",
+    "category": "Các Thì",
+    "description": "Thì quá khứ đơn diễn tả hành động đã kết thúc trong quá khứ. Động từ có quy tắc thêm -ed, còn động từ bất quy tắc có dạng riêng cần học thuộc.",
+    "formula_affirmative": "S + V-ed/V2 + O",
+    "formula_negative": "S + did not + V (bare) + O",
+    "formula_question": "Did + S + V (bare) + O?",
+    "time_markers": [
+      "yesterday (hôm qua)",
+      "last week / last month (tuần trước / tháng trước)",
+      "two days ago (hai ngày trước)",
+      "in 2019 (vào năm 2019)",
+      "when I was young (khi tôi còn trẻ)"
+    ],
+    "usage_rules": [
+      "Dùng cho hành động đã xảy ra và kết thúc hoàn toàn trong quá khứ.",
+      "Thêm -ed vào động từ có quy tắc, chú ý quy tắc gấp đôi phụ âm và đổi y thành i.",
+      "Dùng dạng V2 riêng với động từ bất quy tắc như go → went, buy → bought.",
+      "Trong câu phủ định và câu hỏi dùng 'did', động từ chính trở về nguyên mẫu.",
+      "Hành động trong quá khứ có thời gian xác định rõ ràng."
+    ],
+    "examples": [
+      {
+        "english": "I visited my grandparents yesterday.",
+        "vietnamese": "Hôm qua tôi đã thăm ông bà.",
+        "note": "'Visit' là động từ có quy tắc, thêm -ed."
+      },
+      {
+        "english": "She bought a new phone last week.",
+        "vietnamese": "Tuần trước cô ấy đã mua một chiếc điện thoại mới.",
+        "note": "'Buy' là động từ bất quy tắc, dạng quá khứ là 'bought'."
+      },
+      {
+        "english": "We didn't go to school on Sunday.",
+        "vietnamese": "Chúng tôi không đi học vào Chủ nhật.",
+        "note": "Sau 'didn't' dùng động từ nguyên mẫu 'go'."
+      },
+      {
+        "english": "Did you see the film last night?",
+        "vietnamese": "Tối qua bạn có xem bộ phim đó không?",
+        "note": "Câu hỏi dùng 'Did + S + V'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng V2 sau 'didn't': 'I didn't went' → 'I didn't go'.",
+      "Dùng V2 sau 'Did' trong câu hỏi: 'Did you saw it?' → 'Did you see it?'.",
+      "Thêm -ed vào động từ bất quy tắc: 'goed' → 'went', 'buyed' → 'bought'.",
+      "Quên gấp đôi phụ âm: 'stoped' → 'stopped'."
+    ],
+    "quiz": [
+      {
+        "question": "I _____ my grandparents last Sunday.",
+        "options": ["visit", "visited", "visiting", "visits"],
+        "correct_index": 1,
+        "explanation": "'Last Sunday' chỉ quá khứ, động từ có quy tắc 'visit' thêm -ed."
+      },
+      {
+        "question": "She _____ a new phone last week.",
+        "options": ["buy", "buys", "bought", "buyed"],
+        "correct_index": 2,
+        "explanation": "'Buy' là động từ bất quy tắc, dạng quá khứ là 'bought'."
+      },
+      {
+        "question": "We _____ go to school yesterday.",
+        "options": ["didn't", "don't", "wasn't", "haven't"],
+        "correct_index": 0,
+        "explanation": "Câu phủ định quá khứ dùng 'didn't + V'."
+      },
+      {
+        "question": "_____ you see the film last night?",
+        "options": ["Do", "Did", "Were", "Was"],
+        "correct_index": 1,
+        "explanation": "Câu hỏi quá khứ với động từ thường dùng 'Did'."
+      },
+      {
+        "question": "He _____ football when he was a child.",
+        "options": ["play", "plays", "played", "playing"],
+        "correct_index": 2,
+        "explanation": "'When he was a child' chỉ quá khứ, dùng 'played'."
+      }
+    ]
+  },
+  {
+    "id": "adverbs_frequency_question_words",
+    "title": "Adverbs of Frequency & Question Words",
+    "title_vi": "Trạng từ tần suất & từ hỏi",
+    "level": "A1",
+    "category": "Trạng từ & Câu hỏi",
+    "description": "Trạng từ tần suất cho biết một hành động diễn ra thường xuyên đến mức nào. Các từ hỏi như what, where, when, who, why, how giúp bạn đặt câu hỏi để lấy thông tin.",
+    "formula_affirmative": "S + always/usually/often/sometimes/never + V | S + be + adverb",
+    "formula_negative": "S + do/does not + V + O",
+    "formula_question": "Wh- + do/does/be + S + ...?",
+    "time_markers": [
+      "always (luôn luôn)",
+      "usually (thường xuyên)",
+      "often (hay, thường)",
+      "sometimes (thỉnh thoảng)",
+      "never (không bao giờ)",
+      "every day (mỗi ngày)"
+    ],
+    "usage_rules": [
+      "Trạng từ tần suất đứng trước động từ thường nhưng đứng sau động từ to be.",
+      "Dùng 'how often' để hỏi về mức độ thường xuyên.",
+      "Dùng 'where' hỏi nơi chốn, 'when' hỏi thời gian, 'who' hỏi người.",
+      "Dùng 'why' hỏi lý do và 'what' hỏi thông tin hoặc sự vật.",
+      "Trong câu hỏi có từ hỏi, trợ động từ đứng trước chủ ngữ."
+    ],
+    "examples": [
+      {
+        "english": "I usually get up at six o'clock.",
+        "vietnamese": "Tôi thường thức dậy lúc 6 giờ.",
+        "note": "'Usually' đứng trước động từ thường 'get up'."
+      },
+      {
+        "english": "She is always late for class.",
+        "vietnamese": "Cô ấy luôn đến lớp muộn.",
+        "note": "'Always' đứng sau động từ to be 'is'."
+      },
+      {
+        "english": "Where do you live?",
+        "vietnamese": "Bạn sống ở đâu?",
+        "note": "'Where' hỏi nơi chốn, dùng trợ động từ 'do'."
+      },
+      {
+        "english": "How often do you exercise?",
+        "vietnamese": "Bạn tập thể dục bao lâu một lần?",
+        "note": "'How often' hỏi tần suất."
+      }
+    ],
+    "common_mistakes": [
+      "Đặt trạng từ tần suất sau động từ thường: 'I go always to school' → 'I always go to school'.",
+      "Đặt trạng từ trước to be: 'She always is late' → 'She is always late'.",
+      "Quên trợ động từ trong câu hỏi: 'Where you live?' → 'Where do you live?'.",
+      "Dùng sai từ hỏi: 'What do you live?' → 'Where do you live?'."
+    ],
+    "quiz": [
+      {
+        "question": "I _____ get up at six o'clock.",
+        "options": ["usual", "usually", "am usually", "usually am"],
+        "correct_index": 1,
+        "explanation": "Cần trạng từ tần suất 'usually' đứng trước động từ thường 'get up'."
+      },
+      {
+        "question": "She is _____ late for class.",
+        "options": ["never", "not never", "never is", "be never"],
+        "correct_index": 0,
+        "explanation": "Trạng từ tần suất đứng sau động từ to be: 'is never late'."
+      },
+      {
+        "question": "_____ do you live?",
+        "options": ["What", "Where", "Who", "When"],
+        "correct_index": 1,
+        "explanation": "Hỏi nơi chốn dùng 'Where'."
+      },
+      {
+        "question": "How often _____ you exercise?",
+        "options": ["are", "do", "does", "is"],
+        "correct_index": 1,
+        "explanation": "Câu hỏi hiện tại đơn với chủ ngữ 'you' dùng trợ động từ 'do'."
+      },
+      {
+        "question": "_____ does the train leave?",
+        "options": ["What time", "What times", "How time", "Which time"],
+        "correct_index": 0,
+        "explanation": "Hỏi giờ cụ thể dùng 'What time'."
+      }
+    ]
+  },
+  {
+    "id": "object_pronouns_like_ving",
+    "title": "Object Pronouns & Like + V-ing",
+    "title_vi": "Đại từ tân ngữ & Like + V-ing",
+    "level": "A1",
+    "category": "Nền tảng",
+    "description": "Đại từ tân ngữ đứng sau động từ hoặc giới từ để thay cho danh từ đã nhắc đến. Các động từ chỉ sở thích như like, love, enjoy thường đi với dạng V-ing.",
+    "formula_affirmative": "S + like/love/enjoy + V-ing | S + V + object pronoun",
+    "formula_negative": "S + do/does not + like + V-ing",
+    "formula_question": "Do/Does + S + like + V-ing?",
+    "time_markers": [
+      "every day (mỗi ngày)",
+      "in my free time (trong thời gian rảnh)",
+      "at the weekend (vào cuối tuần)",
+      "now (bây giờ)",
+      "after school (sau giờ học)"
+    ],
+    "usage_rules": [
+      "Dùng me/you/him/her/it/us/them làm tân ngữ sau động từ hoặc giới từ.",
+      "Dùng like/love/enjoy/hate + V-ing để nói về sở thích.",
+      "Dùng 'like + to V' khi nói về một lựa chọn hoặc thói quen cụ thể.",
+      "Không dùng đại từ chủ ngữ sau động từ hoặc giới từ.",
+      "Chủ ngữ ngôi thứ ba số ít dùng 'likes/loves/enjoys'."
+    ],
+    "examples": [
+      {
+        "english": "I like reading books in my free time.",
+        "vietnamese": "Tôi thích đọc sách trong thời gian rảnh.",
+        "note": "'Like' đi với V-ing là 'reading'."
+      },
+      {
+        "english": "She loves cooking.",
+        "vietnamese": "Cô ấy thích nấu ăn.",
+        "note": "Chủ ngữ 'She' nên dùng 'loves + V-ing'."
+      },
+      {
+        "english": "Can you help me?",
+        "vietnamese": "Bạn có thể giúp tôi không?",
+        "note": "'Me' là đại từ tân ngữ đứng sau 'help'."
+      },
+      {
+        "english": "I often go to the cinema with them.",
+        "vietnamese": "Tôi thường đi xem phim với họ.",
+        "note": "Sau giới từ 'with' dùng 'them', không dùng 'they'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng động từ nguyên mẫu sau like: 'I like read' → 'I like reading'.",
+      "Dùng đại từ chủ ngữ sau giới từ: 'with he' → 'with him'.",
+      "Chia sai ngôi thứ ba số ít: 'She like cooking' → 'She likes cooking'.",
+      "Dùng 'to V' sau enjoy: 'I enjoy to swim' → 'I enjoy swimming'."
+    ],
+    "quiz": [
+      {
+        "question": "I like _____ books in my free time.",
+        "options": ["read", "reading", "to reading", "reads"],
+        "correct_index": 1,
+        "explanation": "Sau 'like' khi nói về sở thích dùng V-ing: 'reading'."
+      },
+      {
+        "question": "She loves _____.",
+        "options": ["cook", "cooking", "to cooking", "cooks"],
+        "correct_index": 1,
+        "explanation": "Sau 'loves' dùng V-ing: 'cooking'."
+      },
+      {
+        "question": "Can you help _____?",
+        "options": ["I", "me", "my", "mine"],
+        "correct_index": 1,
+        "explanation": "Sau động từ 'help' cần đại từ tân ngữ 'me'."
+      },
+      {
+        "question": "I often go to the cinema with _____.",
+        "options": ["they", "them", "their", "theirs"],
+        "correct_index": 1,
+        "explanation": "Sau giới từ 'with' dùng đại từ tân ngữ 'them'."
+      },
+      {
+        "question": "He doesn't like _____ dishes.",
+        "options": ["wash", "washing", "to washing", "washes"],
+        "correct_index": 1,
+        "explanation": "Sau 'like' trong câu phủ định vẫn dùng V-ing: 'washing'."
+      }
+    ]
+  },
+  {
+    "id": "basic_conjunctions",
+    "title": "Basic Conjunctions (and/but/or/because)",
+    "title_vi": "Liên từ cơ bản",
+    "level": "A1",
+    "category": "Liên từ",
+    "description": "Liên từ nối các từ, cụm từ hoặc mệnh đề với nhau để câu văn tự nhiên hơn. Bốn liên từ cơ bản and, but, or, because diễn tả bổ sung, tương phản, lựa chọn và nguyên nhân.",
+    "formula_affirmative": "Clause 1 + and/but/or + Clause 2 | Clause + because + reason",
+    "formula_negative": "S + V + but + S + do/does not + V",
+    "formula_question": "Why + do/does + S + V? | Do you want A or B?",
+    "time_markers": [
+      "and (và - bổ sung thông tin)",
+      "but (nhưng - tương phản)",
+      "or (hoặc - lựa chọn)",
+      "because (bởi vì - nguyên nhân)",
+      "every day (mỗi ngày)"
+    ],
+    "usage_rules": [
+      "Dùng 'and' để nối hai thông tin cùng chiều hoặc bổ sung cho nhau.",
+      "Dùng 'but' để nối hai ý tương phản, trái ngược nhau.",
+      "Dùng 'or' để đưa ra lựa chọn hoặc nối các phương án.",
+      "Dùng 'because' để giải thích nguyên nhân, theo sau là một mệnh đề.",
+      "Không dùng 'because' và 'so' trong cùng một câu ở trình độ cơ bản."
+    ],
+    "examples": [
+      {
+        "english": "I like tea and coffee.",
+        "vietnamese": "Tôi thích trà và cà phê.",
+        "note": "'And' nối hai danh từ cùng loại."
+      },
+      {
+        "english": "He is tired but happy.",
+        "vietnamese": "Anh ấy mệt nhưng vui.",
+        "note": "'But' nối hai tính từ tương phản."
+      },
+      {
+        "english": "Do you want tea or coffee?",
+        "vietnamese": "Bạn muốn trà hay cà phê?",
+        "note": "'Or' dùng để đưa ra lựa chọn."
+      },
+      {
+        "english": "She stays at home because she is ill.",
+        "vietnamese": "Cô ấy ở nhà vì cô ấy bị ốm.",
+        "note": "'Because' theo sau là mệnh đề chỉ nguyên nhân."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'but' khi cần bổ sung: 'I like tea but coffee' → 'I like tea and coffee'.",
+      "Dùng 'because of' trước mệnh đề: 'because of she is ill' → 'because she is ill'.",
+      "Thiếu liên từ giữa hai mệnh đề: 'I was tired I went to bed' → 'I was tired, so I went to bed'.",
+      "Dùng 'or' trong câu khẳng định mang nghĩa bổ sung: 'I like tea or coffee' → 'I like tea and coffee'."
+    ],
+    "quiz": [
+      {
+        "question": "I like tea _____ coffee.",
+        "options": ["but", "and", "because", "or"],
+        "correct_index": 1,
+        "explanation": "Hai danh từ cùng được thích nên dùng 'and' để bổ sung."
+      },
+      {
+        "question": "He is tired _____ he is still working.",
+        "options": ["and", "but", "or", "because"],
+        "correct_index": 1,
+        "explanation": "Hai ý tương phản nên dùng 'but'."
+      },
+      {
+        "question": "Do you want tea _____ coffee?",
+        "options": ["and", "but", "or", "because"],
+        "correct_index": 2,
+        "explanation": "Câu hỏi đưa ra lựa chọn nên dùng 'or'."
+      },
+      {
+        "question": "She stays at home _____ she is ill.",
+        "options": ["and", "but", "or", "because"],
+        "correct_index": 3,
+        "explanation": "Phía sau là nguyên nhân nên dùng 'because'."
+      },
+      {
+        "question": "We stayed inside _____ it was raining.",
+        "options": ["and", "but", "or", "because"],
+        "correct_index": 3,
+        "explanation": "'It was raining' là lý do nên dùng 'because'."
+      }
+    ]
+  },
+  {
+    "id": "possessive_s_have_got",
+    "title": "Possessive 's & Have Got",
+    "title_vi": "Sở hữu 's & Have Got",
+    "level": "A1",
+    "category": "Nền tảng",
+    "description": "Sở hữu 's dùng để nói vật gì thuộc về ai, còn 'have got' dùng để nói ai có vật gì hoặc có đặc điểm gì. Đây là hai cách diễn đạt sở hữu rất thường gặp ở trình độ A1.",
+    "formula_affirmative": "S + have/has got + N | noun + 's + noun",
+    "formula_negative": "S + have/has not got + N",
+    "formula_question": "Have/Has + S + got + N?",
+    "time_markers": [
+      "now (bây giờ)",
+      "today (hôm nay)",
+      "every day (mỗi ngày)",
+      "at the moment (lúc này)",
+      "have got = có (sở hữu)"
+    ],
+    "usage_rules": [
+      "Dùng 'have got' với I/you/we/they và 'has got' với he/she/it.",
+      "Dùng 'have got' để nói sở hữu hoặc đặc điểm của người và vật.",
+      "Thêm 's sau danh từ chỉ người để diễn tả sở hữu.",
+      "Với danh từ số nhiều có -s, chỉ thêm dấu nháy đơn: students' books.",
+      "Dùng 'of' cho vật sở hữu thay vì 's: the door of the room."
+    ],
+    "examples": [
+      {
+        "english": "I have got a new bike.",
+        "vietnamese": "Tôi có một chiếc xe đạp mới.",
+        "note": "Chủ ngữ 'I' dùng 'have got'."
+      },
+      {
+        "english": "She has got two sisters.",
+        "vietnamese": "Cô ấy có hai chị em gái.",
+        "note": "Chủ ngữ 'She' dùng 'has got'."
+      },
+      {
+        "english": "This is Tom's car.",
+        "vietnamese": "Đây là xe của Tom.",
+        "note": "Thêm 's vào tên người để chỉ sở hữu."
+      },
+      {
+        "english": "Have you got a pen?",
+        "vietnamese": "Bạn có bút không?",
+        "note": "Câu hỏi đảo 'Have' lên trước chủ ngữ."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'have' với ngôi thứ ba số ít: 'She have got a car' → 'She has got a car'.",
+      "Quên 'got' trong câu phủ định: 'I haven't a car' → 'I haven't got a car'.",
+      "Quên dấu nháy đơn khi viết sở hữu: 'Toms car' → 'Tom's car'.",
+      "Dùng 's với vật: 'the room's door' → 'the door of the room'."
+    ],
+    "quiz": [
+      {
+        "question": "She _____ got two brothers.",
+        "options": ["have", "has", "is", "are"],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'She' ngôi thứ ba số ít dùng 'has got'."
+      },
+      {
+        "question": "I _____ got a new bike.",
+        "options": ["has", "have", "am", "is"],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'I' dùng 'have got'."
+      },
+      {
+        "question": "This is _____ car.",
+        "options": ["Tom", "Toms", "Tom's", "of Tom"],
+        "correct_index": 2,
+        "explanation": "Sở hữu của người bằng cách thêm 's: Tom's car."
+      },
+      {
+        "question": "_____ you got a pen?",
+        "options": ["Do", "Have", "Has", "Are"],
+        "correct_index": 1,
+        "explanation": "Câu hỏi với 'have got' dùng 'Have you got...?'."
+      },
+      {
+        "question": "They haven't _____ a garden.",
+        "options": ["get", "got", "have", "has"],
+        "correct_index": 1,
+        "explanation": "Cấu trúc phủ định là 'haven't got'."
+      }
+    ]
+  }
+]

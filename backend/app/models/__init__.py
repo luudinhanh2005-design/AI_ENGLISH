@@ -6,7 +6,11 @@ from .learning import (
     VocabularyWord,
     UserWordProgress,
     GrammarLesson,
+    GrammarLessonVersion,
+    GrammarAttempt,
+    GrammarAdminAudit,
     UserGrammarProgress,
+    XpTransaction,
 )
 from .ai import (
     AITutorSession,
@@ -28,7 +32,11 @@ __all__ = [
     "VocabularyWord",
     "UserWordProgress",
     "GrammarLesson",
+    "GrammarLessonVersion",
+    "GrammarAttempt",
+    "GrammarAdminAudit",
     "UserGrammarProgress",
+    "XpTransaction",
     "AITutorSession",
     "AITutorMessage",
     "AIWritingSubmission",

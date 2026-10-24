@@ -67,6 +67,7 @@ class UserResponse(BaseModel):
     streak: int = 0
     total_xp: int = 0
     has_completed_onboarding: bool = False
+    role: str = "user"
     created_at: str
 
     class Config:

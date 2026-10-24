@@ -1,11 +1,16 @@
 import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart'; // Uint8List + kIsWeb
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../core/services/audio_recording_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/speech_service.dart';
@@ -22,7 +27,6 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
   List<dynamic> _drills = [];
   bool _isLoading = true;
   int _currentDrillIndex = 0;
-  String _selectedCategory = 'all';
 
   // Audio & Shadowing State
   double _playbackSpeed = 1.0;
@@ -30,13 +34,17 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
   bool _isShadowing = false;
   int _countdown = 0;
   Timer? _countdownTimer;
+  Timer? _autoStopTimer;
+
+  // Ghi âm & chấm điểm
+  final AudioRecordingService _recorder = AudioRecordingService();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  Uint8List? _lastRecording;
+  String? _errorMessage;
 
   // Evaluation
   bool _isEvaluating = false;
   Map<String, dynamic>? _assessmentResult;
-
-  final TextEditingController _userTranscriptController =
-      TextEditingController();
 
   @override
   void initState() {
@@ -47,7 +55,9 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
   @override
   void dispose() {
     _countdownTimer?.cancel();
-    _userTranscriptController.dispose();
+    _autoStopTimer?.cancel();
+    _recorder.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -56,7 +66,9 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     try {
       final dio = ref.read(dioProvider);
       final res = await dio.get(ApiEndpoints.shadowingDrills);
-      if (res.statusCode == 200 && res.data is List && (res.data as List).isNotEmpty) {
+      if (res.statusCode == 200 &&
+          res.data is List &&
+          (res.data as List).isNotEmpty) {
         setState(() {
           _drills = res.data as List;
           _isLoading = false;
@@ -169,18 +181,31 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     if (_drills.isEmpty) return;
     final drill = _drills[_currentDrillIndex];
     setState(() => _isPlayingNative = true);
-    SpeechService.speak(drill['text'].toString(), rate: _playbackSpeed).then((_) {
+    SpeechService.speak(drill['text'].toString(), rate: _playbackSpeed)
+        .then((_) {
       if (mounted) setState(() => _isPlayingNative = false);
     });
   }
 
-  void _startShadowingCountdown() {
+  Future<void> _startShadowingCountdown() async {
+    _countdownTimer?.cancel();
     setState(() {
-      _countdown = 3;
       _assessmentResult = null;
+      _errorMessage = null;
     });
 
-    _countdownTimer?.cancel();
+    // Không có quyền micro thì không chạy countdown, báo lỗi ngay.
+    final hasPermission = await _recorder.hasPermission();
+    if (!mounted) return;
+    if (!hasPermission) {
+      setState(() {
+        _errorMessage =
+            'Cần quyền micro để chấm điểm. Hãy cấp quyền trong Cài đặt.';
+      });
+      return;
+    }
+
+    setState(() => _countdown = 3);
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_countdown > 1) {
         setState(() => _countdown--);
@@ -191,19 +216,51 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     });
   }
 
-  void _startShadowingLive() {
+  Future<void> _startShadowingLive() async {
     setState(() {
+      _isPlayingNative = true; // đang phát câu mẫu, mic CHƯA mở
+      _isShadowing = false;
+      _errorMessage = null;
       _countdown = 0;
-      _isShadowing = true;
     });
 
     final drill = _drills[_currentDrillIndex];
-    // Start native audio simultaneously
-    SpeechService.speak(drill['text'].toString(), rate: _playbackSpeed);
+    final text = drill['text'].toString();
 
-    // Auto complete after duration based on length
-    final durationSeconds = (drill['text'].toString().length * 0.08 / _playbackSpeed).ceil() + 3;
-    Timer(Duration(seconds: durationSeconds), () {
+    // Chế độ "nghe xong rồi nhại": phát câu mẫu trước,
+    // đợi loa dứt rồi mới mở mic để không thu lại tiếng loa.
+    try {
+      await SpeechService.speak(text, rate: _playbackSpeed);
+      await Future.delayed(const Duration(milliseconds: 250));
+    } catch (_) {
+      // Không phát được mẫu thì vẫn cho người học nhại.
+    }
+
+    if (!mounted) return;
+
+    try {
+      await _recorder.startRecording();
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _isPlayingNative = false;
+        _isShadowing = false;
+        _errorMessage = 'Không truy cập được micro. Hãy kiểm tra quyền micro.';
+      });
+      return;
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _isPlayingNative = false;
+      _isShadowing = true; // mic đã mở thật
+    });
+
+    // Tự dừng theo độ dài câu (đủ thời gian cho người học nhại).
+    final durationSeconds = (text.length * 0.08 / _playbackSpeed).ceil() + 3;
+    _autoStopTimer?.cancel();
+    _autoStopTimer = Timer(Duration(seconds: durationSeconds), () {
       if (mounted && _isShadowing) {
         _finishShadowing();
       }
@@ -211,52 +268,91 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
   }
 
   Future<void> _finishShadowing() async {
+    _autoStopTimer?.cancel();
+    _autoStopTimer = null;
     setState(() {
       _isShadowing = false;
       _isEvaluating = true;
+      _errorMessage = null;
     });
 
     final drill = _drills[_currentDrillIndex];
-    final userText = _userTranscriptController.text.trim().isNotEmpty
-        ? _userTranscriptController.text.trim()
-        : drill['text'].toString();
+
+    Uint8List? bytes;
+    try {
+      bytes = await _recorder.stopRecording();
+    } catch (_) {
+      bytes = null;
+    }
+
+    if (bytes == null || bytes.isEmpty) {
+      if (!mounted) return;
+      setState(() {
+        _isEvaluating = false;
+        _errorMessage = 'Không thu được âm thanh. Hãy nói to hơn và thử lại.';
+      });
+      return;
+    }
+
+    _lastRecording = bytes;
 
     try {
-      final dio = ref.read(dioProvider);
-      final res = await dio.post(
-        ApiEndpoints.shadowingAssess,
-        data: {
-          'drill_id': drill['id'] ?? 'shadow_1',
-          'user_transcript': userText,
-        },
-      );
-      if (res.statusCode == 200 && res.data != null) {
+      final formData = FormData.fromMap({
+        'drill_id': drill['id'] ?? 'shadow_1',
+        'audio': MultipartFile.fromBytes(
+          bytes,
+          filename: kIsWeb ? 'shadowing.webm' : 'shadowing.wav',
+          contentType: MediaType('audio', kIsWeb ? 'webm' : 'wav'),
+        ),
+      });
+      final res = await ref
+          .read(dioProvider)
+          .post(ApiEndpoints.shadowingAssess, data: formData);
+
+      if (!mounted) return;
+
+      final data = res.data;
+      if (data is! Map) {
         setState(() {
-          _assessmentResult = res.data as Map<String, dynamic>;
+          _assessmentResult = null;
           _isEvaluating = false;
+          _errorMessage = 'Không chấm được điểm. Kiểm tra kết nối rồi thử lại.';
         });
         return;
       }
-    } catch (_) {}
 
-    // Fallback calculation
-    await Future.delayed(const Duration(milliseconds: 900));
-    setState(() {
-      _assessmentResult = {
-        'overall_score': 88,
-        'intonation_match': 85,
-        'rhythm_tempo_score': 90,
-        'accuracy_score': 89,
-        'feedback':
-            'Khả năng nhại giọng rất tốt! Bạn đã bắt kịp nhịp điệu tự nhiên của người bản ngữ và nối âm mượt mà.',
-        'tips': [
-          'Nhấn trọng âm rõ hơn ở từ: ' +
-              (drill['stress_words'] as List).take(2).join(', '),
-          'Hãy duy trì độ ngân vang ở cuối câu.',
-        ],
-      };
-      _isEvaluating = false;
-    });
+      // Backend có thể trả 200 nhưng không chấm được (scored = false).
+      if (data['scored'] == false) {
+        setState(() {
+          _assessmentResult = null;
+          _isEvaluating = false;
+          _errorMessage =
+              (data['feedback'] as String?) ?? 'Chưa nghe rõ giọng đọc.';
+        });
+        return;
+      }
+
+      setState(() {
+        _assessmentResult = Map<String, dynamic>.from(data);
+        _isEvaluating = false;
+      });
+    } on DioException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _assessmentResult = null;
+        _isEvaluating = false;
+        _errorMessage = e.response?.statusCode == 422
+            ? 'Chưa nghe rõ giọng đọc. Hãy đọc to, rõ hơn và thử lại.'
+            : 'Không chấm được điểm. Kiểm tra kết nối rồi thử lại.';
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _assessmentResult = null;
+        _isEvaluating = false;
+        _errorMessage = 'Không chấm được điểm. Kiểm tra kết nối rồi thử lại.';
+      });
+    }
   }
 
   void _saveToMistakeNotebook() {
@@ -359,6 +455,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                             setState(() {
                               _currentDrillIndex = i;
                               _assessmentResult = null;
+                              _errorMessage = null;
                             });
                           },
                           child: Container(
@@ -425,7 +522,8 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF00CEC9).withOpacity(0.15),
+                                  color:
+                                      const Color(0xFF00CEC9).withOpacity(0.15),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
@@ -470,8 +568,8 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                             decoration: BoxDecoration(
                               color: context.palette.background,
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                  color: context.palette.divider),
+                              border:
+                                  Border.all(color: context.palette.divider),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -518,7 +616,8 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                             ),
                           ),
                           const SizedBox(height: 6),
-                          ...((currentDrill['connected_speech_notes'] as List?) ??
+                          ...((currentDrill['connected_speech_notes']
+                                      as List?) ??
                                   [])
                               .map((note) => Padding(
                                     padding:
@@ -580,7 +679,8 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                               side: const BorderSide(
                                   color: Color(0xFF00CEC9), width: 1.5),
                             ),
-                            onPressed: _isPlayingNative ? null : _playNativeAudio,
+                            onPressed:
+                                _isPlayingNative ? null : _playNativeAudio,
                             icon: Icon(
                               _isPlayingNative
                                   ? Icons.graphic_eq_rounded
@@ -612,7 +712,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                             ),
                             onPressed: _isShadowing
                                 ? _finishShadowing
-                                : (_countdown > 0
+                                : (_countdown > 0 || _isPlayingNative
                                     ? null
                                     : _startShadowingCountdown),
                             icon: Icon(
@@ -624,9 +724,11 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                             label: Text(
                               _countdown > 0
                                   ? 'Chuẩn bị: $_countdown...'
-                                  : _isShadowing
-                                      ? 'Dừng & Chấm Điểm'
-                                      : '2. Bắt Đầu Shadowing',
+                                  : _isPlayingNative
+                                      ? 'Đang phát mẫu...'
+                                      : _isShadowing
+                                          ? 'Dừng & Chấm Điểm'
+                                          : '2. Bắt Đầu Shadowing',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -647,23 +749,30 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                           border: Border.all(
                               color: const Color(0xFFFF6B6B).withOpacity(0.4)),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(Icons.mic_rounded,
                                 color: Color(0xFFFF6B6B), size: 18),
                             SizedBox(width: 8),
-                            Text(
-                              'ĐANG NHẠI GIỌNG... Nói đè lên tiếng mẫu hoặc ngay sau câu mẫu',
-                              style: TextStyle(
-                                color: Color(0xFFFF6B6B),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
+                            Flexible(
+                              child: Text(
+                                'ĐANG GHI ÂM — hãy nhại lại câu vừa nghe',
+                                style: TextStyle(
+                                  color: Color(0xFFFF6B6B),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
+                    ],
+
+                    if (_errorMessage != null) ...[
+                      const SizedBox(height: 16),
+                      _buildErrorBanner(context),
                     ],
 
                     if (_isEvaluating) ...[
@@ -673,7 +782,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                           children: [
                             CircularProgressIndicator(),
                             SizedBox(height: 10),
-                            Text('AI đang phân tích ngữ điệu và nhịp điệu...',
+                            Text('AI đang chấm điểm bản ghi của bạn...',
                                 style: TextStyle(fontSize: 13)),
                           ],
                         ),
@@ -703,9 +812,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primary
-              : context.palette.card,
+          color: isSelected ? AppColors.primary : context.palette.card,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: isSelected ? AppColors.primary : context.palette.divider,
@@ -723,13 +830,67 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     );
   }
 
+  Widget _buildErrorBanner(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFF4757).withOpacity(0.10),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFFF4757).withOpacity(0.4)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.warning_amber_rounded,
+              color: Color(0xFFFF4757), size: 18),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              _errorMessage ?? '',
+              style: const TextStyle(
+                color: Color(0xFFFF4757),
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                height: 1.35,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed:
+                _isShadowing || _isEvaluating ? null : _startShadowingCountdown,
+            child: const Text('Thử lại', style: TextStyle(fontSize: 12)),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildAssessmentCard(BuildContext context) {
-    final overall = _assessmentResult?['overall_score'] ?? 85;
-    final intonation = _assessmentResult?['intonation_match'] ?? 85;
-    final rhythm = _assessmentResult?['rhythm_tempo_score'] ?? 88;
-    final accuracy = _assessmentResult?['accuracy_score'] ?? 86;
-    final feedback = _assessmentResult?['feedback'] ?? '';
-    final tips = (_assessmentResult?['tips'] as List?) ?? [];
+    final result = _assessmentResult;
+    // Không có điểm thật thì để 0, tuyệt đối không bịa điểm.
+    final overall = (result?['overall_score'] as num?)?.toDouble() ?? 0.0;
+    final accuracy = (result?['accuracy_score'] as num?)?.toDouble();
+    final completeness = (result?['completeness_score'] as num?)?.toDouble();
+    final rhythm = (result?['rhythm_tempo_score'] as num?)?.toDouble();
+    final hasTiming = (result?['has_timing'] as bool?) ?? (rhythm != null);
+
+    final recognised = ((result?['recognised_text'] as String?) ??
+            (result?['recognized_text'] as String?) ??
+            '')
+        .trim();
+    final feedback = (result?['feedback'] as String?) ?? '';
+    final tips = (result?['tips'] as List?) ?? const [];
+    final notes = (result?['scoring_notes'] as List?) ?? const [];
+
+    final scoreColor = overall >= 80
+        ? const Color(0xFF2ED573)
+        : overall >= 60
+            ? const Color(0xFFFFA502)
+            : const Color(0xFFFF4757);
+
+    // Bản ghi để nghe lại (null-safe, không dùng `!`).
+    final recording = _lastRecording;
 
     return Container(
       width: double.infinity,
@@ -737,11 +898,10 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
       decoration: BoxDecoration(
         color: context.palette.card,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-            color: const Color(0xFF2ED573).withOpacity(0.5), width: 1.5),
+        border: Border.all(color: scoreColor.withOpacity(0.5), width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF2ED573).withOpacity(0.12),
+            color: scoreColor.withOpacity(0.12),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -753,25 +913,28 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'KẾT QUẢ SHADOWING AI 🎯',
-                style: TextStyle(
-                  color: const Color(0xFF2ED573),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  letterSpacing: 0.8,
+              Expanded(
+                child: Text(
+                  'KẾT QUẢ SHADOWING AI 🎯',
+                  style: TextStyle(
+                    color: scoreColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    letterSpacing: 0.8,
+                  ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2ED573).withOpacity(0.18),
+                  color: scoreColor.withOpacity(0.18),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  '$overall Điểm',
-                  style: const TextStyle(
-                    color: Color(0xFF2ED573),
+                  '${overall.toStringAsFixed(1)} Điểm',
+                  style: TextStyle(
+                    color: scoreColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -781,35 +944,138 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
           ),
           const SizedBox(height: 16),
 
-          // 3 Metric Progress bars
-          _buildScoreBar('Độ Khớp Ngữ Điệu (Intonation)', intonation,
-              const Color(0xFF00CEC9)),
-          const SizedBox(height: 8),
-          _buildScoreBar(
-              'Tốc Độ & Nhịp Điệu (Rhythm)', rhythm, const Color(0xFF6C5CE7)),
-          const SizedBox(height: 8),
-          _buildScoreBar('Độ Chuẩn Phát Âm (Accuracy)', accuracy,
-              const Color(0xFFFFA502)),
+          // Các thanh điểm chỉ vẽ khi backend thật sự trả số liệu.
+          if (accuracy != null) ...[
+            _buildScoreBar('Phát âm', accuracy, const Color(0xFF6C5CE7)),
+            const SizedBox(height: 8),
+          ],
+          if (completeness != null) ...[
+            _buildScoreBar('Độ đầy đủ', completeness, const Color(0xFF00CEC9)),
+            const SizedBox(height: 8),
+          ],
+          if (hasTiming && rhythm != null)
+            _buildScoreBar('Tốc độ & nhịp', rhythm, const Color(0xFFFFA502))
+          else
+            Text(
+              'Chưa đo được tốc độ/nhịp',
+              style: TextStyle(
+                color: context.palette.textSecondary,
+                fontSize: 11,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text(
-            feedback,
+            'Ngữ điệu: chưa phân tích',
             style: TextStyle(
-              color: context.palette.textPrimary,
-              fontSize: 13,
-              height: 1.4,
+              color: context.palette.textSecondary,
+              fontSize: 11,
+              fontStyle: FontStyle.italic,
             ),
           ),
-          const SizedBox(height: 10),
+
+          if (recognised.isNotEmpty) ...[
+            const SizedBox(height: 14),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: context.palette.background,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: context.palette.divider),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Máy nghe được',
+                    style: TextStyle(
+                      color: context.palette.textSecondary,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.4,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    recognised,
+                    style: TextStyle(
+                      color: context.palette.textPrimary,
+                      fontSize: 12,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          if (feedback.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              feedback,
+              style: TextStyle(
+                color: context.palette.textPrimary,
+                fontSize: 13,
+                height: 1.4,
+              ),
+            ),
+          ],
 
           ...tips.map((tip) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
+                padding: const EdgeInsets.only(top: 8),
                 child: Text('💡 $tip',
                     style: TextStyle(
                         color: context.palette.textSecondary, fontSize: 12)),
               )),
 
-          const SizedBox(height: 18),
+          if (notes.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            ...notes.map((note) => Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    '• $note',
+                    style: TextStyle(
+                      color: context.palette.textSecondary,
+                      fontSize: 10,
+                      fontStyle: FontStyle.italic,
+                      height: 1.35,
+                    ),
+                  ),
+                )),
+          ],
+
+          const SizedBox(height: 12),
+
+          Row(
+            children: [
+              TextButton.icon(
+                onPressed: recording == null
+                    ? null
+                    : () {
+                        _audioPlayer.stop();
+                        _audioPlayer.play(BytesSource(recording));
+                      },
+                icon: const Icon(Icons.play_circle_outline_rounded, size: 16),
+                label: const Text('Nghe lại bản ghi',
+                    style: TextStyle(fontSize: 12)),
+              ),
+              const SizedBox(width: 4),
+              TextButton.icon(
+                onPressed: () {
+                  setState(() {
+                    _assessmentResult = null;
+                    _errorMessage = null;
+                  });
+                },
+                icon: const Icon(Icons.refresh_rounded, size: 16),
+                label: const Text('Thử lại', style: TextStyle(fontSize: 12)),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 6),
 
           Row(
             children: [
@@ -840,6 +1106,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                       _currentDrillIndex =
                           (_currentDrillIndex + 1) % _drills.length;
                       _assessmentResult = null;
+                      _errorMessage = null;
                     });
                   },
                   icon: const Icon(Icons.arrow_forward_rounded,
@@ -858,7 +1125,8 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
     );
   }
 
-  Widget _buildScoreBar(String label, int score, Color color) {
+  Widget _buildScoreBar(String label, double score, Color color) {
+    final clamped = score.clamp(0.0, 100.0);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -868,7 +1136,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
             Text(label,
                 style: TextStyle(
                     color: context.palette.textSecondary, fontSize: 11)),
-            Text('$score%',
+            Text('${clamped.toStringAsFixed(0)}%',
                 style: TextStyle(
                     color: color, fontWeight: FontWeight.bold, fontSize: 11)),
           ],
@@ -877,7 +1145,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
-            value: score / 100,
+            value: clamped / 100,
             minHeight: 5,
             backgroundColor: context.palette.divider,
             valueColor: AlwaysStoppedAnimation<Color>(color),

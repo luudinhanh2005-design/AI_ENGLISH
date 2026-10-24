@@ -6,7 +6,6 @@ import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/speech_service.dart';
-import '../../../../shared/widgets/app_card.dart';
 import '../../data/models/vocabulary_models.dart';
 import '../../data/vocabulary_data.dart';
 import '../providers/vocabulary_provider.dart';
@@ -220,8 +219,6 @@ class VocabularyTopicsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final topicsAsync = ref.watch(vocabularyTopicsProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
-    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: context.palette.background,

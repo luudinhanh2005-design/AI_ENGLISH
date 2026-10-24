@@ -142,8 +142,6 @@ class _ListeningScreenState extends State<ListeningScreen>
   // 1. LESSON SELECTOR SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildLessonSelector(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: context.palette.background,
@@ -386,8 +384,6 @@ class _ListeningScreenState extends State<ListeningScreen>
   // 2. ACTIVE LESSON SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildActiveLesson(BuildContext context, ListeningLesson lesson) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: context.palette.background,

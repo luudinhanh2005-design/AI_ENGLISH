@@ -48,10 +48,14 @@ class PronunciationAssessResponse(BaseModel):
     reference_text: str
     recognised_text: str
     overall_score: float
-    fluency_score: float
+    fluency_score: float = 0.0
     accuracy_score: float
     completeness_score: float
-    prosody_score: float
+    prosody_score: float = 0.0
+    scored: bool = Field(default=True, description="False nếu không nhận diện được giọng")
+    prosody_measured: bool = Field(default=True)
+    fluency_measured: bool = Field(default=True)
+    scoring_notes: list[str] = Field(default_factory=list)
     word_scores: list[WordScore]
     feedback: str
     improvement_tips: list[str]

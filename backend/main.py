@@ -11,8 +11,9 @@ from app.api.middleware import (
     setup_cors,
 )
 from app.api.v1.router import router as api_router
+from app.admin.router import router as admin_router
 from app.config import settings
-from app.database import init_db
+from app.database import engine, init_db
 
 # Configure logging
 logging.basicConfig(
@@ -54,6 +55,7 @@ async def lifespan(app: FastAPI):
         logger.info("Local LLM will be lazy-loaded on demand")
     yield
     logger.info("Shutting down...")
+    await engine.dispose()
 
 
 def create_app() -> FastAPI:
@@ -68,12 +70,17 @@ def create_app() -> FastAPI:
     )
 
     # â”€â”€ Middleware â”€â”€
-    setup_cors(app, settings.cors_origins)
+    setup_cors(
+        app,
+        settings.cors_origins,
+        allow_localhost=settings.environment.lower() != "production",
+    )
     app.add_middleware(RequestLoggingMiddleware)
     app.add_middleware(ErrorHandlingMiddleware)
 
     # â”€â”€ Routes â”€â”€
     app.include_router(api_router)
+    app.include_router(admin_router, prefix="/admin", tags=["Admin Workspace"])
 
     # Also support direct paths without /api/v1 prefix for client compatibility
     from app.api.v1.auth import router as auth_router

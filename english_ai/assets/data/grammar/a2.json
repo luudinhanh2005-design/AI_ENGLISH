@@ -1,0 +1,2079 @@
+[
+  {
+    "id": "past_continuous",
+    "title": "Past Continuous",
+    "title_vi": "Quá khứ tiếp diễn",
+    "level": "A2",
+    "category": "Các Thì",
+    "description": "Diễn tả hành động đang diễn ra tại một thời điểm cụ thể trong quá khứ. Thường dùng làm bối cảnh cho một hành động ngắn khác xen vào. Cũng dùng khi hai hành động dài diễn ra đồng thời trong quá khứ.",
+    "formula_affirmative": "S + was/were + V-ing + O",
+    "formula_negative": "S + was/were + not + V-ing + O",
+    "formula_question": "Was/Were + S + V-ing + O?",
+    "time_markers": [
+      "at 8 p.m. yesterday (lúc 8 giờ tối hôm qua)",
+      "at that time / at that moment (vào lúc đó)",
+      "while + hành động dài (trong khi)",
+      "when + hành động ngắn xen vào (khi)",
+      "from 7 to 9 last night (từ 7 đến 9 giờ tối qua)"
+    ],
+    "usage_rules": [
+      "Diễn tả hành động đang diễn ra tại một mốc thời gian xác định trong quá khứ.",
+      "Dùng làm nền cho một hành động ngắn hơn xen vào, hành động ngắn chia quá khứ đơn.",
+      "Dùng với while để nói hai hành động dài diễn ra đồng thời.",
+      "Dùng để mô tả không khí, bối cảnh khi kể lại một câu chuyện."
+    ],
+    "examples": [
+      {
+        "english": "I was watching TV at 9 p.m. yesterday.",
+        "vietnamese": "Tôi đang xem TV lúc 9 giờ tối hôm qua.",
+        "note": "Hành động đang diễn ra tại một mốc thời gian cụ thể."
+      },
+      {
+        "english": "They were playing football when it started to rain.",
+        "vietnamese": "Họ đang chơi bóng đá thì trời bắt đầu mưa.",
+        "note": "Hành động dài bị hành động ngắn xen vào."
+      },
+      {
+        "english": "While I was cooking, my sister was cleaning the floor.",
+        "vietnamese": "Trong khi tôi nấu ăn, chị tôi đang lau nhà.",
+        "note": "Hai hành động diễn ra đồng thời."
+      },
+      {
+        "english": "She was not sleeping when I called her.",
+        "vietnamese": "Cô ấy không ngủ khi tôi gọi.",
+        "note": "Câu phủ định: was/were + not + V-ing."
+      },
+      {
+        "english": "What were you doing at 8 last night?",
+        "vietnamese": "Bạn đang làm gì lúc 8 giờ tối qua?",
+        "note": "Câu hỏi: Were + S + V-ing?"
+      }
+    ],
+    "common_mistakes": [
+      "Dùng quá khứ đơn khi cần tiếp diễn: 'I watched TV at 9 p.m. yesterday' → 'I was watching TV at 9 p.m. yesterday'.",
+      "Sai was/were: 'They was playing' → 'They were playing'.",
+      "Quên -ing sau was/were: 'She was cook' → 'She was cooking'.",
+      "Dùng while với hành động ngắn: 'While it started to rain' → 'When it started to rain'."
+    ],
+    "quiz": [
+      {
+        "question": "At 8 p.m. yesterday, I _____ dinner.",
+        "options": [
+          "cook",
+          "cooked",
+          "was cooking",
+          "am cooking"
+        ],
+        "correct_index": 2,
+        "explanation": "Có mốc thời gian cụ thể trong quá khứ nên dùng quá khứ tiếp diễn: was cooking."
+      },
+      {
+        "question": "They _____ football when it started to rain.",
+        "options": [
+          "played",
+          "were playing",
+          "play",
+          "are playing"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động đang diễn ra thì mưa xen vào nên dùng were playing."
+      },
+      {
+        "question": "She _____ not sleeping when I called.",
+        "options": [
+          "was",
+          "were",
+          "is",
+          "did"
+        ],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ 'She' số ít nên dùng was: was not sleeping."
+      },
+      {
+        "question": "_____ you studying at 9 last night?",
+        "options": [
+          "Did",
+          "Were",
+          "Was",
+          "Do"
+        ],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'you' đi với were trong câu hỏi quá khứ tiếp diễn."
+      },
+      {
+        "question": "While my mother _____ , my father was reading.",
+        "options": [
+          "cooked",
+          "was cooking",
+          "cooks",
+          "is cooking"
+        ],
+        "correct_index": 1,
+        "explanation": "'While' nối hai hành động đồng thời nên cả hai chia quá khứ tiếp diễn."
+      }
+    ]
+  },
+  {
+    "id": "past_simple_vs_continuous",
+    "title": "Past Simple vs Past Continuous",
+    "title_vi": "Quá khứ đơn vs Quá khứ tiếp diễn",
+    "level": "A2",
+    "category": "Các Thì",
+    "description": "Phân biệt hành động ngắn đã kết thúc với hành động đang diễn ra làm nền trong quá khứ. Hai thì thường xuất hiện cùng nhau trong câu kể chuyện. Quá khứ đơn dùng cho chuỗi sự việc, quá khứ tiếp diễn dùng cho bối cảnh.",
+    "formula_affirmative": "S + V2/ed + O (hành động ngắn) | S + was/were + V-ing (hành động nền)",
+    "formula_negative": "S + did not + V + O | S + was/were + not + V-ing",
+    "formula_question": "Did + S + V + O? | Was/Were + S + V-ing?",
+    "time_markers": [
+      "when (khi – hành động ngắn xen vào)",
+      "while (trong khi – hành động đang diễn ra)",
+      "at 9 p.m. yesterday (lúc 9 giờ tối qua)",
+      "suddenly / then (đột nhiên / rồi sau đó)",
+      "last night / last weekend (tối qua / cuối tuần trước)"
+    ],
+    "usage_rules": [
+      "Quá khứ đơn diễn tả hành động ngắn, đã hoàn thành tại một thời điểm trong quá khứ.",
+      "Quá khứ tiếp diễn diễn tả hành động đang diễn ra thì hành động khác xen vào.",
+      "Khi kể chuỗi sự việc nối tiếp nhau, dùng quá khứ đơn cho tất cả các hành động.",
+      "Không dùng quá khứ tiếp diễn cho hành động lặp đi lặp lại như thói quen trong quá khứ."
+    ],
+    "examples": [
+      {
+        "english": "I was watching TV when the phone rang.",
+        "vietnamese": "Tôi đang xem TV thì điện thoại reo.",
+        "note": "Xem TV là nền, điện thoại reo là hành động xen vào."
+      },
+      {
+        "english": "She went to school every day last year.",
+        "vietnamese": "Năm ngoái ngày nào cô ấy cũng đi học.",
+        "note": "Thói quen trong quá khứ dùng quá khứ đơn."
+      },
+      {
+        "english": "They had dinner, then they went out.",
+        "vietnamese": "Họ ăn tối rồi đi ra ngoài.",
+        "note": "Chuỗi hành động nối tiếp dùng quá khứ đơn."
+      },
+      {
+        "english": "While I was studying, the lights went out.",
+        "vietnamese": "Trong khi tôi đang học thì mất điện.",
+        "note": "While + quá khứ tiếp diễn, mệnh đề còn lại dùng quá khứ đơn."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng quá khứ tiếp diễn cho cả hai hành động: 'When the phone was ringing, I was watching TV' → 'When the phone rang, I was watching TV'.",
+      "Dùng quá khứ tiếp diễn cho thói quen: 'I was going to school every day' → 'I went to school every day'.",
+      "Sai thì sau while: 'While I studied, ...' khi ý là đang học → 'While I was studying, ...'.",
+      "Đảo ngược vai trò when/while: 'While the phone rang' → 'When the phone rang'."
+    ],
+    "quiz": [
+      {
+        "question": "I _____ TV when the phone rang.",
+        "options": [
+          "watched",
+          "was watching",
+          "watch",
+          "am watching"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động đang diễn ra (xem TV) làm nền cho hành động xen vào (điện thoại reo)."
+      },
+      {
+        "question": "She _____ to school every day last year.",
+        "options": [
+          "goes",
+          "went",
+          "was going",
+          "gone"
+        ],
+        "correct_index": 1,
+        "explanation": "Thói quen trong quá khứ dùng quá khứ đơn: went."
+      },
+      {
+        "question": "They _____ dinner, then they went out.",
+        "options": [
+          "were having",
+          "had",
+          "have",
+          "are having"
+        ],
+        "correct_index": 1,
+        "explanation": "Chuỗi hành động nối tiếp nhau dùng quá khứ đơn: had."
+      },
+      {
+        "question": "While I _____ , the lights went out.",
+        "options": [
+          "studied",
+          "was studying",
+          "study",
+          "have studied"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau 'while' mô tả hành động đang diễn ra nên dùng quá khứ tiếp diễn."
+      },
+      {
+        "question": "What _____ you doing at 7 a.m. yesterday?",
+        "options": [
+          "did",
+          "were",
+          "was",
+          "do"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu hỏi quá khứ tiếp diễn với 'you' dùng were."
+      }
+    ]
+  },
+  {
+    "id": "present_perfect_experience",
+    "title": "Present Perfect (Experience/Result)",
+    "title_vi": "Hiện tại hoàn thành (trải nghiệm/kết quả)",
+    "level": "A2",
+    "category": "Các Thì",
+    "description": "Diễn tả trải nghiệm đã từng hoặc chưa từng có trong đời, không nêu thời điểm cụ thể. Cũng dùng khi một hành động trong quá khứ để lại kết quả ở hiện tại. Không dùng với thời gian xác định đã kết thúc.",
+    "formula_affirmative": "S + have/has + V3/ed + O",
+    "formula_negative": "S + have/has + not + V3/ed + O",
+    "formula_question": "Have/Has + S + V3/ed + O?",
+    "time_markers": [
+      "ever / never (đã từng / chưa bao giờ)",
+      "already / yet (đã rồi / vẫn chưa)",
+      "just (vừa mới)",
+      "so far / up to now (cho đến nay)",
+      "before (trước đây)"
+    ],
+    "usage_rules": [
+      "Diễn tả trải nghiệm trong đời, không quan trọng thời điểm xảy ra.",
+      "Diễn tả hành động vừa mới xảy ra với 'just' hoặc đã hoàn thành với 'already'.",
+      "Diễn tả hành động chưa xảy ra với 'yet' trong câu phủ định và nghi vấn.",
+      "Diễn tả kết quả hiện tại của một hành động trong quá khứ.",
+      "Không dùng với mốc thời gian cụ thể như yesterday, last week, in 2019."
+    ],
+    "examples": [
+      {
+        "english": "I have never been to Japan.",
+        "vietnamese": "Tôi chưa bao giờ đến Nhật Bản.",
+        "note": "Trải nghiệm chưa từng có, không nêu thời điểm."
+      },
+      {
+        "english": "She has already finished her homework.",
+        "vietnamese": "Cô ấy đã làm xong bài tập rồi.",
+        "note": "'already' đứng giữa has và V3."
+      },
+      {
+        "english": "They haven't arrived yet.",
+        "vietnamese": "Họ vẫn chưa đến.",
+        "note": "'yet' đứng cuối câu phủ định."
+      },
+      {
+        "english": "He has lost his keys, so he can't open the door.",
+        "vietnamese": "Anh ấy mất chìa khóa rồi nên không mở được cửa.",
+        "note": "Hành động quá khứ để lại kết quả hiện tại."
+      },
+      {
+        "english": "Have you ever eaten sushi?",
+        "vietnamese": "Bạn đã từng ăn sushi chưa?",
+        "note": "Câu hỏi về trải nghiệm với 'ever'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng quá khứ đơn cho trải nghiệm không có mốc thời gian: 'Did you ever eat sushi?' → 'Have you ever eaten sushi?'.",
+      "Dùng hiện tại hoàn thành với thời gian xác định: 'I have seen him yesterday' → 'I saw him yesterday'.",
+      "Dùng V2 thay vì V3: 'I have went' → 'I have gone'.",
+      "Đặt sai vị trí 'already': 'She finished already her homework' → 'She has already finished her homework'.",
+      "Dùng 'ever' trong câu khẳng định: 'I have ever been there' → 'I have been there' hoặc 'I have never been there'."
+    ],
+    "quiz": [
+      {
+        "question": "I have _____ been to Japan.",
+        "options": [
+          "ever",
+          "never",
+          "already",
+          "yet"
+        ],
+        "correct_index": 1,
+        "explanation": "'never' nghĩa là chưa bao giờ, đứng giữa have và V3."
+      },
+      {
+        "question": "She has _____ finished her homework.",
+        "options": [
+          "yet",
+          "already",
+          "ever",
+          "never"
+        ],
+        "correct_index": 1,
+        "explanation": "'already' dùng trong câu khẳng định, đặt giữa has và V3."
+      },
+      {
+        "question": "_____ you ever eaten sushi?",
+        "options": [
+          "Did",
+          "Have",
+          "Has",
+          "Do"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu hỏi trải nghiệm với 'you' dùng Have."
+      },
+      {
+        "question": "They haven't arrived _____ .",
+        "options": [
+          "already",
+          "yet",
+          "just",
+          "ever"
+        ],
+        "correct_index": 1,
+        "explanation": "'yet' đứng cuối câu phủ định, nghĩa là vẫn chưa."
+      },
+      {
+        "question": "He _____ his keys, so he can't open the door.",
+        "options": [
+          "lost",
+          "has lost",
+          "loses",
+          "is losing"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động quá khứ để lại kết quả ở hiện tại nên dùng hiện tại hoàn thành."
+      }
+    ]
+  },
+  {
+    "id": "present_perfect_vs_past_simple",
+    "title": "Present Perfect vs Past Simple",
+    "title_vi": "Hiện tại hoàn thành vs Quá khứ đơn",
+    "level": "A2",
+    "category": "Các Thì",
+    "description": "Phân biệt hành động còn liên quan đến hiện tại với hành động đã kết thúc hoàn toàn trong quá khứ. Hiện tại hoàn thành không đi với thời gian xác định. Quá khứ đơn dùng khi biết rõ thời điểm xảy ra.",
+    "formula_affirmative": "S + have/has + V3/ed (hiện tại hoàn thành) | S + V2/ed (quá khứ đơn)",
+    "formula_negative": "S + have/has + not + V3/ed | S + did not + V",
+    "formula_question": "Have/Has + S + V3/ed? | Did + S + V?",
+    "time_markers": [
+      "ever / never / already / yet / just / so far (thì hiện tại hoàn thành)",
+      "yesterday / last week / in 2019 / two days ago (thì quá khứ đơn)",
+      "how long ...? / since / for (thì hiện tại hoàn thành)",
+      "when ...? (thì quá khứ đơn)"
+    ],
+    "usage_rules": [
+      "Hiện tại hoàn thành dùng khi hành động còn liên quan tới hiện tại hoặc chưa rõ thời điểm.",
+      "Quá khứ đơn dùng khi hành động đã kết thúc và có thời gian xác định.",
+      "Với 'since' và 'for' mô tả khoảng thời gian kéo dài đến hiện tại, dùng hiện tại hoàn thành.",
+      "Trong câu hỏi 'when ...?' luôn dùng quá khứ đơn vì hỏi thời điểm cụ thể.",
+      "'How long ...?' thường dùng hiện tại hoàn thành để hỏi về khoảng thời gian đến nay."
+    ],
+    "examples": [
+      {
+        "english": "I visited my grandparents last weekend.",
+        "vietnamese": "Tôi đã thăm ông bà cuối tuần trước.",
+        "note": "Có thời gian xác định nên dùng quá khứ đơn."
+      },
+      {
+        "english": "She has lived in Hanoi since 2020.",
+        "vietnamese": "Cô ấy đã sống ở Hà Nội từ năm 2020.",
+        "note": "'since' + mốc thời gian → hiện tại hoàn thành."
+      },
+      {
+        "english": "Have you ever been to Da Lat?",
+        "vietnamese": "Bạn đã từng đến Đà Lạt chưa?",
+        "note": "Hỏi về trải nghiệm, không nêu thời điểm."
+      },
+      {
+        "english": "We saw that movie yesterday.",
+        "vietnamese": "Chúng tôi đã xem bộ phim đó hôm qua.",
+        "note": "'yesterday' là mốc quá khứ xác định."
+      },
+      {
+        "english": "He has worked here for three years.",
+        "vietnamese": "Anh ấy đã làm việc ở đây được ba năm.",
+        "note": "'for' + khoảng thời gian → hiện tại hoàn thành."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng hiện tại hoàn thành với 'last week': 'I have seen her last week' → 'I saw her last week'.",
+      "Dùng quá khứ đơn với 'since': 'I lived here since 2019' → 'I have lived here since 2019'.",
+      "Nhầm 'for' và 'since': 'for 2020' → 'since 2020'; 'since three years' → 'for three years'.",
+      "Hỏi 'When have you arrived?' → 'When did you arrive?'.",
+      "Dùng 'ago' với hiện tại hoàn thành: 'I have left two hours ago' → 'I left two hours ago'."
+    ],
+    "quiz": [
+      {
+        "question": "I _____ my grandparents last weekend.",
+        "options": [
+          "have visited",
+          "visited",
+          "visit",
+          "was visiting"
+        ],
+        "correct_index": 1,
+        "explanation": "'last weekend' là thời gian xác định trong quá khứ nên dùng quá khứ đơn."
+      },
+      {
+        "question": "She _____ in Hanoi since 2020.",
+        "options": [
+          "lived",
+          "has lived",
+          "lives",
+          "is living"
+        ],
+        "correct_index": 1,
+        "explanation": "'since' + mốc thời gian chỉ hành động kéo dài đến hiện tại nên dùng hiện tại hoàn thành."
+      },
+      {
+        "question": "_____ you ever been to Da Lat?",
+        "options": [
+          "Did",
+          "Have",
+          "Do",
+          "Were"
+        ],
+        "correct_index": 1,
+        "explanation": "Hỏi về trải nghiệm với 'ever' dùng Have."
+      },
+      {
+        "question": "We _____ that movie yesterday.",
+        "options": [
+          "have seen",
+          "saw",
+          "see",
+          "have been seeing"
+        ],
+        "correct_index": 1,
+        "explanation": "'yesterday' là mốc quá khứ xác định nên dùng quá khứ đơn: saw."
+      },
+      {
+        "question": "He has worked here _____ three years.",
+        "options": [
+          "since",
+          "for",
+          "ago",
+          "in"
+        ],
+        "correct_index": 1,
+        "explanation": "'for' đi với khoảng thời gian (three years)."
+      }
+    ]
+  },
+  {
+    "id": "will_vs_going_to",
+    "title": "Will vs Be Going To",
+    "title_vi": "Will vs Be Going To",
+    "level": "A2",
+    "category": "Tương lai",
+    "description": "Cả hai cấu trúc đều nói về tương lai nhưng khác nhau ở mức độ chuẩn bị. 'Will' dùng cho quyết định tức thời, lời hứa, lời đề nghị và dự đoán cá nhân. 'Be going to' dùng cho kế hoạch đã định trước hoặc dự đoán có bằng chứng hiện tại.",
+    "formula_affirmative": "S + will + V | S + am/is/are + going to + V",
+    "formula_negative": "S + will not (won't) + V | S + am/is/are + not + going to + V",
+    "formula_question": "Will + S + V? | Am/Is/Are + S + going to + V?",
+    "time_markers": [
+      "tomorrow / next week (ngày mai / tuần sau)",
+      "I think / I hope / probably (dự đoán, quyết định tức thời)",
+      "I promise / I'll help (lời hứa, lời đề nghị)",
+      "Look at those clouds! (bằng chứng hiện tại → be going to)",
+      "We have already planned / bought tickets (kế hoạch đã định)"
+    ],
+    "usage_rules": [
+      "'Will' diễn tả quyết định được đưa ra ngay tại thời điểm nói.",
+      "'Will' dùng cho lời hứa, lời đề nghị, lời yêu cầu lịch sự và dự đoán dựa trên ý kiến cá nhân.",
+      "'Be going to' diễn tả kế hoạch, dự định đã được quyết định trước khi nói.",
+      "'Be going to' dùng cho dự đoán có bằng chứng rõ ràng ở hiện tại.",
+      "Không dùng 'will' sau 'if' trong câu điều kiện loại 1, dùng hiện tại đơn."
+    ],
+    "examples": [
+      {
+        "english": "Look at those dark clouds! It is going to rain.",
+        "vietnamese": "Nhìn những đám mây đen kìa! Trời sắp mưa rồi.",
+        "note": "Dự đoán dựa trên bằng chứng trước mắt."
+      },
+      {
+        "english": "The phone is ringing. I will answer it.",
+        "vietnamese": "Điện thoại đang reo. Tôi sẽ trả lời.",
+        "note": "Quyết định ngay lúc nói."
+      },
+      {
+        "english": "We are going to visit our uncle next Sunday. We have already bought tickets.",
+        "vietnamese": "Chúng tôi sẽ thăm chú vào Chủ nhật tới. Chúng tôi đã mua vé rồi.",
+        "note": "Kế hoạch đã định trước."
+      },
+      {
+        "english": "I think people will live on Mars one day.",
+        "vietnamese": "Tôi nghĩ một ngày nào đó con người sẽ sống trên sao Hỏa.",
+        "note": "Dự đoán dựa trên ý kiến cá nhân."
+      },
+      {
+        "english": "Will you open the window, please?",
+        "vietnamese": "Bạn mở cửa sổ giúp tôi được không?",
+        "note": "Lời yêu cầu lịch sự với 'Will you ...?'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'will' cho kế hoạch đã định: 'I will visit my aunt tomorrow, I bought the ticket' → 'I am going to visit my aunt tomorrow'.",
+      "Dùng 'going to' cho quyết định tức thời: 'The phone is ringing. I am going to answer it' → 'I will answer it'.",
+      "Dùng 'will' sau 'if': 'If it will rain, we will stay home' → 'If it rains, we will stay home'.",
+      "Sai dạng động từ sau 'going to': 'She is going to went' → 'She is going to go'.",
+      "Quên 'be' trước 'going to': 'They going to travel' → 'They are going to travel'."
+    ],
+    "quiz": [
+      {
+        "question": "Look at those dark clouds! It _____ .",
+        "options": [
+          "will rain",
+          "is going to rain",
+          "rains",
+          "rained"
+        ],
+        "correct_index": 1,
+        "explanation": "Dự đoán dựa trên bằng chứng trước mắt (mây đen) nên dùng be going to."
+      },
+      {
+        "question": "The phone is ringing. I _____ answer it.",
+        "options": [
+          "am going to",
+          "will",
+          "would",
+          "am"
+        ],
+        "correct_index": 1,
+        "explanation": "Quyết định đưa ra ngay lúc nói nên dùng will."
+      },
+      {
+        "question": "We _____ visit our uncle next Sunday. We have already bought tickets.",
+        "options": [
+          "will",
+          "are going to",
+          "would",
+          "shall"
+        ],
+        "correct_index": 1,
+        "explanation": "Kế hoạch đã định trước và có bằng chứng (đã mua vé) nên dùng be going to."
+      },
+      {
+        "question": "I think people _____ live on Mars one day.",
+        "options": [
+          "are going to",
+          "will",
+          "are",
+          "were"
+        ],
+        "correct_index": 1,
+        "explanation": "Dự đoán dựa trên ý kiến cá nhân với 'I think' nên dùng will."
+      },
+      {
+        "question": "_____ you open the window, please?",
+        "options": [
+          "Will",
+          "Are",
+          "Do",
+          "Did"
+        ],
+        "correct_index": 0,
+        "explanation": "Lời yêu cầu lịch sự dùng 'Will you + V?'."
+      }
+    ]
+  },
+  {
+    "id": "present_continuous_future",
+    "title": "Present Continuous for Future",
+    "title_vi": "Hiện tại tiếp diễn diễn tả tương lai",
+    "level": "A2",
+    "category": "Tương lai",
+    "description": "Dùng thì hiện tại tiếp diễn để nói về những kế hoạch đã được sắp xếp chắc chắn trong tương lai gần. Thường có thời gian cụ thể đi kèm. Không dùng cấu trúc này cho dự đoán hay sự thật tương lai.",
+    "formula_affirmative": "S + am/is/are + V-ing + (thời gian tương lai)",
+    "formula_negative": "S + am/is/are + not + V-ing + (thời gian tương lai)",
+    "formula_question": "Am/Is/Are + S + V-ing + (thời gian tương lai)?",
+    "time_markers": [
+      "tomorrow / the day after tomorrow (ngày mai / ngày kia)",
+      "next week / next month (tuần sau / tháng sau)",
+      "this evening / tonight (tối nay)",
+      "on Friday / at 7 p.m. (vào thứ Sáu / lúc 7 giờ tối)",
+      "I have arranged / I have booked (đã sắp xếp, đã đặt trước)"
+    ],
+    "usage_rules": [
+      "Diễn tả kế hoạch đã được sắp xếp và gần như chắc chắn sẽ xảy ra.",
+      "Thường dùng với thời gian cụ thể trong tương lai gần.",
+      "Hay gặp với các động từ chỉ di chuyển như go, come, leave, arrive, fly, move.",
+      "Không dùng để dự đoán tương lai không có kế hoạch; khi đó dùng will hoặc be going to."
+    ],
+    "examples": [
+      {
+        "english": "I am seeing my dentist tomorrow at 10.",
+        "vietnamese": "Mai lúc 10 giờ tôi đi khám răng.",
+        "note": "Lịch hẹn đã sắp xếp sẵn."
+      },
+      {
+        "english": "They are flying to London next Friday.",
+        "vietnamese": "Thứ Sáu tới họ bay sang London.",
+        "note": "Kế hoạch đã có, vé đã đặt."
+      },
+      {
+        "english": "What are you doing this evening?",
+        "vietnamese": "Tối nay bạn làm gì?",
+        "note": "Hỏi về kế hoạch tối nay."
+      },
+      {
+        "english": "She is not coming to the meeting tomorrow.",
+        "vietnamese": "Cô ấy không đến cuộc họp ngày mai.",
+        "note": "Phủ định: is not + V-ing."
+      },
+      {
+        "english": "We are having dinner with my parents on Saturday.",
+        "vietnamese": "Thứ Bảy chúng tôi ăn tối với bố mẹ tôi.",
+        "note": "Kế hoạch đã thống nhất."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng hiện tại tiếp diễn cho dự đoán: 'It is raining tomorrow' → 'It is going to rain tomorrow'.",
+      "Quên 'be': 'I meeting him tomorrow' → 'I am meeting him tomorrow'.",
+      "Dùng hiện tại đơn cho kế hoạch đã sắp xếp: 'I see the doctor tomorrow at 10' → 'I am seeing the doctor tomorrow at 10'.",
+      "Dùng thì này cho sự thật tương lai: 'The sun is rising at 6 tomorrow' → 'The sun rises at 6 tomorrow'.",
+      "Sai dạng V-ing: 'She is comeing' → 'She is coming'."
+    ],
+    "quiz": [
+      {
+        "question": "I _____ my dentist tomorrow at 10.",
+        "options": [
+          "see",
+          "am seeing",
+          "will see",
+          "saw"
+        ],
+        "correct_index": 1,
+        "explanation": "Lịch hẹn đã sắp xếp, có giờ cụ thể nên dùng hiện tại tiếp diễn."
+      },
+      {
+        "question": "They _____ to London next Friday.",
+        "options": [
+          "fly",
+          "are flying",
+          "flew",
+          "have flown"
+        ],
+        "correct_index": 1,
+        "explanation": "Kế hoạch đã định cho tương lai gần dùng are flying."
+      },
+      {
+        "question": "What _____ you doing this evening?",
+        "options": [
+          "do",
+          "are",
+          "will",
+          "did"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu hỏi hiện tại tiếp diễn với 'you' dùng are."
+      },
+      {
+        "question": "She _____ not coming to the meeting tomorrow.",
+        "options": [
+          "is",
+          "does",
+          "will",
+          "did"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu phủ định hiện tại tiếp diễn: is not + V-ing."
+      },
+      {
+        "question": "We _____ dinner with my parents on Saturday.",
+        "options": [
+          "have",
+          "are having",
+          "had",
+          "has"
+        ],
+        "correct_index": 1,
+        "explanation": "Kế hoạch đã thống nhất trong tương lai nên dùng are having."
+      }
+    ]
+  },
+  {
+    "id": "comparatives",
+    "title": "Comparatives",
+    "title_vi": "So sánh hơn",
+    "level": "A2",
+    "category": "So sánh",
+    "description": "Dùng để so sánh hai người, hai vật hoặc hai sự việc với nhau. Tính từ ngắn thêm -er, tính từ dài dùng 'more'. Có một số tính từ bất quy tắc cần học thuộc.",
+    "formula_affirmative": "S1 + be + adj-er/more adj + than + S2",
+    "formula_negative": "S1 + be + not + as adj as + S2 | S1 + be + less adj + than + S2",
+    "formula_question": "Be + S1 + adj-er/more adj + than + S2?",
+    "time_markers": [
+      "than (hơn)",
+      "much / far / a lot + so sánh hơn (hơn nhiều)",
+      "a bit / slightly + so sánh hơn (hơn một chút)",
+      "less ... than (kém hơn)",
+      "the + so sánh hơn, the + so sánh hơn (càng ... càng ...)"
+    ],
+    "usage_rules": [
+      "Tính từ ngắn (1 âm tiết) thêm -er: tall → taller, big → bigger.",
+      "Tính từ dài (2 âm tiết trở lên) dùng 'more': more interesting, more expensive.",
+      "Tính từ tận cùng bằng -y đổi thành -ier: happy → happier, easy → easier.",
+      "Một số tính từ bất quy tắc: good → better, bad → worse, far → farther/further.",
+      "Dùng 'much', 'far', 'a lot' trước so sánh hơn để nhấn mạnh mức độ."
+    ],
+    "examples": [
+      {
+        "english": "This book is more interesting than that one.",
+        "vietnamese": "Cuốn sách này thú vị hơn cuốn kia.",
+        "note": "Tính từ dài dùng 'more'."
+      },
+      {
+        "english": "My brother is taller than me.",
+        "vietnamese": "Anh trai tôi cao hơn tôi.",
+        "note": "Tính từ ngắn thêm -er."
+      },
+      {
+        "english": "Hanoi is colder than Da Nang in winter.",
+        "vietnamese": "Mùa đông Hà Nội lạnh hơn Đà Nẵng.",
+        "note": "So sánh hai địa điểm."
+      },
+      {
+        "english": "Her new car is better than her old one.",
+        "vietnamese": "Xe mới của cô ấy tốt hơn xe cũ.",
+        "note": "good → better (bất quy tắc)."
+      },
+      {
+        "english": "The weather today is much worse than yesterday.",
+        "vietnamese": "Thời tiết hôm nay tệ hơn hôm qua nhiều.",
+        "note": "'much' nhấn mạnh so sánh hơn."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'more' với tính từ ngắn: 'more tall' → 'taller'.",
+      "Thêm -er cho tính từ dài: 'interestinger' → 'more interesting'.",
+      "Quên 'than': 'She is taller me' → 'She is taller than me'.",
+      "Dùng 'more better': 'more better' → 'better'.",
+      "Sai chính tả khi gấp đôi phụ âm: 'biger' → 'bigger', 'hoter' → 'hotter'."
+    ],
+    "quiz": [
+      {
+        "question": "This book is _____ than that one.",
+        "options": [
+          "interesting",
+          "more interesting",
+          "most interesting",
+          "as interesting"
+        ],
+        "correct_index": 1,
+        "explanation": "'Interesting' là tính từ dài nên dùng more interesting."
+      },
+      {
+        "question": "My brother is _____ than me.",
+        "options": [
+          "tall",
+          "taller",
+          "tallest",
+          "more tall"
+        ],
+        "correct_index": 1,
+        "explanation": "Tính từ ngắn 'tall' thêm -er: taller."
+      },
+      {
+        "question": "Hanoi is _____ than Da Nang in winter.",
+        "options": [
+          "cold",
+          "colder",
+          "coldest",
+          "more cold"
+        ],
+        "correct_index": 1,
+        "explanation": "Tính từ ngắn 'cold' thêm -er: colder."
+      },
+      {
+        "question": "Her new car is _____ than her old one.",
+        "options": [
+          "good",
+          "better",
+          "best",
+          "more good"
+        ],
+        "correct_index": 1,
+        "explanation": "'Good' có dạng so sánh hơn bất quy tắc là better."
+      },
+      {
+        "question": "The weather today is _____ worse than yesterday.",
+        "options": [
+          "very",
+          "much",
+          "more",
+          "most"
+        ],
+        "correct_index": 1,
+        "explanation": "Dùng 'much' trước so sánh hơn để nhấn mạnh: much worse."
+      }
+    ]
+  },
+  {
+    "id": "superlatives_as_as",
+    "title": "Superlatives & As...As",
+    "title_vi": "So sánh nhất & As...As",
+    "level": "A2",
+    "category": "So sánh",
+    "description": "So sánh nhất dùng để chỉ một người hoặc vật nổi bật nhất trong một nhóm. Cấu trúc 'as ... as' dùng để so sánh sự bằng nhau. Dạng phủ định 'not as ... as' nghĩa là không bằng.",
+    "formula_affirmative": "S + be + the + adj-est/most adj + (in/of ...)",
+    "formula_negative": "S + be + not + as + adj + as + N",
+    "formula_question": "Be + S + the + adj-est/most adj + ...? | Is + S + as + adj + as + N?",
+    "time_markers": [
+      "the ... in the world (trên thế giới)",
+      "the ... of all (trong tất cả)",
+      "as ... as (bằng nhau)",
+      "not as ... as (không bằng)",
+      "one of the + adj-est + N (một trong những ... nhất)"
+    ],
+    "usage_rules": [
+      "So sánh nhất dùng 'the' trước tính từ: the tallest, the most beautiful.",
+      "Tính từ ngắn thêm -est, tính từ dài dùng 'the most'.",
+      "Dùng 'in' trước địa điểm/nhóm và 'of' trước tập hợp: the best in the class, the best of all.",
+      "Cấu trúc 'as + adj + as' diễn tả hai đối tượng bằng nhau.",
+      "'not as + adj + as' diễn tả một đối tượng kém hơn đối tượng kia."
+    ],
+    "examples": [
+      {
+        "english": "Mount Everest is the highest mountain in the world.",
+        "vietnamese": "Everest là ngọn núi cao nhất thế giới.",
+        "note": "So sánh nhất với phạm vi 'in the world'."
+      },
+      {
+        "english": "This is the most boring film I have ever seen.",
+        "vietnamese": "Đây là bộ phim chán nhất tôi từng xem.",
+        "note": "Tính từ dài dùng 'the most'."
+      },
+      {
+        "english": "My sister is as tall as me.",
+        "vietnamese": "Chị tôi cao bằng tôi.",
+        "note": "So sánh bằng với 'as ... as'."
+      },
+      {
+        "english": "This exercise is not as difficult as the last one.",
+        "vietnamese": "Bài tập này không khó bằng bài trước.",
+        "note": "Phủ định của so sánh bằng."
+      },
+      {
+        "english": "He is one of the cleverest students in the class.",
+        "vietnamese": "Cậu ấy là một trong những học sinh thông minh nhất lớp.",
+        "note": "Cấu trúc 'one of the + so sánh nhất'."
+      }
+    ],
+    "common_mistakes": [
+      "Quên 'the' trước so sánh nhất: 'She is tallest girl' → 'She is the tallest girl'.",
+      "Dùng 'most' với tính từ ngắn: 'the most tall' → 'the tallest'.",
+      "Dùng 'than' trong so sánh nhất: 'the tallest than' → 'the tallest in/of'.",
+      "Sai cấu trúc so sánh bằng: 'as tall than me' → 'as tall as me'.",
+      "Dùng so sánh hơn thay vì so sánh nhất: 'He is the taller student in the class' → 'the tallest'."
+    ],
+    "quiz": [
+      {
+        "question": "Mount Everest is _____ mountain in the world.",
+        "options": [
+          "high",
+          "higher",
+          "the highest",
+          "as high"
+        ],
+        "correct_index": 2,
+        "explanation": "So sánh nhất cần 'the' và dạng -est: the highest."
+      },
+      {
+        "question": "This is _____ film I have ever seen.",
+        "options": [
+          "the most boring",
+          "more boring",
+          "boring",
+          "as boring"
+        ],
+        "correct_index": 0,
+        "explanation": "Tính từ dài 'boring' dùng so sánh nhất 'the most boring'."
+      },
+      {
+        "question": "My sister is as tall _____ me.",
+        "options": [
+          "than",
+          "as",
+          "like",
+          "so"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc so sánh bằng là 'as + adj + as'."
+      },
+      {
+        "question": "This exercise is not _____ difficult as the last one.",
+        "options": [
+          "more",
+          "as",
+          "than",
+          "most"
+        ],
+        "correct_index": 1,
+        "explanation": "Dạng phủ định của so sánh bằng: not as difficult as."
+      },
+      {
+        "question": "He is one of _____ students in the class.",
+        "options": [
+          "the cleverest",
+          "cleverer",
+          "clever",
+          "as clever"
+        ],
+        "correct_index": 0,
+        "explanation": "Cấu trúc 'one of the + so sánh nhất + N số nhiều'."
+      }
+    ]
+  },
+  {
+    "id": "too_enough",
+    "title": "Too & Enough",
+    "title_vi": "Too & Enough",
+    "level": "A2",
+    "category": "So sánh",
+    "description": "Dùng để nói một mức độ là quá nhiều hoặc đủ cho một mục đích nào đó. 'Too' mang nghĩa tiêu cực, hàm ý không thể làm gì. 'Enough' diễn tả sự đủ về số lượng hoặc mức độ.",
+    "formula_affirmative": "S + be + too + adj + (for sb) + to V | S + be + adj + enough + (for sb) + to V",
+    "formula_negative": "S + be + not + adj + enough + (for sb) + to V",
+    "formula_question": "Be + S + too + adj + to V? | Be + S + adj + enough + to V?",
+    "time_markers": [
+      "too ... to (quá ... đến nỗi không thể)",
+      "enough ... to (đủ ... để)",
+      "too much / too many + N (quá nhiều)",
+      "not ... enough (không đủ)",
+      "for somebody (cho ai đó)"
+    ],
+    "usage_rules": [
+      "'Too' đứng trước tính từ hoặc trạng từ: too hot, too quickly.",
+      "'Enough' đứng sau tính từ/trạng từ nhưng đứng trước danh từ: old enough, enough money.",
+      "'Too ... to V' mang nghĩa phủ định: quá ... đến nỗi không thể làm gì.",
+      "Dùng 'too much' với danh từ không đếm được và 'too many' với danh từ đếm được số nhiều.",
+      "Có thể thêm 'for somebody' trước 'to V' để nêu đối tượng."
+    ],
+    "examples": [
+      {
+        "english": "The coffee is too hot to drink.",
+        "vietnamese": "Cà phê nóng quá không uống được.",
+        "note": "Too + adj + to V mang nghĩa phủ định."
+      },
+      {
+        "english": "She is old enough to drive a car.",
+        "vietnamese": "Cô ấy đủ tuổi để lái xe ô tô.",
+        "note": "Enough đứng sau tính từ."
+      },
+      {
+        "english": "There are too many people in this room.",
+        "vietnamese": "Có quá nhiều người trong phòng này.",
+        "note": "Too many + danh từ đếm được số nhiều."
+      },
+      {
+        "english": "I don't have enough money to buy that phone.",
+        "vietnamese": "Tôi không có đủ tiền để mua chiếc điện thoại đó.",
+        "note": "Enough đứng trước danh từ."
+      },
+      {
+        "english": "He speaks too quickly for me to understand.",
+        "vietnamese": "Anh ấy nói quá nhanh nên tôi không hiểu.",
+        "note": "Too + trạng từ + for sb + to V."
+      }
+    ],
+    "common_mistakes": [
+      "Đặt 'enough' sai vị trí: 'enough old' → 'old enough'.",
+      "Dùng 'too' mang nghĩa tích cực: 'The soup is too delicious' → 'The soup is very delicious'.",
+      "Nhầm 'too much' và 'too many': 'too much people' → 'too many people'.",
+      "Dùng 'enough' trước tính từ: 'He is enough tall' → 'He is tall enough'.",
+      "Dùng 'too' khi không có ý phủ định: 'I am too happy today' → 'I am very happy today'."
+    ],
+    "quiz": [
+      {
+        "question": "The coffee is too hot _____ .",
+        "options": [
+          "drink",
+          "to drink",
+          "drinking",
+          "drank"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc 'too + adj + to V': too hot to drink."
+      },
+      {
+        "question": "She is old enough _____ drive a car.",
+        "options": [
+          "for",
+          "to",
+          "that",
+          "so"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc 'adj + enough + to V'."
+      },
+      {
+        "question": "There are too _____ people in this room.",
+        "options": [
+          "much",
+          "many",
+          "a lot",
+          "few"
+        ],
+        "correct_index": 1,
+        "explanation": "'People' là danh từ đếm được số nhiều nên dùng too many."
+      },
+      {
+        "question": "I don't have _____ money to buy that phone.",
+        "options": [
+          "enough",
+          "too",
+          "much enough",
+          "enough of"
+        ],
+        "correct_index": 0,
+        "explanation": "'Enough' đứng trước danh từ: enough money."
+      },
+      {
+        "question": "He speaks too _____ ; I can't understand him.",
+        "options": [
+          "quick",
+          "quickly",
+          "quicker",
+          "quickest"
+        ],
+        "correct_index": 1,
+        "explanation": "'Too' đứng trước trạng từ 'quickly' bổ nghĩa cho động từ speak."
+      }
+    ]
+  },
+  {
+    "id": "modals_obligation",
+    "title": "Must/Have To/Should",
+    "title_vi": "Must/Have To/Should",
+    "level": "A2",
+    "category": "Modal",
+    "description": "Ba động từ khuyết thiếu này diễn tả mức độ bắt buộc và lời khuyên khác nhau. 'Must' và 'have to' chỉ sự bắt buộc, trong đó 'must' mang tính chủ quan còn 'have to' mang tính khách quan. 'Should' dùng để đưa ra lời khuyên.",
+    "formula_affirmative": "S + must/have to/should + V",
+    "formula_negative": "S + mustn't / don't have to / shouldn't + V",
+    "formula_question": "Must/Should + S + V? | Do/Does + S + have to + V?",
+    "time_markers": [
+      "must (phải – bắt buộc mang tính chủ quan)",
+      "have to (phải – bắt buộc do hoàn cảnh, quy định)",
+      "should (nên – lời khuyên)",
+      "mustn't (không được phép)",
+      "don't have to (không cần thiết)"
+    ],
+    "usage_rules": [
+      "'Must' diễn tả sự bắt buộc do người nói tự thấy cần thiết hoặc quy định mạnh.",
+      "'Have to' diễn tả sự bắt buộc do hoàn cảnh bên ngoài, luật lệ hoặc người khác đặt ra.",
+      "'Should' dùng để khuyên bảo, đưa ra ý kiến nên làm gì.",
+      "'Mustn't' nghĩa là không được phép làm, khác hoàn toàn với 'don't have to' là không cần thiết.",
+      "Sau modal luôn dùng động từ nguyên mẫu không 'to'; riêng 'have to' có 'to'."
+    ],
+    "examples": [
+      {
+        "english": "You must wear a helmet when you ride a motorbike.",
+        "vietnamese": "Bạn phải đội mũ bảo hiểm khi đi xe máy.",
+        "note": "Bắt buộc theo luật."
+      },
+      {
+        "english": "You look tired. You should go to bed early.",
+        "vietnamese": "Trông bạn mệt đấy. Bạn nên đi ngủ sớm.",
+        "note": "'Should' đưa ra lời khuyên."
+      },
+      {
+        "english": "I don't have to work on Sundays, so I can relax.",
+        "vietnamese": "Chủ nhật tôi không phải làm việc nên có thể nghỉ ngơi.",
+        "note": "'Don't have to' = không cần thiết."
+      },
+      {
+        "english": "You mustn't smoke here. It's forbidden.",
+        "vietnamese": "Bạn không được hút thuốc ở đây. Điều đó bị cấm.",
+        "note": "'Mustn't' = không được phép."
+      },
+      {
+        "english": "Do I have to finish this report today?",
+        "vietnamese": "Hôm nay tôi có phải hoàn thành báo cáo này không?",
+        "note": "Câu hỏi với 'have to' dùng trợ động từ do."
+      }
+    ],
+    "common_mistakes": [
+      "Nhầm 'mustn't' và 'don't have to': 'You mustn't pay; it's free' → 'You don't have to pay; it's free'.",
+      "Thêm 'to' sau must/should: 'You must to go' → 'You must go'.",
+      "Chia 'have to' sai ngôi: 'He have to go' → 'He has to go'.",
+      "Dùng 'should' cho bắt buộc mạnh: 'You should wear a helmet by law' → 'You must wear a helmet'.",
+      "Dùng 'do' trong câu hỏi với must: 'Do you must go?' → 'Must you go?' hoặc 'Do you have to go?'."
+    ],
+    "quiz": [
+      {
+        "question": "You _____ wear a helmet when you ride a motorbike. It's the law.",
+        "options": [
+          "should",
+          "must",
+          "might",
+          "could"
+        ],
+        "correct_index": 1,
+        "explanation": "Bắt buộc theo luật nên dùng must."
+      },
+      {
+        "question": "You look tired. You _____ go to bed early.",
+        "options": [
+          "must",
+          "should",
+          "have to",
+          "may"
+        ],
+        "correct_index": 1,
+        "explanation": "Đưa ra lời khuyên nên dùng should."
+      },
+      {
+        "question": "I _____ work on Sundays, so I can relax.",
+        "options": [
+          "mustn't",
+          "don't have to",
+          "shouldn't",
+          "can't"
+        ],
+        "correct_index": 1,
+        "explanation": "Không cần thiết phải làm nên dùng don't have to."
+      },
+      {
+        "question": "You _____ smoke here. It's forbidden.",
+        "options": [
+          "don't have to",
+          "mustn't",
+          "shouldn't",
+          "needn't"
+        ],
+        "correct_index": 1,
+        "explanation": "Bị cấm làm gì đó nên dùng mustn't."
+      },
+      {
+        "question": "_____ I have to finish this report today?",
+        "options": [
+          "Do",
+          "Am",
+          "Have",
+          "Must"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu hỏi với 'have to' dùng trợ động từ do."
+      }
+    ]
+  },
+  {
+    "id": "may_might_permission",
+    "title": "May/Might & Permission",
+    "title_vi": "May/Might & Xin phép",
+    "level": "A2",
+    "category": "Modal",
+    "description": "'May' và 'might' dùng để nói về khả năng một việc có thể xảy ra. 'May' còn dùng để xin phép hoặc cho phép một cách lịch sự, trang trọng. 'Might' diễn tả khả năng thấp hơn 'may'.",
+    "formula_affirmative": "S + may/might + V",
+    "formula_negative": "S + may not/might not + V",
+    "formula_question": "May + I/we + V? (xin phép)",
+    "time_markers": [
+      "may (có thể – khả năng hoặc xin phép)",
+      "might (có thể – khả năng thấp hơn)",
+      "perhaps / maybe (có lẽ)",
+      "May I ...? (Tôi có thể ...?)",
+      "Do you mind if ...? (xin phép lịch sự)"
+    ],
+    "usage_rules": [
+      "'May' diễn tả khả năng có thể xảy ra trong hiện tại hoặc tương lai.",
+      "'Might' diễn tả khả năng thấp hơn 'may', thường dùng khi không chắc chắn.",
+      "'May I + V?' dùng để xin phép một cách lịch sự, trang trọng.",
+      "'May' còn dùng để cho phép: You may go now.",
+      "Sau may/might luôn là động từ nguyên mẫu không 'to'."
+    ],
+    "examples": [
+      {
+        "english": "May I borrow your dictionary?",
+        "vietnamese": "Tôi có thể mượn từ điển của bạn không?",
+        "note": "Xin phép lịch sự với 'May I ...?'."
+      },
+      {
+        "english": "Take a jacket. It may be cold tonight.",
+        "vietnamese": "Mang áo khoác đi. Tối nay trời có thể lạnh.",
+        "note": "'May' diễn tả khả năng."
+      },
+      {
+        "english": "She might not know the answer.",
+        "vietnamese": "Cô ấy có thể không biết câu trả lời.",
+        "note": "'Might not' diễn tả khả năng không xảy ra."
+      },
+      {
+        "english": "You may go now if you want.",
+        "vietnamese": "Bạn có thể đi bây giờ nếu muốn.",
+        "note": "'May' dùng để cho phép."
+      },
+      {
+        "english": "May I use your bike this afternoon?",
+        "vietnamese": "Chiều nay tôi có thể dùng xe đạp của bạn không?",
+        "note": "Xin phép với động từ thường."
+      }
+    ],
+    "common_mistakes": [
+      "Thêm 'to' sau may/might: 'She may to come' → 'She may come'.",
+      "Dùng 'may' cho bắt buộc: 'You may wear a helmet' khi ý là phải → 'You must wear a helmet'.",
+      "Nhầm 'may not' với 'must not': 'You may not smoke' (không được phép, trang trọng) khác 'You must not smoke' (cấm mạnh).",
+      "Dùng 'might' trong câu xin phép: 'Might I go out?' → 'May I go out?'.",
+      "Chia động từ sau may: 'He may goes' → 'He may go'."
+    ],
+    "quiz": [
+      {
+        "question": "_____ I borrow your dictionary?",
+        "options": [
+          "May",
+          "Do",
+          "Am",
+          "Are"
+        ],
+        "correct_index": 0,
+        "explanation": "Xin phép lịch sự dùng 'May I + V?'."
+      },
+      {
+        "question": "Take a jacket. It _____ be cold tonight.",
+        "options": [
+          "may",
+          "must",
+          "should",
+          "has to"
+        ],
+        "correct_index": 0,
+        "explanation": "'May' diễn tả khả năng có thể xảy ra."
+      },
+      {
+        "question": "You _____ go now if you want.",
+        "options": [
+          "may",
+          "must",
+          "have to",
+          "need"
+        ],
+        "correct_index": 0,
+        "explanation": "'May' dùng để cho phép ai đó làm gì."
+      },
+      {
+        "question": "She _____ not know the answer.",
+        "options": [
+          "may",
+          "must",
+          "should",
+          "has"
+        ],
+        "correct_index": 0,
+        "explanation": "'May not' diễn tả khả năng không xảy ra."
+      },
+      {
+        "question": "May I _____ your bike this afternoon?",
+        "options": [
+          "use",
+          "using",
+          "to use",
+          "used"
+        ],
+        "correct_index": 0,
+        "explanation": "Sau 'may' dùng động từ nguyên mẫu không 'to': may I use."
+      }
+    ]
+  },
+  {
+    "id": "quantifiers",
+    "title": "Much/Many/A lot/A few/A little",
+    "title_vi": "Lượng từ",
+    "level": "A2",
+    "category": "Lượng từ",
+    "description": "Các lượng từ giúp nói về số lượng nhiều hay ít. Cần phân biệt danh từ đếm được và không đếm được để chọn đúng từ. 'Many/a few' đi với danh từ đếm được, 'much/a little' đi với danh từ không đếm được.",
+    "formula_affirmative": "many/a few + N đếm được số nhiều | much/a little + N không đếm được | a lot of + cả hai",
+    "formula_negative": "not many + N đếm được | not much + N không đếm được",
+    "formula_question": "How many + N đếm được? | How much + N không đếm được?",
+    "time_markers": [
+      "many / a few / a large number of + N đếm được",
+      "much / a little / a great deal of + N không đếm được",
+      "a lot of / lots of + cả hai loại danh từ",
+      "How many / How much ...? (hỏi số lượng)",
+      "only a few / only a little (chỉ một ít)"
+    ],
+    "usage_rules": [
+      "'Many' và 'a few' chỉ dùng với danh từ đếm được số nhiều.",
+      "'Much' và 'a little' chỉ dùng với danh từ không đếm được.",
+      "'A lot of / lots of' dùng được với cả hai loại, thường trong câu khẳng định.",
+      "'A few' nghĩa là một vài (đủ dùng), 'few' nghĩa là ít ỏi (không đủ).",
+      "'A little' nghĩa là một chút (đủ dùng), 'little' nghĩa là rất ít (không đủ)."
+    ],
+    "examples": [
+      {
+        "english": "How much sugar do you need?",
+        "vietnamese": "Bạn cần bao nhiêu đường?",
+        "note": "'Sugar' không đếm được nên dùng how much."
+      },
+      {
+        "english": "There are only a few apples left.",
+        "vietnamese": "Chỉ còn một vài quả táo.",
+        "note": "'Apples' đếm được nên dùng a few."
+      },
+      {
+        "english": "I have a little time, so I can help you.",
+        "vietnamese": "Tôi có một chút thời gian nên có thể giúp bạn.",
+        "note": "'Time' không đếm được nên dùng a little."
+      },
+      {
+        "english": "She doesn't have many friends in this city.",
+        "vietnamese": "Cô ấy không có nhiều bạn ở thành phố này.",
+        "note": "Câu phủ định với danh từ đếm được dùng many."
+      },
+      {
+        "english": "We need to buy a little bread.",
+        "vietnamese": "Chúng ta cần mua một ít bánh mì.",
+        "note": "'Bread' không đếm được nên dùng a little."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'much' với danh từ đếm được: 'much books' → 'many books'.",
+      "Dùng 'many' với danh từ không đếm được: 'many money' → 'much money'.",
+      "Dùng 'a few' với danh từ không đếm được: 'a few water' → 'a little water'.",
+      "Nhầm 'few' và 'a few': 'I have few friends, so I'm happy' (nghĩa tiêu cực) → 'a few friends' nếu ý là có một vài người bạn.",
+      "Dùng 'how much' hỏi số lượng đếm được: 'How much students?' → 'How many students?'."
+    ],
+    "quiz": [
+      {
+        "question": "How _____ sugar do you need?",
+        "options": [
+          "many",
+          "much",
+          "few",
+          "a few"
+        ],
+        "correct_index": 1,
+        "explanation": "'Sugar' là danh từ không đếm được nên dùng how much."
+      },
+      {
+        "question": "There are only _____ apples left.",
+        "options": [
+          "a little",
+          "a few",
+          "much",
+          "little"
+        ],
+        "correct_index": 1,
+        "explanation": "'Apples' đếm được số nhiều nên dùng a few."
+      },
+      {
+        "question": "I have _____ time, so I can help you.",
+        "options": [
+          "a few",
+          "a little",
+          "many",
+          "few"
+        ],
+        "correct_index": 1,
+        "explanation": "'Time' không đếm được nên dùng a little."
+      },
+      {
+        "question": "She doesn't have _____ friends in this city.",
+        "options": [
+          "much",
+          "many",
+          "a little",
+          "a lot"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu phủ định với danh từ đếm được số nhiều dùng many."
+      },
+      {
+        "question": "We need to buy _____ bread.",
+        "options": [
+          "a few",
+          "a little",
+          "many",
+          "few"
+        ],
+        "correct_index": 1,
+        "explanation": "'Bread' không đếm được nên dùng a little."
+      }
+    ]
+  },
+  {
+    "id": "some_any_no_every_compounds",
+    "title": "Some/Any/No/Every + Compounds",
+    "title_vi": "Some/Any/No/Every & từ ghép",
+    "level": "A2",
+    "category": "Lượng từ",
+    "description": "Some, any, no, every kết hợp với -thing, -body, -one, -where tạo thành các đại từ và trạng từ bất định. Việc chọn some- hay any- phụ thuộc vào loại câu. Các từ với 'every-' chỉ số ít nhưng mang nghĩa tất cả.",
+    "formula_affirmative": "S + V + somebody/something/somewhere (câu khẳng định)",
+    "formula_negative": "S + not + V + anybody/anything/anywhere",
+    "formula_question": "Do/Does/Did + S + V + anybody/anything/anywhere?",
+    "time_markers": [
+      "some- + thing/body/one/where (câu khẳng định, lời mời)",
+      "any- + thing/body/one/where (câu phủ định, nghi vấn)",
+      "no- + thing/body/one/where (nghĩa phủ định, động từ khẳng định)",
+      "every- + thing/body/one/where (tất cả, mọi)",
+      "something to eat / somewhere nice (từ ghép + bổ ngữ)"
+    ],
+    "usage_rules": [
+      "Dùng 'some-' trong câu khẳng định và trong lời mời, lời đề nghị.",
+      "Dùng 'any-' trong câu phủ định và câu hỏi.",
+      "Dùng 'no-' khi động từ ở dạng khẳng định nhưng câu mang nghĩa phủ định.",
+      "Không dùng phủ định kép: không kết hợp 'not' với 'nobody/nothing/nowhere'.",
+      "Các từ ghép với 'every-' và 'no-' đi với động từ số ít."
+    ],
+    "examples": [
+      {
+        "english": "Would you like something to drink?",
+        "vietnamese": "Bạn có muốn uống gì không?",
+        "note": "Lời mời dùng 'something'."
+      },
+      {
+        "english": "I didn't see anyone in the classroom.",
+        "vietnamese": "Tôi không thấy ai trong lớp.",
+        "note": "Câu phủ định dùng 'anyone'."
+      },
+      {
+        "english": "There is nothing in the fridge. It's empty.",
+        "vietnamese": "Không có gì trong tủ lạnh. Nó trống trơn.",
+        "note": "'Nothing' + động từ khẳng định."
+      },
+      {
+        "english": "She lives somewhere near the beach.",
+        "vietnamese": "Cô ấy sống ở đâu đó gần bãi biển.",
+        "note": "Câu khẳng định dùng 'somewhere'."
+      },
+      {
+        "english": "Everybody in my class likes football.",
+        "vietnamese": "Mọi người trong lớp tôi đều thích bóng đá.",
+        "note": "'Everybody' đi với động từ số ít 'likes'."
+      }
+    ],
+    "common_mistakes": [
+      "Phủ định kép: 'I didn't see nobody' → 'I didn't see anybody' hoặc 'I saw nobody'.",
+      "Dùng 'something' trong câu phủ định: 'I don't need something' → 'I don't need anything'.",
+      "Chia động từ số nhiều sau 'everybody': 'Everybody like it' → 'Everybody likes it'.",
+      "Dùng 'any-' trong lời mời: 'Would you like anything to drink?' → 'Would you like something to drink?'.",
+      "Viết tách rời: 'every thing' → 'everything' khi mang nghĩa 'mọi thứ'."
+    ],
+    "quiz": [
+      {
+        "question": "Would you like _____ tea?",
+        "options": [
+          "some",
+          "any",
+          "no",
+          "every"
+        ],
+        "correct_index": 0,
+        "explanation": "Lời mời dùng 'some': Would you like some tea?"
+      },
+      {
+        "question": "I didn't see _____ in the classroom.",
+        "options": [
+          "someone",
+          "anyone",
+          "no one",
+          "everyone"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu phủ định dùng 'anyone'."
+      },
+      {
+        "question": "There is _____ in the fridge. It's empty.",
+        "options": [
+          "something",
+          "anything",
+          "nothing",
+          "everything"
+        ],
+        "correct_index": 2,
+        "explanation": "Tủ lạnh trống nên dùng 'nothing' với động từ khẳng định."
+      },
+      {
+        "question": "She lives _____ near the beach.",
+        "options": [
+          "somewhere",
+          "anywhere",
+          "nowhere",
+          "everywhere"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu khẳng định dùng 'somewhere'."
+      },
+      {
+        "question": "_____ in my class likes football, but I can't remember who.",
+        "options": [
+          "Anybody",
+          "Nobody",
+          "Somebody",
+          "Something"
+        ],
+        "correct_index": 2,
+        "explanation": "Câu khẳng định cần đại từ chỉ người làm chủ ngữ; 'Somebody' hợp nghĩa với 'I can't remember who'."
+      }
+    ]
+  },
+  {
+    "id": "prepositions_movement",
+    "title": "Prepositions of Movement",
+    "title_vi": "Giới từ chỉ chuyển động",
+    "level": "A2",
+    "category": "Giới từ",
+    "description": "Giới từ chỉ chuyển động cho biết hướng đi của một hành động. Chúng thường đi sau các động từ như go, walk, run, drive, fly, jump. Mỗi giới từ diễn tả một hướng khác nhau.",
+    "formula_affirmative": "S + V (go/walk/run/drive...) + giới từ chuyển động + N",
+    "formula_negative": "S + do/does/did + not + V + giới từ chuyển động + N",
+    "formula_question": "Do/Does/Did + S + V + giới từ chuyển động + N?",
+    "time_markers": [
+      "into (vào trong)",
+      "out of (ra khỏi)",
+      "through (xuyên qua)",
+      "across (băng qua)",
+      "along (dọc theo)"
+    ],
+    "usage_rules": [
+      "'To' chỉ đích đến, 'from' chỉ điểm xuất phát; 'to' không đi với 'home'.",
+      "'Into' chỉ việc đi vào bên trong, 'out of' chỉ việc đi ra khỏi.",
+      "'Through' nghĩa là xuyên qua một không gian kín, 'across' là băng qua một bề mặt.",
+      "'Along' nghĩa là đi dọc theo một đường dài; 'up/down' chỉ hướng lên/xuống.",
+      "'Over' chỉ việc vượt qua phía trên một vật."
+    ],
+    "examples": [
+      {
+        "english": "We walked across the bridge to the other side.",
+        "vietnamese": "Chúng tôi đi bộ băng qua cầu sang bên kia.",
+        "note": "'Across' = băng qua một bề mặt."
+      },
+      {
+        "english": "She went into the room and closed the door.",
+        "vietnamese": "Cô ấy đi vào phòng và đóng cửa lại.",
+        "note": "'Into' = vào bên trong."
+      },
+      {
+        "english": "The cat jumped onto the table.",
+        "vietnamese": "Con mèo nhảy lên bàn.",
+        "note": "'Onto' = lên trên bề mặt."
+      },
+      {
+        "english": "They drove through the tunnel.",
+        "vietnamese": "Họ lái xe xuyên qua đường hầm.",
+        "note": "'Through' = xuyên qua không gian kín."
+      },
+      {
+        "english": "He ran along the street to catch the bus.",
+        "vietnamese": "Anh ấy chạy dọc theo con phố để bắt xe buýt.",
+        "note": "'Along' = dọc theo."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'in' thay 'into' cho chuyển động: 'She walked in the room' → 'She walked into the room'.",
+      "Dùng 'to' với 'home': 'I went to home' → 'I went home'.",
+      "Nhầm 'through' và 'across': 'walk through the bridge' → 'walk across the bridge'.",
+      "Dùng 'out' thiếu 'of': 'He went out the house' → 'He went out of the house'.",
+      "Dùng 'on' thay 'onto' khi có chuyển động lên bề mặt: 'jumped on the table' (nhấn vị trí) → 'jumped onto the table' (nhấn hướng)."
+    ],
+    "quiz": [
+      {
+        "question": "We walked _____ the bridge to the other side.",
+        "options": [
+          "across",
+          "into",
+          "out of",
+          "along"
+        ],
+        "correct_index": 0,
+        "explanation": "'Across' diễn tả việc băng qua một bề mặt như cây cầu."
+      },
+      {
+        "question": "She went _____ the room and closed the door.",
+        "options": [
+          "into",
+          "across",
+          "over",
+          "through"
+        ],
+        "correct_index": 0,
+        "explanation": "'Into' diễn tả đi vào bên trong một không gian."
+      },
+      {
+        "question": "The cat jumped _____ the table.",
+        "options": [
+          "onto",
+          "into",
+          "out of",
+          "along"
+        ],
+        "correct_index": 0,
+        "explanation": "'Onto' diễn tả chuyển động lên trên bề mặt."
+      },
+      {
+        "question": "He ran _____ the street to catch the bus.",
+        "options": [
+          "along",
+          "into",
+          "up",
+          "over"
+        ],
+        "correct_index": 0,
+        "explanation": "'Along' diễn tả chạy dọc theo con phố."
+      },
+      {
+        "question": "They drove _____ the tunnel.",
+        "options": [
+          "through",
+          "into",
+          "onto",
+          "up"
+        ],
+        "correct_index": 0,
+        "explanation": "'Through' diễn tả di chuyển xuyên qua không gian kín như đường hầm."
+      }
+    ]
+  },
+  {
+    "id": "gerunds_infinitives_basic",
+    "title": "Gerunds & Infinitives (Basic)",
+    "title_vi": "Danh động từ & động từ nguyên mẫu",
+    "level": "A2",
+    "category": "Động từ",
+    "description": "Một số động từ được theo sau bởi V-ing (danh động từ), số khác lại theo sau bởi 'to + V'. Cần học thuộc nhóm động từ để dùng đúng. Danh động từ còn có thể làm chủ ngữ trong câu.",
+    "formula_affirmative": "S + V + V-ing (enjoy/finish/avoid...) | S + V + to V (want/decide/hope...)",
+    "formula_negative": "S + V + not + V-ing | S + V + not + to V",
+    "formula_question": "Do/Does + S + V + V-ing? | Do/Does + S + V + to V?",
+    "time_markers": [
+      "enjoy / like / love / hate + V-ing",
+      "want / need / decide / hope / plan + to V",
+      "finish / stop / avoid / suggest + V-ing",
+      "would like / would love + to V",
+      "V-ing làm chủ ngữ (Reading is fun.)"
+    ],
+    "usage_rules": [
+      "Các động từ như enjoy, finish, avoid, suggest, mind đi với V-ing.",
+      "Các động từ như want, decide, hope, plan, need đi với 'to + V'.",
+      "Sau giới từ luôn dùng V-ing: interested in reading, good at swimming.",
+      "Danh động từ (V-ing) có thể làm chủ ngữ: Swimming is good for health.",
+      "Sau 'would like / would love' dùng 'to + V'."
+    ],
+    "examples": [
+      {
+        "english": "I enjoy listening to music in the evening.",
+        "vietnamese": "Tôi thích nghe nhạc vào buổi tối.",
+        "note": "'Enjoy' + V-ing."
+      },
+      {
+        "english": "She wants to find a new job.",
+        "vietnamese": "Cô ấy muốn tìm một công việc mới.",
+        "note": "'Want' + to V."
+      },
+      {
+        "english": "They decided to go to the beach.",
+        "vietnamese": "Họ quyết định đi biển.",
+        "note": "'Decide' + to V."
+      },
+      {
+        "english": "He finished doing his homework at 9 p.m.",
+        "vietnamese": "Anh ấy làm xong bài tập lúc 9 giờ tối.",
+        "note": "'Finish' + V-ing."
+      },
+      {
+        "english": "Would you like to have some coffee?",
+        "vietnamese": "Bạn có muốn uống chút cà phê không?",
+        "note": "'Would like' + to V."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'to V' sau enjoy: 'I enjoy to read' → 'I enjoy reading'.",
+      "Dùng V-ing sau want: 'She wants finding a job' → 'She wants to find a job'.",
+      "Dùng V nguyên mẫu sau giới từ: 'good at swim' → 'good at swimming'.",
+      "Dùng 'to V' sau finish: 'He finished to do it' → 'He finished doing it'.",
+      "Sai dạng sau 'would like': 'I would like having tea' → 'I would like to have tea'."
+    ],
+    "quiz": [
+      {
+        "question": "I enjoy _____ music in the evening.",
+        "options": [
+          "listen",
+          "listening",
+          "to listen",
+          "listened"
+        ],
+        "correct_index": 1,
+        "explanation": "'Enjoy' được theo sau bởi V-ing: enjoy listening."
+      },
+      {
+        "question": "She wants _____ a new job.",
+        "options": [
+          "find",
+          "finding",
+          "to find",
+          "found"
+        ],
+        "correct_index": 2,
+        "explanation": "'Want' được theo sau bởi 'to + V': wants to find."
+      },
+      {
+        "question": "They decided _____ to the beach.",
+        "options": [
+          "go",
+          "going",
+          "to go",
+          "went"
+        ],
+        "correct_index": 2,
+        "explanation": "'Decide' được theo sau bởi 'to + V': decided to go."
+      },
+      {
+        "question": "He finished _____ his homework at 9 p.m.",
+        "options": [
+          "do",
+          "doing",
+          "to do",
+          "did"
+        ],
+        "correct_index": 1,
+        "explanation": "'Finish' được theo sau bởi V-ing: finished doing."
+      },
+      {
+        "question": "Would you like _____ some coffee?",
+        "options": [
+          "have",
+          "having",
+          "to have",
+          "had"
+        ],
+        "correct_index": 2,
+        "explanation": "'Would like' được theo sau bởi 'to + V': would like to have."
+      }
+    ]
+  },
+  {
+    "id": "question_tags_adverbs_manner",
+    "title": "Question Tags & Adverbs of Manner",
+    "title_vi": "Câu hỏi đuôi & trạng từ chỉ cách thức",
+    "level": "A2",
+    "category": "Câu hỏi & Trạng từ",
+    "description": "Câu hỏi đuôi là phần ngắn thêm vào cuối câu để xác nhận thông tin hoặc tìm sự đồng tình. Trạng từ chỉ cách thức cho biết hành động được thực hiện như thế nào. Hai cấu trúc này thường xuất hiện trong giao tiếp hằng ngày.",
+    "formula_affirmative": "Câu khẳng định + trợ động từ phủ định + đại từ? (You are a student, aren't you?)",
+    "formula_negative": "Câu phủ định + trợ động từ khẳng định + đại từ? (She doesn't like it, does she?)",
+    "formula_question": "S + V + O, trợ động từ + đại từ? | S + V + adv-ly",
+    "time_markers": [
+      "isn't it? / aren't you? / don't they? (đuôi phủ định)",
+      "doesn't she? / didn't he? (đuôi phủ định)",
+      "carefully (một cách cẩn thận)",
+      "quickly (một cách nhanh chóng)",
+      "well (tốt – trạng từ bất quy tắc của good)"
+    ],
+    "usage_rules": [
+      "Câu hỏi đuôi dùng trợ động từ giống câu chính và đại từ nhân xưng, không dùng danh từ.",
+      "Nếu câu chính khẳng định thì đuôi phủ định, và ngược lại.",
+      "Trạng từ chỉ cách thức thường được tạo bằng cách thêm -ly vào tính từ: careful → carefully.",
+      "Trạng từ chỉ cách thức đứng sau động từ hoặc sau tân ngữ: She speaks English well.",
+      "Một số trạng từ bất quy tắc: good → well, fast → fast, hard → hard."
+    ],
+    "examples": [
+      {
+        "english": "You are a student, aren't you?",
+        "vietnamese": "Bạn là học sinh phải không?",
+        "note": "Câu khẳng định → đuôi phủ định."
+      },
+      {
+        "english": "She doesn't like fish, does she?",
+        "vietnamese": "Cô ấy không thích cá phải không?",
+        "note": "Câu phủ định → đuôi khẳng định."
+      },
+      {
+        "english": "They went to school yesterday, didn't they?",
+        "vietnamese": "Hôm qua họ đi học phải không?",
+        "note": "Dùng trợ động từ 'did' cho quá khứ đơn."
+      },
+      {
+        "english": "He drives very carefully.",
+        "vietnamese": "Anh ấy lái xe rất cẩn thận.",
+        "note": "Trạng từ 'carefully' bổ nghĩa cho động từ drives."
+      },
+      {
+        "english": "Your sister can swim, can't she?",
+        "vietnamese": "Chị bạn biết bơi phải không?",
+        "note": "Dùng lại modal 'can' ở đuôi câu."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng đuôi cùng chiều: 'You are tired, are you?' → 'You are tired, aren't you?'.",
+      "Dùng danh từ ở đuôi câu: 'Tom is here, isn't Tom?' → 'Tom is here, isn't he?'.",
+      "Sai trợ động từ: 'She likes tea, isn't she?' → 'She likes tea, doesn't she?'.",
+      "Dùng tính từ thay trạng từ: 'He drives careful' → 'He drives carefully'.",
+      "Dùng 'good' thay 'well': 'She sings very good' → 'She sings very well'."
+    ],
+    "quiz": [
+      {
+        "question": "You are a student, _____ ?",
+        "options": [
+          "aren't you",
+          "are you",
+          "don't you",
+          "isn't it"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu khẳng định với 'are' nên đuôi phủ định là aren't you."
+      },
+      {
+        "question": "She doesn't like fish, _____ ?",
+        "options": [
+          "does she",
+          "doesn't she",
+          "is she",
+          "did she"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu phủ định nên đuôi khẳng định: does she."
+      },
+      {
+        "question": "They went to school yesterday, _____ ?",
+        "options": [
+          "did they",
+          "didn't they",
+          "were they",
+          "do they"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu khẳng định ở quá khứ đơn nên đuôi là didn't they."
+      },
+      {
+        "question": "He drives very _____ .",
+        "options": [
+          "careful",
+          "carefully",
+          "care",
+          "carefulness"
+        ],
+        "correct_index": 1,
+        "explanation": "Cần trạng từ chỉ cách thức 'carefully' bổ nghĩa cho động từ drives."
+      },
+      {
+        "question": "Your sister can swim, _____ ?",
+        "options": [
+          "can't she",
+          "can she",
+          "doesn't she",
+          "isn't she"
+        ],
+        "correct_index": 0,
+        "explanation": "Dùng lại modal 'can' ở dạng phủ định cho đuôi câu: can't she."
+      }
+    ]
+  },
+  {
+    "id": "defining_relative_clauses",
+    "title": "Defining Relative Clauses",
+    "title_vi": "Mệnh đề quan hệ xác định",
+    "level": "A2",
+    "category": "Mệnh đề",
+    "description": "Mệnh đề quan hệ xác định bổ sung thông tin cần thiết để nhận diện người hoặc vật được nhắc đến. Nếu bỏ mệnh đề này, nghĩa của câu sẽ không rõ ràng. Các đại từ thường dùng là who, which, that, whose, where.",
+    "formula_affirmative": "N + who/which/that + V + O",
+    "formula_negative": "N + who/which/that + do/does/did + not + V",
+    "formula_question": "Who/Which + be + N? | N + who/which/that + V?",
+    "time_markers": [
+      "who (người – làm chủ ngữ hoặc tân ngữ)",
+      "which (vật – làm chủ ngữ hoặc tân ngữ)",
+      "that (thay cho who/which trong mệnh đề xác định)",
+      "whose (sở hữu)",
+      "where (nơi chốn)"
+    ],
+    "usage_rules": [
+      "Dùng 'who' cho người, 'which' cho vật và 'that' có thể thay cho cả hai trong mệnh đề xác định.",
+      "Dùng 'whose' để chỉ sở hữu, theo sau là danh từ.",
+      "Dùng 'where' cho địa điểm và 'when' cho thời gian.",
+      "Không dùng dấu phẩy với mệnh đề quan hệ xác định.",
+      "Đại từ quan hệ làm tân ngữ có thể được lược bỏ: the book (which) I bought."
+    ],
+    "examples": [
+      {
+        "english": "The man who lives next door is a doctor.",
+        "vietnamese": "Người đàn ông sống cạnh nhà là bác sĩ.",
+        "note": "'Who' thay cho người, làm chủ ngữ."
+      },
+      {
+        "english": "This is the book which I told you about.",
+        "vietnamese": "Đây là cuốn sách mà tôi đã kể với bạn.",
+        "note": "'Which' thay cho vật, làm tân ngữ."
+      },
+      {
+        "english": "The girl whose bag was stolen is crying.",
+        "vietnamese": "Cô gái bị mất túi đang khóc.",
+        "note": "'Whose' chỉ sở hữu."
+      },
+      {
+        "english": "This is the house where we lived last year.",
+        "vietnamese": "Đây là ngôi nhà nơi chúng tôi sống năm ngoái.",
+        "note": "'Where' thay cho cụm chỉ nơi chốn."
+      },
+      {
+        "english": "I don't like people who are always late.",
+        "vietnamese": "Tôi không thích những người luôn đi muộn.",
+        "note": "Mệnh đề xác định bổ nghĩa cho 'people'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'which' cho người: 'The man which lives here' → 'The man who lives here'.",
+      "Dùng 'who' cho vật: 'The book who I bought' → 'The book which I bought'.",
+      "Nhầm 'whose' và 'who's': 'The boy who's bag is red' → 'The boy whose bag is red'.",
+      "Dùng 'where' thay 'which' khi không phải nơi chốn: 'the film where I saw' → 'the film which I saw'.",
+      "Thêm dấu phẩy sai trong mệnh đề xác định: 'The man, who lives next door, is a doctor' (khi thông tin là cần thiết)."
+    ],
+    "quiz": [
+      {
+        "question": "The man _____ lives next door is a doctor.",
+        "options": [
+          "which",
+          "who",
+          "whose",
+          "where"
+        ],
+        "correct_index": 1,
+        "explanation": "'The man' chỉ người và làm chủ ngữ nên dùng who."
+      },
+      {
+        "question": "This is the book _____ I told you about.",
+        "options": [
+          "who",
+          "which",
+          "whose",
+          "where"
+        ],
+        "correct_index": 1,
+        "explanation": "'The book' chỉ vật nên dùng which."
+      },
+      {
+        "question": "The girl _____ bag was stolen is crying.",
+        "options": [
+          "who",
+          "which",
+          "whose",
+          "that"
+        ],
+        "correct_index": 2,
+        "explanation": "Cần đại từ chỉ sở hữu đứng trước danh từ 'bag': whose."
+      },
+      {
+        "question": "This is the house _____ we lived last year.",
+        "options": [
+          "which",
+          "who",
+          "where",
+          "whose"
+        ],
+        "correct_index": 2,
+        "explanation": "'The house' chỉ nơi chốn nên dùng where."
+      },
+      {
+        "question": "I don't like people _____ are always late.",
+        "options": [
+          "which",
+          "who",
+          "whose",
+          "where"
+        ],
+        "correct_index": 1,
+        "explanation": "'People' chỉ người và làm chủ ngữ nên dùng who."
+      }
+    ]
+  },
+  {
+    "id": "first_conditional_used_to",
+    "title": "First Conditional & Used To",
+    "title_vi": "Câu điều kiện loại 1 & Used To",
+    "level": "A2",
+    "category": "Điều kiện & Quá khứ",
+    "description": "Câu điều kiện loại 1 diễn tả một khả năng có thể xảy ra trong tương lai và kết quả của nó. 'Used to' diễn tả thói quen hoặc trạng thái đã có trong quá khứ nhưng không còn ở hiện tại.",
+    "formula_affirmative": "If + S + V (hiện tại đơn), S + will + V | S + used to + V",
+    "formula_negative": "If + S + don't/doesn't + V, S + won't + V | S + didn't use to + V",
+    "formula_question": "What will + S + V + if + S + V? | Did + S + use to + V?",
+    "time_markers": [
+      "if (nếu)",
+      "unless (trừ khi)",
+      "when (khi)",
+      "used to (đã từng – thói quen quá khứ)",
+      "didn't use to (đã không còn)"
+    ],
+    "usage_rules": [
+      "Mệnh đề 'if' của câu điều kiện loại 1 dùng hiện tại đơn, không dùng will.",
+      "Mệnh đề chính dùng 'will + V' để nói kết quả có thể xảy ra.",
+      "'Unless' có nghĩa là 'if ... not' (trừ khi).",
+      "'Used to + V' diễn tả thói quen hoặc trạng thái trong quá khứ nay không còn.",
+      "Câu phủ định và nghi vấn của 'used to' dùng 'didn't use to' và 'Did ... use to'."
+    ],
+    "examples": [
+      {
+        "english": "If it rains tomorrow, we will stay at home.",
+        "vietnamese": "Nếu mai trời mưa, chúng tôi sẽ ở nhà.",
+        "note": "If + hiện tại đơn, mệnh đề chính dùng will."
+      },
+      {
+        "english": "I used to play football when I was a child.",
+        "vietnamese": "Tôi đã từng chơi bóng đá khi còn nhỏ.",
+        "note": "'Used to' chỉ thói quen quá khứ."
+      },
+      {
+        "english": "If you study hard, you will pass the exam.",
+        "vietnamese": "Nếu bạn học chăm, bạn sẽ đỗ kỳ thi.",
+        "note": "Điều kiện có thể xảy ra trong tương lai."
+      },
+      {
+        "english": "She didn't use to like coffee, but now she does.",
+        "vietnamese": "Trước đây cô ấy không thích cà phê, nhưng giờ thì thích.",
+        "note": "Phủ định của 'used to': didn't use to."
+      },
+      {
+        "english": "We won't go out unless it stops raining.",
+        "vietnamese": "Chúng tôi sẽ không ra ngoài trừ khi trời tạnh mưa.",
+        "note": "'Unless' = if ... not."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'will' trong mệnh đề if: 'If it will rain' → 'If it rains'.",
+      "Dùng 'used to' ở hiện tại: 'I use to play tennis now' → 'I play tennis now'.",
+      "Sai dạng phủ định: 'I didn't used to smoke' → 'I didn't use to smoke'.",
+      "Dùng 'use to' trong câu khẳng định: 'I use to live here' → 'I used to live here'.",
+      "Nhầm 'used to' với 'be used to': 'I am used to play football' → 'I used to play football' hoặc 'I am used to playing football'."
+    ],
+    "quiz": [
+      {
+        "question": "If it _____ tomorrow, we will stay at home.",
+        "options": [
+          "rains",
+          "will rain",
+          "rained",
+          "is raining"
+        ],
+        "correct_index": 0,
+        "explanation": "Mệnh đề 'if' của câu điều kiện loại 1 dùng hiện tại đơn: rains."
+      },
+      {
+        "question": "I _____ play football when I was a child.",
+        "options": [
+          "use to",
+          "used to",
+          "am used to",
+          "using to"
+        ],
+        "correct_index": 1,
+        "explanation": "Thói quen trong quá khứ dùng 'used to + V'."
+      },
+      {
+        "question": "If you study hard, you _____ pass the exam.",
+        "options": [
+          "will",
+          "would",
+          "are",
+          "did"
+        ],
+        "correct_index": 0,
+        "explanation": "Mệnh đề chính của câu điều kiện loại 1 dùng will + V."
+      },
+      {
+        "question": "She didn't _____ like coffee, but now she does.",
+        "options": [
+          "used to",
+          "use to",
+          "uses to",
+          "using to"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau 'didn't' dùng 'use to', không có -d."
+      },
+      {
+        "question": "We won't go out _____ it stops raining.",
+        "options": [
+          "unless",
+          "if",
+          "when",
+          "because"
+        ],
+        "correct_index": 0,
+        "explanation": "'Unless' nghĩa là trừ khi, hợp nghĩa câu."
+      }
+    ]
+  }
+]

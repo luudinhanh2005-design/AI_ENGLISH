@@ -90,8 +90,6 @@ class _ReadingScreenState extends State<ReadingScreen> {
   // 1. ARTICLE SELECTOR SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildArticleSelector(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: context.palette.background,
@@ -345,8 +343,6 @@ class _ReadingScreenState extends State<ReadingScreen> {
   // 2. ACTIVE ARTICLE SCREEN
   // ─────────────────────────────────────────────────────────────
   Widget _buildActiveArticle(BuildContext context, ReadingArticle article) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final contentWidth = screenWidth > 800 ? 800.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: context.palette.background,

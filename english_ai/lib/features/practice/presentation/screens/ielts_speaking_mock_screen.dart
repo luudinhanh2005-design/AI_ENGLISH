@@ -37,7 +37,6 @@ class _IeltsSpeakingMockScreenState
 
   // Prompt data
   Map<String, dynamic>? _promptData;
-  bool _isLoadingPrompt = false;
 
   // Test State
   int _p1Index = 0;
@@ -85,7 +84,6 @@ class _IeltsSpeakingMockScreenState
   }
 
   Future<void> _fetchPrompt([String? topicId]) async {
-    setState(() => _isLoadingPrompt = true);
     try {
       final dio = ref.read(dioProvider);
       final res = await dio.get(
@@ -95,7 +93,6 @@ class _IeltsSpeakingMockScreenState
       if (res.statusCode == 200 && res.data != null) {
         setState(() {
           _promptData = res.data as Map<String, dynamic>;
-          _isLoadingPrompt = false;
         });
         return;
       }
@@ -129,7 +126,6 @@ class _IeltsSpeakingMockScreenState
           'How can elderly people be encouraged to adopt modern digital tools?',
         ],
       };
-      _isLoadingPrompt = false;
     });
   }
 

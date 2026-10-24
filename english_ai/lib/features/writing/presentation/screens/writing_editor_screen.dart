@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../data/models/writing_models.dart';
 import '../providers/writing_provider.dart';
 
 class WritingEditorScreen extends ConsumerStatefulWidget {

@@ -165,8 +165,8 @@ class LearnScreen extends ConsumerWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: ElevatedButton.icon(
-                            onPressed: () =>
-                                context.push('/grammar?id=present_perfect'),
+                            onPressed: () => context
+                                .push('/grammar?id=present_perfect_experience'),
                             icon:
                                 const Icon(Icons.play_arrow_rounded, size: 18),
                             label: const Text('Học ngay ➔'),
@@ -315,8 +315,9 @@ class LearnScreen extends ConsumerWidget {
                         'Diễn đạt hành động đã xảy ra và hoàn thành trong quá khứ • Cấu trúc did/didn\'t',
                     color: const Color(0xFF00CEC9),
                     icon: Icons.history_edu_rounded,
-                    level: 'A2',
-                    onTap: () => context.push('/grammar?id=past_simple'),
+                    level: 'A1',
+                    onTap: () => context
+                        .push('/grammar?id=past_simple_regular_irregular'),
                   ),
                   const SizedBox(height: 10),
                   _FeaturedLessonCard(
@@ -327,7 +328,8 @@ class LearnScreen extends ConsumerWidget {
                     color: const Color(0xFFFFA502),
                     icon: Icons.auto_stories_rounded,
                     level: 'B1',
-                    onTap: () => context.push('/grammar?id=present_perfect'),
+                    onTap: () => context.push(
+                        '/grammar?id=present_perfect_simple_vs_continuous'),
                   ),
                   const SizedBox(height: 10),
                   _FeaturedLessonCard(
@@ -337,7 +339,7 @@ class LearnScreen extends ConsumerWidget {
                         'Điều kiện không có thật ở hiện tại hoặc tương lai • If + V2/were, S + would + V',
                     color: const Color(0xFFFF4757),
                     icon: Icons.psychology_rounded,
-                    level: 'B2',
+                    level: 'B1',
                     onTap: () => context.push('/grammar?id=second_conditional'),
                   ),
                   const SizedBox(height: 10),
@@ -349,7 +351,8 @@ class LearnScreen extends ConsumerWidget {
                     color: const Color(0xFF6C5CE7),
                     icon: Icons.swap_horiz_rounded,
                     level: 'B1',
-                    onTap: () => context.push('/grammar?id=passive_voice'),
+                    onTap: () =>
+                        context.push('/grammar?id=passive_present_past'),
                   ),
 
                   const SizedBox(height: 36),
@@ -378,25 +381,26 @@ class LearnScreen extends ConsumerWidget {
           _CefrCard(
             level: 'A2',
             title: 'Sơ Cấp',
-            description: 'Quá Khứ Đơn & So Sánh',
+            description: 'Quá Khứ Đơn & Tiếp Diễn',
             color: const Color(0xFF00CEC9),
-            onTap: () => context.push('/grammar?id=past_simple'),
+            onTap: () => context.push('/grammar?id=past_simple_vs_continuous'),
           ),
           const SizedBox(width: 12),
           _CefrCard(
             level: 'B1',
             title: 'Trung Cấp',
-            description: 'Hiện Tại Hoàn Thành & Bị Động',
+            description: 'Hiện Tại Hoàn Thành & Tiếp Diễn',
             color: const Color(0xFFFFA502),
-            onTap: () => context.push('/grammar?id=present_perfect'),
+            onTap: () => context
+                .push('/grammar?id=present_perfect_simple_vs_continuous'),
           ),
           const SizedBox(width: 12),
           _CefrCard(
             level: 'B2',
             title: 'Nâng Cao',
-            description: 'Câu Điều Kiện & Mệnh Đề Qhệ',
+            description: 'Câu Điều Kiện Nâng Cao & Mệnh Đề',
             color: const Color(0xFFFF4757),
-            onTap: () => context.push('/grammar?id=second_conditional'),
+            onTap: () => context.push('/grammar?id=advanced_conditionals'),
           ),
         ],
       ),

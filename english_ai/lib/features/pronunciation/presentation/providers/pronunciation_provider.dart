@@ -31,11 +31,7 @@ class PronunciationState {
   // Speech settings (persisted between sessions)
   final String voiceId;
   final double speechSpeed;
-  final int requiredReads;
-
-  // Multi-read session progress
-  final int attemptsDone;
-  final List<PronunciationResultModel> attemptResults;
+  final int listenCount;
 
   const PronunciationState({
     this.phase = PronunciationPhase.ready,
@@ -52,31 +48,8 @@ class PronunciationState {
     this.recordDuration = 0,
     this.voiceId = 'sarah',
     this.speechSpeed = 1.0,
-    this.requiredReads = 1,
-    this.attemptsDone = 0,
-    this.attemptResults = const [],
+    this.listenCount = 1,
   });
-
-  bool get isSessionComplete => attemptsDone >= requiredReads;
-
-  int get nextAttemptNumber =>
-      attemptsDone >= requiredReads ? requiredReads : attemptsDone + 1;
-
-  double get averageAttemptScore {
-    if (attemptResults.isEmpty) return 0;
-    final total = attemptResults.fold<double>(
-      0,
-      (sum, result) => sum + result.overallScore,
-    );
-    return total / attemptResults.length;
-  }
-
-  double get bestAttemptScore {
-    if (attemptResults.isEmpty) return 0;
-    return attemptResults
-        .map((result) => result.overallScore)
-        .reduce((a, b) => a > b ? a : b);
-  }
 
   PronunciationState copyWith({
     PronunciationPhase? phase,
@@ -93,9 +66,7 @@ class PronunciationState {
     int? recordDuration,
     String? voiceId,
     double? speechSpeed,
-    int? requiredReads,
-    int? attemptsDone,
-    List<PronunciationResultModel>? attemptResults,
+    int? listenCount,
     bool clearError = false,
     bool clearResult = false,
     bool clearCurrentSentence = false,
@@ -117,9 +88,7 @@ class PronunciationState {
       recordDuration: recordDuration ?? this.recordDuration,
       voiceId: voiceId ?? this.voiceId,
       speechSpeed: speechSpeed ?? this.speechSpeed,
-      requiredReads: requiredReads ?? this.requiredReads,
-      attemptsDone: attemptsDone ?? this.attemptsDone,
-      attemptResults: attemptResults ?? this.attemptResults,
+      listenCount: listenCount ?? this.listenCount,
     );
   }
 }
@@ -141,7 +110,7 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
 
   static const String _prefsVoice = 'pronunciation_voice';
   static const String _prefsSpeed = 'pronunciation_speed';
-  static const String _prefsReads = 'pronunciation_required_reads';
+  static const String _prefsListenCount = 'pronunciation_listen_count';
   static const List<String> _voiceOptions = ['sarah', 'harrison', 'emma'];
   static const List<double> _speedOptions = [0.75, 1.0, 1.25];
 
@@ -164,18 +133,18 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
 
       final savedVoice = prefs.getString(_prefsVoice);
       final savedSpeed = prefs.getDouble(_prefsSpeed);
-      final savedReads = prefs.getInt(_prefsReads);
+      final savedListenCount = prefs.getInt(_prefsListenCount);
 
       final voice = _voiceOptions.contains(savedVoice) ? savedVoice! : 'sarah';
       final speed = savedSpeed != null && _speedOptions.contains(savedSpeed)
           ? savedSpeed
           : 1.0;
-      final reads = (savedReads ?? 1).clamp(1, 3).toInt();
+      final listenCount = (savedListenCount ?? 1).clamp(1, 3).toInt();
 
       state = state.copyWith(
         voiceId: voice,
         speechSpeed: speed,
-        requiredReads: reads,
+        listenCount: listenCount,
       );
     } catch (_) {
       // Keep defaults if preferences are unavailable.
@@ -187,7 +156,7 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_prefsVoice, state.voiceId);
       await prefs.setDouble(_prefsSpeed, state.speechSpeed);
-      await prefs.setInt(_prefsReads, state.requiredReads);
+      await prefs.setInt(_prefsListenCount, state.listenCount);
     } catch (_) {
       // Settings are best-effort; keep the in-memory values.
     }
@@ -208,18 +177,10 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
     _persistSpeechSettings();
   }
 
-  void setRequiredReads(int reads) {
-    final clamped = reads.clamp(1, 3).toInt();
-    if (clamped == state.requiredReads) return;
-    state = state.copyWith(
-      requiredReads: clamped,
-      attemptsDone: 0,
-      attemptResults: const [],
-      phase: PronunciationPhase.ready,
-      recordDuration: 0,
-      clearResult: true,
-      clearError: true,
-    );
+  void setListenCount(int count) {
+    final clamped = count.clamp(1, 3).toInt();
+    if (clamped == state.listenCount) return;
+    state = state.copyWith(listenCount: clamped);
     _persistSpeechSettings();
   }
 
@@ -262,8 +223,6 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
     state = state.copyWith(
       currentSentence: sentence,
       phase: PronunciationPhase.ready,
-      attemptsDone: 0,
-      attemptResults: const [],
       clearResult: true,
       clearError: true,
       recordDuration: 0,
@@ -369,8 +328,8 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
       );
 
       // Backend không nhận diện được giọng đọc: không chấm điểm ảo,
-      // giữ nguyên số lần đã hoàn thành và yêu cầu người đọc đọc lại.
-      if (result.recognizedText.trim().isEmpty) {
+      // giữ nguyên trạng thái và yêu cầu người đọc đọc lại.
+      if (!result.scored || result.recognizedText.trim().isEmpty) {
         state = state.copyWith(
           phase: PronunciationPhase.ready,
           recordDuration: 0,
@@ -381,21 +340,33 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
         return;
       }
 
-      final updatedResults = [...state.attemptResults, result];
-      final updatedAttempts =
-          (state.attemptsDone + 1).clamp(0, state.requiredReads).toInt();
-
       state = state.copyWith(
         phase: PronunciationPhase.result,
         result: result,
-        attemptsDone: updatedAttempts,
-        attemptResults: updatedResults,
         recordDuration: 0,
         clearError: true,
       );
 
       // Refresh history sau khi hoàn thành
       loadHistory();
+    } on DioException catch (e) {
+      // Backend trả 422 khi không nhận diện được giọng đọc.
+      if (e.response?.statusCode == 422) {
+        state = state.copyWith(
+          phase: PronunciationPhase.ready,
+          recordDuration: 0,
+          clearResult: true,
+          errorMessage:
+              'Chưa nghe rõ giọng đọc. Hãy đọc to, rõ hơn và thử lại.',
+        );
+        return;
+      }
+      state = state.copyWith(
+        phase: PronunciationPhase.ready,
+        recordDuration: 0,
+        clearResult: true,
+        errorMessage: 'Lỗi phân tích phát âm. Vui lòng thử lại.',
+      );
     } catch (e) {
       state = state.copyWith(
         phase: PronunciationPhase.ready,
@@ -440,38 +411,10 @@ class PronunciationNotifier extends StateNotifier<PronunciationState> {
   // ---------------------------------------------------------------------------
   // Reset về ready để luyện lại câu
   // ---------------------------------------------------------------------------
-  /// Quay về màn hình sẵn sàng cho lần đọc kế tiếp, giữ các kết quả cũ.
-  void startNextAttempt() {
-    state = state.copyWith(
-      phase: PronunciationPhase.ready,
-      recordDuration: 0,
-      clearResult: true,
-      clearError: true,
-    );
-  }
-
-  /// Bỏ kết quả của lần vừa đọc và cho phép đọc lại đúng lần đó.
-  void retryLastAttempt() {
-    final results = [...state.attemptResults];
-    if (results.isNotEmpty) results.removeLast();
-    final attempts =
-        (state.attemptsDone - 1).clamp(0, state.requiredReads).toInt();
-    state = state.copyWith(
-      phase: PronunciationPhase.ready,
-      attemptsDone: attempts,
-      attemptResults: results,
-      recordDuration: 0,
-      clearResult: true,
-      clearError: true,
-    );
-  }
-
-  /// Bắt đầu lại toàn bộ phiên đọc (xóa tất cả kết quả của câu hiện tại).
+  /// Quay về màn hình sẵn sàng để đọc lại câu hiện tại.
   void restartSession() {
     state = state.copyWith(
       phase: PronunciationPhase.ready,
-      attemptsDone: 0,
-      attemptResults: const [],
       recordDuration: 0,
       clearResult: true,
       clearError: true,

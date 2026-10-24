@@ -2,7 +2,17 @@ import uuid
 from datetime import datetime, timezone
 from typing import Optional
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text, func
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -239,7 +249,11 @@ class UserWordProgress(Base):
 # ──────────────────────────────────────────────
 
 class GrammarLesson(Base):
-    """Grammar lesson content and rules."""
+    """Grammar lesson content and rules.
+
+    ``content`` is the canonical local-compatible payload. The legacy columns
+    remain populated so older clients and admin queries keep working.
+    """
 
     __tablename__ = "grammar_lessons"
 
@@ -250,7 +264,9 @@ class GrammarLesson(Base):
     )
     slug: Mapped[str] = mapped_column(String(100), unique=True, nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(200), nullable=False)
+    title_vi: Mapped[str] = mapped_column(String(200), default="", server_default="")
     level: Mapped[str] = mapped_column(String(10), default="A1")
+    category: Mapped[str] = mapped_column(String(120), default="", server_default="")
     summary: Mapped[str] = mapped_column(Text, nullable=False)
     content_markdown: Mapped[str] = mapped_column(Text, nullable=False)
     formula: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
@@ -260,8 +276,74 @@ class GrammarLesson(Base):
         default=list,
         comment="List of quiz questions for immediate practice",
     )
+    content: Mapped[Optional[dict]] = mapped_column(
+        JSONB,
+        nullable=True,
+        comment="Canonical A1-C2 JSON payload used by the Flutter client",
+    )
+    content_hash: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    status: Mapped[str] = mapped_column(
+        String(20),
+        default="published",
+        server_default="published",
+        index=True,
+        comment="draft, in_review, published, archived",
+    )
+    version: Mapped[int] = mapped_column(Integer, default=1, server_default="1")
+    is_beta: Mapped[bool] = mapped_column(Boolean, default=False)
+    tags: Mapped[list] = mapped_column(JSONB, default=list)
+    estimated_minutes: Mapped[int] = mapped_column(Integer, default=10, server_default="10")
+    created_by: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), nullable=True)
+    updated_by: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), nullable=True)
+    reviewed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    published_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
     order_index: Mapped[int] = mapped_column(Integer, default=0)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+
+class GrammarLessonVersion(Base):
+    """Immutable published/draft snapshots for rollback and audit."""
+
+    __tablename__ = "grammar_lesson_versions"
+    __table_args__ = (
+        UniqueConstraint("lesson_id", "version", name="uq_grammar_lesson_version"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    lesson_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("grammar_lessons.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    version: Mapped[int] = mapped_column(Integer, nullable=False)
+    content: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    content_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    changelog: Mapped[str] = mapped_column(Text, default="", server_default="")
+    created_by: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -269,9 +351,12 @@ class GrammarLesson(Base):
 
 
 class UserGrammarProgress(Base):
-    """User completion status for grammar lessons."""
+    """Best score and completion state for a user and lesson."""
 
     __tablename__ = "user_grammar_progress"
+    __table_args__ = (
+        UniqueConstraint("user_id", "lesson_id", name="uq_user_grammar_progress_user_lesson"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -291,8 +376,14 @@ class UserGrammarProgress(Base):
         index=True,
     )
     score: Mapped[float] = mapped_column(Float, default=0.0)
+    best_score: Mapped[float] = mapped_column(Float, default=0.0, server_default="0")
+    attempts_count: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     is_completed: Mapped[bool] = mapped_column(Boolean, default=False)
     completed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    last_attempt_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True),
         nullable=True,
     )
@@ -300,4 +391,105 @@ class UserGrammarProgress(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now(),
+    )
+
+
+class GrammarAttempt(Base):
+    """An idempotent grammar quiz attempt."""
+
+    __tablename__ = "grammar_attempts"
+    __table_args__ = (
+        UniqueConstraint("user_id", "attempt_id", name="uq_grammar_attempt_user_attempt"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    attempt_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False, index=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    lesson_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("grammar_lessons.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    lesson_version: Mapped[int] = mapped_column(Integer, default=1, server_default="1")
+    answers: Mapped[list] = mapped_column(JSONB, default=list)
+    score: Mapped[float] = mapped_column(Float, default=0.0)
+    correct: Mapped[int] = mapped_column(Integer, default=0)
+    total: Mapped[int] = mapped_column(Integer, default=0)
+    xp_awarded: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+
+
+class XpTransaction(Base):
+    """Append-only XP ledger used to prevent duplicate rewards."""
+
+    __tablename__ = "xp_transactions"
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "source_type",
+            "source_id",
+            name="uq_xp_transaction_source",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    source_type: Mapped[str] = mapped_column(String(40), nullable=False)
+    source_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    amount: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+
+
+class GrammarAdminAudit(Base):
+    """Audit trail for staff changes to grammar content."""
+
+    __tablename__ = "grammar_admin_audit"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    actor_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    action: Mapped[str] = mapped_column(String(50), nullable=False)
+    lesson_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("grammar_lessons.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    details: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
     )

@@ -1,0 +1,674 @@
+[
+  {
+    "id": "verb_to_be",
+    "title": "Verb To Be (am/is/are)",
+    "title_vi": "Động từ To Be",
+    "level": "A1",
+    "category": "Nền tảng"
+  },
+  {
+    "id": "subject_pronouns_possessives",
+    "title": "Subject Pronouns & Possessive Adjectives",
+    "title_vi": "Đại từ nhân xưng & tính từ sở hữu",
+    "level": "A1",
+    "category": "Nền tảng"
+  },
+  {
+    "id": "articles_basic",
+    "title": "Articles a/an/the (Basic)",
+    "title_vi": "Mạo từ cơ bản",
+    "level": "A1",
+    "category": "Danh từ & Mạo từ"
+  },
+  {
+    "id": "singular_plural_demonstratives",
+    "title": "Singular/Plural & This/That/These/Those",
+    "title_vi": "Danh từ số ít/số nhiều & chỉ định từ",
+    "level": "A1",
+    "category": "Danh từ & Mạo từ"
+  },
+  {
+    "id": "present_simple",
+    "title": "Present Simple",
+    "title_vi": "Thì Hiện Tại Đơn",
+    "level": "A1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "present_continuous",
+    "title": "Present Continuous",
+    "title_vi": "Thì Hiện Tại Tiếp Diễn",
+    "level": "A1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "present_simple_vs_continuous",
+    "title": "Present Simple vs Present Continuous",
+    "title_vi": "Hiện tại đơn vs Hiện tại tiếp diễn",
+    "level": "A1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "can_cannot_imperatives",
+    "title": "Can/Can't & Imperatives",
+    "title_vi": "Can/Can't & Câu mệnh lệnh",
+    "level": "A1",
+    "category": "Modal & Câu lệnh"
+  },
+  {
+    "id": "there_is_are_some_any",
+    "title": "There is/are & Some/Any",
+    "title_vi": "There is/are & Some/Any",
+    "level": "A1",
+    "category": "Lượng từ"
+  },
+  {
+    "id": "countable_uncountable_basic",
+    "title": "Countable & Uncountable Nouns (Basic)",
+    "title_vi": "Danh từ đếm được/không đếm được",
+    "level": "A1",
+    "category": "Danh từ & Lượng từ"
+  },
+  {
+    "id": "prepositions_place",
+    "title": "Prepositions of Place",
+    "title_vi": "Giới từ chỉ nơi chốn",
+    "level": "A1",
+    "category": "Giới từ"
+  },
+  {
+    "id": "prepositions_time",
+    "title": "Prepositions of Time",
+    "title_vi": "Giới từ chỉ thời gian",
+    "level": "A1",
+    "category": "Giới từ"
+  },
+  {
+    "id": "past_simple_was_were",
+    "title": "Past Simple: Was/Were",
+    "title_vi": "Quá khứ đơn với Was/Were",
+    "level": "A1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "past_simple_regular_irregular",
+    "title": "Past Simple: Regular & Irregular Verbs",
+    "title_vi": "Quá khứ đơn: động từ có quy tắc & bất quy tắc",
+    "level": "A1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "adverbs_frequency_question_words",
+    "title": "Adverbs of Frequency & Question Words",
+    "title_vi": "Trạng từ tần suất & từ hỏi",
+    "level": "A1",
+    "category": "Trạng từ & Câu hỏi"
+  },
+  {
+    "id": "object_pronouns_like_ving",
+    "title": "Object Pronouns & Like + V-ing",
+    "title_vi": "Đại từ tân ngữ & Like + V-ing",
+    "level": "A1",
+    "category": "Nền tảng"
+  },
+  {
+    "id": "basic_conjunctions",
+    "title": "Basic Conjunctions (and/but/or/because)",
+    "title_vi": "Liên từ cơ bản",
+    "level": "A1",
+    "category": "Liên từ"
+  },
+  {
+    "id": "possessive_s_have_got",
+    "title": "Possessive 's & Have Got",
+    "title_vi": "Sở hữu 's & Have Got",
+    "level": "A1",
+    "category": "Nền tảng"
+  },
+  {
+    "id": "past_continuous",
+    "title": "Past Continuous",
+    "title_vi": "Quá khứ tiếp diễn",
+    "level": "A2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "past_simple_vs_continuous",
+    "title": "Past Simple vs Past Continuous",
+    "title_vi": "Quá khứ đơn vs Quá khứ tiếp diễn",
+    "level": "A2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "present_perfect_experience",
+    "title": "Present Perfect (Experience/Result)",
+    "title_vi": "Hiện tại hoàn thành (trải nghiệm/kết quả)",
+    "level": "A2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "present_perfect_vs_past_simple",
+    "title": "Present Perfect vs Past Simple",
+    "title_vi": "Hiện tại hoàn thành vs Quá khứ đơn",
+    "level": "A2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "will_vs_going_to",
+    "title": "Will vs Be Going To",
+    "title_vi": "Will vs Be Going To",
+    "level": "A2",
+    "category": "Tương lai"
+  },
+  {
+    "id": "present_continuous_future",
+    "title": "Present Continuous for Future",
+    "title_vi": "Hiện tại tiếp diễn diễn tả tương lai",
+    "level": "A2",
+    "category": "Tương lai"
+  },
+  {
+    "id": "comparatives",
+    "title": "Comparatives",
+    "title_vi": "So sánh hơn",
+    "level": "A2",
+    "category": "So sánh"
+  },
+  {
+    "id": "superlatives_as_as",
+    "title": "Superlatives & As...As",
+    "title_vi": "So sánh nhất & As...As",
+    "level": "A2",
+    "category": "So sánh"
+  },
+  {
+    "id": "too_enough",
+    "title": "Too & Enough",
+    "title_vi": "Too & Enough",
+    "level": "A2",
+    "category": "So sánh"
+  },
+  {
+    "id": "modals_obligation",
+    "title": "Must/Have To/Should",
+    "title_vi": "Must/Have To/Should",
+    "level": "A2",
+    "category": "Modal"
+  },
+  {
+    "id": "may_might_permission",
+    "title": "May/Might & Permission",
+    "title_vi": "May/Might & Xin phép",
+    "level": "A2",
+    "category": "Modal"
+  },
+  {
+    "id": "quantifiers",
+    "title": "Much/Many/A lot/A few/A little",
+    "title_vi": "Lượng từ",
+    "level": "A2",
+    "category": "Lượng từ"
+  },
+  {
+    "id": "some_any_no_every_compounds",
+    "title": "Some/Any/No/Every + Compounds",
+    "title_vi": "Some/Any/No/Every & từ ghép",
+    "level": "A2",
+    "category": "Lượng từ"
+  },
+  {
+    "id": "prepositions_movement",
+    "title": "Prepositions of Movement",
+    "title_vi": "Giới từ chỉ chuyển động",
+    "level": "A2",
+    "category": "Giới từ"
+  },
+  {
+    "id": "gerunds_infinitives_basic",
+    "title": "Gerunds & Infinitives (Basic)",
+    "title_vi": "Danh động từ & động từ nguyên mẫu",
+    "level": "A2",
+    "category": "Động từ"
+  },
+  {
+    "id": "question_tags_adverbs_manner",
+    "title": "Question Tags & Adverbs of Manner",
+    "title_vi": "Câu hỏi đuôi & trạng từ chỉ cách thức",
+    "level": "A2",
+    "category": "Câu hỏi & Trạng từ"
+  },
+  {
+    "id": "defining_relative_clauses",
+    "title": "Defining Relative Clauses",
+    "title_vi": "Mệnh đề quan hệ xác định",
+    "level": "A2",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "first_conditional_used_to",
+    "title": "First Conditional & Used To",
+    "title_vi": "Câu điều kiện loại 1 & Used To",
+    "level": "A2",
+    "category": "Điều kiện & Quá khứ"
+  },
+  {
+    "id": "present_perfect_continuous",
+    "title": "Present Perfect Continuous",
+    "title_vi": "Hiện tại hoàn thành tiếp diễn",
+    "level": "B1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "present_perfect_simple_vs_continuous",
+    "title": "Present Perfect Simple vs Continuous",
+    "title_vi": "Hiện tại hoàn thành vs tiếp diễn",
+    "level": "B1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "past_perfect",
+    "title": "Past Perfect",
+    "title_vi": "Quá khứ hoàn thành",
+    "level": "B1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "past_perfect_vs_past_simple",
+    "title": "Past Perfect vs Past Simple",
+    "title_vi": "Quá khứ hoàn thành vs Quá khứ đơn",
+    "level": "B1",
+    "category": "Các Thì"
+  },
+  {
+    "id": "future_continuous",
+    "title": "Future Continuous",
+    "title_vi": "Tương lai tiếp diễn",
+    "level": "B1",
+    "category": "Tương lai"
+  },
+  {
+    "id": "future_perfect",
+    "title": "Future Perfect",
+    "title_vi": "Tương lai hoàn thành",
+    "level": "B1",
+    "category": "Tương lai"
+  },
+  {
+    "id": "second_conditional",
+    "title": "Second Conditional",
+    "title_vi": "Câu điều kiện loại 2",
+    "level": "B1",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "first_vs_second_conditional",
+    "title": "First vs Second Conditional",
+    "title_vi": "Điều kiện loại 1 vs 2",
+    "level": "B1",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "third_conditional",
+    "title": "Third Conditional",
+    "title_vi": "Câu điều kiện loại 3",
+    "level": "B1",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "mixed_conditionals",
+    "title": "Mixed Conditionals",
+    "title_vi": "Câu điều kiện hỗn hợp",
+    "level": "B1",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "passive_present_past",
+    "title": "Passive Voice: Present/Past",
+    "title_vi": "Bị động hiện tại/quá khứ",
+    "level": "B1",
+    "category": "Bị động"
+  },
+  {
+    "id": "passive_perfect_future_modals",
+    "title": "Passive: Perfect/Future/Modals",
+    "title_vi": "Bị động hoàn thành/tương lai/modal",
+    "level": "B1",
+    "category": "Bị động"
+  },
+  {
+    "id": "reported_speech",
+    "title": "Reported Speech",
+    "title_vi": "Câu tường thuật",
+    "level": "B1",
+    "category": "Tường thuật"
+  },
+  {
+    "id": "relative_clauses_defining_non_defining",
+    "title": "Relative Clauses: Defining & Non-defining",
+    "title_vi": "Mệnh đề quan hệ xác định/không xác định",
+    "level": "B1",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "relative_clauses_whose_where_when",
+    "title": "Relative Clauses: Whose/Where/When",
+    "title_vi": "Mệnh đề quan hệ với whose/where/when",
+    "level": "B1",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "modals_deduction_present",
+    "title": "Modals of Deduction (Present)",
+    "title_vi": "Modal suy đoán hiện tại",
+    "level": "B1",
+    "category": "Modal"
+  },
+  {
+    "id": "modals_obligation_past",
+    "title": "Modals of Obligation/Advice (Past)",
+    "title_vi": "Modal nghĩa vụ/lời khuyên quá khứ",
+    "level": "B1",
+    "category": "Modal"
+  },
+  {
+    "id": "gerunds_infinitives_advanced",
+    "title": "Gerunds vs Infinitives (Advanced)",
+    "title_vi": "Danh động từ vs nguyên mẫu nâng cao",
+    "level": "B1",
+    "category": "Động từ"
+  },
+  {
+    "id": "causative_have_get",
+    "title": "Causative Have/Get Something Done",
+    "title_vi": "Câu sai khiến",
+    "level": "B1",
+    "category": "Cấu trúc"
+  },
+  {
+    "id": "wish_if_only_present",
+    "title": "Wish/If Only (Present)",
+    "title_vi": "Wish/If Only hiện tại",
+    "level": "B1",
+    "category": "Ước"
+  },
+  {
+    "id": "future_in_the_past",
+    "title": "Future in the Past",
+    "title_vi": "Tương lai trong quá khứ",
+    "level": "B2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "narrative_tenses_review",
+    "title": "Narrative Tenses Review",
+    "title_vi": "Ôn tập các thì tự sự",
+    "level": "B2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "past_perfect_continuous",
+    "title": "Past Perfect Continuous",
+    "title_vi": "Quá khứ hoàn thành tiếp diễn",
+    "level": "B2",
+    "category": "Các Thì"
+  },
+  {
+    "id": "passive_reporting_impersonal",
+    "title": "Passive with Reporting Verbs & Impersonal Passive",
+    "title_vi": "Bị động với động từ tường thuật & bị động khách quan",
+    "level": "B2",
+    "category": "Bị động"
+  },
+  {
+    "id": "advanced_conditionals",
+    "title": "Advanced Conditionals (Unless/Provided/As long as)",
+    "title_vi": "Điều kiện nâng cao",
+    "level": "B2",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "wish_if_only_past",
+    "title": "Wish/If Only (Past)",
+    "title_vi": "Wish/If Only quá khứ",
+    "level": "B2",
+    "category": "Ước"
+  },
+  {
+    "id": "its_time_high_time",
+    "title": "It's Time/It's High Time",
+    "title_vi": "It's Time/It's High Time",
+    "level": "B2",
+    "category": "Cấu trúc"
+  },
+  {
+    "id": "modal_perfects",
+    "title": "Modal Perfects",
+    "title_vi": "Modal hoàn thành",
+    "level": "B2",
+    "category": "Modal"
+  },
+  {
+    "id": "speculation_deduction_past",
+    "title": "Speculation & Deduction (Past)",
+    "title_vi": "Suy đoán quá khứ",
+    "level": "B2",
+    "category": "Modal"
+  },
+  {
+    "id": "advanced_relative_clauses",
+    "title": "Advanced Relative Clauses (Preposition + Which/Whom)",
+    "title_vi": "Mệnh đề quan hệ nâng cao",
+    "level": "B2",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "reduced_relative_clauses",
+    "title": "Reduced Relative Clauses",
+    "title_vi": "Mệnh đề quan hệ rút gọn",
+    "level": "B2",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "participle_clauses",
+    "title": "Participle Clauses",
+    "title_vi": "Mệnh đề phân từ",
+    "level": "B2",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "gerund_infinitive_nuances",
+    "title": "Gerund/Infinitive Nuances",
+    "title_vi": "Sắc thái gerund/infinitive",
+    "level": "B2",
+    "category": "Động từ"
+  },
+  {
+    "id": "inversion_negative_adverbials",
+    "title": "Inversion with Negative Adverbials",
+    "title_vi": "Đảo ngữ với trạng từ phủ định",
+    "level": "B2",
+    "category": "Đảo ngữ"
+  },
+  {
+    "id": "cleft_sentences",
+    "title": "Cleft Sentences",
+    "title_vi": "Câu chẻ",
+    "level": "B2",
+    "category": "Nhấn mạnh"
+  },
+  {
+    "id": "subjunctive",
+    "title": "Subjunctive (Suggest/Insist/It is essential)",
+    "title_vi": "Thức giả định",
+    "level": "B2",
+    "category": "Thức giả định"
+  },
+  {
+    "id": "articles_advanced",
+    "title": "Articles Advanced",
+    "title_vi": "Mạo từ nâng cao",
+    "level": "B2",
+    "category": "Danh từ & Mạo từ"
+  },
+  {
+    "id": "quantifiers_advanced",
+    "title": "Quantifiers Advanced",
+    "title_vi": "Lượng từ nâng cao",
+    "level": "B2",
+    "category": "Lượng từ"
+  },
+  {
+    "id": "linking_words_advanced",
+    "title": "Linking Words Advanced",
+    "title_vi": "Liên từ nâng cao",
+    "level": "B2",
+    "category": "Liên từ"
+  },
+  {
+    "id": "ellipsis_substitution",
+    "title": "Ellipsis & Substitution",
+    "title_vi": "Tỉnh lược & thay thế",
+    "level": "B2",
+    "category": "Cấu trúc"
+  },
+  {
+    "id": "advanced_inversion",
+    "title": "Advanced Inversion",
+    "title_vi": "Đảo ngữ nâng cao",
+    "level": "C1",
+    "category": "Đảo ngữ"
+  },
+  {
+    "id": "cleft_emphasis",
+    "title": "Cleft Sentences & Emphasis",
+    "title_vi": "Câu chẻ & nhấn mạnh",
+    "level": "C1",
+    "category": "Nhấn mạnh"
+  },
+  {
+    "id": "subjunctive_formal",
+    "title": "Subjunctive & Formal Structures",
+    "title_vi": "Giả định & cấu trúc trang trọng",
+    "level": "C1",
+    "category": "Thức giả định"
+  },
+  {
+    "id": "advanced_passive",
+    "title": "Advanced Passive Constructions",
+    "title_vi": "Bị động nâng cao",
+    "level": "C1",
+    "category": "Bị động"
+  },
+  {
+    "id": "nominalisation",
+    "title": "Nominalisation",
+    "title_vi": "Danh từ hóa",
+    "level": "C1",
+    "category": "Cấu trúc"
+  },
+  {
+    "id": "participle_reduced_advanced",
+    "title": "Participle & Reduced Relative Clauses (Advanced)",
+    "title_vi": "Phân từ & mệnh đề quan hệ rút gọn nâng cao",
+    "level": "C1",
+    "category": "Mệnh đề"
+  },
+  {
+    "id": "advanced_conditionals_hypothetical",
+    "title": "Advanced Conditionals & Hypothetical Past",
+    "title_vi": "Điều kiện nâng cao & quá khứ giả định",
+    "level": "C1",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "modal_perfects_speculation",
+    "title": "Modal Perfects & Advanced Speculation",
+    "title_vi": "Modal hoàn thành & suy đoán nâng cao",
+    "level": "C1",
+    "category": "Modal"
+  },
+  {
+    "id": "discourse_cohesion",
+    "title": "Discourse Markers & Cohesion",
+    "title_vi": "Dấu hiệu diễn ngôn & liên kết",
+    "level": "C1",
+    "category": "Diễn ngôn"
+  },
+  {
+    "id": "complex_noun_phrases",
+    "title": "Complex Noun Phrases & Determiners",
+    "title_vi": "Cụm danh từ phức & từ hạn định",
+    "level": "C1",
+    "category": "Danh từ"
+  },
+  {
+    "id": "inversion_focus_mastery",
+    "title": "Inversion & Focus Mastery",
+    "title_vi": "Đảo ngữ & nhấn mạnh chuyên sâu",
+    "level": "C2",
+    "category": "Đảo ngữ"
+  },
+  {
+    "id": "advanced_cleft_focus",
+    "title": "Advanced Cleft & Focus Structures",
+    "title_vi": "Câu chẻ & cấu trúc nhấn mạnh nâng cao",
+    "level": "C2",
+    "category": "Nhấn mạnh"
+  },
+  {
+    "id": "subjunctive_archaic_formal",
+    "title": "Subjunctive, Archaic & Formal Structures",
+    "title_vi": "Giả định, cổ ngữ & trang trọng",
+    "level": "C2",
+    "category": "Thức giả định"
+  },
+  {
+    "id": "complex_counterfactuals",
+    "title": "Complex Conditionals & Counterfactuals",
+    "title_vi": "Điều kiện phức & phản thực",
+    "level": "C2",
+    "category": "Điều kiện"
+  },
+  {
+    "id": "advanced_modality_hedging",
+    "title": "Advanced Modality & Hedging",
+    "title_vi": "Modal nâng cao & rào đón",
+    "level": "C2",
+    "category": "Modal"
+  },
+  {
+    "id": "nominalisation_academic",
+    "title": "Nominalisation & Academic Style",
+    "title_vi": "Danh từ hóa & văn phong học thuật",
+    "level": "C2",
+    "category": "Cấu trúc"
+  },
+  {
+    "id": "advanced_cohesion_discourse",
+    "title": "Advanced Cohesion & Discourse",
+    "title_vi": "Liên kết & diễn ngôn nâng cao",
+    "level": "C2",
+    "category": "Diễn ngôn"
+  },
+  {
+    "id": "ellipsis_formal",
+    "title": "Ellipsis & Substitution in Formal Texts",
+    "title_vi": "Tỉnh lược & thay thế trong văn bản trang trọng",
+    "level": "C2",
+    "category": "Cấu trúc"
+  },
+  {
+    "id": "idiomatic_grammar",
+    "title": "Idiomatic Grammar & Fixed Expressions",
+    "title_vi": "Ngữ pháp thành ngữ & cụm cố định",
+    "level": "C2",
+    "category": "Thành ngữ"
+  },
+  {
+    "id": "register_style_precision",
+    "title": "Register, Style & C2 Precision",
+    "title_vi": "Phong cách & độ chính xác C2",
+    "level": "C2",
+    "category": "Phong cách"
+  }
+]

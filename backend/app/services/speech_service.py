@@ -12,13 +12,13 @@ import math
 import os
 import re
 import uuid
-from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Optional
 
 import httpx
 
 from ..config import settings
+from .pronunciation_scoring import build_assessment
 
 logger = logging.getLogger(__name__)
 
@@ -99,12 +99,12 @@ class SpeechAIService:
                         "word": w,
                         "start_time": 0.0,
                         "end_time": 0.0,
-                        "confidence": 0.95,
+                        "confidence": 0.0,  # Google Web Speech via speech_recognition returns no confidence
                     })
 
             return {
                 "transcript": clean_text,
-                "confidence": 0.95 if clean_text else 0.0,
+                "confidence": 0.0,  # engine does not expose confidence — do not invent one
                 "language": lang_code,
                 "duration_seconds": round(len(wav_bytes) / 32000.0, 2),
                 "words": words,
@@ -118,6 +118,7 @@ class SpeechAIService:
         audio_data: bytes,
         language: str = "en-US",
         file_format: str = "wav",
+        assessment_mode: bool = False,
     ) -> dict:
         import asyncio
         import tempfile
@@ -143,16 +144,31 @@ class SpeechAIService:
                 # Use initial prompt to bias Whisper towards clean conversational English
                 initial_prompt = "English conversation, clear pronunciation, ESL speaking practice." if lang_code == "en" else None
 
+                if assessment_mode:
+                    # Assessment must be deterministic and unbiased: no priming prompt,
+                    # no context carry-over between segments, greedy-stable decoding.
+                    transcribe_kwargs: dict[str, Any] = {
+                        "language": lang_code,
+                        "initial_prompt": None,
+                        "condition_on_previous_text": False,
+                        "temperature": 0.0,
+                        "word_timestamps": True,
+                        "vad_filter": True,
+                        "vad_parameters": dict(min_silence_duration_ms=400),
+                        "beam_size": 5,
+                    }
+                else:
+                    transcribe_kwargs = {
+                        "language": lang_code,
+                        "initial_prompt": initial_prompt,
+                        "word_timestamps": True,
+                        "vad_filter": True,
+                        "vad_parameters": dict(min_silence_duration_ms=400),
+                        "beam_size": 5,
+                    }
+
                 # Transcribe with VAD to eliminate background silence / ellipsis hallucinations
-                segments, info = cls._whisper_model.transcribe(
-                    tmp_path,
-                    language=lang_code,
-                    initial_prompt=initial_prompt,
-                    word_timestamps=True,
-                    vad_filter=True,
-                    vad_parameters=dict(min_silence_duration_ms=400),
-                    beam_size=5,
-                )
+                segments, info = cls._whisper_model.transcribe(tmp_path, **transcribe_kwargs)
 
                 words = []
                 full_text = []
@@ -177,7 +193,7 @@ class SpeechAIService:
 
                 return {
                     "transcript": cleaned_transcript,
-                    "confidence": round(info.avg_logprob, 2) if hasattr(info, "avg_logprob") else 0.95,
+                    "confidence": round(min(1.0, max(0.0, math.exp(info.avg_logprob))), 3) if getattr(info, "avg_logprob", None) is not None else 0.0,
                     "language": getattr(info, "language", language),
                     "duration_seconds": round(info.duration, 2) if hasattr(info, "duration") else 0.0,
                     "words": words,
@@ -356,6 +372,7 @@ class SpeechAIService:
         audio_data: bytes,
         language: str = "en-US",
         file_format: str = "wav",
+        assessment_mode: bool = False,
     ) -> dict[str, Any]:
         """
         Transcribe audio to text.
@@ -368,7 +385,7 @@ class SpeechAIService:
         """
         # 1. Try Local faster-whisper first (offline on machine)
         try:
-            result = await cls._local_whisper_transcribe(audio_data, language, file_format)
+            result = await cls._local_whisper_transcribe(audio_data, language, file_format, assessment_mode)
             if result.get("transcript"):
                 return result
         except Exception as e:
@@ -385,7 +402,7 @@ class SpeechAIService:
         # 3. Try OpenAI Whisper
         if settings.openai_api_key:
             try:
-                return await cls._whisper_transcribe(audio_data, language, file_format)
+                return await cls._whisper_transcribe(audio_data, language, file_format, assessment_mode)
             except Exception as e:
                 logger.warning(f"Whisper STT failed: {e}")
 
@@ -405,6 +422,7 @@ class SpeechAIService:
         audio_data: bytes,
         language: str,
         file_format: str,
+        assessment_mode: bool = False,
     ) -> dict[str, Any]:
         """Transcribe via OpenAI Whisper API."""
         url = "https://api.openai.com/v1/audio/transcriptions"
@@ -430,12 +448,12 @@ class SpeechAIService:
                     "word": w["word"],
                     "start_time": w.get("start", 0),
                     "end_time": w.get("end", 0),
-                    "confidence": 0.95,  # Whisper doesn't return per-word confidence
+                    "confidence": 0.0,  # Whisper doesn't return per-word confidence
                 })
 
             return {
                 "transcript": result["text"],
-                "confidence": 0.95,
+                "confidence": 0.0,  # Whisper API returns no confidence score
                 "language": language,
                 "duration_seconds": result.get("duration"),
                 "words": words,
@@ -514,28 +532,26 @@ class SpeechAIService:
         reference_text: str,
         user_level: str = "B1",
         language: str = "en-US",
+        file_format: str = "wav",
     ) -> dict[str, Any]:
         """
         Full pronunciation assessment pipeline:
-        1. Transcribe audio (STT)
-        2. Compare with reference text
-        3. Score fluency, accuracy, completeness, prosody
-        4. Generate per-word scores
-        5. Provide targeted feedback
+        1. Transcribe audio (STT) in assessment mode
+        2. Align recognised words against the reference (ordered alignment)
+        3. Score accuracy / completeness / fluency from real STT data only
+        4. Provide per-word scores and targeted feedback
         """
-        # Step 1: Transcribe
-        stt_result = await cls.transcribe_audio(audio_data, language)
+        stt_result = await cls.transcribe_audio(
+            audio_data, language, file_format, assessment_mode=True
+        )
         recognised_text = stt_result["transcript"]
 
-        # Step 2: Assess
-        assessment = cls._compute_pronunciation_scores(
+        assessment = build_assessment(
             reference_text=reference_text,
             recognised_text=recognised_text,
-            stt_confidence=stt_result["confidence"],
             stt_words=stt_result.get("words", []),
+            target_wpm=None,
         )
-
-        # Step 3: Generate feedback
         feedback = cls._generate_pronunciation_feedback(
             assessment=assessment,
             user_level=user_level,
@@ -544,11 +560,17 @@ class SpeechAIService:
         return {
             "reference_text": reference_text,
             "recognised_text": recognised_text,
+            "scored": assessment["scored"],
+            "reason": assessment["reason"],
             "overall_score": assessment["overall_score"],
             "fluency_score": assessment["fluency_score"],
             "accuracy_score": assessment["accuracy_score"],
             "completeness_score": assessment["completeness_score"],
-            "prosody_score": assessment["prosody_score"],
+            "prosody_score": 0.0,
+            "prosody_measured": False,
+            "fluency_measured": assessment["fluency_score"] is not None,
+            "has_timing": assessment["has_timing"],
+            "scoring_notes": assessment["notes"],
             "word_scores": assessment["word_scores"],
             "feedback": feedback["feedback"],
             "improvement_tips": feedback["tips"],
@@ -559,114 +581,19 @@ class SpeechAIService:
         cls,
         reference_text: str,
         recognised_text: str,
-        stt_confidence: float,
-        stt_words: list[dict],
+        stt_confidence: float = 0.0,
+        stt_words: list[dict] | None = None,
     ) -> dict[str, Any]:
-        """
-        Compare recognised text against reference and compute detailed scores.
-        Uses SequenceMatcher for alignment when API word-level data is absent.
-        """
-        ref_words = reference_text.lower().strip().split()
-        rec_words = recognised_text.lower().strip().split()
-
-        # Sequence matching for word-level alignment
-        matcher = SequenceMatcher(None, ref_words, rec_words)
-        ratio = matcher.ratio()
-
-        # Build word-level scores
-        word_scores: list[dict] = []
-        matched_ops = matcher.get_opcodes()
-
-        for tag, i1, i2, j1, j2 in matched_ops:
-            if tag == "equal":
-                for idx in range(i1, i2):
-                    word_scores.append({
-                        "word": ref_words[idx],
-                        "accuracy_score": round(85 + stt_confidence * 15, 1),
-                        "error_type": "None",
-                        "phonemes": cls._estimate_phoneme_scores(ref_words[idx], correct=True),
-                    })
-            elif tag == "replace":
-                for idx in range(i1, i2):
-                    rec_word = rec_words[j1 + (idx - i1)] if (j1 + (idx - i1)) < j2 else ""
-                    word_sim = SequenceMatcher(None, ref_words[idx], rec_word).ratio()
-                    word_scores.append({
-                        "word": ref_words[idx],
-                        "accuracy_score": round(word_sim * 100, 1),
-                        "error_type": "Mispronunciation",
-                        "phonemes": cls._estimate_phoneme_scores(ref_words[idx], correct=False),
-                    })
-            elif tag == "delete":
-                for idx in range(i1, i2):
-                    word_scores.append({
-                        "word": ref_words[idx],
-                        "accuracy_score": 0.0,
-                        "error_type": "Omission",
-                        "phonemes": [],
-                    })
-            elif tag == "insert":
-                for idx in range(j1, j2):
-                    word_scores.append({
-                        "word": f"[{rec_words[idx]}]",
-                        "accuracy_score": 0.0,
-                        "error_type": "Insertion",
-                        "phonemes": [],
-                    })
-
-        # Compute aggregate scores
-        correct_words = [w for w in word_scores if w["error_type"] == "None"]
-        total_ref = len(ref_words)
-
-        accuracy = ratio * 100
-        completeness = (len(correct_words) / max(total_ref, 1)) * 100
-        fluency = min(100, accuracy * 0.8 + completeness * 0.2 + stt_confidence * 10)
-
-        # Prosody is estimated from consistency of word scores
-        if correct_words:
-            scores = [w["accuracy_score"] for w in correct_words]
-            avg = sum(scores) / len(scores)
-            variance = sum((s - avg) ** 2 for s in scores) / len(scores)
-            prosody = max(0, 100 - math.sqrt(variance) * 2)
-        else:
-            prosody = 30.0
-
-        overall = (accuracy * 0.35 + fluency * 0.25 + completeness * 0.25 + prosody * 0.15)
-
+        """Legacy wrapper — delegates to the honest scoring module."""
+        a = build_assessment(reference_text, recognised_text, stt_words=stt_words or [])
         return {
-            "overall_score": round(min(100, max(0, overall)), 1),
-            "fluency_score": round(min(100, max(0, fluency)), 1),
-            "accuracy_score": round(min(100, max(0, accuracy)), 1),
-            "completeness_score": round(min(100, max(0, completeness)), 1),
-            "prosody_score": round(min(100, max(0, prosody)), 1),
-            "word_scores": word_scores,
+            "overall_score": a["overall_score"],
+            "fluency_score": a["fluency_score"] or 0.0,
+            "accuracy_score": a["accuracy_score"],
+            "completeness_score": a["completeness_score"],
+            "prosody_score": 0.0,
+            "word_scores": a["word_scores"],
         }
-
-    @classmethod
-    def _estimate_phoneme_scores(cls, word: str, correct: bool) -> list[dict]:
-        """Estimate phoneme-level scores for a word (simplified)."""
-        # Simple phoneme estimation based on common patterns
-        phoneme_map: dict[str, list[str]] = {
-            "th": ["θ"],
-            "sh": ["ʃ"],
-            "ch": ["tʃ"],
-            "ng": ["ŋ"],
-            "r": ["r"],
-            "l": ["l"],
-        }
-
-        phonemes: list[dict] = []
-        word_lower = word.lower()
-
-        for pattern, ipa_list in phoneme_map.items():
-            if pattern in word_lower:
-                for ipa in ipa_list:
-                    score = 85 + (15 * (1 if correct else 0)) - cls.DIFFICULT_PHONEMES_VI.get(ipa, {}).get("difficulty", 0) * 3
-                    phonemes.append({
-                        "phoneme": ipa,
-                        "score": round(min(100, max(0, score)), 1),
-                    })
-
-        return phonemes
 
     @classmethod
     def _generate_pronunciation_feedback(
@@ -674,83 +601,65 @@ class SpeechAIService:
         assessment: dict[str, Any],
         user_level: str,
     ) -> dict[str, Any]:
-        """Generate human-readable feedback and actionable tips."""
+        """Generate honest feedback and actionable tips (no praise for low scores)."""
         overall = assessment["overall_score"]
         word_scores = assessment["word_scores"]
 
-        # Overall feedback
-        if overall >= 90:
-            feedback = (
-                "Xuất sắc! 🎉 Phát âm của bạn rất tự nhiên và gần như bản xứ. "
-                "Tiếp tục duy trì phong độ này nhé!"
-            )
-        elif overall >= 75:
-            feedback = (
-                "Rất tốt! 👏 Phát âm của bạn khá chuẩn. "
-                "Chỉ cần chú ý thêm một vài âm tiết nhỏ để hoàn hảo hơn."
-            )
-        elif overall >= 60:
-            feedback = (
-                "Khá ổn! 😊 Bạn đã nắm được cơ bản. "
-                "Hãy luyện tập thêm các âm khó và chú ý đến nhịp điệu câu."
-            )
-        elif overall >= 40:
-            feedback = (
-                "Tiếp tục cố gắng! 💪 Một số từ cần luyện thêm. "
-                "Hãy nghe lại bản ghi âm mẫu và so sánh với phát âm của bạn."
-            )
-        else:
-            feedback = (
-                "Đừng nản lòng! 🌟 Phát âm là kỹ năng cần nhiều thời gian. "
-                "Hãy bắt đầu chậm lại, nghe kỹ từng từ, và luyện từng câu ngắn."
-            )
+        if not assessment.get("scored", True):
+            return {
+                "feedback": "Chưa nghe rõ giọng đọc. Hãy đọc to, rõ hơn và thử lại.",
+                "tips": ["Kiểm tra micro và giảm tiếng ồn xung quanh."],
+            }
 
-        # Specific tips based on problem areas
+        if overall >= 90:
+            feedback = "Rất sát bản mẫu. Điểm tối đa 96 vì chỉ chấm qua nhận dạng giọng nói."
+        elif overall >= 80:
+            feedback = "Tốt. Còn vài từ cần làm rõ hơn."
+        elif overall >= 70:
+            feedback = "Khá ổn nhưng còn từ sai hoặc bỏ sót. Xem danh sách từ bên dưới."
+        elif overall >= 60:
+            feedback = "Chưa khớp tốt. Hãy đọc chậm lại và rõ từng từ."
+        elif overall >= 40:
+            feedback = "Nhiều từ chưa khớp với câu mẫu. Nghe lại bản mẫu rồi đọc theo."
+        else:
+            feedback = "Chưa nhận diện được phần lớn câu. Hãy kiểm tra micro/tiếng ồn và đọc lại."
+
         tips: list[str] = []
-        mispronounced = [w for w in word_scores if w["error_type"] == "Mispronunciation"]
-        omitted = [w for w in word_scores if w["error_type"] == "Omission"]
+
+        def _add(tip: str) -> None:
+            if tip not in tips:
+                tips.append(tip)
+
+        mispronounced = [w for w in word_scores if w.get("error_type") == "Mispronunciation"]
+        omitted = [w for w in word_scores if w.get("error_type") == "Omission"]
+        inserted = [w for w in word_scores if w.get("error_type") == "Insertion"]
 
         if mispronounced:
-            problem_words = [w["word"] for w in mispronounced[:3]]
-            tips.append(
-                f"🔤 Luyện phát âm lại các từ: {', '.join(problem_words)}. "
-                "Hãy nghe bản ghi âm mẫu và bắt chước."
-            )
-
-            # Check for specific difficult phonemes
-            for w in mispronounced:
-                for ph in w.get("phonemes", []):
-                    phoneme = ph["phoneme"]
-                    if phoneme in cls.DIFFICULT_PHONEMES_VI and ph["score"] < 70:
-                        info = cls.DIFFICULT_PHONEMES_VI[phoneme]
-                        tips.append(
-                            f"💡 Âm /{phoneme}/ (ví dụ: '{info['example']}'): {info['tip_vi']}"
-                        )
-
+            names = [w["word"] for w in mispronounced[:3]]
+            _add(f"Luyện lại các từ: {', '.join(names)}.")
         if omitted:
-            omitted_words = [w["word"] for w in omitted[:3]]
-            tips.append(
-                f"⚠️ Bạn bỏ sót các từ: {', '.join(omitted_words)}. "
-                "Hãy đọc chậm hơn và phát âm rõ từng từ."
+            names = [w["word"] for w in omitted[:3]]
+            _add(f"Bạn bỏ sót các từ: {', '.join(names)}.")
+        if inserted:
+            _add("Bạn nói thêm từ không có trong câu mẫu.")
+
+        fluency = assessment.get("fluency_score")
+        if fluency is None:
+            _add("Không đo được độ trôi chảy vì STT không trả timestamp.")
+        elif fluency < 60:
+            _add(
+                "Nhịp đọc chưa đều — chú ý ngắt nghỉ đúng chỗ "
+                "và tránh dừng quá lâu giữa các từ."
             )
 
-        if assessment["fluency_score"] < 60:
-            tips.append(
-                "🎵 Hãy chú ý đến nhịp điệu và tốc độ nói. "
-                "Đọc theo shadowing (nghe và nói theo) để cải thiện độ trôi chảy."
-            )
-
-        if assessment["prosody_score"] < 60:
-            tips.append(
-                "🎶 Ngữ điệu cần cải thiện. Câu hỏi thường lên giọng cuối câu, "
-                "câu khẳng định thường xuống giọng. Hãy luyện tập intonation."
-            )
-
-        # Always add general encouragement
-        if not tips:
-            tips.append(
-                "✅ Phát âm tổng thể rất tốt! Hãy thử thách bản thân với các câu khó hơn."
-            )
+        accuracy_note = (
+            "Điểm được chấm qua nhận dạng giọng nói, không phân tích âm học trực tiếp "
+            "— hãy đọc to và rõ để kết quả chính xác."
+        )
+        if assessment.get("accuracy_score", 0.0) < 100:
+            tips = tips[:3] + [accuracy_note]
+        else:
+            tips = tips[:4]
 
         return {"feedback": feedback, "tips": tips}
 

@@ -1,0 +1,1162 @@
+[
+  {
+    "id": "advanced_inversion",
+    "title": "Advanced Inversion",
+    "title_vi": "Đảo ngữ nâng cao",
+    "level": "C1",
+    "category": "Đảo ngữ",
+    "description": "Đảo ngữ nâng cao là việc đưa trạng từ hoặc cụm phủ định lên đầu câu rồi đảo trợ động từ ra trước chủ ngữ. Cấu trúc này xuất hiện dày đặc trong văn viết học thuật, báo chí và diễn ngôn trang trọng nhằm tạo nhấn mạnh. Nắm vững các mẫu cố định giúp câu văn tự nhiên và đúng chuẩn C1.",
+    "formula_affirmative": "Negative adverbial + auxiliary + S + V (Never have I seen...; Not only did she... but she also...)",
+    "formula_negative": "Rarely/Seldom/At no time + auxiliary + S + V (Rarely does he ever complain.)",
+    "formula_question": "Had + S + V3, ...? | Were + S + to + V, ...? | Should + S + V, ...? (Had he objected, would the motion have passed?)",
+    "time_markers": [
+      "never / rarely / seldom / hardly ever (chưa bao giờ / hiếm khi)",
+      "no sooner ... than / hardly ... when (vừa mới ... thì)",
+      "not only ... but also (không những ... mà còn)",
+      "under no circumstances / on no account / at no time (dù trong bất kỳ hoàn cảnh nào)",
+      "only when / only after / not until (chỉ khi / chỉ sau khi / mãi đến khi)"
+    ],
+    "usage_rules": [
+      "Đảo trợ động từ khi câu mở đầu bằng trạng từ phủ định hoặc bán phủ định: Never, Rarely, Seldom, Little, Hardly, Scarcely, Nowhere.",
+      "Với 'Not only ... but also', chỉ mệnh đề đầu đảo ngữ; mệnh đề sau giữ trật tự thường và thường bỏ 'also' khi đã có 'but'.",
+      "'No sooner ... than' và 'Hardly/Scarcely ... when' diễn tả hai hành động liên tiếp; mệnh đề mở đầu dùng quá khứ hoàn thành.",
+      "Khi 'Only when/after/if' hoặc 'Not until' đứng đầu câu, chỉ mệnh đề chính đảo ngữ, mệnh đề phụ giữ trật tự thường.",
+      "Đảo ngữ còn dùng thay 'if' trong điều kiện giả định: Were I..., Had I..., Should you... — mang sắc thái trang trọng."
+    ],
+    "examples": [
+      {
+        "english": "Never before had the committee faced such a decisive challenge to its authority.",
+        "vietnamese": "Chưa bao giờ ủy ban phải đối mặt với một thách thức quyết định đến vậy đối với thẩm quyền của mình.",
+        "note": "Đảo trợ động từ 'had' sau cụm phủ định 'Never before'."
+      },
+      {
+        "english": "Not only did the study challenge prevailing assumptions, but it also proposed a more rigorous methodology.",
+        "vietnamese": "Nghiên cứu không những thách thức những giả định phổ biến mà còn đề xuất một phương pháp luận chặt chẽ hơn.",
+        "note": "Mệnh đề đầu đảo ngữ; mệnh đề sau 'but it also' giữ trật tự thường."
+      },
+      {
+        "english": "No sooner had the findings been published than they were contested by several leading statisticians.",
+        "vietnamese": "Ngay sau khi các phát hiện được công bố, chúng đã bị một số nhà thống kê hàng đầu phản bác.",
+        "note": "'No sooner ... than' kết hợp quá khứ hoàn thành bị động."
+      },
+      {
+        "english": "Only after the data had been independently verified did the reviewers endorse the conclusions.",
+        "vietnamese": "Chỉ sau khi dữ liệu được kiểm chứng độc lập, các phản biện viên mới chấp thuận kết luận.",
+        "note": "'Only after' + mệnh đề phụ; mệnh đề chính đảo 'did'."
+      },
+      {
+        "english": "Under no circumstances should confidential material be circulated outside the review panel.",
+        "vietnamese": "Trong bất kỳ hoàn cảnh nào cũng không được lưu hành tài liệu mật ra ngoài hội đồng phản biện.",
+        "note": "Cụm phủ định mạnh, dùng 'should' đảo lên trước chủ ngữ."
+      }
+    ],
+    "common_mistakes": [
+      "Đảo ngữ cả mệnh đề phụ: 'Only when did he arrive did the meeting start' → 'Only when he arrived did the meeting start'.",
+      "Không đảo trợ động từ: 'Never I have seen such a case' → 'Never have I seen such a case'.",
+      "Dùng 'than' sau 'Hardly/Scarcely': 'Hardly had I sat down than the bell rang' → 'Hardly had I sat down when the bell rang'.",
+      "Đặt phủ định sai vị trí: 'Not only she did object' → 'Not only did she object'.",
+      "Giữ 'if' khi đã đảo ngữ: 'If had I known' → 'Had I known'."
+    ],
+    "quiz": [
+      {
+        "question": "Never _____ such a compelling argument in a doctoral thesis.",
+        "options": [
+          "I have read",
+          "have I read",
+          "I read",
+          "I did read"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau trạng từ phủ định 'Never' đứng đầu câu, trợ động từ 'have' phải đảo lên trước chủ ngữ: Never have I read."
+      },
+      {
+        "question": "No sooner _____ the lecture than the fire alarm went off.",
+        "options": [
+          "she had begun",
+          "had she begun",
+          "she began",
+          "did she begin"
+        ],
+        "correct_index": 1,
+        "explanation": "'No sooner' đứng đầu câu yêu cầu đảo trợ động từ 'had' và dùng quá khứ hoàn thành, theo sau là 'than'."
+      },
+      {
+        "question": "Only when the audit was complete _____ the extent of the fraud.",
+        "options": [
+          "the board understood",
+          "did the board understand",
+          "the board did understand",
+          "understood the board"
+        ],
+        "correct_index": 1,
+        "explanation": "Mệnh đề phụ 'Only when ...' không đảo ngữ; mệnh đề chính đảo trợ động từ 'did' và đưa động từ về nguyên mẫu."
+      },
+      {
+        "question": "_____ I been informed earlier, I would have revised the manuscript.",
+        "options": [
+          "If",
+          "Had",
+          "Have",
+          "Should"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu điều kiện loại 3 bỏ 'if' bằng đảo ngữ: 'Had I been informed' tương đương 'If I had been informed'."
+      },
+      {
+        "question": "At no time _____ aware of the implications of his decision.",
+        "options": [
+          "he was",
+          "was he",
+          "he had",
+          "did he"
+        ],
+        "correct_index": 1,
+        "explanation": "'At no time' là cụm phủ định đứng đầu câu nên phải đảo ngữ: 'At no time was he aware ...'."
+      }
+    ]
+  },
+  {
+    "id": "cleft_emphasis",
+    "title": "Cleft Sentences & Emphasis",
+    "title_vi": "Câu chẻ & nhấn mạnh",
+    "level": "C1",
+    "category": "Nhấn mạnh",
+    "description": "Câu chẻ chia một câu đơn thành hai mệnh đề nhằm làm nổi bật một thành phần thông tin. Tiếng Anh C1 dùng it-cleft, wh-cleft, all-cleft và there-cleft để điều chỉnh trọng tâm thông tin trong văn viết học thuật. Việc chọn đúng cấu trúc giúp lập luận rõ ràng và mạch lạc hơn.",
+    "formula_affirmative": "It is/was + focus + that/who + clause; What + S + V + is/was + focus; All (that) + S + V + is/was + focus",
+    "formula_negative": "It is/was not + focus + that/who + clause; It was not until X that Y; What ... is/was not ...",
+    "formula_question": "Is/Was it + focus + that/who + clause?; What is/was it that + clause?",
+    "time_markers": [
+      "it was not until ... that (mãi đến khi ... mới)",
+      "it was only after ... that (chỉ sau khi ... thì)",
+      "the first time / the last time (lần đầu / lần cuối)",
+      "in recent years / these days (trong những năm gần đây / hiện nay)",
+      "above all / in particular (trên hết / đặc biệt là)"
+    ],
+    "usage_rules": [
+      "It-cleft nhấn mạnh chủ ngữ, tân ngữ hoặc trạng ngữ: It was the methodology, not the sample size, that drew criticism.",
+      "Wh-cleft đưa thông tin đã biết lên đầu và đặt thông tin mới sau 'is/was': What the report lacks is a clear definition of terms.",
+      "All-cleft nhấn mạnh tính duy nhất hoặc giới hạn: All the committee did was postpone the decision.",
+      "There-cleft giới thiệu thông tin mới như một phát hiện: There is one assumption that underpins the entire model.",
+      "'It was not until ... that' nhấn mạnh mốc thời gian; mệnh đề sau 'that' không đảo ngữ."
+    ],
+    "examples": [
+      {
+        "english": "It was the absence of a control group, rather than the sample size, that undermined the study's credibility.",
+        "vietnamese": "Chính việc thiếu nhóm đối chứng, chứ không phải quy mô mẫu, đã làm suy giảm độ tin cậy của nghiên cứu.",
+        "note": "It-cleft nhấn mạnh chủ ngữ kèm tương phản 'rather than'."
+      },
+      {
+        "english": "What distinguishes her analysis is the precision with which she separates correlation from causation.",
+        "vietnamese": "Điều làm nên sự khác biệt trong phân tích của bà là độ chính xác khi tách tương quan khỏi nhân quả.",
+        "note": "Wh-cleft: thông tin mới nằm sau 'is'."
+      },
+      {
+        "english": "All the reviewers demanded was a clearer account of how the data had been coded.",
+        "vietnamese": "Tất cả những gì các phản biện viên yêu cầu là một trình bày rõ ràng hơn về cách mã hóa dữ liệu.",
+        "note": "All-cleft nhấn mạnh yêu cầu duy nhất."
+      },
+      {
+        "english": "It was not until the archive was declassified that historians could reconstruct the sequence of events.",
+        "vietnamese": "Mãi đến khi kho lưu trữ được giải mật, các nhà sử học mới có thể dựng lại trình tự sự kiện.",
+        "note": "Nhấn mạnh mốc thời gian với 'not until ... that'."
+      },
+      {
+        "english": "There is one premise, however, that the entire argument silently depends on.",
+        "vietnamese": "Tuy nhiên, có một tiền đề mà toàn bộ lập luận âm thầm dựa vào.",
+        "note": "There-cleft giới thiệu tiền đề quan trọng."
+      }
+    ],
+    "common_mistakes": [
+      "Đảo ngữ sau 'not until': 'It was not until 1990 did the law change' → 'It was not until 1990 that the law changed'.",
+      "Thiếu 'that' khiến câu rời: 'It was the data convinced us' → 'It was the data that convinced us'.",
+      "Wh-cleft thiếu động từ liên kết: 'What is needed a new framework' → 'What is needed is a new framework'.",
+      "Dùng 'what' thay 'that' sau it-cleft: 'It was the cost what mattered' → 'It was the cost that mattered'.",
+      "Lạm dụng câu chẻ liên tiếp khiến văn bản nặng nề; chỉ dùng khi cần điều chỉnh trọng tâm thông tin."
+    ],
+    "quiz": [
+      {
+        "question": "It was the lack of transparency, not the cost, _____ public trust in the institution.",
+        "options": [
+          "that eroded",
+          "which eroding",
+          "eroded",
+          "that it eroded"
+        ],
+        "correct_index": 0,
+        "explanation": "It-cleft cần 'that' (hoặc 'which') nối với mệnh đề hoàn chỉnh: 'that eroded public trust'."
+      },
+      {
+        "question": "_____ the report fails to address is the long-term environmental impact.",
+        "options": [
+          "It",
+          "What",
+          "That",
+          "Which"
+        ],
+        "correct_index": 1,
+        "explanation": "Wh-cleft bắt đầu bằng 'What' đóng vai trò tân ngữ của 'address': 'What the report fails to address'."
+      },
+      {
+        "question": "It was not until the second trial _____ the treatment's efficacy was confirmed.",
+        "options": [
+          "when",
+          "that",
+          "which",
+          "then"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc cố định 'It was not until ... that ...'; không dùng 'when' hay đảo ngữ ở mệnh đề sau."
+      },
+      {
+        "question": "All the evidence _____ was circumstantial.",
+        "options": [
+          "that was presented",
+          "was presented",
+          "presented it",
+          "which presented"
+        ],
+        "correct_index": 0,
+        "explanation": "'All the evidence' + mệnh đề quan hệ 'that was presented' tạo thành chủ ngữ đầy đủ cho 'was circumstantial'."
+      },
+      {
+        "question": "_____ was her refusal to acknowledge the counter-evidence that damaged her credibility.",
+        "options": [
+          "It",
+          "What",
+          "There",
+          "That"
+        ],
+        "correct_index": 0,
+        "explanation": "Đây là it-cleft nhấn mạnh 'her refusal ...': 'It was her refusal ... that damaged ...'."
+      }
+    ]
+  },
+  {
+    "id": "subjunctive_formal",
+    "title": "Subjunctive & Formal Structures",
+    "title_vi": "Giả định & cấu trúc trang trọng",
+    "level": "C1",
+    "category": "Thức giả định",
+    "description": "Thức giả định trong tiếng Anh trang trọng dùng động từ nguyên mẫu không 'to' sau các động từ và tính từ như suggest, insist, demand, essential, imperative. Ngoài ra còn có 'were' giả định trong điều kiện và nhượng bộ, cùng các cụm cố định mang tính nghi thức. Đây là cấu trúc đặc trưng của văn bản pháp lý, hành chính và học thuật.",
+    "formula_affirmative": "S + suggest/insist/demand/recommend + that + S + (should) + V(bare); It is essential/imperative/vital + that + S + (should) + V(bare)",
+    "formula_negative": "S + insist + that + S + not + V(bare); It is essential that + S + not + V(bare)",
+    "formula_question": "Is it essential/imperative that + S + (should) + V(bare)?; Do you suggest that + S + (should) + V(bare)?",
+    "time_markers": [
+      "in the event that (trong trường hợp)",
+      "until such time as (cho đến khi)",
+      "with effect from (có hiệu lực từ)",
+      "henceforth (từ nay về sau)",
+      "pending + N (trong khi chờ)"
+    ],
+    "usage_rules": [
+      "Sau động từ chỉ yêu cầu, đề nghị, kiến nghị (suggest, recommend, insist, demand, propose, request, urge) dùng 'that + S + V nguyên mẫu'.",
+      "Sau tính từ khách quan (essential, imperative, vital, crucial, necessary, advisable) cũng dùng giả định: It is imperative that the committee review the findings.",
+      "Dạng phủ định là 'not + V nguyên mẫu', không dùng 'do not': It is essential that he not disclose the information.",
+      "'Were' giả định xuất hiện trong điều kiện không có thật và nhượng bộ: Were the hypothesis correct, ...; Even if that were true, ...",
+      "Một số cụm cố định mang tính nghi thức: Long live the Republic; Be that as it may; Suffice it to say."
+    ],
+    "examples": [
+      {
+        "english": "The panel recommends that the institution adopt a binding code of conduct by the end of the fiscal year.",
+        "vietnamese": "Hội đồng khuyến nghị tổ chức này thông qua một bộ quy tắc ứng xử ràng buộc trước khi kết thúc năm tài chính.",
+        "note": "Sau 'recommend that' dùng 'adopt' nguyên mẫu, không chia theo ngôi."
+      },
+      {
+        "english": "It is imperative that no participant be identified in the published dataset.",
+        "vietnamese": "Điều bắt buộc là không người tham gia nào được nhận dạng trong bộ dữ liệu công bố.",
+        "note": "Phủ định giả định với 'no participant be', không dùng 'is'."
+      },
+      {
+        "english": "Were the assumptions to hold, the model would predict a sharp decline in demand.",
+        "vietnamese": "Nếu các giả định đúng, mô hình sẽ dự báo nhu cầu giảm mạnh.",
+        "note": "Đảo ngữ 'Were' thay cho 'If the assumptions held'."
+      },
+      {
+        "english": "Even if that were the case, the conclusion would not necessarily follow.",
+        "vietnamese": "Ngay cả khi đúng là như vậy, kết luận cũng không nhất thiết suy ra được.",
+        "note": "'Were' giả định trong mệnh đề nhượng bộ."
+      },
+      {
+        "english": "Suffice it to say that the evidence, however suggestive, remains inconclusive.",
+        "vietnamese": "Chỉ cần nói rằng bằng chứng, dù gợi ý nhiều điều, vẫn chưa đủ kết luận.",
+        "note": "Cụm cố định trang trọng 'Suffice it to say'."
+      }
+    ],
+    "common_mistakes": [
+      "Chia động từ theo ngôi: 'It is essential that he attends' → 'It is essential that he attend' (hoặc 'should attend').",
+      "Dùng 'does not' trong giả định: 'It is vital that she does not leave' → 'It is vital that she not leave'.",
+      "Thêm 'to' sau động từ giả định: 'They demanded that he to resign' → 'They demanded that he resign'.",
+      "Dùng 'was' thay 'were' trong điều kiện giả định trang trọng: 'If I was to accept' → 'If I were to accept'.",
+      "Nhầm 'suggest' nghĩa 'gợi ý rằng' với 'suggest' nghĩa 'đề nghị': 'The data suggests that he is right' là câu thường, không dùng giả định."
+    ],
+    "quiz": [
+      {
+        "question": "The board insisted that the report _____ before the shareholders' meeting.",
+        "options": [
+          "is circulated",
+          "be circulated",
+          "was circulated",
+          "will be circulated"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau 'insisted that' dùng giả định bị động 'be + V3', không chia theo thời gian của mệnh đề chính."
+      },
+      {
+        "question": "It is crucial that the findings _____ misrepresented in the executive summary.",
+        "options": [
+          "are not",
+          "not be",
+          "do not be",
+          "will not be"
+        ],
+        "correct_index": 1,
+        "explanation": "Phủ định giả định là 'not + V nguyên mẫu': 'not be misrepresented'."
+      },
+      {
+        "question": "_____ the hypothesis to be correct, the observed anomaly would remain unexplained.",
+        "options": [
+          "Was",
+          "Were",
+          "If",
+          "Should"
+        ],
+        "correct_index": 1,
+        "explanation": "Đảo ngữ giả định 'Were the hypothesis to be correct' tương đương 'If the hypothesis were correct'."
+      },
+      {
+        "question": "The auditor demanded that the accounts _____ independently.",
+        "options": [
+          "are verified",
+          "be verified",
+          "were verified",
+          "will verify"
+        ],
+        "correct_index": 1,
+        "explanation": "'Demand that' + giả định bị động 'be verified', bất kể mệnh đề chính ở quá khứ."
+      },
+      {
+        "question": "Suffice it _____ that the committee reached no consensus.",
+        "options": [
+          "to say",
+          "saying",
+          "say",
+          "said"
+        ],
+        "correct_index": 0,
+        "explanation": "Cụm cố định 'Suffice it to say that ...' nghĩa là 'chỉ cần nói rằng'."
+      }
+    ]
+  },
+  {
+    "id": "advanced_passive",
+    "title": "Advanced Passive Constructions",
+    "title_vi": "Bị động nâng cao",
+    "level": "C1",
+    "category": "Bị động",
+    "description": "Bị động nâng cao gồm bị động với động từ tường thuật (It is said that..., He is believed to...), bị động của động từ hai tân ngữ, bị động với modal hoàn thành và get-passive. Những cấu trúc này giúp văn bản học thuật và báo chí trở nên khách quan, tránh nêu trực tiếp chủ thể. Trình độ C1 đòi hỏi dùng chính xác thì và dạng thức động từ sau 'to'.",
+    "formula_affirmative": "S + be + V3 (+ by agent); It is/was + said/believed/reported + that + clause; S + is/was + said + to + have + V3",
+    "formula_negative": "S + be + not + V3; It is not believed that + clause; S + is not thought to + V",
+    "formula_question": "Is/Was + S + V3 (+ by agent)?; Is it believed that + clause?; Is S + said + to + V?",
+    "time_markers": [
+      "according to + nguồn (theo nguồn tin)",
+      "reportedly / allegedly / supposedly (được cho là)",
+      "at the time of writing (tại thời điểm viết)",
+      "in the wake of + N (ngay sau)",
+      "as yet (cho đến nay vẫn chưa)"
+    ],
+    "usage_rules": [
+      "Bị động tường thuật khách quan: It is widely believed that... / It has been demonstrated that... — không nêu chủ thể hành động.",
+      "Khi hành động bị động đã xảy ra trước, dùng 'to have + V3': The minister is believed to have misled Parliament.",
+      "Động từ hai tân ngữ (give, offer, deny, award) có thể lấy tân ngữ gián tiếp làm chủ ngữ bị động: She was awarded a grant.",
+      "Get-passive nhấn mạnh sự thay đổi trạng thái hoặc hàm ý tiêu cực, ngoài ý muốn: The proposal got rejected.",
+      "Bị động với modal hoàn thành: The data must have been tampered with. / The error could have been avoided."
+    ],
+    "examples": [
+      {
+        "english": "The manuscript is believed to have been circulating in draft form for several months before publication.",
+        "vietnamese": "Bản thảo được cho là đã lưu hành dưới dạng nháp trong vài tháng trước khi công bố.",
+        "note": "Bị động kép: 'is believed to have been circulating'."
+      },
+      {
+        "english": "It has been argued, not altogether convincingly, that the policy was never intended to be enforceable.",
+        "vietnamese": "Người ta đã lập luận, không hoàn toàn thuyết phục, rằng chính sách này chưa bao giờ được thiết kế để có thể thực thi.",
+        "note": "Bị động khách quan với 'It has been argued'."
+      },
+      {
+        "english": "Applicants who fail to disclose conflicts of interest may be denied funding.",
+        "vietnamese": "Ứng viên không công bố xung đột lợi ích có thể bị từ chối tài trợ.",
+        "note": "Bị động với động từ hai tân ngữ, giữ lại tân ngữ trực tiếp."
+      },
+      {
+        "english": "By the time the auditors arrived, the records had already been destroyed.",
+        "vietnamese": "Vào lúc các kiểm toán viên đến, hồ sơ đã bị tiêu hủy từ trước.",
+        "note": "Bị động quá khứ hoàn thành, nhấn mạnh hành động xảy ra trước."
+      },
+      {
+        "english": "The equipment got damaged during transit, which delayed the experiment by three weeks.",
+        "vietnamese": "Thiết bị bị hỏng trong quá trình vận chuyển, khiến thí nghiệm bị trì hoãn ba tuần.",
+        "note": "Get-passive, hàm ý sự cố ngoài ý muốn."
+      }
+    ],
+    "common_mistakes": [
+      "Sai dạng sau 'to' khi hành động đã xảy ra: 'He is believed to commit the offence' → 'He is believed to have committed the offence'.",
+      "Quên 'been' trong bị động hoàn thành: 'The report has published' → 'The report has been published'.",
+      "Thêm 'by' với chủ thể không xác định gây thừa: 'The results were analysed by researchers' → bỏ 'by researchers' khi không cần thiết.",
+      "Nhầm get-passive với V-ing: 'He got fining' → 'He got fined'.",
+      "Dùng bị động với nội động từ: 'The accident was happened' → 'The accident happened'."
+    ],
+    "quiz": [
+      {
+        "question": "The minister _____ to have known about the payments months before they were disclosed.",
+        "options": [
+          "is believed",
+          "believes",
+          "is believing",
+          "has believed"
+        ],
+        "correct_index": 0,
+        "explanation": "Bị động tường thuật: 'is believed to have known' — chủ thể được cho là đã biết từ trước."
+      },
+      {
+        "question": "The documents are thought _____ deliberately before the inquiry began.",
+        "options": [
+          "to destroy",
+          "to have been destroyed",
+          "to be destroying",
+          "having destroyed"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động tiêu hủy xảy ra trước thời điểm suy đoán nên dùng 'to have been destroyed'."
+      },
+      {
+        "question": "It _____ that the two events were directly connected.",
+        "options": [
+          "has been widely suggested",
+          "have been widely suggested",
+          "has widely suggesting",
+          "was widely suggest"
+        ],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ giả 'It' đi với động từ số ít: 'It has been widely suggested that ...'."
+      },
+      {
+        "question": "She _____ a research fellowship on the strength of her doctoral work.",
+        "options": [
+          "awarded",
+          "was awarded",
+          "was awarding",
+          "has awarding"
+        ],
+        "correct_index": 1,
+        "explanation": "Động từ hai tân ngữ 'award' ở bị động lấy người nhận làm chủ ngữ: 'She was awarded a fellowship'."
+      },
+      {
+        "question": "The samples must _____ at a constant temperature.",
+        "options": [
+          "have stored",
+          "have been stored",
+          "be storing",
+          "storing"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau modal hoàn thành, bị động là 'must have been + V3': 'must have been stored'."
+      }
+    ]
+  },
+  {
+    "id": "nominalisation",
+    "title": "Nominalisation",
+    "title_vi": "Danh từ hóa",
+    "level": "C1",
+    "category": "Cấu trúc",
+    "description": "Danh từ hóa là quá trình chuyển động từ hoặc tính từ thành danh từ (implement → implementation, likely → likelihood) để tạo văn phong trang trọng và cô đọng. Cấu trúc này rất phổ biến trong văn bản học thuật, báo cáo chính sách và luận văn. Tuy nhiên, lạm dụng danh từ hóa sẽ khiến câu khó đọc và che khuất chủ thể hành động.",
+    "formula_affirmative": "Det + N + of + N + V + O (The implementation of the policy resulted in a reduction of costs.)",
+    "formula_negative": "There is a lack of + N / The absence of + N + V (There was no significant improvement in outcomes.)",
+    "formula_question": "What accounts for the + N + of/in + N? (What accounts for the decline in enrolment?)",
+    "time_markers": [
+      "in recent decades (trong những thập kỷ gần đây)",
+      "over the course of + N (trong suốt quá trình)",
+      "following + N (sau khi)",
+      "subsequent to + N (sau khi — trang trọng)",
+      "prior to + N (trước khi — trang trọng)"
+    ],
+    "usage_rules": [
+      "Chuyển động từ thành danh từ bằng hậu tố: -tion, -ment, -ance, -al, -ure (analyse → analysis, fail → failure).",
+      "Chuyển tính từ thành danh từ bằng hậu tố: -ity, -ness, -cy (accurate → accuracy, likely → likelihood).",
+      "Danh từ hóa giúp câu khách quan và cô đọng: 'X caused Y to decline' → 'The decline in Y was attributable to X'.",
+      "Cấu trúc 'the + N + of + N' cho phép xếp chồng thông tin, nhưng không nên vượt quá ba tầng để tránh tối nghĩa.",
+      "Khi cần nêu rõ chủ thể hành động, dùng 'by + agent' hoặc 'on the part of + N': the rejection of the proposal by the committee."
+    ],
+    "examples": [
+      {
+        "english": "The implementation of stricter emission standards has led to a marked reduction in urban air pollution.",
+        "vietnamese": "Việc thực thi các tiêu chuẩn khí thải nghiêm ngặt hơn đã dẫn đến mức giảm rõ rệt ô nhiễm không khí đô thị.",
+        "note": "Danh từ hóa: implement → implementation, reduce → reduction."
+      },
+      {
+        "english": "The committee's rejection of the proposal was widely interpreted as a failure of leadership.",
+        "vietnamese": "Việc ủy ban bác bỏ đề xuất được hiểu rộng rãi là một thất bại của ban lãnh đạo.",
+        "note": "Chuỗi danh từ với sở hữu cách và 'of'."
+      },
+      {
+        "english": "An increase in the frequency of extreme weather events has prompted a reassessment of infrastructure resilience.",
+        "vietnamese": "Sự gia tăng tần suất các hiện tượng thời tiết cực đoan đã thúc đẩy việc đánh giá lại khả năng chống chịu của hạ tầng.",
+        "note": "Ba tầng danh từ: 'an increase in the frequency of'."
+      },
+      {
+        "english": "The absence of reliable data makes any comparison between the two systems problematic.",
+        "vietnamese": "Việc thiếu dữ liệu đáng tin cậy khiến mọi so sánh giữa hai hệ thống trở nên khó khăn.",
+        "note": "Danh từ hóa của 'absent' và 'compare'."
+      },
+      {
+        "english": "Subsequent to the publication of the findings, the agency revised its guidance.",
+        "vietnamese": "Sau khi các phát hiện được công bố, cơ quan này đã sửa đổi hướng dẫn của mình.",
+        "note": "Giới từ trang trọng 'subsequent to' + cụm danh từ."
+      }
+    ],
+    "common_mistakes": [
+      "Danh từ hóa quá mức khiến câu nặng: 'The carrying out of the implementation of the plan' → 'The implementation of the plan'.",
+      "Bỏ mất chủ thể hành động: 'The decision was made' — nếu cần rõ, thêm 'by the board'.",
+      "Chọn sai hậu tố: 'the analyse of data' → 'the analysis of data'.",
+      "Dùng danh từ không đếm được với mạo từ không phù hợp: 'a research' → 'a piece of research' hoặc 'some research'.",
+      "Ghép quá nhiều 'of': 'the reduction of the level of the risk of the failure' → 'the reduction in the risk of failure'."
+    ],
+    "quiz": [
+      {
+        "question": "The _____ of the new curriculum required extensive consultation with teachers.",
+        "options": [
+          "implement",
+          "implementation",
+          "implementing",
+          "implemented"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau mạo từ 'The' và trước 'of' cần danh từ: 'implementation'."
+      },
+      {
+        "question": "There has been a marked _____ in the number of applicants since the fee was introduced.",
+        "options": [
+          "decline",
+          "declining",
+          "declined",
+          "declination"
+        ],
+        "correct_index": 0,
+        "explanation": "'A marked decline in' là cụm danh từ chuẩn; 'declination' mang nghĩa khác (sự từ chối)."
+      },
+      {
+        "question": "The _____ of adequate funding has seriously constrained the project.",
+        "options": [
+          "absent",
+          "absence",
+          "absenting",
+          "absently"
+        ],
+        "correct_index": 1,
+        "explanation": "Cần danh từ 'absence' sau mạo từ 'The': 'the absence of adequate funding'."
+      },
+      {
+        "question": "Her argument rests on the _____ that economic growth inevitably reduces poverty.",
+        "options": [
+          "assume",
+          "assumption",
+          "assuming",
+          "assumed"
+        ],
+        "correct_index": 1,
+        "explanation": "'The assumption that ...' là cụm danh từ + mệnh đề bổ nghĩa."
+      },
+      {
+        "question": "_____ to the introduction of the policy, unemployment had been falling steadily.",
+        "options": [
+          "Prior",
+          "Before",
+          "Previous",
+          "Former"
+        ],
+        "correct_index": 0,
+        "explanation": "Giới từ trang trọng 'prior to + N' nghĩa là 'trước khi'; 'Before to' không đúng ngữ pháp."
+      }
+    ]
+  },
+  {
+    "id": "participle_reduced_advanced",
+    "title": "Participle & Reduced Relative Clauses (Advanced)",
+    "title_vi": "Phân từ & mệnh đề quan hệ rút gọn nâng cao",
+    "level": "C1",
+    "category": "Mệnh đề",
+    "description": "Mệnh đề phân từ và mệnh đề quan hệ rút gọn nâng cao cho phép lược bỏ đại từ quan hệ và trợ động từ, tạo câu cô đọng và trang trọng. Các dạng chính gồm V-ing (chủ động), V3 (bị động), Having + V3 (hoàn thành) và being + V3. Cấu trúc này đòi hỏi chủ ngữ mệnh đề rút gọn phải trùng với chủ ngữ mệnh đề chính để tránh lỗi dangling participle.",
+    "formula_affirmative": "V-ing / V3 / Having + V3 + O, S + V + O; S + who/which + be + V-ing/V3 → S + V-ing/V3",
+    "formula_negative": "Not + V-ing + O, S + V; Not having + V3 + O, S + V; S + not + V3 (rút gọn bị động)",
+    "formula_question": "Having + V3 + O, + auxiliary + S + V? (Having completed the review, did the panel identify any gaps?)",
+    "time_markers": [
+      "having + V3 (sau khi đã)",
+      "on + V-ing (khi / ngay sau khi)",
+      "before / after + V-ing (trước / sau khi)",
+      "while / when + V-ing (trong khi)",
+      "once + V3 (một khi đã được)"
+    ],
+    "usage_rules": [
+      "Rút gọn mệnh đề quan hệ chủ động: 'the researchers who were analysing the data' → 'the researchers analysing the data'.",
+      "Rút gọn mệnh đề quan hệ bị động: 'the samples which were collected in 2020' → 'the samples collected in 2020'.",
+      "Dùng 'Having + V3' khi hành động thứ nhất hoàn thành trước hành động thứ hai.",
+      "'Having been + V3' nhấn mạnh hành động đã bị tác động trước đó: Having been rejected twice, the proposal was withdrawn.",
+      "Chủ ngữ mệnh đề phân từ phải trùng với chủ ngữ chính; nếu khác, giữ nguyên mệnh đề hoặc dùng 'with + N + V-ing'."
+    ],
+    "examples": [
+      {
+        "english": "Having reviewed all the submissions, the panel concluded that none met the required standard.",
+        "vietnamese": "Sau khi xem xét tất cả bài nộp, hội đồng kết luận rằng không bài nào đạt tiêu chuẩn yêu cầu.",
+        "note": "Having + V3 diễn tả hành động xảy ra trước."
+      },
+      {
+        "english": "The data collected during the first phase proved considerably more reliable than those obtained later.",
+        "vietnamese": "Dữ liệu thu thập trong giai đoạn đầu tỏ ra đáng tin cậy hơn đáng kể so với dữ liệu thu được sau đó.",
+        "note": "Rút gọn bị động: 'which were collected' → 'collected'."
+      },
+      {
+        "english": "Not having been informed of the change in schedule, several delegates arrived after the session had begun.",
+        "vietnamese": "Do không được thông báo về việc thay đổi lịch, một số đại biểu đến sau khi phiên họp đã bắt đầu.",
+        "note": "Phủ định 'Not having been + V3'."
+      },
+      {
+        "english": "The policy, once implemented, is expected to reduce administrative costs by a third.",
+        "vietnamese": "Chính sách này, một khi được triển khai, dự kiến sẽ giảm một phần ba chi phí hành chính.",
+        "note": "Rút gọn với 'once + V3' xen vào giữa câu."
+      },
+      {
+        "english": "With the deadline approaching, the team decided to prioritise the most critical analyses.",
+        "vietnamese": "Khi hạn chót đang đến gần, nhóm quyết định ưu tiên những phân tích quan trọng nhất.",
+        "note": "'With + N + V-ing' dùng khi hai chủ ngữ khác nhau."
+      }
+    ],
+    "common_mistakes": [
+      "Dangling participle: 'Walking through the archive, the documents were dusty' → 'Walking through the archive, I found the documents dusty'.",
+      "Dùng V-ing khi cần bị động: 'The samples testing in the lab' → 'The samples tested in the lab'.",
+      "Thiếu 'being' trong bị động tiếp diễn rút gọn: 'The issue discussed at the moment' → 'The issue being discussed at the moment'.",
+      "Đặt 'not' sai vị trí: 'Having not completed the review' → 'Not having completed the review'.",
+      "Dùng 'Having + V3' cho hai hành động đồng thời: 'Having entered the room, she was reading' → 'Entering the room, she was reading'."
+    ],
+    "quiz": [
+      {
+        "question": "_____ the results of the pilot study, the researchers redesigned the questionnaire.",
+        "options": [
+          "Having analysed",
+          "Analyse",
+          "Analysed",
+          "To analyse"
+        ],
+        "correct_index": 0,
+        "explanation": "Hành động phân tích hoàn thành trước khi thiết kế lại, nên dùng 'Having + V3'."
+      },
+      {
+        "question": "The specimens _____ in 2019 were found to have deteriorated.",
+        "options": [
+          "collecting",
+          "collected",
+          "having collected",
+          "collect"
+        ],
+        "correct_index": 1,
+        "explanation": "Mẫu vật được thu thập (bị động) nên dùng quá khứ phân từ 'collected'."
+      },
+      {
+        "question": "_____ of the revised deadline, many applicants submitted incomplete files.",
+        "options": [
+          "Not informing",
+          "Not having been informed",
+          "Not having informed",
+          "Having not informed"
+        ],
+        "correct_index": 1,
+        "explanation": "Ứng viên là người được thông báo (bị động) và việc đó xảy ra trước: 'Not having been informed'."
+      },
+      {
+        "question": "The proposal, once _____, will be circulated to all departments.",
+        "options": [
+          "approving",
+          "approved",
+          "approve",
+          "having approved"
+        ],
+        "correct_index": 1,
+        "explanation": "Đề xuất được phê duyệt (bị động), rút gọn thành 'once approved'."
+      },
+      {
+        "question": "_____ by the complexity of the data, the team sought external advice.",
+        "options": [
+          "Overwhelmed",
+          "Overwhelming",
+          "Having overwhelming",
+          "To overwhelm"
+        ],
+        "correct_index": 0,
+        "explanation": "Nhóm bị choáng ngợp (bị động) nên dùng quá khứ phân từ 'Overwhelmed'."
+      }
+    ]
+  },
+  {
+    "id": "advanced_conditionals_hypothetical",
+    "title": "Advanced Conditionals & Hypothetical Past",
+    "title_vi": "Điều kiện nâng cao & quá khứ giả định",
+    "level": "C1",
+    "category": "Điều kiện",
+    "description": "Điều kiện nâng cao mở rộng các mẫu loại 1–3 với đảo ngữ, 'but for', 'provided that', 'unless' và cấu trúc giả định quá khứ. Những mẫu này cho phép diễn đạt giả thuyết phức tạp, phản thực và hệ quả logic trong văn viết học thuật. Trình độ C1 yêu cầu phân biệt rõ thời gian và mức độ chắc chắn của từng mệnh đề.",
+    "formula_affirmative": "If + S + had + V3, S + would/could/might + have + V3; Were S + to + V, S + would + V; But for + N, S + would + have + V3",
+    "formula_negative": "If + S + had not + V3, S + would not + have + V3; Were it not for + N, S + would + V; Had it not been for + N, ...",
+    "formula_question": "Had + S + V3, + would + S + have + V3?; What would have happened if + S + had + V3?",
+    "time_markers": [
+      "if / unless / provided that / on condition that (nếu / trừ khi / với điều kiện là)",
+      "but for / were it not for (nếu không vì)",
+      "otherwise / in the event that (nếu không thì / trong trường hợp)",
+      "supposing / imagine that (giả sử)",
+      "as if / as though (như thể là)"
+    ],
+    "usage_rules": [
+      "Điều kiện loại 3 phản thực quá khứ: If + had + V3, would have + V3; có thể bỏ 'if' bằng đảo ngữ 'Had + S + V3'.",
+      "'Were + S + to + V' diễn tả giả thuyết ít khả năng hoặc mang tính lịch sự, trang trọng.",
+      "'But for / Were it not for / Had it not been for + N' thay cho mệnh đề 'if' phủ định.",
+      "Câu điều kiện hỗn hợp: If + had + V3 (quá khứ), S + would + V (hiện tại) — hệ quả hiện tại của nguyên nhân quá khứ.",
+      "'Provided that / as long as / on condition that' đặt điều kiện ràng buộc; 'unless' = if not, không dùng 'unless ... not'."
+    ],
+    "examples": [
+      {
+        "english": "Had the funding been secured in time, the trial could have been completed before the regulatory deadline.",
+        "vietnamese": "Nếu kinh phí được bảo đảm kịp thời, thử nghiệm lâm sàng đã có thể hoàn tất trước hạn chót của cơ quan quản lý.",
+        "note": "Đảo ngữ điều kiện loại 3."
+      },
+      {
+        "english": "Were the government to adopt the recommendation, the cost of compliance would rise sharply in the short term.",
+        "vietnamese": "Nếu chính phủ chấp nhận khuyến nghị này, chi phí tuân thủ sẽ tăng mạnh trong ngắn hạn.",
+        "note": "'Were ... to' cho giả thuyết ít khả năng."
+      },
+      {
+        "english": "But for the intervention of a single reviewer, the error would have gone unnoticed.",
+        "vietnamese": "Nếu không có sự can thiệp của một phản biện viên duy nhất, lỗi này đã không bị phát hiện.",
+        "note": "'But for + N' tương đương 'if it had not been for'."
+      },
+      {
+        "english": "If the archive had been catalogued properly, we would not now be reconstructing the timeline from fragmentary evidence.",
+        "vietnamese": "Nếu kho lưu trữ được lập mục lục đúng cách, giờ đây chúng ta đã không phải dựng lại dòng thời gian từ những mảnh bằng chứng rời rạc.",
+        "note": "Điều kiện hỗn hợp: nguyên nhân quá khứ, hệ quả hiện tại."
+      },
+      {
+        "english": "The results are presented as if the correlation were sufficient evidence of causation.",
+        "vietnamese": "Các kết quả được trình bày như thể tương quan đã là bằng chứng đủ để khẳng định quan hệ nhân quả.",
+        "note": "'As if + were' diễn tả giả định không có thật."
+      }
+    ],
+    "common_mistakes": [
+      "Trộn sai thì: 'If I would have known, I would have acted' → 'If I had known, I would have acted'.",
+      "Dùng 'unless' với phủ định: 'Unless you don't submit the form' → 'Unless you submit the form'.",
+      "Quên 'have' sau 'would' trong loại 3: 'I would known' → 'I would have known'.",
+      "Dùng 'was' thay 'were' trong văn phong trang trọng: 'as if it was' → 'as if it were'.",
+      "Đảo ngữ sai trật tự: 'Had been the funding secured' → 'Had the funding been secured'."
+    ],
+    "quiz": [
+      {
+        "question": "_____ the committee known about the conflict of interest, it would have rejected the application.",
+        "options": [
+          "If",
+          "Had",
+          "Have",
+          "Should"
+        ],
+        "correct_index": 1,
+        "explanation": "Điều kiện loại 3 bỏ 'if' bằng đảo ngữ 'Had + S + V3': 'Had the committee known'."
+      },
+      {
+        "question": "But _____ the timely intervention of the regulator, the bank would have collapsed.",
+        "options": [
+          "for",
+          "from",
+          "with",
+          "of"
+        ],
+        "correct_index": 0,
+        "explanation": "Cụm cố định 'but for + N' nghĩa là 'nếu không có'."
+      },
+      {
+        "question": "If the initial hypothesis had been tested more rigorously, the flaw _____ earlier.",
+        "options": [
+          "would be detected",
+          "would have been detected",
+          "will be detected",
+          "had been detected"
+        ],
+        "correct_index": 1,
+        "explanation": "Mệnh đề 'if' ở quá khứ hoàn thành nên mệnh đề chính dùng 'would have been + V3'."
+      },
+      {
+        "question": "_____ the policy to be reversed, thousands of households would be affected.",
+        "options": [
+          "Were",
+          "Was",
+          "Should",
+          "Had"
+        ],
+        "correct_index": 0,
+        "explanation": "Giả thuyết ít khả năng dùng 'Were + S + to + V': 'Were the policy to be reversed'."
+      },
+      {
+        "question": "The deadline was extended; _____, the report would never have been completed.",
+        "options": [
+          "therefore",
+          "otherwise",
+          "likewise",
+          "henceforth"
+        ],
+        "correct_index": 1,
+        "explanation": "'Otherwise' nghĩa là 'nếu không thì', nối với hệ quả giả định ở mệnh đề sau."
+      }
+    ]
+  },
+  {
+    "id": "modal_perfects_speculation",
+    "title": "Modal Perfects & Advanced Speculation",
+    "title_vi": "Modal hoàn thành & suy đoán nâng cao",
+    "level": "C1",
+    "category": "Modal",
+    "description": "Modal hoàn thành (must/might/could/should/would/needn't + have + V3) diễn tả suy đoán, tiếc nuối hoặc đánh giá về một hành động trong quá khứ. Ở trình độ C1, người học cần phân biệt sắc thái chắc chắn, khả năng và phản thực. Cấu trúc này xuất hiện thường xuyên trong diễn ngôn phê bình học thuật và báo chí.",
+    "formula_affirmative": "S + must/may/might/could/should/would + have + V3 (He must have overlooked the footnote.)",
+    "formula_negative": "S + cannot/couldn't + have + V3 (chắc chắn không); S + might not + have + V3 (có thể không); S + needn't + have + V3 (không cần mà vẫn làm)",
+    "formula_question": "Could/Might S + have + V3?; Should S + have + V3?; Need S + have + V3?",
+    "time_markers": [
+      "by the time + clause (vào lúc)",
+      "in retrospect (nhìn lại)",
+      "at the time (vào thời điểm đó)",
+      "in all likelihood (rất có thể)",
+      "on reflection (sau khi suy xét)"
+    ],
+    "usage_rules": [
+      "'Must have + V3' diễn tả suy luận chắc chắn dựa trên bằng chứng: The lights were on; someone must have been there.",
+      "'Can't/couldn't have + V3' diễn tả điều không thể đã xảy ra; 'might not/may not have + V3' chỉ khả năng không xảy ra.",
+      "'Should/ought to have + V3' diễn tả việc lẽ ra nên làm nhưng đã không làm, hàm ý phê bình.",
+      "'Needn't have + V3' nghĩa là đã làm nhưng không cần thiết; 'didn't need to' nghĩa là không cần nên đã không làm.",
+      "'Would have + V3' thường nằm trong mệnh đề hệ quả của điều kiện loại 3 hoặc diễn tả mong muốn không thành."
+    ],
+    "examples": [
+      {
+        "english": "Given the discrepancies in the two accounts, the witness must have been mistaken about the sequence of events.",
+        "vietnamese": "Xét những điểm mâu thuẫn giữa hai lời khai, nhân chứng hẳn đã nhầm lẫn về trình tự sự kiện.",
+        "note": "Suy luận chắc chắn từ bằng chứng."
+      },
+      {
+        "english": "The error cannot have arisen from a simple transcription slip; it appears throughout the dataset.",
+        "vietnamese": "Lỗi này không thể chỉ do một sơ suất sao chép đơn giản, vì nó xuất hiện khắp bộ dữ liệu.",
+        "note": "'Cannot have + V3' phủ định chắc chắn."
+      },
+      {
+        "english": "The authors should have acknowledged the limitations of their sampling method.",
+        "vietnamese": "Các tác giả lẽ ra nên thừa nhận những hạn chế trong phương pháp lấy mẫu của họ.",
+        "note": "Phê bình nhẹ: lẽ ra nên làm nhưng đã không làm."
+      },
+      {
+        "english": "We needn't have commissioned the second survey; the first dataset was already sufficient.",
+        "vietnamese": "Chúng ta đã không cần phải đặt làm cuộc khảo sát thứ hai; bộ dữ liệu đầu tiên đã đủ.",
+        "note": "Đã làm nhưng không cần thiết."
+      },
+      {
+        "english": "Had the reviewers been more attentive, they might have noticed the inconsistency in the reported figures.",
+        "vietnamese": "Nếu các phản biện viên chú ý hơn, họ có thể đã nhận ra sự không nhất quán trong các số liệu được báo cáo.",
+        "note": "Kết hợp điều kiện loại 3 với suy đoán."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'must have' cho khả năng không chắc: 'He must have left, but I am not sure' → 'He might have left'.",
+      "Dùng 'can have' ở câu khẳng định: 'She can have forgotten' → 'She may/might have forgotten'.",
+      "Nhầm 'needn't have' với 'didn't need to': 'I needn't have gone, so I stayed' sai logic; đúng là 'I didn't need to go, so I stayed'.",
+      "Thiếu 'have': 'He must forgot' → 'He must have forgotten'.",
+      "Dùng 'should have' khi chỉ muốn suy đoán: 'You should have enjoyed the film' → 'You must have enjoyed the film'."
+    ],
+    "quiz": [
+      {
+        "question": "The lights were still on at midnight; someone _____ working late.",
+        "options": [
+          "must be",
+          "must have been",
+          "should have been",
+          "could be"
+        ],
+        "correct_index": 1,
+        "explanation": "Suy luận chắc chắn về quá khứ dùng 'must have been + V-ing'."
+      },
+      {
+        "question": "The manuscript _____ have been reviewed so quickly; it runs to six hundred pages.",
+        "options": [
+          "mustn't",
+          "can't",
+          "needn't",
+          "wouldn't"
+        ],
+        "correct_index": 1,
+        "explanation": "'Can't have + V3' diễn tả điều không thể đã xảy ra; 'mustn't have' không dùng cho suy đoán."
+      },
+      {
+        "question": "You _____ have warned me about the change; I had already prepared the old version.",
+        "options": [
+          "must",
+          "needn't",
+          "shouldn't",
+          "can't"
+        ],
+        "correct_index": 1,
+        "explanation": "'Needn't have + V3' nghĩa là lẽ ra không cần làm nhưng đã làm."
+      },
+      {
+        "question": "Given that the deadline passed yesterday, the committee _____ have reached a decision by now.",
+        "options": [
+          "should",
+          "needn't",
+          "mustn't",
+          "wouldn't"
+        ],
+        "correct_index": 0,
+        "explanation": "'Should have + V3' diễn tả kỳ vọng hợp lý: lẽ ra đã phải có quyết định."
+      },
+      {
+        "question": "Had the data been checked, the anomaly _____ have been detected.",
+        "options": [
+          "would",
+          "must",
+          "should",
+          "needn't"
+        ],
+        "correct_index": 0,
+        "explanation": "Mệnh đề hệ quả của điều kiện loại 3 dùng 'would have + V3'."
+      }
+    ]
+  },
+  {
+    "id": "discourse_cohesion",
+    "title": "Discourse Markers & Cohesion",
+    "title_vi": "Dấu hiệu diễn ngôn & liên kết",
+    "level": "C1",
+    "category": "Diễn ngôn",
+    "description": "Dấu hiệu diễn ngôn và các phương tiện liên kết giúp văn bản mạch lạc ở cấp đoạn và cấp bài: liên từ, trạng từ liên kết, chuỗi quy chiếu, thay thế và tỉnh lược. Ở trình độ C1, người viết cần chọn đúng quan hệ logic như tương phản, nhân quả, nhượng bộ hay bổ sung. Sự kết hợp hợp lý giữa từ nối và trật tự thông tin tạo nên văn phong học thuật trưởng thành.",
+    "formula_affirmative": "Clause 1; + however/nevertheless/therefore/hence/moreover + clause 2; Although/Whereas/While + clause 1, clause 2",
+    "formula_negative": "Clause 1; + nevertheless/notwithstanding this + clause 2 (không dùng 'but' cùng 'however')",
+    "formula_question": "Does this, however, imply that ...?; To what extent, then, can we claim that ...?",
+    "time_markers": [
+      "in the first instance / to begin with (trước hết)",
+      "subsequently / thereafter (sau đó)",
+      "meanwhile / simultaneously (trong khi đó / đồng thời)",
+      "ultimately / in conclusion (cuối cùng / kết luận)",
+      "hitherto / to date (cho đến nay)"
+    ],
+    "usage_rules": [
+      "Phân biệt 'however/nevertheless' (trạng từ liên kết, đứng sau dấu chấm phẩy hoặc đầu câu) với 'although/though' (liên từ nối hai mệnh đề).",
+      "'Therefore/hence/consequently' chỉ kết quả logic; 'moreover/furthermore' bổ sung cùng hướng lập luận.",
+      "'Whereas/while' đối chiếu hai mệnh đề trong cùng một câu; 'conversely' đảo chiều quan hệ vừa nêu.",
+      "Dùng chuỗi quy chiếu (this, these, such, the former/the latter) để tránh lặp, nhưng phải bảo đảm tiền ngữ rõ ràng.",
+      "Tỉnh lược và thay thế (do so, one, the former) giúp tránh lặp mà vẫn giữ liên kết; 'notwithstanding + N' mang tính trang trọng."
+    ],
+    "examples": [
+      {
+        "english": "The sample was small; nevertheless, the effect size was large enough to warrant further investigation.",
+        "vietnamese": "Mẫu nghiên cứu nhỏ; tuy vậy, mức độ ảnh hưởng đủ lớn để đáng được điều tra tiếp.",
+        "note": "'Nevertheless' sau dấu chấm phẩy, không dùng kèm 'but'."
+      },
+      {
+        "english": "Whereas the first cohort showed a steady improvement, the second exhibited considerable fluctuation.",
+        "vietnamese": "Trong khi nhóm thứ nhất cải thiện đều đặn, nhóm thứ hai lại biến động đáng kể.",
+        "note": "'Whereas' đối chiếu hai mệnh đề trong cùng câu."
+      },
+      {
+        "english": "Funding was withheld; consequently, the fieldwork was curtailed and the longitudinal dimension lost.",
+        "vietnamese": "Kinh phí bị giữ lại; do đó, công tác thực địa bị cắt giảm và mất đi chiều dọc của nghiên cứu.",
+        "note": "'Consequently' diễn tả hệ quả trực tiếp."
+      },
+      {
+        "english": "Notwithstanding these reservations, the study offers the most comprehensive account to date.",
+        "vietnamese": "Bất chấp những hoài nghi đó, nghiên cứu này vẫn là trình bày toàn diện nhất cho đến nay.",
+        "note": "'Notwithstanding + N' trang trọng, tương đương 'despite'."
+      },
+      {
+        "english": "The former explanation attributes the shift to demography; the latter emphasises institutional change.",
+        "vietnamese": "Cách giải thích thứ nhất quy sự thay đổi cho nhân khẩu học; cách thứ hai nhấn mạnh sự thay đổi thể chế.",
+        "note": "'The former/the latter' thay thế, tránh lặp danh từ."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng 'but' và 'however' cùng câu: 'But however the data are incomplete' → 'However, the data are incomplete'.",
+      "Thiếu dấu phẩy sau 'however' đầu câu: 'However the results were consistent' → 'However, the results were consistent'.",
+      "Dùng 'therefore' khi quan hệ là tương phản: 'The cost rose; therefore, quality improved' — sai logic, cần 'nevertheless'.",
+      "Nhầm 'on the contrary' với 'on the other hand': 'on the contrary' phủ định mệnh đề trước, không phải nêu mặt khác.",
+      "Tiền ngữ mơ hồ: 'This shows that...' khi 'this' không rõ quy chiếu tới câu hay ý nào."
+    ],
+    "quiz": [
+      {
+        "question": "The methodology was sound; _____, the conclusions drawn from it were overstated.",
+        "options": [
+          "therefore",
+          "nevertheless",
+          "moreover",
+          "hence"
+        ],
+        "correct_index": 1,
+        "explanation": "Hai vế tương phản nên dùng 'nevertheless', không dùng từ nối chỉ kết quả."
+      },
+      {
+        "question": "_____ the sample size was limited, the findings were remarkably consistent.",
+        "options": [
+          "Although",
+          "However",
+          "Nevertheless",
+          "Therefore"
+        ],
+        "correct_index": 0,
+        "explanation": "'Although' là liên từ nối hai mệnh đề; 'However/Nevertheless' là trạng từ liên kết, không đứng trước mệnh đề phụ như vậy."
+      },
+      {
+        "question": "The initial results were inconclusive. _____, the team decided to replicate the experiment.",
+        "options": [
+          "Conversely",
+          "Consequently",
+          "Similarly",
+          "Nonetheless"
+        ],
+        "correct_index": 1,
+        "explanation": "Kết quả không rõ ràng dẫn tới quyết định lặp lại thí nghiệm, nên dùng 'Consequently'."
+      },
+      {
+        "question": "_____ these limitations, the study remains the most detailed analysis available.",
+        "options": [
+          "Despite of",
+          "Notwithstanding",
+          "Although",
+          "In spite"
+        ],
+        "correct_index": 1,
+        "explanation": "'Notwithstanding + N' nghĩa là 'bất chấp'; 'Despite of' sai, 'Although' cần mệnh đề."
+      },
+      {
+        "question": "Some attribute the decline to automation; others point to trade policy. The _____ view is more persuasive.",
+        "options": [
+          "former",
+          "latter",
+          "latest",
+          "last"
+        ],
+        "correct_index": 1,
+        "explanation": "'The latter' chỉ ý thứ hai vừa nêu (trade policy), đối lập với 'the former'."
+      }
+    ]
+  },
+  {
+    "id": "complex_noun_phrases",
+    "title": "Complex Noun Phrases & Determiners",
+    "title_vi": "Cụm danh từ phức & từ hạn định",
+    "level": "C1",
+    "category": "Danh từ",
+    "description": "Cụm danh từ phức trong tiếng Anh C1 kết hợp nhiều từ hạn định, tính từ và thành phần bổ nghĩa sau danh từ trung tâm. Trật tự thành phần, cách dùng 'of', mệnh đề quan hệ rút gọn và giới từ quyết định độ chính xác của câu. Xây dựng cụm danh từ hợp lý giúp văn bản cô đọng mà vẫn rõ nghĩa.",
+    "formula_affirmative": "Det + (adv) + adj + N + (prep phrase / relative clause / participle) (a remarkably well-documented account of the events)",
+    "formula_negative": "Det + not + adj + enough + N; There is no + N + that + clause (There is no convincing evidence that ...)",
+    "formula_question": "How + adj + a + N + auxiliary + S + V? (How significant a role did the media play?)",
+    "time_markers": [
+      "the then + N (khi đó giữ chức)",
+      "the once + adj + N (từng là)",
+      "the forthcoming + N (sắp tới)",
+      "the aforementioned + N (đã nêu trên)",
+      "a hitherto + adj + N (cho đến nay vẫn)"
+    ],
+    "usage_rules": [
+      "Trật tự tính từ: ý kiến – kích cỡ – tuổi – hình dạng – màu – xuất xứ – chất liệu – mục đích + danh từ.",
+      "Từ hạn định đứng trước tính từ: all the, both the, half a, such a, quite a, rather a; 'many a + N số ít' mang tính trang trọng.",
+      "Bổ nghĩa sau danh từ có thể là giới từ (the rise in prices), mệnh đề quan hệ rút gọn (the data collected) hoặc mệnh đề 'that' (the claim that ...).",
+      "Cụm danh từ ghép dùng gạch nối khi đứng trước danh từ: a well-established framework, a three-year study.",
+      "Tránh xếp quá nhiều bổ nghĩa trước danh từ; chuyển bớt sang cụm giới từ để câu dễ đọc."
+    ],
+    "examples": [
+      {
+        "english": "The study offers a remarkably detailed account of the institutional constraints under which policymakers operated.",
+        "vietnamese": "Nghiên cứu đưa ra một trình bày chi tiết đáng kể về những ràng buộc thể chế mà các nhà hoạch định chính sách phải hoạt động trong đó.",
+        "note": "Tính từ + danh từ + cụm giới từ + mệnh đề quan hệ."
+      },
+      {
+        "english": "Such a poorly substantiated claim cannot serve as the basis for a national policy.",
+        "vietnamese": "Một tuyên bố được chứng minh yếu ớt như vậy không thể làm cơ sở cho chính sách quốc gia.",
+        "note": "'Such a + adj + N' với tính từ ghép có gạch nối."
+      },
+      {
+        "english": "The then minister's refusal to disclose the minutes remains a subject of considerable controversy.",
+        "vietnamese": "Việc vị bộ trưởng đương thời từ chối công bố biên bản vẫn là đề tài tranh cãi đáng kể.",
+        "note": "'The then + N' chỉ chức vụ trong quá khứ."
+      },
+      {
+        "english": "There is little compelling evidence that the reform achieved its stated objectives.",
+        "vietnamese": "Có rất ít bằng chứng thuyết phục rằng cải cách đã đạt được các mục tiêu đã nêu.",
+        "note": "Cụm danh từ + mệnh đề 'that' bổ nghĩa."
+      },
+      {
+        "english": "How significant a role did informal networks play in the allocation of resources?",
+        "vietnamese": "Các mạng lưới phi chính thức đóng vai trò quan trọng đến mức nào trong việc phân bổ nguồn lực?",
+        "note": "'How + adj + a + N' trong câu hỏi trang trọng."
+      }
+    ],
+    "common_mistakes": [
+      "Sai trật tự tính từ: 'a wooden large table' → 'a large wooden table'.",
+      "Đặt 'such a' sai vị trí: 'a such important issue' → 'such an important issue'.",
+      "Thiếu gạch nối trong tính từ ghép trước danh từ: 'a five year plan' → 'a five-year plan'.",
+      "Nhầm 'the then' với 'then the': 'the then president' đúng, 'then the president' sai nghĩa.",
+      "Dùng 'many a' với danh từ số nhiều: 'many a studies' → 'many a study'."
+    ],
+    "quiz": [
+      {
+        "question": "The report presents a _____ analysis of the policy's long-term consequences.",
+        "options": [
+          "thorough economic",
+          "economic thorough",
+          "thoroughly economic",
+          "economic and thorough"
+        ],
+        "correct_index": 0,
+        "explanation": "Tính từ chỉ ý kiến/mức độ đứng trước tính từ chỉ lĩnh vực: 'a thorough economic analysis'."
+      },
+      {
+        "question": "_____ a controversial decision could not have been taken without broad support.",
+        "options": [
+          "So",
+          "Such",
+          "What",
+          "How"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc 'Such a + adj + N' đứng đầu câu để nhấn mạnh."
+      },
+      {
+        "question": "There is _____ evidence that the policy reduced inequality.",
+        "options": [
+          "few",
+          "little",
+          "a few",
+          "many"
+        ],
+        "correct_index": 1,
+        "explanation": "'Evidence' là danh từ không đếm được nên dùng 'little'."
+      },
+      {
+        "question": "_____ a role did social media play in shaping public opinion?",
+        "options": [
+          "How significant",
+          "What significant",
+          "Such significant",
+          "So significant"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu hỏi trang trọng dùng 'How + adj + a + N': 'How significant a role ...'."
+      },
+      {
+        "question": "The _____ plan was criticised for lacking measurable targets.",
+        "options": [
+          "five year",
+          "five-year",
+          "five years",
+          "five-years"
+        ],
+        "correct_index": 1,
+        "explanation": "Tính từ ghép đứng trước danh từ dùng dạng số ít và gạch nối: 'a five-year plan'."
+      }
+    ]
+  }
+]

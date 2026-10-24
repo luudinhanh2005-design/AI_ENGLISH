@@ -27,7 +27,6 @@ import '../../features/ai_tutor/presentation/screens/voice_call_screen.dart';
 import '../../features/ai_tutor/presentation/screens/voice_call_summary_screen.dart';
 import '../../features/writing/presentation/screens/writing_editor_screen.dart';
 import '../../features/writing/presentation/screens/writing_result_screen.dart';
-import '../../features/grammar/presentation/screens/grammar_lesson_screen.dart';
 import '../../features/practice/presentation/screens/ielts_speaking_mock_screen.dart';
 import '../../features/practice/presentation/screens/mistake_notebook_screen.dart';
 import '../../features/pronunciation/presentation/screens/shadowing_screen.dart';
@@ -186,8 +185,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/grammar/lesson/:id',
         name: RouteNames.grammarLesson,
-        builder: (context, state) => GrammarLessonScreen(
-          lessonId: state.pathParameters['id'] ?? '',
+        builder: (context, state) => GrammarScreen(
+          initialLessonId: state.pathParameters['id'],
         ),
       ),
       // ── 4 New Advanced Features ──

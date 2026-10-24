@@ -43,6 +43,7 @@ def _build_memory_users() -> dict[UUID, User]:
             total_xp=450,
             has_completed_onboarding=True,
             is_active=True,
+            role="user",
         ),
         _DEMO_ADMIN_ID: User(
             id=_DEMO_ADMIN_ID,
@@ -57,6 +58,7 @@ def _build_memory_users() -> dict[UUID, User]:
             total_xp=1200,
             has_completed_onboarding=True,
             is_active=True,
+            role="admin",
         ),
     }
 
@@ -70,7 +72,7 @@ _USERS_FILE = Path("storage/users.json")
 _PERSIST_FIELDS = (
     "email", "password_hash", "name", "avatar_url", "current_level",
     "target_level", "learning_goal", "daily_learning_minutes", "streak",
-    "total_xp", "has_completed_onboarding", "is_active",
+    "total_xp", "has_completed_onboarding", "is_active", "role",
 )
 _DEMO_IDS = {_DEFAULT_DEMO_ID, _DEMO_ADMIN_ID}
 
@@ -183,3 +185,27 @@ async def get_optional_user(
         return await get_current_user(credentials, db)
     except HTTPException:
         return None
+
+
+async def require_staff(
+    current_user: User = Depends(get_current_user),
+) -> User:
+    """Allow reviewers and admins to access the content workspace."""
+    if (current_user.role or "user") not in {"reviewer", "admin"}:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Staff access required",
+        )
+    return current_user
+
+
+async def require_admin(
+    current_user: User = Depends(get_current_user),
+) -> User:
+    """Restrict publishing and destructive content actions to admins."""
+    if (current_user.role or "user") != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin access required",
+        )
+    return current_user

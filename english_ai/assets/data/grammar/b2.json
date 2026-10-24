@@ -1,0 +1,2299 @@
+[
+  {
+    "id": "future_in_the_past",
+    "title": "Future in the Past",
+    "title_vi": "Tương lai trong quá khứ",
+    "level": "B2",
+    "category": "Các Thì",
+    "description": "Diễn tả một hành động trong tương lai được nhìn từ một thời điểm trong quá khứ. Cấu trúc này thường xuất hiện trong câu tường thuật, kể chuyện và các kế hoạch đã được dự định từ trước. Các dạng phổ biến là would + V, was/were going to + V và was/were to + V.",
+    "formula_affirmative": "S + would + V (hoặc S + was/were going to + V)",
+    "formula_negative": "S + would not (wouldn't) + V (hoặc S + was/were not going to + V)",
+    "formula_question": "Would + S + V? (hoặc Was/Were + S + going to + V?)",
+    "time_markers": [
+      "the next day / the following week (ngày hôm sau / tuần sau đó)",
+      "at that time (vào thời điểm đó)",
+      "later that year (cuối năm đó)",
+      "in the years to come (trong những năm tới)"
+    ],
+    "usage_rules": [
+      "Dùng would + V để nói về điều được xem là tương lai tại một thời điểm trong quá khứ.",
+      "Dùng was/were going to + V cho kế hoạch hoặc dự định đã có trước đó nhưng được nhìn từ quá khứ.",
+      "Dùng was/were to + V cho sự kiện đã được sắp đặt sẵn, thường trong văn phong trang trọng.",
+      "Dùng was/were about to + V cho hành động sắp xảy ra ngay tại thời điểm quá khứ.",
+      "Trong câu tường thuật sau động từ quá khứ, will được chuyển thành would."
+    ],
+    "examples": [
+      {
+        "english": "She said she would send the report the next day.",
+        "vietnamese": "Cô ấy nói cô ấy sẽ gửi báo cáo vào ngày hôm sau.",
+        "note": "Would thay cho will trong câu tường thuật."
+      },
+      {
+        "english": "We were going to book the tickets, but the website crashed.",
+        "vietnamese": "Chúng tôi định đặt vé nhưng trang web bị lỗi.",
+        "note": "Dự định trong quá khứ không thực hiện được."
+      },
+      {
+        "english": "The meeting was to take place at noon.",
+        "vietnamese": "Cuộc họp đã được dự kiến diễn ra vào giữa trưa.",
+        "note": "Sự kiện đã sắp đặt, văn phong trang trọng."
+      },
+      {
+        "english": "I knew the train was about to leave.",
+        "vietnamese": "Tôi biết tàu sắp rời đi.",
+        "note": "Hành động sắp xảy ra ngay lúc đó."
+      },
+      {
+        "english": "They hoped the project would be finished by June.",
+        "vietnamese": "Họ hy vọng dự án sẽ hoàn thành vào tháng Sáu.",
+        "note": "Would đứng sau hoped để chỉ tương lai trong quá khứ."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng will thay vì would trong câu tường thuật: 'He said he will come' → 'He said he would come'.",
+      "Dùng was/were going to + V-ing: 'She was going to buying' → 'She was going to buy'.",
+      "Nhầm was about to với will: 'I was about to call you tomorrow' không đúng khi nói về tương lai hiện tại.",
+      "Quên đổi trạng từ thời gian khi tường thuật: 'tomorrow' → 'the next day'."
+    ],
+    "quiz": [
+      {
+        "question": "He said he _____ visit us the following week.",
+        "options": [
+          "will",
+          "would",
+          "is",
+          "has"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau động từ tường thuật 'said' ở quá khứ, will chuyển thành would."
+      },
+      {
+        "question": "We _____ going to leave early, but the car broke down.",
+        "options": [
+          "was",
+          "were",
+          "are",
+          "will"
+        ],
+        "correct_index": 1,
+        "explanation": "Chủ ngữ 'We' số nhiều nên dùng 'were' trong cấu trúc were going to."
+      },
+      {
+        "question": "The ceremony _____ to begin at dawn.",
+        "options": [
+          "was",
+          "were",
+          "is",
+          "has"
+        ],
+        "correct_index": 0,
+        "explanation": "'The ceremony' là số ít, cấu trúc was/were to + V nên chọn 'was'."
+      },
+      {
+        "question": "She was about _____ the phone when it rang.",
+        "options": [
+          "answer",
+          "to answer",
+          "answering",
+          "answered"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc was about to + V diễn tả hành động sắp xảy ra."
+      },
+      {
+        "question": "They hoped the weather _____ improve by the weekend.",
+        "options": [
+          "will",
+          "would",
+          "is",
+          "was"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau 'hoped' ở quá khứ dùng 'would' để chỉ tương lai trong quá khứ."
+      }
+    ]
+  },
+  {
+    "id": "narrative_tenses_review",
+    "title": "Narrative Tenses Review",
+    "title_vi": "Ôn tập các thì tự sự",
+    "level": "B2",
+    "category": "Các Thì",
+    "description": "Ôn tập cách phối hợp các thì dùng để kể chuyện: quá khứ đơn, quá khứ tiếp diễn, quá khứ hoàn thành và quá khứ hoàn thành tiếp diễn. Mỗi thì đảm nhận một vai trò riêng trong việc sắp xếp sự kiện, bối cảnh và nguyên nhân. Sử dụng linh hoạt giúp câu chuyện rõ trình tự và mạch lạc.",
+    "formula_affirmative": "S + V2/ed (sự kiện chính); S + was/were + V-ing (bối cảnh); S + had + V3 (trước đó)",
+    "formula_negative": "S + did not + V; S + was/were not + V-ing; S + had not + V3",
+    "formula_question": "Did + S + V?; Was/Were + S + V-ing?; Had + S + V3?",
+    "time_markers": [
+      "while / as (trong khi)",
+      "when (khi)",
+      "before / after (trước / sau)",
+      "by the time (vào lúc)",
+      "at first / in the end (lúc đầu / cuối cùng)"
+    ],
+    "usage_rules": [
+      "Quá khứ đơn kể chuỗi sự kiện chính theo thứ tự thời gian.",
+      "Quá khứ tiếp diễn mô tả bối cảnh hoặc hành động đang diễn ra thì bị chen ngang.",
+      "Quá khứ hoàn thành diễn tả sự việc xảy ra trước một mốc quá khứ khác.",
+      "Quá khứ hoàn thành tiếp diễn nhấn mạnh quá trình kéo dài trước một sự việc trong quá khứ.",
+      "Dùng when với hành động ngắn và while với hành động dài đang diễn ra."
+    ],
+    "examples": [
+      {
+        "english": "While I was walking home, I bumped into an old friend.",
+        "vietnamese": "Trong khi tôi đang đi bộ về nhà, tôi tình cờ gặp một người bạn cũ.",
+        "note": "Hành động dài đang diễn ra thì hành động ngắn xen vào."
+      },
+      {
+        "english": "By the time we arrived, the film had already started.",
+        "vietnamese": "Vào lúc chúng tôi đến, bộ phim đã bắt đầu rồi.",
+        "note": "Had started xảy ra trước khi chúng tôi đến."
+      },
+      {
+        "english": "She had been working there for years before she resigned.",
+        "vietnamese": "Cô ấy đã làm việc ở đó nhiều năm trước khi nghỉ việc.",
+        "note": "Nhấn mạnh quá trình kéo dài trước khi nghỉ."
+      },
+      {
+        "english": "He opened the door, walked in and sat down.",
+        "vietnamese": "Anh ấy mở cửa, bước vào và ngồi xuống.",
+        "note": "Chuỗi hành động liên tiếp dùng quá khứ đơn."
+      },
+      {
+        "english": "They were arguing when the phone rang.",
+        "vietnamese": "Họ đang cãi nhau thì điện thoại reo.",
+        "note": "Bối cảnh đang diễn ra bị ngắt bởi hành động ngắn."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng quá khứ hoàn thành khi thứ tự đã rõ: 'He had opened the door and had walked in' → 'He opened the door and walked in'.",
+      "Dùng while với hành động ngắn: 'While he called, I was cooking' → 'When he called, I was cooking'.",
+      "Quên had cho sự việc xảy ra trước: 'When we got there, the show started' → 'had started' nếu muốn nói phim đã bắt đầu trước.",
+      "Dùng quá khứ tiếp diễn cho chuỗi sự kiện chính: 'He was opening the door, was walking in' → dùng quá khứ đơn."
+    ],
+    "quiz": [
+      {
+        "question": "While I _____ home, I bumped into an old friend.",
+        "options": [
+          "walk",
+          "was walking",
+          "had walked",
+          "walked"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động dài đang diễn ra dùng quá khứ tiếp diễn: was walking."
+      },
+      {
+        "question": "By the time we arrived, the film _____.",
+        "options": [
+          "started",
+          "was starting",
+          "had started",
+          "has started"
+        ],
+        "correct_index": 2,
+        "explanation": "Phim đã bắt đầu trước khi chúng tôi đến nên dùng quá khứ hoàn thành."
+      },
+      {
+        "question": "She _____ there for years before she resigned.",
+        "options": [
+          "worked",
+          "was working",
+          "had been working",
+          "has worked"
+        ],
+        "correct_index": 2,
+        "explanation": "Nhấn mạnh quá trình kéo dài trước khi nghỉ việc nên dùng had been working."
+      },
+      {
+        "question": "They _____ when the phone rang.",
+        "options": [
+          "argued",
+          "had argued",
+          "were arguing",
+          "argue"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động đang diễn ra tại thời điểm điện thoại reo dùng quá khứ tiếp diễn."
+      },
+      {
+        "question": "He opened the door, _____ in and sat down.",
+        "options": [
+          "walks",
+          "had walked",
+          "walked",
+          "was walking"
+        ],
+        "correct_index": 2,
+        "explanation": "Chuỗi hành động liên tiếp trong quá khứ dùng quá khứ đơn."
+      }
+    ]
+  },
+  {
+    "id": "past_perfect_continuous",
+    "title": "Past Perfect Continuous",
+    "title_vi": "Quá khứ hoàn thành tiếp diễn",
+    "level": "B2",
+    "category": "Các Thì",
+    "description": "Diễn tả một hành động đã đang diễn ra liên tục trước một thời điểm hoặc sự kiện khác trong quá khứ. Cấu trúc này nhấn mạnh vào quá trình và thời lượng chứ không phải kết quả. Nó cũng thường dùng để giải thích nguyên nhân của một tình huống trong quá khứ.",
+    "formula_affirmative": "S + had been + V-ing",
+    "formula_negative": "S + had not (hadn't) been + V-ing",
+    "formula_question": "Had + S + been + V-ing?",
+    "time_markers": [
+      "for + khoảng thời gian (for two hours)",
+      "since + mốc thời gian (since 2019)",
+      "all day / all morning (cả ngày / cả buổi sáng)",
+      "before / by the time (trước khi / vào lúc)",
+      "how long ... ? (bao lâu ... ?)"
+    ],
+    "usage_rules": [
+      "Nhấn mạnh quá trình kéo dài trước một mốc thời gian trong quá khứ.",
+      "Giải thích nguyên nhân hoặc kết quả nhìn thấy trong quá khứ.",
+      "Dùng với for/since để nêu thời lượng tính đến một mốc quá khứ.",
+      "Không dùng với động từ trạng thái như know, own, believe; khi đó dùng had + V3.",
+      "Khác quá khứ hoàn thành ở chỗ nhấn mạnh tính liên tục thay vì kết quả hoàn thành."
+    ],
+    "examples": [
+      {
+        "english": "They had been driving for six hours before they found a hotel.",
+        "vietnamese": "Họ đã lái xe sáu tiếng trước khi tìm được khách sạn.",
+        "note": "Nhấn mạnh thời lượng kéo dài trước khi tìm được khách sạn."
+      },
+      {
+        "english": "Her eyes were red because she had been crying.",
+        "vietnamese": "Mắt cô ấy đỏ vì cô ấy đã khóc.",
+        "note": "Giải thích nguyên nhân của trạng thái trong quá khứ."
+      },
+      {
+        "english": "Had you been waiting long before I arrived?",
+        "vietnamese": "Bạn đã đợi lâu chưa trước khi tôi đến?",
+        "note": "Câu hỏi đảo had lên trước chủ ngữ."
+      },
+      {
+        "english": "He had been working at the company since 2015 when he was promoted.",
+        "vietnamese": "Anh ấy đã làm việc ở công ty từ năm 2015 khi được thăng chức.",
+        "note": "Since + mốc thời gian với hành động kéo dài."
+      },
+      {
+        "english": "The children had been playing outside all afternoon.",
+        "vietnamese": "Bọn trẻ đã chơi ngoài trời suốt cả buổi chiều.",
+        "note": "All afternoon nhấn mạnh toàn bộ khoảng thời gian."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng had been + V3: 'had been went' → 'had been going'.",
+      "Dùng quá khứ tiếp diễn khi có mốc trước: 'When I met him, he was working there for years' → 'had been working'.",
+      "Dùng với động từ trạng thái: 'had been knowing' → 'had known'.",
+      "Nhầm for và since: 'since two hours' → 'for two hours'; 'for 2019' → 'since 2019'."
+    ],
+    "quiz": [
+      {
+        "question": "They _____ for six hours before they found a hotel.",
+        "options": [
+          "drove",
+          "had been driving",
+          "were driving",
+          "have driven"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động kéo dài sáu tiếng trước một sự kiện quá khứ dùng had been driving."
+      },
+      {
+        "question": "Her eyes were red because she _____.",
+        "options": [
+          "cried",
+          "was crying",
+          "has cried",
+          "had been crying"
+        ],
+        "correct_index": 3,
+        "explanation": "Khóc là nguyên nhân kéo dài dẫn đến trạng thái mắt đỏ trong quá khứ."
+      },
+      {
+        "question": "_____ you been waiting long before I arrived?",
+        "options": [
+          "Did",
+          "Have",
+          "Had",
+          "Were"
+        ],
+        "correct_index": 2,
+        "explanation": "Câu hỏi của thì quá khứ hoàn thành tiếp diễn dùng Had + S + been + V-ing."
+      },
+      {
+        "question": "He _____ at the company since 2015 when he was promoted.",
+        "options": [
+          "worked",
+          "was working",
+          "had been working",
+          "has worked"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động kéo dài từ 2015 đến mốc được thăng chức dùng had been working."
+      },
+      {
+        "question": "The children _____ outside all afternoon.",
+        "options": [
+          "played",
+          "had been playing",
+          "were playing",
+          "have played"
+        ],
+        "correct_index": 1,
+        "explanation": "All afternoon nhấn mạnh quá trình kéo dài trước một mốc trong quá khứ."
+      }
+    ]
+  },
+  {
+    "id": "passive_reporting_impersonal",
+    "title": "Passive with Reporting Verbs & Impersonal Passive",
+    "title_vi": "Bị động với động từ tường thuật & bị động khách quan",
+    "level": "B2",
+    "category": "Bị động",
+    "description": "Dùng để tường thuật ý kiến, tin tức một cách khách quan khi không muốn nêu rõ người nói. Có hai dạng chính: It is said that + mệnh đề và S + is said + to V. Cấu trúc này rất phổ biến trong báo chí, báo cáo và văn phong học thuật.",
+    "formula_affirmative": "It + is/was + said/believed/reported + that + S + V (hoặc S + is/was + said + to V)",
+    "formula_negative": "It + is/was + not + said + that + S + V (hoặc S + is/was + not + said + to V)",
+    "formula_question": "Is/Was + it + said + that + S + V? (hoặc Is/Was + S + said + to V?)",
+    "time_markers": [
+      "according to (theo)",
+      "it is widely believed (nhiều người tin rằng)",
+      "recently / at present (gần đây / hiện nay)",
+      "it has been reported (đã được đưa tin)"
+    ],
+    "usage_rules": [
+      "Dùng khi nguồn tin không quan trọng hoặc không xác định.",
+      "It is said that + mệnh đề giữ nguyên thì của thông tin được tường thuật.",
+      "S + is said + to V dùng khi hành động cùng thời với động từ tường thuật.",
+      "S + is said + to have + V3 dùng khi hành động xảy ra trước thời điểm tường thuật.",
+      "Các động từ thường gặp: say, believe, think, report, know, claim, consider, expect."
+    ],
+    "examples": [
+      {
+        "english": "It is believed that the company will expand next year.",
+        "vietnamese": "Người ta tin rằng công ty sẽ mở rộng vào năm tới.",
+        "note": "Dạng khách quan với It is believed that."
+      },
+      {
+        "english": "The minister is reported to have resigned.",
+        "vietnamese": "Bộ trưởng được đưa tin là đã từ chức.",
+        "note": "Hành động từ chức xảy ra trước thời điểm đưa tin."
+      },
+      {
+        "english": "He is said to be living in Canada.",
+        "vietnamese": "Người ta nói rằng anh ấy đang sống ở Canada.",
+        "note": "Hành động đang diễn ra nên dùng to be + V-ing."
+      },
+      {
+        "english": "It was thought that the painting was worthless.",
+        "vietnamese": "Người ta từng cho rằng bức tranh không có giá trị.",
+        "note": "Dùng was để phù hợp với bối cảnh quá khứ."
+      },
+      {
+        "english": "The drug is claimed to reduce pain within minutes.",
+        "vietnamese": "Loại thuốc này được cho là giảm đau trong vài phút.",
+        "note": "Claim thường dùng trong quảng cáo, thông tin chưa kiểm chứng."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng sai thì của động từ sau to: 'He is said to leave yesterday' → 'He is said to have left yesterday'.",
+      "Dùng chủ động thay bị động khách quan: 'It says that he is rich' → 'It is said that he is rich'.",
+      "Sai dạng sau to: 'He is said to being' → 'He is said to be'.",
+      "Quên chia số ít: 'It are reported that' → 'It is reported that'."
+    ],
+    "quiz": [
+      {
+        "question": "It _____ believed that the company will expand.",
+        "options": [
+          "is",
+          "are",
+          "has",
+          "was been"
+        ],
+        "correct_index": 0,
+        "explanation": "Chủ ngữ giả 'It' đi với động từ số ít 'is'."
+      },
+      {
+        "question": "The minister is reported _____ resigned.",
+        "options": [
+          "to has",
+          "having",
+          "to have",
+          "have"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động xảy ra trước dùng to have + V3: to have resigned."
+      },
+      {
+        "question": "He is said _____ in Canada.",
+        "options": [
+          "living",
+          "to living",
+          "lives",
+          "to live"
+        ],
+        "correct_index": 3,
+        "explanation": "Cấu trúc bị động tường thuật là S + is said + to V."
+      },
+      {
+        "question": "It was _____ that the painting was worthless.",
+        "options": [
+          "think",
+          "thought",
+          "thinking",
+          "thinks"
+        ],
+        "correct_index": 1,
+        "explanation": "Dạng bị động của think là thought: It was thought that ..."
+      },
+      {
+        "question": "The drug is claimed _____ pain within minutes.",
+        "options": [
+          "reducing",
+          "reduce",
+          "to reduce",
+          "reduced"
+        ],
+        "correct_index": 2,
+        "explanation": "Sau is claimed dùng to + V để nêu hành động được cho là xảy ra."
+      }
+    ]
+  },
+  {
+    "id": "advanced_conditionals",
+    "title": "Advanced Conditionals (Unless/Provided/As long as)",
+    "title_vi": "Điều kiện nâng cao",
+    "level": "B2",
+    "category": "Điều kiện",
+    "description": "Mở rộng câu điều kiện bằng các liên từ như unless, provided that, as long as, in case và otherwise. Các cấu trúc này diễn tả điều kiện, giả định hoặc ràng buộc rõ ràng hơn if. Chúng thường được dùng trong văn viết và giao tiếp trang trọng.",
+    "formula_affirmative": "Unless/Provided (that)/As long as + S + V (hiện tại), S + will/can + V",
+    "formula_negative": "Unless + S + V (không thêm not sau unless), S + will + V",
+    "formula_question": "Will + S + V + provided (that)/as long as + S + V?",
+    "time_markers": [
+      "unless (trừ khi)",
+      "provided/providing that (với điều kiện là)",
+      "as long as (miễn là)",
+      "in case (phòng khi)",
+      "otherwise (nếu không thì)"
+    ],
+    "usage_rules": [
+      "Unless có nghĩa tương đương if ... not và không dùng unless ... not.",
+      "Provided that, as long as và on condition that nhấn mạnh điều kiện bắt buộc.",
+      "In case + hiện tại đơn diễn tả khả năng có thể xảy ra, không dùng will sau in case.",
+      "Otherwise nối hai câu và có nghĩa là nếu không thì.",
+      "Giữ hiện tại đơn trong mệnh đề điều kiện, không dùng will."
+    ],
+    "examples": [
+      {
+        "english": "Unless you hurry, you will miss the train.",
+        "vietnamese": "Trừ khi bạn nhanh lên, bạn sẽ lỡ tàu.",
+        "note": "Unless = if you do not hurry."
+      },
+      {
+        "english": "You can borrow my car as long as you drive carefully.",
+        "vietnamese": "Bạn có thể mượn xe của tôi miễn là bạn lái cẩn thận.",
+        "note": "As long as nêu điều kiện bắt buộc."
+      },
+      {
+        "english": "Provided that the weather is good, the event will go ahead.",
+        "vietnamese": "Với điều kiện thời tiết tốt, sự kiện sẽ diễn ra.",
+        "note": "Provided that trang trọng hơn if."
+      },
+      {
+        "english": "Take an umbrella in case it rains.",
+        "vietnamese": "Mang theo ô phòng khi trời mưa.",
+        "note": "In case diễn tả việc phòng trước, không phải điều kiện trực tiếp."
+      },
+      {
+        "english": "You must book in advance; otherwise, you won't get a seat.",
+        "vietnamese": "Bạn phải đặt trước; nếu không thì sẽ không có chỗ ngồi.",
+        "note": "Otherwise thay cho 'if you don't'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng unless với not: 'Unless you don't study' → 'Unless you study'.",
+      "Dùng will trong mệnh đề điều kiện: 'If it will rain' → 'If it rains'.",
+      "Nhầm in case với if: in case là phòng khi, if là nếu.",
+      "Dùng unless khi ý định là 'nếu': 'Unless you study, you will pass' (nghĩa ngược) → 'If you study, you will pass'."
+    ],
+    "quiz": [
+      {
+        "question": "_____ you hurry, you will miss the train.",
+        "options": [
+          "If",
+          "Unless",
+          "Provided",
+          "Otherwise"
+        ],
+        "correct_index": 1,
+        "explanation": "Unless = if ... not, phù hợp nghĩa 'trừ khi bạn nhanh lên'."
+      },
+      {
+        "question": "You can borrow my car _____ you drive carefully.",
+        "options": [
+          "unless",
+          "as long as",
+          "in case",
+          "otherwise"
+        ],
+        "correct_index": 1,
+        "explanation": "As long as diễn tả điều kiện 'miễn là'."
+      },
+      {
+        "question": "_____ that the weather is good, the event will go ahead.",
+        "options": [
+          "Provided",
+          "Unless",
+          "In case",
+          "Otherwise"
+        ],
+        "correct_index": 0,
+        "explanation": "Provided that nghĩa là 'với điều kiện là'."
+      },
+      {
+        "question": "Take an umbrella _____ it rains.",
+        "options": [
+          "whether",
+          "unless",
+          "in case",
+          "despite"
+        ],
+        "correct_index": 2,
+        "explanation": "In case diễn tả việc phòng trước một khả năng có thể xảy ra."
+      },
+      {
+        "question": "You must book in advance; _____, you won't get a seat.",
+        "options": [
+          "otherwise",
+          "unless",
+          "provided",
+          "in case"
+        ],
+        "correct_index": 0,
+        "explanation": "Otherwise có nghĩa 'nếu không thì', nối với hệ quả."
+      }
+    ]
+  },
+  {
+    "id": "wish_if_only_past",
+    "title": "Wish/If Only (Past)",
+    "title_vi": "Wish/If Only quá khứ",
+    "level": "B2",
+    "category": "Ước",
+    "description": "Diễn tả sự tiếc nuối về một điều đã xảy ra hoặc đã không xảy ra trong quá khứ. Cấu trúc wish/if only + quá khứ hoàn thành bày tỏ mong muốn thay đổi một việc đã qua. If only mang sắc thái nhấn mạnh hơn wish và thường xuất hiện trong câu cảm thán.",
+    "formula_affirmative": "S + wish(es) + S + had + V3 (hoặc If only + S + had + V3)",
+    "formula_negative": "S + wish(es) + S + had not (hadn't) + V3",
+    "formula_question": "Do you wish + S + had + V3? (dạng câu hỏi ít gặp)",
+    "time_markers": [
+      "yesterday / last week (hôm qua / tuần trước)",
+      "when I was young (khi tôi còn trẻ)",
+      "at that time (lúc đó)",
+      "in the past (trong quá khứ)",
+      "years ago (nhiều năm trước)"
+    ],
+    "usage_rules": [
+      "Wish + had + V3 diễn tả tiếc nuối về quá khứ, điều không thể thay đổi.",
+      "Dùng khi hối tiếc mình đã làm hoặc đã không làm điều gì.",
+      "If only mạnh hơn wish và thường dùng trong câu cảm thán.",
+      "Dạng chuẩn là had + V3; tránh 'would have + V3' dù đôi khi gặp trong lời nói thân mật.",
+      "Không dùng quá khứ đơn cho tiếc nuối quá khứ; quá khứ đơn dùng cho ước hiện tại."
+    ],
+    "examples": [
+      {
+        "english": "I wish I had studied harder for the exam.",
+        "vietnamese": "Tôi ước mình đã học chăm hơn cho kỳ thi.",
+        "note": "Tiếc vì đã không học chăm trước đây."
+      },
+      {
+        "english": "She wishes she hadn't sold her old house.",
+        "vietnamese": "Cô ấy ước mình đã không bán căn nhà cũ.",
+        "note": "Tiếc vì đã bán nhà."
+      },
+      {
+        "english": "If only we had left earlier!",
+        "vietnamese": "Giá mà chúng tôi đã rời đi sớm hơn!",
+        "note": "If only nhấn mạnh sự tiếc nuối."
+      },
+      {
+        "english": "They wish they had taken that opportunity.",
+        "vietnamese": "Họ ước họ đã nắm lấy cơ hội đó.",
+        "note": "Tiếc vì đã bỏ lỡ cơ hội."
+      },
+      {
+        "english": "I wish I hadn't said that to him.",
+        "vietnamese": "Tôi ước mình đã không nói điều đó với anh ấy.",
+        "note": "Dạng phủ định had not + V3."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng quá khứ đơn cho tiếc nuối quá khứ: 'I wish I studied harder' → 'I wish I had studied harder'.",
+      "Dùng would have: 'I wish I would have known' → 'I wish I had known'.",
+      "Dùng had + V2: 'had knew' → 'had known'.",
+      "Nhầm wish hiện tại và quá khứ: 'I wish I had more time' (hiện tại) khác 'I wish I had had more time' (quá khứ)."
+    ],
+    "quiz": [
+      {
+        "question": "I wish I _____ harder for the exam.",
+        "options": [
+          "study",
+          "studied",
+          "had studied",
+          "would study"
+        ],
+        "correct_index": 2,
+        "explanation": "Tiếc nuối về quá khứ dùng wish + had + V3."
+      },
+      {
+        "question": "She wishes she _____ her old house.",
+        "options": [
+          "didn't sell",
+          "hadn't sold",
+          "hasn't sold",
+          "wouldn't sell"
+        ],
+        "correct_index": 1,
+        "explanation": "Tiếc vì đã bán nhà nên dùng phủ định had not + V3: hadn't sold."
+      },
+      {
+        "question": "If only we _____ earlier!",
+        "options": [
+          "leave",
+          "left",
+          "had left",
+          "would leave"
+        ],
+        "correct_index": 2,
+        "explanation": "If only + had + V3 diễn tả tiếc nuối về quá khứ."
+      },
+      {
+        "question": "They wish they _____ that opportunity.",
+        "options": [
+          "take",
+          "took",
+          "had taken",
+          "would take"
+        ],
+        "correct_index": 2,
+        "explanation": "Họ tiếc vì đã không nắm cơ hội trong quá khứ nên dùng had taken."
+      },
+      {
+        "question": "I wish I _____ that to him.",
+        "options": [
+          "didn't say",
+          "hadn't said",
+          "haven't said",
+          "wouldn't say"
+        ],
+        "correct_index": 1,
+        "explanation": "Hối tiếc vì đã nói ra nên dùng hadn't said."
+      }
+    ]
+  },
+  {
+    "id": "its_time_high_time",
+    "title": "It's Time/It's High Time",
+    "title_vi": "It's Time/It's High Time",
+    "level": "B2",
+    "category": "Cấu trúc",
+    "description": "Dùng để nói rằng đã đến lúc cần làm gì đó, thường ngụ ý việc đó đang trễ hoặc đáng lẽ phải làm sớm hơn. Cấu trúc phổ biến là It's time + to V hoặc It's (high) time + S + V2/ed. It's high time mang sắc thái nhấn mạnh và có thể hàm ý phê bình nhẹ.",
+    "formula_affirmative": "It's (high) time + S + V2/ed (hoặc It's time + to V)",
+    "formula_negative": "It's (high) time + S + didn't + V",
+    "formula_question": "Isn't it time + S + V2/ed? (hoặc Is it time + to V?)",
+    "time_markers": [
+      "now (bây giờ)",
+      "already (đã rồi)",
+      "long ago (từ lâu rồi)",
+      "at last (cuối cùng)",
+      "by now (đến giờ này)"
+    ],
+    "usage_rules": [
+      "It's time + to V nêu hành động cần làm mà không nhấn mạnh chủ thể.",
+      "It's time + S + V2/ed dùng hình thức quá khứ nhưng mang nghĩa hiện tại hoặc tương lai.",
+      "It's high time nhấn mạnh sự trễ tràng, thường hàm ý trách nhẹ.",
+      "It's about time có nghĩa tương tự và cũng dùng V2/ed khi có chủ ngữ.",
+      "Không dùng V-ing sau It's time khi câu có chủ ngữ."
+    ],
+    "examples": [
+      {
+        "english": "It's time to go home.",
+        "vietnamese": "Đã đến lúc về nhà rồi.",
+        "note": "Dạng đơn giản với to V."
+      },
+      {
+        "english": "It's time we left.",
+        "vietnamese": "Đã đến lúc chúng ta phải đi rồi.",
+        "note": "Dùng left (quá khứ) nhưng nghĩa hiện tại."
+      },
+      {
+        "english": "It's high time you started revising for your exams.",
+        "vietnamese": "Đã đến lúc bạn phải bắt đầu ôn thi rồi đấy.",
+        "note": "High time hàm ý đã trễ."
+      },
+      {
+        "english": "It's about time she apologised.",
+        "vietnamese": "Đã đến lúc cô ấy phải xin lỗi rồi.",
+        "note": "About time có sắc thái nhấn mạnh tương tự."
+      },
+      {
+        "english": "Isn't it time the government took action?",
+        "vietnamese": "Chẳng phải đã đến lúc chính phủ hành động rồi sao?",
+        "note": "Câu hỏi tu từ với V2/ed."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng hiện tại đơn: 'It's time we go' → 'It's time we went'.",
+      "Dùng to V khi có chủ ngữ: 'It's time you to go' → 'It's time you went'.",
+      "Dùng V-ing: 'It's time going' → 'It's time to go'.",
+      "Hiểu sai là thì quá khứ: 'It's time we left' nói về hiện tại, không phải việc đã rời đi."
+    ],
+    "quiz": [
+      {
+        "question": "It's time we _____ home.",
+        "options": [
+          "go",
+          "went",
+          "going",
+          "to go"
+        ],
+        "correct_index": 1,
+        "explanation": "It's time + S + V2/ed, nên dùng went dù nghĩa hiện tại."
+      },
+      {
+        "question": "It's high time you _____ revising.",
+        "options": [
+          "start",
+          "started",
+          "starting",
+          "to start"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau It's high time + chủ ngữ dùng động từ ở dạng quá khứ: started."
+      },
+      {
+        "question": "It's time _____ a break.",
+        "options": [
+          "take",
+          "taking",
+          "to take",
+          "took"
+        ],
+        "correct_index": 2,
+        "explanation": "Không có chủ ngữ sau It's time thì dùng to + V."
+      },
+      {
+        "question": "It's about time she _____.",
+        "options": [
+          "apologise",
+          "apologised",
+          "apologising",
+          "to apologise"
+        ],
+        "correct_index": 1,
+        "explanation": "Cấu trúc It's about time + S + V2/ed."
+      },
+      {
+        "question": "Isn't it time the government _____ action?",
+        "options": [
+          "take",
+          "took",
+          "taking",
+          "to take"
+        ],
+        "correct_index": 1,
+        "explanation": "Câu hỏi tu từ vẫn dùng V2/ed sau chủ ngữ: took."
+      }
+    ]
+  },
+  {
+    "id": "modal_perfects",
+    "title": "Modal Perfects",
+    "title_vi": "Modal hoàn thành",
+    "level": "B2",
+    "category": "Modal",
+    "description": "Cấu trúc modal + have + V3 dùng để nói về khả năng, suy đoán, hối tiếc hoặc lời chỉ trích liên quan đến quá khứ. Mỗi modal mang một sắc thái riêng như must have, might have, should have hay could have. Đây là điểm ngữ pháp quan trọng để diễn đạt tinh tế ở trình độ B2.",
+    "formula_affirmative": "S + modal + have + V3",
+    "formula_negative": "S + modal + not + have + V3",
+    "formula_question": "Modal + S + have + V3?",
+    "time_markers": [
+      "yesterday / last night (hôm qua / tối qua)",
+      "already (đã rồi)",
+      "by then (đến lúc đó)",
+      "at the time (lúc đó)",
+      "since then (từ đó đến nay)"
+    ],
+    "usage_rules": [
+      "Must have + V3 diễn tả suy đoán chắc chắn dựa trên bằng chứng trong quá khứ.",
+      "Might/May/Could have + V3 diễn tả khả năng trong quá khứ với độ chắc chắn thấp.",
+      "Can't have + V3 diễn tả điều chắc chắn không xảy ra.",
+      "Should/Ought to have + V3 diễn tả điều đáng lẽ nên làm nhưng đã không làm.",
+      "Could have + V3 diễn tả khả năng đã có nhưng không được dùng, hoặc lời phàn nàn."
+    ],
+    "examples": [
+      {
+        "english": "She must have forgotten her keys.",
+        "vietnamese": "Cô ấy chắc hẳn đã quên chìa khóa.",
+        "note": "Suy đoán gần như chắc chắn dựa trên tình huống."
+      },
+      {
+        "english": "They might have missed the last bus.",
+        "vietnamese": "Có lẽ họ đã lỡ chuyến xe buýt cuối.",
+        "note": "Khả năng có thể xảy ra, không chắc chắn."
+      },
+      {
+        "english": "You should have told me earlier.",
+        "vietnamese": "Đáng lẽ bạn nên nói với tôi sớm hơn.",
+        "note": "Lời trách nhẹ vì đã không làm."
+      },
+      {
+        "english": "He can't have finished the report so quickly.",
+        "vietnamese": "Anh ấy không thể nào hoàn thành báo cáo nhanh như vậy.",
+        "note": "Phủ định chắc chắn với can't have."
+      },
+      {
+        "english": "I could have helped you if you had asked.",
+        "vietnamese": "Tôi đã có thể giúp bạn nếu bạn đã nhờ.",
+        "note": "Khả năng trong quá khứ nhưng không thực hiện."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng V2 thay V3: 'must have went' → 'must have gone'.",
+      "Dùng mustn't have cho suy đoán: 'They mustn't have arrived' → 'They can't have arrived'.",
+      "Nhầm should have (đáng lẽ nên) với must have (chắc hẳn).",
+      "Chia sai have: 'should has' → 'should have'."
+    ],
+    "quiz": [
+      {
+        "question": "She must _____ her keys — they're not here.",
+        "options": [
+          "forget",
+          "forgot",
+          "have forgotten",
+          "has forgotten"
+        ],
+        "correct_index": 2,
+        "explanation": "Suy đoán chắc chắn về quá khứ dùng must have + V3."
+      },
+      {
+        "question": "You should _____ me earlier.",
+        "options": [
+          "tell",
+          "have told",
+          "told",
+          "telling"
+        ],
+        "correct_index": 1,
+        "explanation": "Should have + V3 diễn tả điều đáng lẽ nên làm nhưng đã không làm."
+      },
+      {
+        "question": "He can't _____ the report so quickly.",
+        "options": [
+          "finish",
+          "finished",
+          "finishing",
+          "have finished"
+        ],
+        "correct_index": 3,
+        "explanation": "Can't have + V3 diễn tả điều chắc chắn không thể xảy ra."
+      },
+      {
+        "question": "They might _____ the last bus.",
+        "options": [
+          "have missed",
+          "miss",
+          "missed",
+          "missing"
+        ],
+        "correct_index": 0,
+        "explanation": "Might have + V3 diễn tả khả năng trong quá khứ."
+      },
+      {
+        "question": "I could _____ you if you had asked.",
+        "options": [
+          "help",
+          "helped",
+          "have helped",
+          "helping"
+        ],
+        "correct_index": 2,
+        "explanation": "Could have + V3 diễn tả khả năng đã có trong quá khứ nhưng không thực hiện."
+      }
+    ]
+  },
+  {
+    "id": "speculation_deduction_past",
+    "title": "Speculation & Deduction (Past)",
+    "title_vi": "Suy đoán quá khứ",
+    "level": "B2",
+    "category": "Modal",
+    "description": "Diễn tả mức độ chắc chắn về một sự việc đã xảy ra trong quá khứ. Ngoài modal perfect, người nói còn dùng các cụm như apparently, perhaps, I'm sure hay it's possible that. Mức độ chắc chắn giảm dần từ must have đến might have và can't have.",
+    "formula_affirmative": "S + must/may/might/could + have + V3 (hoặc + have been + V-ing)",
+    "formula_negative": "S + can't/couldn't + have + V3 (hoặc may/might not + have + V3)",
+    "formula_question": "Do you think + S + modal + have + V3? (hoặc Modal + S + have + V3?)",
+    "time_markers": [
+      "apparently (có vẻ như)",
+      "perhaps / maybe (có lẽ)",
+      "I'm sure / I doubt (tôi chắc / tôi nghi)",
+      "at the time (lúc đó)",
+      "as far as I know (theo tôi biết)"
+    ],
+    "usage_rules": [
+      "Must have + V3 diễn tả gần như chắc chắn dựa trên bằng chứng.",
+      "Might/May/Could have + V3 diễn tả khả năng với độ chắc chắn thấp.",
+      "Can't/Couldn't have + V3 diễn tả điều chắc chắn không xảy ra.",
+      "Dùng have been + V-ing khi suy đoán về hành động đang kéo dài trong quá khứ.",
+      "Có thể dùng trạng từ như apparently, perhaps để điều chỉnh mức độ chắc chắn."
+    ],
+    "examples": [
+      {
+        "english": "The lights were off, so they must have gone out.",
+        "vietnamese": "Đèn đã tắt nên chắc hẳn họ đã ra ngoài.",
+        "note": "Suy luận từ bằng chứng quan sát được."
+      },
+      {
+        "english": "He might have been waiting for hours.",
+        "vietnamese": "Có lẽ anh ấy đã đợi hàng giờ.",
+        "note": "Suy đoán về hành động kéo dài nên dùng have been + V-ing."
+      },
+      {
+        "english": "She can't have seen us; she was looking the other way.",
+        "vietnamese": "Cô ấy không thể đã thấy chúng ta; cô ấy đang nhìn hướng khác.",
+        "note": "Can't have diễn tả điều chắc chắn không xảy ra."
+      },
+      {
+        "english": "Apparently, the concert was cancelled.",
+        "vietnamese": "Có vẻ như buổi hòa nhạc đã bị hủy.",
+        "note": "Apparently giảm mức độ chắc chắn của thông tin."
+      },
+      {
+        "english": "I doubt they could have solved it without help.",
+        "vietnamese": "Tôi nghi họ không thể giải quyết được nếu không có sự giúp đỡ.",
+        "note": "I doubt + could have thể hiện sự hoài nghi."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng mustn't cho suy đoán quá khứ: 'They mustn't have arrived' → 'They can't have arrived'.",
+      "Dùng might have + V-ing thiếu been: 'might have going' → 'might have been going'.",
+      "Dùng must have been cho hành động đơn: 'He must have been left' → 'He must have left'.",
+      "Nhầm could have (khả năng) với was able to (đã thành công cụ thể)."
+    ],
+    "quiz": [
+      {
+        "question": "The lights were off, so they must _____ out.",
+        "options": [
+          "go",
+          "have gone",
+          "went",
+          "going"
+        ],
+        "correct_index": 1,
+        "explanation": "Suy đoán chắc chắn về quá khứ dùng must have + V3: must have gone."
+      },
+      {
+        "question": "He might _____ for hours.",
+        "options": [
+          "wait",
+          "have waited",
+          "have been waiting",
+          "waited"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động kéo dài trong quá khứ dùng might have been + V-ing."
+      },
+      {
+        "question": "She can't _____ us; she was looking away.",
+        "options": [
+          "see",
+          "have seen",
+          "saw",
+          "seeing"
+        ],
+        "correct_index": 1,
+        "explanation": "Can't have + V3 diễn tả điều chắc chắn không xảy ra."
+      },
+      {
+        "question": "They _____ have arrived yet — it's too early.",
+        "options": [
+          "mustn't",
+          "can't",
+          "shouldn't",
+          "needn't"
+        ],
+        "correct_index": 1,
+        "explanation": "Phủ định chắc chắn dùng can't have, không dùng mustn't have."
+      },
+      {
+        "question": "I doubt they could _____ it without help.",
+        "options": [
+          "solve",
+          "have solved",
+          "solved",
+          "solving"
+        ],
+        "correct_index": 1,
+        "explanation": "Could have + V3 diễn tả khả năng trong quá khứ."
+      }
+    ]
+  },
+  {
+    "id": "advanced_relative_clauses",
+    "title": "Advanced Relative Clauses (Preposition + Which/Whom)",
+    "title_vi": "Mệnh đề quan hệ nâng cao",
+    "level": "B2",
+    "category": "Mệnh đề",
+    "description": "Dùng đại từ quan hệ sau giới từ trong văn phong trang trọng, ví dụ the person to whom hoặc the house in which. Cấu trúc này thay cho cách nói có giới từ đứng cuối câu. Nó thường gặp trong văn viết, báo cáo và bài luận học thuật.",
+    "formula_affirmative": "N + preposition + which/whom + S + V",
+    "formula_negative": "N + preposition + which/whom + S + do/does/did not + V",
+    "formula_question": "To whom + did + S + V? (câu hỏi trang trọng)",
+    "time_markers": [
+      "the day on which (ngày mà)",
+      "the year in which (năm mà)",
+      "the moment at which (thời điểm mà)",
+      "the reason for which (lý do mà)",
+      "the place at which (nơi mà)"
+    ],
+    "usage_rules": [
+      "Giới từ đứng trước which khi nói về vật hoặc sự việc, trước whom khi nói về người.",
+      "Không dùng that ngay sau giới từ.",
+      "Trong văn nói, giới từ thường đứng cuối mệnh đề quan hệ.",
+      "Không bỏ đại từ quan hệ khi giới từ đã đứng đầu mệnh đề.",
+      "Whom là bắt buộc khi giới từ đứng trước; which dùng được cho cả mệnh đề xác định và không xác định."
+    ],
+    "examples": [
+      {
+        "english": "The colleague with whom I share an office is on holiday.",
+        "vietnamese": "Người đồng nghiệp mà tôi dùng chung văn phòng đang nghỉ phép.",
+        "note": "With + whom thay cho 'who ... with'."
+      },
+      {
+        "english": "This is the book about which I told you.",
+        "vietnamese": "Đây là cuốn sách mà tôi đã kể với bạn.",
+        "note": "About + which trong văn phong trang trọng."
+      },
+      {
+        "english": "The period during which the company grew rapidly was the 1990s.",
+        "vietnamese": "Giai đoạn mà công ty phát triển nhanh là những năm 1990.",
+        "note": "During which chỉ thời gian."
+      },
+      {
+        "english": "She is the person to whom the letter was addressed.",
+        "vietnamese": "Cô ấy là người mà lá thư được gửi đến.",
+        "note": "To whom trong cấu trúc bị động."
+      },
+      {
+        "english": "The town in which he grew up has changed a lot.",
+        "vietnamese": "Thị trấn nơi anh ấy lớn lên đã thay đổi nhiều.",
+        "note": "In which = where, nhưng trang trọng hơn."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng that sau giới từ: 'the house in that he lives' → 'the house in which he lives'.",
+      "Dùng who sau giới từ: 'the person to who I spoke' → 'the person to whom I spoke'.",
+      "Bỏ đại từ quan hệ: 'the person to I spoke' → 'the person to whom I spoke'.",
+      "Đặt giới từ ở cuối trong văn trang trọng: 'the person whom I spoke to' → 'to whom I spoke'."
+    ],
+    "quiz": [
+      {
+        "question": "The colleague with _____ I share an office is on holiday.",
+        "options": [
+          "who",
+          "whom",
+          "which",
+          "that"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau giới từ with và chỉ người phải dùng whom."
+      },
+      {
+        "question": "This is the book about _____ I told you.",
+        "options": [
+          "that",
+          "who",
+          "which",
+          "whom"
+        ],
+        "correct_index": 2,
+        "explanation": "Sau giới từ about và chỉ vật dùng which."
+      },
+      {
+        "question": "She is the person to _____ the letter was addressed.",
+        "options": [
+          "which",
+          "who",
+          "whom",
+          "that"
+        ],
+        "correct_index": 2,
+        "explanation": "Giới từ to + đại từ chỉ người dùng whom."
+      },
+      {
+        "question": "The town in _____ he grew up has changed.",
+        "options": [
+          "that",
+          "where",
+          "which",
+          "who"
+        ],
+        "correct_index": 2,
+        "explanation": "Sau giới từ in chỉ nơi chốn dùng which, không dùng where."
+      },
+      {
+        "question": "The period during _____ the company grew was the 1990s.",
+        "options": [
+          "that",
+          "which",
+          "when",
+          "what"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau giới từ during dùng which để chỉ khoảng thời gian."
+      }
+    ]
+  },
+  {
+    "id": "reduced_relative_clauses",
+    "title": "Reduced Relative Clauses",
+    "title_vi": "Mệnh đề quan hệ rút gọn",
+    "level": "B2",
+    "category": "Mệnh đề",
+    "description": "Rút gọn mệnh đề quan hệ bằng cách bỏ đại từ quan hệ và trợ động từ, dùng V-ing, V3 hoặc to V. Cấu trúc này giúp câu ngắn gọn, tự nhiên và rất phổ biến trong văn viết. Cần giữ đúng nghĩa chủ động hoặc bị động khi rút gọn.",
+    "formula_affirmative": "N + V-ing/V3/to V + ... (thay cho who/which + be + V-ing/V3)",
+    "formula_negative": "N + not + V-ing + ... (hoặc N + V3 + ...)",
+    "formula_question": "N + V-ing/V3 + ... (dạng rút gọn, không tạo câu hỏi riêng)",
+    "time_markers": [
+      "the man standing there (người đàn ông đang đứng đó)",
+      "the documents signed yesterday (các tài liệu được ký hôm qua)",
+      "the first person to arrive (người đầu tiên đến)",
+      "anyone wishing to attend (bất kỳ ai muốn tham dự)"
+    ],
+    "usage_rules": [
+      "Bỏ who/which + be khi mệnh đề ở dạng tiếp diễn hoặc bị động.",
+      "Dùng V-ing khi mệnh đề mang nghĩa chủ động.",
+      "Dùng V3 khi mệnh đề mang nghĩa bị động.",
+      "Dùng to V sau the first, the last, the only và so sánh nhất.",
+      "Không rút gọn mệnh đề không xác định nếu có thể gây nhập nhằng nghĩa."
+    ],
+    "examples": [
+      {
+        "english": "The woman standing by the door is my manager.",
+        "vietnamese": "Người phụ nữ đang đứng cạnh cửa là quản lý của tôi.",
+        "note": "Rút gọn 'who is standing' thành 'standing'."
+      },
+      {
+        "english": "The documents signed yesterday are now invalid.",
+        "vietnamese": "Các tài liệu được ký hôm qua giờ không còn hiệu lực.",
+        "note": "Rút gọn bị động 'which were signed' thành 'signed'."
+      },
+      {
+        "english": "She was the first person to arrive.",
+        "vietnamese": "Cô ấy là người đầu tiên đến.",
+        "note": "Dùng to V sau the first."
+      },
+      {
+        "english": "The children playing in the garden are my nephews.",
+        "vietnamese": "Những đứa trẻ đang chơi trong vườn là các cháu của tôi.",
+        "note": "V-ing thay cho 'who are playing'."
+      },
+      {
+        "english": "Anyone wishing to attend should register online.",
+        "vietnamese": "Bất kỳ ai muốn tham dự nên đăng ký trực tuyến.",
+        "note": "Wishing thay cho 'who wishes'."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng V-ing cho nghĩa bị động: 'the letter sending yesterday' → 'the letter sent yesterday'.",
+      "Giữ đại từ quan hệ khi rút gọn: 'the man who standing' → 'the man standing'.",
+      "Dùng to V sai dạng: 'the first to arrived' → 'the first to arrive'.",
+      "Rút gọn mệnh đề không có be ở thì đơn giản: 'the man works here' không thể thành 'the man working here' nếu muốn giữ nghĩa hiện tại đơn."
+    ],
+    "quiz": [
+      {
+        "question": "The woman _____ by the door is my manager.",
+        "options": [
+          "stands",
+          "standing",
+          "stood",
+          "to stand"
+        ],
+        "correct_index": 1,
+        "explanation": "Rút gọn mệnh đề chủ động 'who is standing' thành V-ing: standing."
+      },
+      {
+        "question": "The documents _____ yesterday are now invalid.",
+        "options": [
+          "signing",
+          "to sign",
+          "signed",
+          "sign"
+        ],
+        "correct_index": 2,
+        "explanation": "Mệnh đề bị động 'which were signed' rút gọn thành V3: signed."
+      },
+      {
+        "question": "She was the first person _____.",
+        "options": [
+          "arrive",
+          "arriving",
+          "to arrive",
+          "arrived"
+        ],
+        "correct_index": 2,
+        "explanation": "Sau the first dùng to + V: the first person to arrive."
+      },
+      {
+        "question": "Anyone _____ to attend should register online.",
+        "options": [
+          "wish",
+          "wished",
+          "wishing",
+          "to wish"
+        ],
+        "correct_index": 2,
+        "explanation": "Rút gọn 'who wishes' thành V-ing: wishing."
+      },
+      {
+        "question": "The children _____ in the garden are my nephews.",
+        "options": [
+          "play",
+          "played",
+          "playing",
+          "to play"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động đang diễn ra, chủ động, rút gọn thành V-ing: playing."
+      }
+    ]
+  },
+  {
+    "id": "participle_clauses",
+    "title": "Participle Clauses",
+    "title_vi": "Mệnh đề phân từ",
+    "level": "B2",
+    "category": "Mệnh đề",
+    "description": "Dùng mệnh đề phân từ với V-ing hoặc V3 để thay cho mệnh đề trạng ngữ, giúp câu văn gọn và mạch lạc. Mệnh đề phân từ có thể diễn tả thời gian, nguyên nhân, điều kiện, kết quả hoặc hành động song song. Chủ ngữ của mệnh đề phân từ phải trùng với chủ ngữ câu chính.",
+    "formula_affirmative": "V-ing/V3 + ..., S + V (hoặc S + V, V-ing/V3 + ...)",
+    "formula_negative": "Not + V-ing + ..., S + V (hoặc Not having + V3 + ..., S + V)",
+    "formula_question": "V-ing/V3 + ..., + auxiliary + S + V? (dạng câu hỏi ít gặp)",
+    "time_markers": [
+      "walking home (trên đường đi bộ về)",
+      "having finished (sau khi đã hoàn thành)",
+      "built in 1900 (được xây năm 1900)",
+      "before leaving (trước khi rời đi)",
+      "after arriving (sau khi đến)"
+    ],
+    "usage_rules": [
+      "V-ing diễn tả hành động chủ động, thường là nguyên nhân hoặc hành động đồng thời.",
+      "V3 diễn tả nghĩa bị động trong mệnh đề phân từ.",
+      "Having + V3 nhấn mạnh hành động đã hoàn thành trước hành động chính.",
+      "Chủ ngữ mệnh đề phân từ phải trùng chủ ngữ câu chính để tránh dangling participle.",
+      "Not đứng trước V-ing để tạo dạng phủ định."
+    ],
+    "examples": [
+      {
+        "english": "Walking home, I noticed a strange car.",
+        "vietnamese": "Trên đường đi bộ về nhà, tôi để ý thấy một chiếc xe lạ.",
+        "note": "Hai hành động cùng chủ ngữ 'I'."
+      },
+      {
+        "english": "Having finished the report, she went home.",
+        "vietnamese": "Sau khi hoàn thành báo cáo, cô ấy về nhà.",
+        "note": "Having + V3 diễn tả hành động xong trước."
+      },
+      {
+        "english": "Built in 1900, the bridge is still in use.",
+        "vietnamese": "Được xây từ năm 1900, cây cầu vẫn còn được sử dụng.",
+        "note": "V3 mang nghĩa bị động."
+      },
+      {
+        "english": "Not knowing the answer, he kept silent.",
+        "vietnamese": "Không biết câu trả lời, anh ấy giữ im lặng.",
+        "note": "Not + V-ing tạo dạng phủ định."
+      },
+      {
+        "english": "The children ran out, laughing loudly.",
+        "vietnamese": "Bọn trẻ chạy ra ngoài, cười to.",
+        "note": "Mệnh đề phân từ đứng sau, diễn tả hành động song song."
+      }
+    ],
+    "common_mistakes": [
+      "Dangling participle: 'Walking home, the rain started' → 'Walking home, I noticed the rain'.",
+      "Dùng Having + V-ing: 'Having finishing' → 'Having finished'.",
+      "Dùng V3 cho nghĩa chủ động: 'Finished the report, she went home' → 'Having finished the report, she went home'.",
+      "Đặt not sai vị trí: 'Walking not home' → 'Not walking home' hoặc 'Not having walked home'."
+    ],
+    "quiz": [
+      {
+        "question": "_____ home, I noticed a strange car.",
+        "options": [
+          "Walk",
+          "Walking",
+          "Walked",
+          "To walk"
+        ],
+        "correct_index": 1,
+        "explanation": "Hành động chủ động, cùng chủ ngữ 'I', dùng V-ing: Walking."
+      },
+      {
+        "question": "_____ the report, she went home.",
+        "options": [
+          "Finish",
+          "Finishing",
+          "Having finished",
+          "Finished"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động hoàn thành trước hành động chính dùng Having + V3."
+      },
+      {
+        "question": "_____ in 1900, the bridge is still in use.",
+        "options": [
+          "Building",
+          "Built",
+          "To build",
+          "Build"
+        ],
+        "correct_index": 1,
+        "explanation": "Cây cầu được xây nên dùng V3 mang nghĩa bị động: Built."
+      },
+      {
+        "question": "_____ knowing the answer, he kept silent.",
+        "options": [
+          "No",
+          "Not",
+          "None",
+          "Never"
+        ],
+        "correct_index": 1,
+        "explanation": "Phủ định mệnh đề phân từ dùng Not + V-ing."
+      },
+      {
+        "question": "The children ran out, _____ loudly.",
+        "options": [
+          "laugh",
+          "laughed",
+          "laughing",
+          "to laugh"
+        ],
+        "correct_index": 2,
+        "explanation": "Hành động song song, chủ động, dùng V-ing: laughing."
+      }
+    ]
+  },
+  {
+    "id": "gerund_infinitive_nuances",
+    "title": "Gerund/Infinitive Nuances",
+    "title_vi": "Sắc thái gerund/infinitive",
+    "level": "B2",
+    "category": "Động từ",
+    "description": "Phân biệt sắc thái nghĩa khi một động từ có thể theo sau bởi cả gerund và infinitive. Các động từ như remember, forget, stop, try và regret thay đổi nghĩa tùy theo dạng động từ đi kèm. Nắm rõ sự khác biệt giúp diễn đạt chính xác ở trình độ B2.",
+    "formula_affirmative": "S + V + V-ing (hoặc S + V + to V)",
+    "formula_negative": "S + V + not + V-ing (hoặc S + V + not + to V)",
+    "formula_question": "Does + S + V + V-ing/to V? (dùng trợ động từ theo thì)",
+    "time_markers": [
+      "remember + V-ing (nhớ đã làm gì)",
+      "remember + to V (nhớ phải làm gì)",
+      "stop + V-ing (dừng hẳn việc gì)",
+      "stop + to V (dừng lại để làm gì)",
+      "try + V-ing / try + to V (thử / cố gắng)"
+    ],
+    "usage_rules": [
+      "Remember/forget + V-ing: nhớ hoặc quên việc đã làm; + to V: nhớ hoặc quên phải làm.",
+      "Stop + V-ing: dừng hẳn một việc; stop + to V: dừng lại để làm việc khác.",
+      "Try + V-ing: thử một cách làm; try + to V: cố gắng đạt được điều gì.",
+      "Regret + V-ing: hối tiếc việc đã làm; regret + to V: tiếc phải nói điều gì.",
+      "Mean + V-ing: có nghĩa là; mean + to V: có ý định làm."
+    ],
+    "examples": [
+      {
+        "english": "I remember locking the door.",
+        "vietnamese": "Tôi nhớ là đã khóa cửa.",
+        "note": "Nhớ một việc đã làm trong quá khứ."
+      },
+      {
+        "english": "Remember to lock the door before you leave.",
+        "vietnamese": "Nhớ khóa cửa trước khi bạn rời đi.",
+        "note": "Nhớ phải làm một việc trong tương lai."
+      },
+      {
+        "english": "He stopped smoking last year.",
+        "vietnamese": "Anh ấy đã bỏ hút thuốc năm ngoái.",
+        "note": "Dừng hẳn thói quen hút thuốc."
+      },
+      {
+        "english": "She stopped to check her phone.",
+        "vietnamese": "Cô ấy dừng lại để kiểm tra điện thoại.",
+        "note": "Dừng việc đang làm để làm việc khác."
+      },
+      {
+        "english": "I regret telling him the truth.",
+        "vietnamese": "Tôi hối tiếc vì đã nói sự thật với anh ấy.",
+        "note": "Hối tiếc việc đã làm."
+      }
+    ],
+    "common_mistakes": [
+      "Nhầm remember + V-ing với to V khiến nghĩa đổi hoàn toàn.",
+      "Dùng stop + V-ing khi muốn nói dừng lại để làm gì: 'I stopped smoking a cigarette' → 'I stopped to smoke a cigarette'.",
+      "Dùng try + to V khi nói thử cách làm: 'Try to adding salt' → 'Try adding salt'.",
+      "Dùng sai dạng sau mean: 'I mean to going' → 'I mean to go'."
+    ],
+    "quiz": [
+      {
+        "question": "I clearly remember _____ the door before leaving.",
+        "options": [
+          "to lock",
+          "locking",
+          "lock",
+          "locked"
+        ],
+        "correct_index": 1,
+        "explanation": "Remember + V-ing diễn tả nhớ một việc đã làm."
+      },
+      {
+        "question": "Remember _____ the door before you leave.",
+        "options": [
+          "locking",
+          "lock",
+          "to lock",
+          "locked"
+        ],
+        "correct_index": 2,
+        "explanation": "Remember + to V diễn tả nhớ phải làm việc gì đó."
+      },
+      {
+        "question": "He stopped _____ last year.",
+        "options": [
+          "to smoke",
+          "smoke",
+          "smoking",
+          "smoked"
+        ],
+        "correct_index": 2,
+        "explanation": "Stop + V-ing nghĩa là bỏ hẳn, dừng hẳn một thói quen."
+      },
+      {
+        "question": "She stopped _____ her phone.",
+        "options": [
+          "checking",
+          "check",
+          "to check",
+          "checked"
+        ],
+        "correct_index": 2,
+        "explanation": "Stop + to V nghĩa là dừng lại để làm việc khác."
+      },
+      {
+        "question": "I regret _____ him the truth.",
+        "options": [
+          "to tell",
+          "tell",
+          "telling",
+          "told"
+        ],
+        "correct_index": 2,
+        "explanation": "Regret + V-ing diễn tả hối tiếc vì đã làm điều gì."
+      }
+    ]
+  },
+  {
+    "id": "inversion_negative_adverbials",
+    "title": "Inversion with Negative Adverbials",
+    "title_vi": "Đảo ngữ với trạng từ phủ định",
+    "level": "B2",
+    "category": "Đảo ngữ",
+    "description": "Đảo ngữ xảy ra khi câu bắt đầu bằng trạng từ phủ định hoặc bán phủ định như never, rarely, seldom, hardly, no sooner hay not only. Trợ động từ được đưa lên trước chủ ngữ để tạo sắc thái nhấn mạnh và trang trọng. Cấu trúc này phổ biến trong văn viết, diễn văn và bài thi.",
+    "formula_affirmative": "Negative adverbial + auxiliary + S + V (Never have I seen ...)",
+    "formula_negative": "Negative adverbial + auxiliary + not + S + V (Not only did he not apologise ...)",
+    "formula_question": "Negative adverbial + auxiliary + S + V? (dạng câu hỏi nhấn mạnh)",
+    "time_markers": [
+      "never (không bao giờ)",
+      "rarely / seldom (hiếm khi)",
+      "hardly ... when (vừa mới ... thì)",
+      "no sooner ... than (vừa mới ... thì)",
+      "not only ... but also (không chỉ ... mà còn)"
+    ],
+    "usage_rules": [
+      "Never/Rarely/Seldom/Hardly đứng đầu câu thì trợ động từ đứng trước chủ ngữ.",
+      "No sooner ... than và Hardly ... when diễn tả hai hành động liên tiếp.",
+      "Not only ... but also đảo ngữ ở mệnh đề đầu khi not only đứng đầu câu.",
+      "Little, nowhere và at no time cũng kích hoạt đảo ngữ khi đứng đầu câu.",
+      "Chỉ đảo ngữ khi trạng từ phủ định thực sự đứng ở vị trí đầu câu."
+    ],
+    "examples": [
+      {
+        "english": "Never have I seen such a beautiful sunset.",
+        "vietnamese": "Tôi chưa từng thấy hoàng hôn nào đẹp đến vậy.",
+        "note": "Never + have + I + V3."
+      },
+      {
+        "english": "Rarely does she complain about her workload.",
+        "vietnamese": "Cô ấy hiếm khi phàn nàn về khối lượng công việc.",
+        "note": "Hiện tại đơn dùng trợ động từ does."
+      },
+      {
+        "english": "No sooner had we arrived than it started raining.",
+        "vietnamese": "Chúng tôi vừa đến thì trời bắt đầu mưa.",
+        "note": "Cấu trúc no sooner ... than, không dùng when."
+      },
+      {
+        "english": "Not only did he apologise, but he also offered to pay.",
+        "vietnamese": "Anh ấy không chỉ xin lỗi mà còn đề nghị trả tiền.",
+        "note": "Đảo ngữ ở mệnh đề not only."
+      },
+      {
+        "english": "Hardly had I sat down when the phone rang.",
+        "vietnamese": "Tôi vừa ngồi xuống thì điện thoại reo.",
+        "note": "Hardly ... when diễn tả hai việc liên tiếp."
+      }
+    ],
+    "common_mistakes": [
+      "Không đảo trợ động từ: 'Never I have seen' → 'Never have I seen'.",
+      "Dùng do sai vị trí: 'Rarely she does complain' → 'Rarely does she complain'.",
+      "Nhầm no sooner ... when: 'No sooner had we arrived when' → 'No sooner had we arrived than'.",
+      "Đảo ngữ dù trạng từ phủ định không đứng đầu câu: 'I have never seen' không đảo."
+    ],
+    "quiz": [
+      {
+        "question": "Never _____ such a beautiful sunset.",
+        "options": [
+          "I have seen",
+          "have I seen",
+          "I saw",
+          "did I saw"
+        ],
+        "correct_index": 1,
+        "explanation": "Never đứng đầu câu nên đảo trợ động từ lên trước chủ ngữ: have I seen."
+      },
+      {
+        "question": "Rarely _____ about her workload.",
+        "options": [
+          "she complains",
+          "she does complain",
+          "does she complain",
+          "complains she"
+        ],
+        "correct_index": 2,
+        "explanation": "Rarely + trợ động từ + chủ ngữ + V: does she complain."
+      },
+      {
+        "question": "No sooner _____ than it started raining.",
+        "options": [
+          "we had arrived",
+          "we arrived",
+          "had we arrived",
+          "did we arrived"
+        ],
+        "correct_index": 2,
+        "explanation": "No sooner đứng đầu câu nên đảo had lên trước chủ ngữ."
+      },
+      {
+        "question": "Not only _____ apologise, but he also offered to pay.",
+        "options": [
+          "he did",
+          "he has",
+          "did he",
+          "has he"
+        ],
+        "correct_index": 2,
+        "explanation": "Not only + trợ động từ + S + V: did he apologise."
+      },
+      {
+        "question": "Hardly _____ down when the phone rang.",
+        "options": [
+          "I had sat",
+          "I sat",
+          "had I sat",
+          "did I sat"
+        ],
+        "correct_index": 2,
+        "explanation": "Hardly đứng đầu câu nên đảo had lên trước chủ ngữ: had I sat."
+      }
+    ]
+  },
+  {
+    "id": "cleft_sentences",
+    "title": "Cleft Sentences",
+    "title_vi": "Câu chẻ",
+    "level": "B2",
+    "category": "Nhấn mạnh",
+    "description": "Câu chẻ dùng để nhấn mạnh một thành phần trong câu bằng cách tách câu thành hai mệnh đề. Hai dạng phổ biến là It is/was + thành phần nhấn mạnh + that và What + mệnh đề + is/was + thành phần nhấn mạnh. Cấu trúc này giúp làm nổi bật thông tin quan trọng trong giao tiếp và văn viết.",
+    "formula_affirmative": "It is/was + focus + that/who + S + V (hoặc What + S + V + is/was + focus)",
+    "formula_negative": "It is/was not + focus + that + S + V",
+    "formula_question": "Is/Was it + focus + that + S + V? (hoặc What is/was it that + S + V?)",
+    "time_markers": [
+      "it was yesterday that (chính là hôm qua ...)",
+      "it was in Paris that (chính là ở Paris ...)",
+      "it was Maria who (chính Maria là người ...)",
+      "what I need is (điều tôi cần là ...)",
+      "what surprised me was (điều làm tôi ngạc nhiên là ...)"
+    ],
+    "usage_rules": [
+      "It-cleft nhấn mạnh chủ ngữ, tân ngữ hoặc trạng ngữ của câu.",
+      "Dùng who cho người và that cho vật hoặc sự việc trong it-cleft.",
+      "Wh-cleft với What nhấn mạnh hành động hoặc thông tin ở cuối câu.",
+      "Câu chẻ giữ nguyên thì của câu gốc.",
+      "Không dùng câu chẻ khi thông tin không thực sự cần nhấn mạnh."
+    ],
+    "examples": [
+      {
+        "english": "It was Maria who broke the news.",
+        "vietnamese": "Chính Maria là người đã báo tin.",
+        "note": "Nhấn mạnh chủ ngữ chỉ người."
+      },
+      {
+        "english": "It was in Paris that they first met.",
+        "vietnamese": "Chính ở Paris họ đã gặp nhau lần đầu.",
+        "note": "Nhấn mạnh trạng ngữ chỉ nơi chốn."
+      },
+      {
+        "english": "What I need is a good night's sleep.",
+        "vietnamese": "Điều tôi cần là một giấc ngủ ngon.",
+        "note": "Wh-cleft nhấn mạnh điều cần thiết."
+      },
+      {
+        "english": "It wasn't the price that bothered me.",
+        "vietnamese": "Không phải giá cả là điều khiến tôi bận tâm.",
+        "note": "Dạng phủ định của it-cleft."
+      },
+      {
+        "english": "What surprised me was his calm reaction.",
+        "vietnamese": "Điều khiến tôi ngạc nhiên là phản ứng bình tĩnh của anh ấy.",
+        "note": "What + mệnh đề + was + thông tin nhấn mạnh."
+      }
+    ],
+    "common_mistakes": [
+      "Sai thì của it-cleft: 'It is yesterday that he left' → 'It was yesterday that he left'.",
+      "Thiếu that/who: 'It was Maria broke the news' → 'It was Maria who broke the news'.",
+      "Thiếu động từ to be trong wh-cleft: 'What I need a sleep' → 'What I need is a sleep'.",
+      "Dùng which cho người trong it-cleft: 'It was Maria which' → 'It was Maria who'."
+    ],
+    "quiz": [
+      {
+        "question": "It was in Paris _____ they first met.",
+        "options": [
+          "who",
+          "that",
+          "which",
+          "what"
+        ],
+        "correct_index": 1,
+        "explanation": "Nhấn mạnh trạng ngữ nơi chốn dùng that: It was in Paris that ..."
+      },
+      {
+        "question": "_____ I need is a good night's sleep.",
+        "options": [
+          "That",
+          "It",
+          "What",
+          "Which"
+        ],
+        "correct_index": 2,
+        "explanation": "Wh-cleft bắt đầu bằng What + mệnh đề."
+      },
+      {
+        "question": "It _____ the price that bothered me.",
+        "options": [
+          "is",
+          "were",
+          "was",
+          "be"
+        ],
+        "correct_index": 2,
+        "explanation": "Câu gốc ở quá khứ (bothered) nên dùng was."
+      },
+      {
+        "question": "It was yesterday _____ he left.",
+        "options": [
+          "which",
+          "who",
+          "that",
+          "when"
+        ],
+        "correct_index": 2,
+        "explanation": "It-cleft nhấn mạnh trạng ngữ thời gian dùng that."
+      },
+      {
+        "question": "What surprised me _____ his calm reaction.",
+        "options": [
+          "is",
+          "were",
+          "was",
+          "be"
+        ],
+        "correct_index": 2,
+        "explanation": "Wh-cleft ở quá khứ dùng was trước phần thông tin nhấn mạnh."
+      }
+    ]
+  },
+  {
+    "id": "subjunctive",
+    "title": "Subjunctive (Suggest/Insist/It is essential)",
+    "title_vi": "Thức giả định",
+    "level": "B2",
+    "category": "Thức giả định",
+    "description": "Thức giả định dùng động từ nguyên mẫu không có to sau các động từ như suggest, insist, recommend, demand và sau tính từ như essential, vital, necessary. Cấu trúc này mang tính trang trọng và thường gặp trong văn bản chính thức. Ở tiếng Anh Mỹ, dạng này phổ biến hơn trong tiếng Anh Anh.",
+    "formula_affirmative": "S + suggest/insist/recommend + that + S + V (nguyên mẫu)",
+    "formula_negative": "S + suggest + that + S + not + V (nguyên mẫu)",
+    "formula_question": "Do you suggest that + S + V? (hoặc Is it essential that + S + V?)",
+    "time_markers": [
+      "recommend that (đề nghị rằng)",
+      "insist that (khăng khăng rằng)",
+      "it is essential that (điều thiết yếu là)",
+      "it is vital that (điều sống còn là)",
+      "demand that (yêu cầu rằng)"
+    ],
+    "usage_rules": [
+      "Sau suggest, recommend, propose, insist, demand và request dùng động từ nguyên mẫu.",
+      "Không thêm -s dù chủ ngữ là ngôi thứ ba số ít.",
+      "Sau It is essential/vital/important/necessary that cũng dùng động từ nguyên mẫu.",
+      "Phủ định dùng not + V, không dùng don't hoặc doesn't.",
+      "Tiếng Anh Anh có thể dùng should + V với nghĩa tương đương."
+    ],
+    "examples": [
+      {
+        "english": "The doctor recommended that she rest for a week.",
+        "vietnamese": "Bác sĩ đề nghị cô ấy nghỉ ngơi một tuần.",
+        "note": "Rest là nguyên mẫu, không chia theo she."
+      },
+      {
+        "english": "It is essential that every student submit the form.",
+        "vietnamese": "Điều thiết yếu là mọi sinh viên phải nộp biểu mẫu.",
+        "note": "Sau It is essential that dùng nguyên mẫu submit."
+      },
+      {
+        "english": "They insisted that he not be told.",
+        "vietnamese": "Họ khăng khăng rằng không được nói cho anh ấy biết.",
+        "note": "Phủ định giả định dùng not + be."
+      },
+      {
+        "english": "I suggest that the meeting be postponed.",
+        "vietnamese": "Tôi đề nghị hoãn cuộc họp.",
+        "note": "Be là dạng nguyên mẫu của to be."
+      },
+      {
+        "english": "It is vital that everyone arrive on time.",
+        "vietnamese": "Điều sống còn là mọi người phải đến đúng giờ.",
+        "note": "Arrive không thêm -s dù everyone là số ít."
+      }
+    ],
+    "common_mistakes": [
+      "Thêm -s: 'that he goes' → 'that he go'.",
+      "Dùng don't/doesn't: 'that he doesn't go' → 'that he not go'.",
+      "Dùng to V: 'that she to rest' → 'that she rest'.",
+      "Chia động từ sau It is essential: 'essential that he goes' → 'essential that he go'."
+    ],
+    "quiz": [
+      {
+        "question": "The doctor recommended that she _____ for a week.",
+        "options": [
+          "rests",
+          "rest",
+          "rested",
+          "to rest"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau recommend that dùng động từ nguyên mẫu: rest."
+      },
+      {
+        "question": "It is essential that every student _____ the form.",
+        "options": [
+          "submits",
+          "submitted",
+          "submit",
+          "to submit"
+        ],
+        "correct_index": 2,
+        "explanation": "Thức giả định sau It is essential that dùng nguyên mẫu submit."
+      },
+      {
+        "question": "They insisted that he _____ told.",
+        "options": [
+          "isn't",
+          "doesn't be",
+          "not be",
+          "won't be"
+        ],
+        "correct_index": 2,
+        "explanation": "Phủ định giả định dùng not + động từ nguyên mẫu: not be."
+      },
+      {
+        "question": "I suggest that the meeting _____ postponed.",
+        "options": [
+          "is",
+          "was",
+          "be",
+          "being"
+        ],
+        "correct_index": 2,
+        "explanation": "Sau suggest that dùng be làm động từ giả định."
+      },
+      {
+        "question": "It is vital that everyone _____ on time.",
+        "options": [
+          "arrives",
+          "arrived",
+          "arrive",
+          "to arrive"
+        ],
+        "correct_index": 2,
+        "explanation": "Everyone là số ít nhưng thức giả định vẫn dùng nguyên mẫu arrive."
+      }
+    ]
+  },
+  {
+    "id": "articles_advanced",
+    "title": "Articles Advanced",
+    "title_vi": "Mạo từ nâng cao",
+    "level": "B2",
+    "category": "Danh từ & Mạo từ",
+    "description": "Nâng cao cách dùng mạo từ a/an/the, tập trung vào những trường hợp dễ nhầm. Nội dung bao gồm danh từ không đếm được, tên riêng, tổ chức, địa danh và cách dùng the để chỉ đối tượng xác định. Nắm vững mạo từ giúp câu văn chính xác và tự nhiên hơn.",
+    "formula_affirmative": "a/an + N đếm được số ít; the + N xác định; không mạo từ + N khái quát",
+    "formula_negative": "not a/an + N; no + N; the + N + not + V",
+    "formula_question": "Is this a/an + N? / Is the + N ...? (mạo từ không có dạng câu hỏi riêng)",
+    "time_markers": [
+      "the first time (lần đầu)",
+      "the same (giống nhau)",
+      "the only (duy nhất)",
+      "in general (nói chung)",
+      "at home / at work (ở nhà / ở nơi làm việc)"
+    ],
+    "usage_rules": [
+      "Dùng the khi người nghe hoặc người đọc đã biết đối tượng, hoặc đối tượng là duy nhất.",
+      "Không dùng the với danh từ số nhiều hoặc không đếm được khi nói chung.",
+      "Dùng the với tên sông, biển, dãy núi và quốc gia số nhiều; không dùng với hầu hết quốc gia số ít.",
+      "Dùng a/an khi nhắc đến lần đầu hoặc nói về nghề nghiệp.",
+      "Không dùng mạo từ với tên bữa ăn, ngôn ngữ, môn học và cụm by + phương tiện giao thông."
+    ],
+    "examples": [
+      {
+        "english": "She plays the piano, but she doesn't play golf.",
+        "vietnamese": "Cô ấy chơi piano nhưng không chơi gôn.",
+        "note": "Dùng the với nhạc cụ, không dùng với môn thể thao."
+      },
+      {
+        "english": "The Thames flows through London.",
+        "vietnamese": "Sông Thames chảy qua London.",
+        "note": "Dùng the với tên sông."
+      },
+      {
+        "english": "I have breakfast at home before work.",
+        "vietnamese": "Tôi ăn sáng ở nhà trước khi đi làm.",
+        "note": "Không dùng mạo từ với bữa ăn."
+      },
+      {
+        "english": "He is an engineer at a local firm.",
+        "vietnamese": "Anh ấy là kỹ sư tại một công ty địa phương.",
+        "note": "Dùng an trước danh từ nghề nghiệp bắt đầu bằng nguyên âm."
+      },
+      {
+        "english": "The advice you gave me was very helpful.",
+        "vietnamese": "Lời khuyên bạn dành cho tôi rất hữu ích.",
+        "note": "The + danh từ không đếm được đã được xác định."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng the cho khái quát: 'The cats are beautiful animals' → 'Cats are beautiful animals'.",
+      "Bỏ the khi đối tượng đã xác định: 'I bought book you wanted' → 'the book you wanted'.",
+      "Dùng the với bữa ăn: 'I had the dinner at 7' → 'I had dinner at 7'.",
+      "Chọn a/an theo chữ cái thay vì âm: 'an university' → 'a university'."
+    ],
+    "quiz": [
+      {
+        "question": "She plays _____ piano very well.",
+        "options": [
+          "a",
+          "an",
+          "the",
+          "(no article)"
+        ],
+        "correct_index": 2,
+        "explanation": "Trước tên nhạc cụ thường dùng the: play the piano."
+      },
+      {
+        "question": "_____ cats are beautiful animals.",
+        "options": [
+          "Every",
+          "A",
+          "An",
+          "(no article)"
+        ],
+        "correct_index": 3,
+        "explanation": "Nói chung về một loài dùng danh từ số nhiều không mạo từ; 'Every' không đi với danh từ số nhiều."
+      },
+      {
+        "question": "He is _____ engineer at a local firm.",
+        "options": [
+          "a",
+          "an",
+          "the",
+          "(no article)"
+        ],
+        "correct_index": 1,
+        "explanation": "Engineer bắt đầu bằng nguyên âm nên dùng an."
+      },
+      {
+        "question": "I have _____ breakfast at home every day.",
+        "options": [
+          "a",
+          "an",
+          "the",
+          "(no article)"
+        ],
+        "correct_index": 3,
+        "explanation": "Tên bữa ăn không dùng mạo từ."
+      },
+      {
+        "question": "_____ advice you gave me was very helpful.",
+        "options": [
+          "A",
+          "An",
+          "The",
+          "(no article)"
+        ],
+        "correct_index": 2,
+        "explanation": "Lời khuyên đã được xác định bởi mệnh đề 'you gave me' nên dùng the."
+      }
+    ]
+  },
+  {
+    "id": "quantifiers_advanced",
+    "title": "Quantifiers Advanced",
+    "title_vi": "Lượng từ nâng cao",
+    "level": "B2",
+    "category": "Lượng từ",
+    "description": "Ôn và mở rộng các lượng từ như a great deal of, plenty of, a number of, the majority of, few và little. Cần phân biệt lượng từ đi với danh từ đếm được, không đếm được và sắc thái trang trọng. Dùng chính xác giúp câu văn tự nhiên và phù hợp văn phong.",
+    "formula_affirmative": "Quantifier + N (đếm được/không đếm được) + V",
+    "formula_negative": "not + quantifier + N (hoặc few/little + N)",
+    "formula_question": "How much/many + N + ...? (hoặc Is there/Are there + quantifier + N?)",
+    "time_markers": [
+      "a great deal of + không đếm được (nhiều)",
+      "a number of + số nhiều đếm được (một số)",
+      "plenty of + cả hai loại (nhiều, đủ)",
+      "the majority of + N (phần lớn)",
+      "hardly any + N (hầu như không có)"
+    ],
+    "usage_rules": [
+      "A great deal of, a little và little đi với danh từ không đếm được.",
+      "A number of, many và few đi với danh từ đếm được số nhiều.",
+      "Plenty of, a lot of và lots of dùng được cho cả hai loại danh từ.",
+      "Few và little không có a mang nghĩa tiêu cực: rất ít, gần như không.",
+      "The majority of + N chia động từ theo danh từ sau of."
+    ],
+    "examples": [
+      {
+        "english": "A great deal of research has been done on this topic.",
+        "vietnamese": "Rất nhiều nghiên cứu đã được thực hiện về chủ đề này.",
+        "note": "A great deal of + danh từ không đếm được."
+      },
+      {
+        "english": "A number of students were absent yesterday.",
+        "vietnamese": "Một số sinh viên đã vắng mặt hôm qua.",
+        "note": "A number of + danh từ đếm được số nhiều."
+      },
+      {
+        "english": "There is little hope of finding survivors.",
+        "vietnamese": "Có rất ít hy vọng tìm thấy người sống sót.",
+        "note": "Little mang nghĩa tiêu cực với danh từ không đếm được."
+      },
+      {
+        "english": "Plenty of time is left before the deadline.",
+        "vietnamese": "Còn nhiều thời gian trước hạn chót.",
+        "note": "Plenty of dùng được với danh từ không đếm được."
+      },
+      {
+        "english": "The majority of the audience was impressed.",
+        "vietnamese": "Phần lớn khán giả đã rất ấn tượng.",
+        "note": "The majority of + danh từ tập hợp."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng much với danh từ đếm được: 'much students' → 'many students'.",
+      "Nhầm a few và few: 'A few people came' (một vài) khác 'Few people came' (rất ít, tiêu cực).",
+      "Dùng a number of với không đếm được: 'a number of information' → 'a great deal of information'.",
+      "Chia động từ sai sau the majority of: 'The majority of students is' → 'are' khi nói về số nhiều."
+    ],
+    "quiz": [
+      {
+        "question": "_____ research has been done on this topic.",
+        "options": [
+          "Many",
+          "A great deal of",
+          "A number of",
+          "Few"
+        ],
+        "correct_index": 1,
+        "explanation": "Research là danh từ không đếm được nên dùng a great deal of."
+      },
+      {
+        "question": "_____ students were absent yesterday.",
+        "options": [
+          "Much",
+          "A number of",
+          "A great deal of",
+          "Little"
+        ],
+        "correct_index": 1,
+        "explanation": "Students là danh từ đếm được số nhiều nên dùng a number of."
+      },
+      {
+        "question": "There is _____ hope of finding survivors.",
+        "options": [
+          "few",
+          "a few",
+          "little",
+          "many"
+        ],
+        "correct_index": 2,
+        "explanation": "Hope là danh từ không đếm được và nghĩa tiêu cực nên dùng little."
+      },
+      {
+        "question": "_____ time is left before the deadline.",
+        "options": [
+          "Many",
+          "Few",
+          "Plenty of",
+          "A number of"
+        ],
+        "correct_index": 2,
+        "explanation": "Time là không đếm được; plenty of dùng được cho cả hai loại."
+      },
+      {
+        "question": "_____ the audience was impressed.",
+        "options": [
+          "Many",
+          "Much",
+          "The majority of",
+          "A few"
+        ],
+        "correct_index": 2,
+        "explanation": "The majority of + danh từ tập hợp diễn tả 'phần lớn'."
+      }
+    ]
+  },
+  {
+    "id": "linking_words_advanced",
+    "title": "Linking Words Advanced",
+    "title_vi": "Liên từ nâng cao",
+    "level": "B2",
+    "category": "Liên từ",
+    "description": "Sử dụng liên từ và trạng từ liên kết nâng cao để nối ý, thể hiện quan hệ nguyên nhân, đối lập, nhượng bộ và kết luận. Các từ như nevertheless, whereas, in spite of hay consequently giúp bài viết mạch lạc và trang trọng. Cần chú ý cấu trúc ngữ pháp đi kèm mỗi từ.",
+    "formula_affirmative": "Clause + linker + clause (hoặc linker + N/V-ing, clause)",
+    "formula_negative": "not only ... but also / neither ... nor (cấu trúc đối lập, phủ định)",
+    "formula_question": "Linker + clause, + auxiliary + S + V? (liên từ thường dùng trong câu kể)",
+    "time_markers": [
+      "although / even though (mặc dù)",
+      "in spite of / despite (mặc dù + N/V-ing)",
+      "whereas / while (trong khi, đối lập)",
+      "nevertheless (tuy nhiên)",
+      "consequently / therefore (do đó)"
+    ],
+    "usage_rules": [
+      "However, nevertheless và therefore là trạng từ liên kết, thường đứng đầu câu và theo sau là dấu phẩy.",
+      "Although và even though đi với mệnh đề; in spite of và despite đi với danh từ hoặc V-ing.",
+      "Whereas và while nối hai mệnh đề đối lập.",
+      "Because, since và as chỉ nguyên nhân; so và therefore chỉ kết quả.",
+      "Not only ... but also đảo ngữ khi not only đứng đầu câu."
+    ],
+    "examples": [
+      {
+        "english": "Although the weather was bad, the event went ahead.",
+        "vietnamese": "Mặc dù thời tiết xấu, sự kiện vẫn diễn ra.",
+        "note": "Although + mệnh đề."
+      },
+      {
+        "english": "Despite the heavy rain, they continued the match.",
+        "vietnamese": "Bất chấp mưa lớn, họ vẫn tiếp tục trận đấu.",
+        "note": "Despite + danh từ."
+      },
+      {
+        "english": "The salary is low; nevertheless, the job is rewarding.",
+        "vietnamese": "Mức lương thấp; tuy nhiên, công việc rất đáng làm.",
+        "note": "Nevertheless nối hai ý đối lập."
+      },
+      {
+        "english": "He was late; consequently, he missed the opening.",
+        "vietnamese": "Anh ấy đến muộn; do đó, anh ấy đã lỡ phần mở đầu.",
+        "note": "Consequently chỉ kết quả."
+      },
+      {
+        "english": "Whereas my brother enjoys sport, I prefer reading.",
+        "vietnamese": "Trong khi anh trai tôi thích thể thao, tôi lại thích đọc sách.",
+        "note": "Whereas nối hai mệnh đề đối lập."
+      }
+    ],
+    "common_mistakes": [
+      "Dùng although + danh từ: 'Although the rain' → 'Despite the rain'.",
+      "Dùng despite + mệnh đề: 'Despite it rained' → 'Despite the rain' hoặc 'Although it rained'.",
+      "Dùng however như liên từ nối trực tiếp hai mệnh đề bằng dấu phẩy; cần dấu chấm hoặc chấm phẩy.",
+      "Dùng because và so trong cùng một câu: 'Because it rained, so we stayed' → bỏ so."
+    ],
+    "quiz": [
+      {
+        "question": "_____ the weather was bad, the event went ahead.",
+        "options": [
+          "Despite",
+          "Although",
+          "However",
+          "Because"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau đây là mệnh đề đầy đủ nên dùng although."
+      },
+      {
+        "question": "_____ the heavy rain, they continued the match.",
+        "options": [
+          "Although",
+          "Because",
+          "Despite",
+          "Whereas"
+        ],
+        "correct_index": 2,
+        "explanation": "Sau đây là cụm danh từ nên dùng despite."
+      },
+      {
+        "question": "The salary is low; _____, the job is rewarding.",
+        "options": [
+          "although",
+          "nevertheless",
+          "despite",
+          "because"
+        ],
+        "correct_index": 1,
+        "explanation": "Nevertheless là trạng từ liên kết chỉ sự đối lập."
+      },
+      {
+        "question": "He was late; _____, he missed the opening.",
+        "options": [
+          "however",
+          "whereas",
+          "consequently",
+          "although"
+        ],
+        "correct_index": 2,
+        "explanation": "Consequently diễn tả kết quả của việc đến muộn."
+      },
+      {
+        "question": "_____ my brother enjoys sport, I prefer reading.",
+        "options": [
+          "Despite",
+          "Because",
+          "Whereas",
+          "However"
+        ],
+        "correct_index": 2,
+        "explanation": "Whereas nối hai mệnh đề đối lập về sở thích."
+      }
+    ]
+  },
+  {
+    "id": "ellipsis_substitution",
+    "title": "Ellipsis & Substitution",
+    "title_vi": "Tỉnh lược & thay thế",
+    "level": "B2",
+    "category": "Cấu trúc",
+    "description": "Tỉnh lược là bỏ bớt từ đã rõ nghĩa, còn thay thế là dùng one/ones/do/so để tránh lặp lại. Hai kỹ thuật này giúp câu văn gọn, tự nhiên và mạch lạc. Chúng đặc biệt hữu ích trong hội thoại và văn viết trang trọng.",
+    "formula_affirmative": "S + V + (O) + one/ones/do/so (thay cho phần đã nhắc)",
+    "formula_negative": "S + auxiliary + not (tỉnh lược mệnh đề: I think not / I hope not)",
+    "formula_question": "Auxiliary + S? (tỉnh lược trong câu hỏi: Coming? / Want some?)",
+    "time_markers": [
+      "one / ones (thay cho danh từ đã nhắc)",
+      "do / does / did (thay cho động từ chính)",
+      "so / not (thay cho mệnh đề sau think, hope)",
+      "the same (tương tự)",
+      "too / either (cũng vậy / cũng không)"
+    ],
+    "usage_rules": [
+      "Bỏ động từ hoặc tân ngữ đã nhắc khi nghĩa vẫn rõ ràng.",
+      "Dùng one/ones thay cho danh từ đếm được để tránh lặp.",
+      "Dùng do/does/did thay cho động từ chính trong so sánh và trả lời ngắn.",
+      "Dùng so/not sau think, hope, believe, suppose: I think so / I hope not.",
+      "Có thể tỉnh lược chủ ngữ và trợ động từ trong câu hỏi thân mật."
+    ],
+    "examples": [
+      {
+        "english": "I'd like a coffee, and she'd like one too.",
+        "vietnamese": "Tôi muốn một ly cà phê, và cô ấy cũng muốn một ly.",
+        "note": "One thay cho 'a coffee'."
+      },
+      {
+        "english": "He doesn't like spicy food, but I do.",
+        "vietnamese": "Anh ấy không thích đồ cay, nhưng tôi thì có.",
+        "note": "Do thay cho 'like spicy food'."
+      },
+      {
+        "english": "Will it rain tomorrow? I hope not.",
+        "vietnamese": "Ngày mai trời sẽ mưa chứ? Tôi hy vọng là không.",
+        "note": "Not thay cho mệnh đề phủ định."
+      },
+      {
+        "english": "She can play the guitar, and so can her brother.",
+        "vietnamese": "Cô ấy biết chơi guitar, và anh trai cô ấy cũng vậy.",
+        "note": "So + trợ động từ + chủ ngữ diễn tả 'cũng vậy'."
+      },
+      {
+        "english": "Some students passed; others didn't.",
+        "vietnamese": "Một số sinh viên đã đậu; những người khác thì không.",
+        "note": "Didn't tỉnh lược 'pass'."
+      }
+    ],
+    "common_mistakes": [
+      "Lặp từ không cần thiết: 'I like red cars and she likes red cars' → 'she likes red ones'.",
+      "Dùng one cho danh từ không đếm được: 'Can you give me one?' khi nói về advice → 'Can you give me some?'.",
+      "Dùng sai dạng phủ định: 'I hope so not' → 'I hope not'.",
+      "Tỉnh lược quá mức gây mơ hồ, đặc biệt khi chủ ngữ của hai mệnh đề khác nhau."
+    ],
+    "quiz": [
+      {
+        "question": "I'd like a coffee, and she'd like _____ too.",
+        "options": [
+          "it",
+          "one",
+          "ones",
+          "some"
+        ],
+        "correct_index": 1,
+        "explanation": "One thay cho danh từ đếm được số ít 'a coffee'."
+      },
+      {
+        "question": "He doesn't like spicy food, but I _____.",
+        "options": [
+          "am",
+          "do",
+          "does",
+          "did"
+        ],
+        "correct_index": 1,
+        "explanation": "Do thay cho động từ chính 'like spicy food' ở hiện tại đơn."
+      },
+      {
+        "question": "Will it rain tomorrow? I hope _____.",
+        "options": [
+          "no",
+          "not",
+          "so not",
+          "don't"
+        ],
+        "correct_index": 1,
+        "explanation": "Sau hope, dạng phủ định tỉnh lược là 'I hope not'."
+      },
+      {
+        "question": "She can play the guitar, and so _____ her brother.",
+        "options": [
+          "can",
+          "does",
+          "is",
+          "did"
+        ],
+        "correct_index": 0,
+        "explanation": "So + trợ động từ + chủ ngữ; trợ động từ can được lặp lại."
+      },
+      {
+        "question": "Some students passed; others _____.",
+        "options": [
+          "didn't",
+          "don't",
+          "weren't",
+          "haven't"
+        ],
+        "correct_index": 0,
+        "explanation": "Câu gốc ở quá khứ nên dùng didn't để tỉnh lược 'passed'."
+      }
+    ]
+  }
+]

@@ -40,8 +40,6 @@ class _VocabularyListScreenState extends ConsumerState<VocabularyListScreen> {
   @override
   Widget build(BuildContext context) {
     final wordsAsync = ref.watch(allVocabularyWordsProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
-    final contentWidth = screenWidth > 900 ? 900.0 : screenWidth;
 
     return Scaffold(
       backgroundColor: context.palette.background,

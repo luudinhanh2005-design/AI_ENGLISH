@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -5,6 +7,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/speech_service.dart';
 import '../../data/grammar_data.dart';
+import '../../data/grammar_progress_store.dart';
+import '../../data/grammar_repository.dart';
+import '../../data/grammar_sync_service.dart';
 
 class GrammarScreen extends StatefulWidget {
   final String? initialLessonId;
@@ -20,17 +25,100 @@ class _GrammarScreenState extends State<GrammarScreen> {
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
   GrammarLesson? _activeLesson;
+  List<GrammarLesson> _lessons = const [];
+  Map<String, GrammarProgress> _progress = const {};
+  bool _isLoading = true;
+  Future<void> _progressWrite = Future<void>.value();
 
   @override
   void initState() {
     super.initState();
-    if (widget.initialLessonId != null) {
-      final found = grammarLessonsData.firstWhere(
-        (l) => l.id == widget.initialLessonId,
-        orElse: () => grammarLessonsData.first,
-      );
-      _activeLesson = found;
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final loaded = await GrammarRepository.loadLessonsWithSync();
+    final lessons = loaded.isEmpty ? grammarLessonsData : loaded;
+
+    // Server progress is merged with local best scores; local wins on ties.
+    var progress = await GrammarSyncService.fetchAndMergeProgress(lessons);
+    await GrammarSyncService.flushPending(lessons: lessons);
+    progress = await GrammarProgressStore.load();
+
+    // Keep old bookmarks/quick links working after the curriculum was expanded.
+    const legacyLessonIds = <String, String>{
+      'past_simple': 'past_simple_regular_irregular',
+      'present_perfect': 'present_perfect_experience',
+      'passive_voice': 'passive_present_past',
+    };
+    final requestedId = widget.initialLessonId == null
+        ? null
+        : legacyLessonIds[widget.initialLessonId] ?? widget.initialLessonId;
+    GrammarLesson? initial;
+    if (requestedId != null) {
+      for (final lesson in lessons) {
+        if (lesson.id == requestedId) {
+          initial = lesson;
+          break;
+        }
+      }
     }
+
+    if (!mounted) return;
+    setState(() {
+      _lessons = lessons;
+      _progress = progress;
+      _activeLesson = initial;
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _saveProgress(
+    GrammarLesson lesson,
+    int correct,
+    Map<int, int> answers,
+  ) async {
+    final previous = _progress[lesson.id];
+    final sameQuiz = previous != null && previous.total == lesson.quiz.length;
+    final bestCorrect = sameQuiz && previous.bestCorrect > correct
+        ? previous.bestCorrect
+        : correct;
+    final updated = Map<String, GrammarProgress>.from(_progress)
+      ..[lesson.id] = GrammarProgress(
+        completed: true,
+        bestCorrect: bestCorrect,
+        total: lesson.quiz.length,
+        xpEarned: previous?.xpEarned ?? 0,
+        synced: previous?.synced ?? false,
+      );
+    setState(() => _progress = updated);
+    _progressWrite =
+        _progressWrite.then((_) => GrammarProgressStore.save(updated));
+    await _progressWrite;
+
+    // Local completion is immediate; server sync is best-effort and queues
+    // offline attempts for the next app launch/login.
+    final synced = await GrammarSyncService.submitAttempt(
+      lesson: lesson,
+      answers: answers,
+    );
+    if (synced == null || !mounted) return;
+    final current = _progress[lesson.id];
+    final merged = GrammarProgress(
+      completed: (current?.completed ?? false) || synced.completed,
+      bestCorrect: current != null && current.bestCorrect > synced.bestCorrect
+          ? current.bestCorrect
+          : synced.bestCorrect,
+      total: lesson.quiz.length,
+      xpEarned: current != null && current.xpEarned > synced.xpEarned
+          ? current.xpEarned
+          : synced.xpEarned,
+      synced: true,
+    );
+    setState(() {
+      _progress = Map<String, GrammarProgress>.from(_progress)
+        ..[lesson.id] = merged;
+    });
   }
 
   @override
@@ -53,14 +141,49 @@ class _GrammarScreenState extends State<GrammarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: context.palette.background,
+        appBar: AppBar(
+          backgroundColor: context.palette.background,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new_rounded,
+                color: context.palette.textPrimary),
+            tooltip: 'Thoát',
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/learn');
+              }
+            },
+          ),
+          title: Text(
+            'Ngữ Pháp Toàn Diện (Grammar)',
+            style: AppTextStyles.titleMedium.copyWith(
+              color: context.palette.textPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     if (_activeLesson != null) {
+      final lesson = _activeLesson!;
       return _GrammarLessonDetailView(
-        lesson: _activeLesson!,
+        lesson: lesson,
+        progress: _progress[lesson.id],
+        onCompleted: (correct, answers) =>
+            unawaited(_saveProgress(lesson, correct, answers)),
         onBack: _closeLesson,
       );
     }
 
-    final filteredLessons = grammarLessonsData.where((l) {
+    final filteredLessons = _lessons.where((l) {
       final matchesLevel = _selectedLevel == 'All' || l.level == _selectedLevel;
       final matchesQuery = _searchQuery.isEmpty ||
           l.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
@@ -211,8 +334,7 @@ class _GrammarScreenState extends State<GrammarScreen> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildFilterChip(
-                            'All', 'Tất cả (${grammarLessonsData.length})'),
+                        _buildFilterChip('All', 'Tất cả (${_lessons.length})'),
                         const SizedBox(width: 8),
                         _buildFilterChip('A1', 'A1 Căn bản'),
                         const SizedBox(width: 8),
@@ -221,6 +343,10 @@ class _GrammarScreenState extends State<GrammarScreen> {
                         _buildFilterChip('B1', 'B1 Trung cấp'),
                         const SizedBox(width: 8),
                         _buildFilterChip('B2', 'B2 Nâng cao'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip('C1', 'C1 Nâng cao (beta)'),
+                        const SizedBox(width: 8),
+                        _buildFilterChip('C2', 'C2 Thành thạo (beta)'),
                       ],
                     ),
                   ),
@@ -284,6 +410,9 @@ class _GrammarScreenState extends State<GrammarScreen> {
     if (lesson.level == 'A2') levelColor = const Color(0xFF00CEC9);
     if (lesson.level == 'B1') levelColor = const Color(0xFFFFA502);
     if (lesson.level == 'B2') levelColor = const Color(0xFFFF4757);
+    if (lesson.level == 'C1') levelColor = const Color(0xFF8E44AD);
+    if (lesson.level == 'C2') levelColor = const Color(0xFF0984E3);
+    final progress = _progress[lesson.id];
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -343,6 +472,25 @@ class _GrammarScreenState extends State<GrammarScreen> {
                               ),
                             ),
                           ),
+                          if (lesson.isBeta) ...[
+                            const SizedBox(width: 4),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: Colors.orange.withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: const Text(
+                                'BETA',
+                                style: TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                       const SizedBox(height: 3),
@@ -362,9 +510,25 @@ class _GrammarScreenState extends State<GrammarScreen> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      if (progress != null && progress.completed) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          'Đã hoàn thành · ${progress.bestCorrect}/${progress.total} câu đúng',
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: Colors.green,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
+                if (progress != null && progress.completed) ...[
+                  const SizedBox(width: 6),
+                  const Icon(Icons.check_circle_rounded,
+                      color: Colors.green, size: 18),
+                ],
                 const SizedBox(width: 8),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
@@ -385,10 +549,14 @@ class _GrammarScreenState extends State<GrammarScreen> {
 // ─────────────────────────────────────────────────────────────
 class _GrammarLessonDetailView extends StatefulWidget {
   final GrammarLesson lesson;
+  final GrammarProgress? progress;
+  final void Function(int correct, Map<int, int> answers)? onCompleted;
   final VoidCallback onBack;
 
   const _GrammarLessonDetailView({
     required this.lesson,
+    this.progress,
+    this.onCompleted,
     required this.onBack,
   });
 
@@ -420,6 +588,7 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
 
   void _selectQuizOption(int qIndex, int optIndex) {
     if (_selectedAnswers.containsKey(qIndex)) return;
+    var justCompleted = false;
     setState(() {
       _selectedAnswers[qIndex] = optIndex;
       if (optIndex == widget.lesson.quiz[qIndex].correctIndex) {
@@ -427,8 +596,12 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
       }
       if (_selectedAnswers.length == widget.lesson.quiz.length) {
         _quizCompleted = true;
+        justCompleted = true;
       }
     });
+    if (justCompleted) {
+      widget.onCompleted?.call(_score, Map<int, int>.from(_selectedAnswers));
+    }
   }
 
   void _resetQuiz() {
@@ -445,6 +618,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
     if (widget.lesson.level == 'A2') levelColor = const Color(0xFF00CEC9);
     if (widget.lesson.level == 'B1') levelColor = const Color(0xFFFFA502);
     if (widget.lesson.level == 'B2') levelColor = const Color(0xFFFF4757);
+    if (widget.lesson.level == 'C1') levelColor = const Color(0xFF8E44AD);
+    if (widget.lesson.level == 'C2') levelColor = const Color(0xFF0984E3);
 
     return Scaffold(
       backgroundColor: context.palette.background,
@@ -486,7 +661,9 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
               border: Border.all(color: levelColor.withOpacity(0.5)),
             ),
             child: Text(
-              widget.lesson.level,
+              widget.lesson.isBeta
+                  ? '${widget.lesson.level} · BETA'
+                  : widget.lesson.level,
               style: TextStyle(
                 color: levelColor,
                 fontWeight: FontWeight.bold,
@@ -758,8 +935,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                 const SizedBox(height: 3),
                 Text(
                   formula,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: context.palette.textPrimary,
                     fontSize: 13,
                     fontFamily: 'monospace',
                     fontWeight: FontWeight.w600,
@@ -811,8 +988,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                     children: [
                       Text(
                         ex.english,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: context.palette.textPrimary,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -892,6 +1069,35 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
+        if (!_quizCompleted &&
+            widget.progress != null &&
+            widget.progress!.completed)
+          Container(
+            padding: const EdgeInsets.all(12),
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: Colors.green.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.green.withOpacity(0.4)),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.check_circle_rounded,
+                    color: Colors.green, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Điểm tốt nhất: ${widget.progress!.bestCorrect}/${widget.progress!.total} câu đúng',
+                    style: TextStyle(
+                      color: context.palette.textPrimary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         if (_quizCompleted)
           Container(
             padding: const EdgeInsets.all(18),
@@ -983,8 +1189,8 @@ class _GrammarLessonDetailViewState extends State<_GrammarLessonDetailView>
                     Expanded(
                       child: Text(
                         q.question,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: context.palette.textPrimary,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),

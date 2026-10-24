@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+import '../utils/test_environment_stub.dart'
+    if (dart.library.io) '../utils/test_environment_io.dart';
+
 /// Central runtime configuration.
 ///
 /// Override the backend URL at build/run time without editing code:
@@ -9,6 +12,15 @@ class AppConfig {
 
   /// Optional override supplied via `--dart-define=API_BASE_URL=...`.
   static const String _apiBaseUrlOverride = String.fromEnvironment('API_BASE_URL');
+
+  /// Content source switch: `remote` (default) or `local`.
+  /// Use `--dart-define=GRAMMAR_SOURCE=local` to force the bundled JSON flow.
+  static const String _grammarSource =
+      String.fromEnvironment('GRAMMAR_SOURCE', defaultValue: 'remote');
+
+  static bool get useRemoteGrammar =>
+      _grammarSource.trim().toLowerCase() != 'local' &&
+      !isFlutterTestEnvironment;
 
   /// Backend origin (without the `/api/v1` suffix), e.g. `http://10.0.2.2:8000`.
   static String get apiBaseUrl {

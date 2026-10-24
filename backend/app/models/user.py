@@ -68,6 +68,13 @@ class User(Base):
         Boolean,
         default=True,
     )
+    role: Mapped[str] = mapped_column(
+        String(20),
+        default="user",
+        server_default="user",
+        index=True,
+        comment="user, reviewer, admin",
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -99,6 +106,7 @@ class User(Base):
             "streak": self.streak if self.streak is not None else 0,
             "total_xp": self.total_xp if self.total_xp is not None else 0,
             "has_completed_onboarding": bool(self.has_completed_onboarding),
+            "role": self.role or "user",
             "created_at": self.created_at.isoformat() if self.created_at else datetime.utcnow().isoformat(),
         }
 

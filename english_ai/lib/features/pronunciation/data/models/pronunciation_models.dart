@@ -1,4 +1,4 @@
-﻿/// Pronunciation feature data models
+/// Pronunciation feature data models
 
 // -----------------------------------------------------------------------------
 // Word-level scoring from /api/v1/speech/assess
@@ -49,31 +49,48 @@ class PronunciationResultModel {
   final String recognizedText;
   final String referenceText;
 
+  /// Backend có thực sự chấm được điểm hay không (false = chưa nghe rõ giọng).
+  final bool scored;
+
+  /// Prosody/ngữ điệu có được đo thật hay không (backend có thể không chấm).
+  final bool prosodyMeasured;
+
+  /// Fluency có số liệu timing thật hay không.
+  final bool fluencyMeasured;
+
+  /// Ghi chú kỹ thuật từ backend về cách tính điểm.
+  final List<String> scoringNotes;
+
   const PronunciationResultModel({
     required this.overallScore,
-    required this.fluencyScore,
+    this.fluencyScore = 0.0,
     required this.accuracyScore,
     required this.completenessScore,
-    required this.prosodyScore,
+    this.prosodyScore = 0.0,
     required this.feedbackVi,
     required this.improvementTips,
     required this.wordScores,
     required this.recognizedText,
     required this.referenceText,
+    this.scored = true,
+    this.prosodyMeasured = true,
+    this.fluencyMeasured = true,
+    this.scoringNotes = const [],
   });
 
   factory PronunciationResultModel.fromJson(Map<String, dynamic> json) {
     final rawWords = json['word_scores'] as List<dynamic>? ?? [];
     final rawTips = json['improvement_tips'] as List<dynamic>? ?? [];
+    final rawNotes = json['scoring_notes'] as List<dynamic>?;
     return PronunciationResultModel(
       overallScore: (json['overall_score'] as num?)?.toDouble() ?? 0.0,
       fluencyScore: (json['fluency_score'] as num?)?.toDouble() ?? 0.0,
       accuracyScore: (json['accuracy_score'] as num?)?.toDouble() ?? 0.0,
-      completenessScore: (json['completeness_score'] as num?)?.toDouble() ?? 0.0,
+      completenessScore:
+          (json['completeness_score'] as num?)?.toDouble() ?? 0.0,
       prosodyScore: (json['prosody_score'] as num?)?.toDouble() ?? 0.0,
-      feedbackVi: json['feedback_vi'] as String? ??
-          json['feedback'] as String? ??
-          '',
+      feedbackVi:
+          json['feedback_vi'] as String? ?? json['feedback'] as String? ?? '',
       improvementTips: rawTips.map((e) => e.toString()).toList(),
       wordScores: rawWords
           .map((w) => WordScoreModel.fromJson(w as Map<String, dynamic>))
@@ -82,6 +99,13 @@ class PronunciationResultModel {
           json['recognised_text'] as String? ??
           '',
       referenceText: json['reference_text'] as String? ?? '',
+      scored: json['scored'] as bool? ?? true,
+      prosodyMeasured:
+          json['prosody_measured'] as bool? ?? (json['prosody_score'] != null),
+      fluencyMeasured:
+          json['fluency_measured'] as bool? ?? (json['fluency_score'] != null),
+      scoringNotes:
+          rawNotes?.map((e) => e.toString()).toList() ?? const <String>[],
     );
   }
 
@@ -184,5 +208,3 @@ class PronunciationStatsModel {
     );
   }
 }
-
-

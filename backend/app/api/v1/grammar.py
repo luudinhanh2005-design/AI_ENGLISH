@@ -1,214 +1,237 @@
-from datetime import datetime, timezone
-from uuid import UUID
+"""Public grammar content, progress, and idempotent quiz attempts."""
+from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+import logging
+from datetime import datetime, timezone
+from typing import Optional
+from uuid import UUID, uuid4
+
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...database import get_db, is_db_connected
-from ...models.learning import GrammarLesson, UserGrammarProgress
+from ...models.learning import GrammarLesson
 from ...models.user import User
-from ...schemas.learning import (
+from ...schemas.grammar import (
+    GrammarAttemptRequest,
+    GrammarAttemptResponse,
+    GrammarBundleResponse,
     GrammarLessonDetail,
     GrammarLessonSummary,
+    GrammarManifestResponse,
+    GrammarProgressResponse,
     GrammarResultResponse,
     GrammarSubmitRequest,
 )
-from ..deps import get_current_user
+from ...services.grammar_service import (
+    build_manifest,
+    deterministic_lesson_id,
+    find_lesson,
+    lesson_to_payload,
+    load_progress_map,
+    load_progress_response,
+    load_published_lessons,
+    load_seed_lessons,
+    payload_to_detail,
+    payload_to_summary,
+    seed_lesson_map,
+    submit_attempt,
+)
+from ..deps import get_current_user, get_optional_user
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-import uuid
-from ...utils.seed_learning_data import SAMPLE_GRAMMAR
+async def _load_rows(db: Optional[AsyncSession]) -> list[GrammarLesson]:
+    if not is_db_connected() or db is None:
+        return []
+    try:
+        return await load_published_lessons(db)
+    except Exception:
+        logger.exception("Grammar DB query failed; using bundled seed content")
+        return []
 
-# Pre-generate fallback grammar data
-_FALLBACK_GRAMMAR_LESSONS = []
-_FALLBACK_GRAMMAR_MAP = {}
 
-for idx, g_data in enumerate(SAMPLE_GRAMMAR):
-    g_id = uuid.uuid5(uuid.NAMESPACE_DNS, f"grammar-lesson-{g_data['slug']}")
-    g_obj = GrammarLesson(
-        id=g_id,
-        slug=g_data["slug"],
-        title=g_data["title"],
-        level=g_data["level"],
-        summary=g_data["summary"],
-        formula=g_data["formula"],
-        content_markdown=g_data["content_markdown"],
-        examples=g_data["examples"],
-        practice_questions=g_data["practice_questions"],
-        order_index=g_data["order_index"],
-        is_active=True,
+def _seed_by_identifier(identifier: str) -> Optional[dict]:
+    direct = seed_lesson_map().get(identifier)
+    if direct:
+        return direct
+    try:
+        wanted = UUID(identifier)
+    except (TypeError, ValueError):
+        return None
+    for payload in load_seed_lessons():
+        if deterministic_lesson_id(payload["id"]) == wanted:
+            return payload
+    return None
+
+
+async def _public_payloads(db: Optional[AsyncSession]) -> list[dict]:
+    rows = await _load_rows(db)
+    if rows:
+        return [lesson_to_payload(row) for row in rows]
+    return list(load_seed_lessons())
+
+
+async def _resolve_slug(db: AsyncSession, identifier: str) -> Optional[str]:
+    lesson = await find_lesson(db, identifier)
+    return lesson.slug if lesson else None
+
+
+@router.get("/manifest", response_model=GrammarManifestResponse)
+async def grammar_manifest(db: AsyncSession = Depends(get_db)):
+    """Return lightweight version metadata for incremental client sync."""
+    payloads = await _public_payloads(db)
+    version, entries = build_manifest(payloads)
+    return GrammarManifestResponse(
+        version=version,
+        generated_at=datetime.now(timezone.utc),
+        lessons=entries,
     )
-    _FALLBACK_GRAMMAR_LESSONS.append(g_obj)
-    _FALLBACK_GRAMMAR_MAP[g_id] = g_obj
+
+
+@router.get("/bundle", response_model=GrammarBundleResponse)
+async def grammar_bundle(db: AsyncSession = Depends(get_db)):
+    """Return all published lessons for offline cache bootstrapping."""
+    payloads = await _public_payloads(db)
+    version, _ = build_manifest(payloads)
+    return GrammarBundleResponse(
+        version=version,
+        generated_at=datetime.now(timezone.utc),
+        lessons=[payload_to_detail(payload) for payload in payloads],
+    )
 
 
 @router.get("/lessons", response_model=list[GrammarLessonSummary])
 async def list_grammar_lessons(
+    level: Optional[str] = Query(default=None),
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: Optional[User] = Depends(get_optional_user),
 ):
-    """Retrieve all grammar lessons with current user completion status."""
-    if is_db_connected():
-        try:
-            result = await db.execute(
-                select(GrammarLesson)
-                .where(GrammarLesson.is_active == True)
-                .order_by(GrammarLesson.order_index)
-            )
-            lessons = result.scalars().all()
+    """List published lessons with optional authenticated progress."""
+    rows = await _load_rows(db)
+    if rows:
+        progress_map = {}
+        if current_user is not None:
+            try:
+                progress_map = await load_progress_map(db, current_user.id)
+            except Exception:
+                logger.exception("Could not load grammar progress")
+        result = []
+        for row in rows:
+            payload = lesson_to_payload(row)
+            if level and payload["level"].upper() != level.upper():
+                continue
+            result.append(payload_to_summary(payload, progress_map.get(row.id)))
+        return result
 
-            if lessons:
-                prog_res = await db.execute(
-                    select(UserGrammarProgress).where(UserGrammarProgress.user_id == current_user.id)
-                )
-                user_prog_map = {p.lesson_id: p for p in prog_res.scalars().all()}
-
-                summary_list = []
-                for l in lessons:
-                    p = user_prog_map.get(l.id)
-                    summary_list.append(
-                        GrammarLessonSummary(
-                            id=l.id,
-                            slug=l.slug,
-                            title=l.title,
-                            level=l.level,
-                            summary=l.summary,
-                            order_index=l.order_index,
-                            is_completed=p.is_completed if p else False,
-                            score=p.score if p else None,
-                        )
-                    )
-                return summary_list
-        except Exception:
-            pass
-
-    return [
-        GrammarLessonSummary(
-            id=l.id,
-            slug=l.slug,
-            title=l.title,
-            level=l.level,
-            summary=l.summary,
-            order_index=l.order_index,
-            is_completed=False,
-            score=None,
-        )
-        for l in _FALLBACK_GRAMMAR_LESSONS
-    ]
+    # DB unavailable: serve honest seed content, without fake completion scores.
+    result = []
+    for payload in load_seed_lessons():
+        if level and payload["level"].upper() != level.upper():
+            continue
+        result.append(payload_to_summary(payload))
+    return result
 
 
 @router.get("/lessons/{lesson_id}", response_model=GrammarLessonDetail)
 async def get_grammar_lesson_detail(
-    lesson_id: UUID,
+    lesson_id: str,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
 ):
-    """Retrieve full content, formulas, examples, and practice quiz of a grammar lesson."""
-    lesson = None
-    if is_db_connected():
-        try:
-            result = await db.execute(
-                select(GrammarLesson).where(GrammarLesson.id == lesson_id)
-            )
-            lesson = result.scalar_one_or_none()
-        except Exception:
-            pass
+    """Get a published lesson by slug (or legacy UUID)."""
+    if is_db_connected() and db is not None:
+        lesson = await find_lesson(db, lesson_id)
+        if lesson is not None and lesson.is_active and lesson.status == "published":
+            return payload_to_detail(lesson_to_payload(lesson))
 
-    if not lesson:
-        lesson = _FALLBACK_GRAMMAR_MAP.get(lesson_id)
-
-    if not lesson:
+    payload = _seed_by_identifier(lesson_id)
+    if payload is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Grammar lesson not found",
         )
-    return lesson
+    return payload_to_detail(payload)
+
+
+@router.post("/attempts", response_model=GrammarAttemptResponse)
+async def create_grammar_attempt(
+    request: GrammarAttemptRequest,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Submit an idempotent quiz attempt and award XP at most once."""
+    if not is_db_connected() or db is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Grammar sync is temporarily unavailable",
+        )
+    try:
+        return await submit_attempt(
+            db=db,
+            user=current_user,
+            lesson_slug=request.lesson_slug,
+            attempt_id=request.attempt_id,
+            answers=request.answers,
+            lesson_version=request.lesson_version,
+        )
+    except LookupError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+@router.get("/progress", response_model=GrammarProgressResponse)
+async def get_grammar_progress(
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if not is_db_connected() or db is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Grammar sync is temporarily unavailable",
+        )
+    return await load_progress_response(db, current_user)
 
 
 @router.post("/lessons/{lesson_id}/submit", response_model=GrammarResultResponse)
-async def submit_grammar_practice(
-    lesson_id: UUID,
+async def submit_grammar_practice_legacy(
+    lesson_id: str,
     request: GrammarSubmitRequest,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """Submit answers for the practice quiz in a grammar lesson."""
-    lesson = None
-    try:
-        result = await db.execute(
-            select(GrammarLesson).where(GrammarLesson.id == lesson_id)
+    """Backwards-compatible alias for older clients.
+
+    New clients should use ``POST /grammar/attempts`` with their own
+    ``attempt_id`` so retries after a network failure do not double-award XP.
+    """
+    if not is_db_connected() or db is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Grammar sync is temporarily unavailable",
         )
-        lesson = result.scalar_one_or_none()
-    except Exception:
-        pass
-
-    if not lesson:
-        lesson = _FALLBACK_GRAMMAR_MAP.get(lesson_id)
-
-    if not lesson:
+    slug = await _resolve_slug(db, lesson_id)
+    if slug is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Grammar lesson not found",
         )
-
-    questions = lesson.practice_questions or []
-    if not questions:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="No practice questions available for this lesson",
-        )
-
-    total = len(questions)
-    correct = 0
-
-    # Map user answers
-    user_ans_map = {a.question_index: a.selected_option for a in request.answers}
-    for idx, q in enumerate(questions):
-        correct_opt = q.get("correct_option")
-        if user_ans_map.get(idx) == correct_opt:
-            correct += 1
-
-    score_pct = round((correct / total) * 100, 1) if total > 0 else 0.0
-    is_passed = score_pct >= 70.0
-    xp_earned = 30 if is_passed else 10
-
-    # Save or update progress safely
     try:
-        p_res = await db.execute(
-            select(UserGrammarProgress).where(
-                UserGrammarProgress.user_id == current_user.id,
-                UserGrammarProgress.lesson_id == lesson_id,
-            )
+        result = await submit_attempt(
+            db=db,
+            user=current_user,
+            lesson_slug=slug,
+            attempt_id=uuid4(),
+            answers=request.answers,
         )
-        prog = p_res.scalar_one_or_none()
-        if not prog:
-            prog = UserGrammarProgress(
-                id=uuid.uuid4(),
-                user_id=current_user.id,
-                lesson_id=lesson_id,
-                score=score_pct,
-                is_completed=is_passed,
-                completed_at=datetime.now(timezone.utc) if is_passed else None,
-            )
-            db.add(prog)
-        else:
-            prog.score = max(prog.score, score_pct)
-            if is_passed and not prog.is_completed:
-                prog.is_completed = True
-                prog.completed_at = datetime.now(timezone.utc)
-        await db.flush()
-    except Exception:
-        pass
-
-    current_user.total_xp = (current_user.total_xp or 0) + xp_earned
-
+    except (LookupError, ValueError) as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
     return GrammarResultResponse(
-        score=score_pct,
-        total=total,
-        correct=correct,
-        is_passed=is_passed,
-        xp_earned=xp_earned,
+        score=result.score,
+        total=result.total,
+        correct=result.correct,
+        is_passed=result.is_passed,
+        xp_earned=result.xp_earned,
     )
