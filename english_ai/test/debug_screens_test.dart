@@ -17,11 +17,14 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
-    
+    // The arena loads its quiz and progress asynchronously and may keep a
+    // progress indicator alive, so a fixed pump is safer than pumpAndSettle.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
     expect(find.text('Đấu Trường Luyện Tập ⚡'), findsOneWidget);
-    expect(find.text('Trắc Nghiệm Tốc Độ ⚡'), findsOneWidget);
-    expect(find.text('Xưởng Luyện Viết Câu Thông Minh 🖊️'), findsOneWidget);
+    expect(find.text('Thử Thách Ngữ Pháp'), findsOneWidget);
+    expect(find.text('Writing AI'), findsOneWidget);
   });
 
   testWidgets('Test ListeningScreen active lesson renders content', (tester) async {
@@ -100,8 +103,8 @@ void main() {
       });
       await tester.pump(const Duration(milliseconds: 50));
     }
-    await tester.pumpAndSettle();
-    
+    await tester.pump();
+
     expect(find.text('Ngữ Pháp Toàn Diện (Grammar)'), findsOneWidget);
     tester.hitTestOnBinding(const Offset(400, 300));
     tester.hitTestOnBinding(const Offset(960, 540));

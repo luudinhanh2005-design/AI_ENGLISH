@@ -1,4 +1,4 @@
-﻿import 'dart:math';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart' show visibleForTesting;
 
@@ -6,6 +6,28 @@ import '../../../../core/constants/app_config.dart';
 import 'grammar_data.dart';
 import 'grammar_progress_store.dart';
 import 'grammar_remote_repository.dart';
+
+/// Outcome of one grammar attempt.
+///
+/// [progress] is the merged best-ever progress. [attempt] is the server's
+/// result for this attempt and is `null` when the attempt was queued offline.
+class GrammarAttemptSyncResult {
+  final GrammarProgress? progress;
+  final GrammarAttemptResult? attempt;
+  final bool queued;
+
+  const GrammarAttemptSyncResult({
+    this.progress,
+    this.attempt,
+    this.queued = false,
+  });
+
+  bool get synced => attempt != null;
+  int get xpEarned => attempt?.xpEarned ?? 0;
+  int get correct => attempt?.correct ?? 0;
+  int get total => attempt?.total ?? 0;
+  bool get duplicate => attempt?.duplicate ?? false;
+}
 
 /// Best-effort synchronization for grammar content, progress, and attempts.
 ///
@@ -44,8 +66,7 @@ class GrammarSyncService {
       final previous = merged[lesson.id];
       merged[lesson.id] = GrammarProgress(
         completed: (previous?.completed ?? false) || server.completed,
-        bestCorrect:
-            max(previous?.bestCorrect ?? 0, server.bestCorrect),
+        bestCorrect: max(previous?.bestCorrect ?? 0, server.bestCorrect),
         total: lesson.quiz.length,
         xpEarned: max(previous?.xpEarned ?? 0, server.xpEarned),
         synced: true,
@@ -61,7 +82,23 @@ class GrammarSyncService {
     required GrammarLesson lesson,
     required Map<int, int> answers,
   }) async {
-    if (!_enabled) return null;
+    final outcome = await submitAttemptDetailed(
+      lesson: lesson,
+      answers: answers,
+    );
+    return outcome.progress;
+  }
+
+  /// Submit an attempt and keep the server result so callers can show the XP
+  /// earned by this attempt (not just the best-ever XP for the lesson).
+  static Future<GrammarAttemptSyncResult> submitAttemptDetailed({
+    required GrammarLesson lesson,
+    required Map<int, int> answers,
+  }) async {
+    if (!_enabled) {
+      return const GrammarAttemptSyncResult(queued: true);
+    }
+
     final attemptId = generateGrammarAttemptId();
     try {
       final result = await GrammarRemoteRepository.submitAttempt(
@@ -71,12 +108,16 @@ class GrammarSyncService {
       );
       if (result == null) {
         await _enqueue(lesson, answers, attemptId);
-        return null;
+        return const GrammarAttemptSyncResult(queued: true);
       }
-      return await _mergeResult(lesson, result);
+      final progress = await _mergeResult(lesson, result);
+      return GrammarAttemptSyncResult(
+        progress: progress,
+        attempt: result,
+      );
     } catch (_) {
       await _enqueue(lesson, answers, attemptId);
-      return null;
+      return const GrammarAttemptSyncResult(queued: true);
     }
   }
 
@@ -141,8 +182,9 @@ class GrammarSyncService {
         ? ((result.bestScore / 100) * total).round()
         : result.correct;
     final merged = GrammarProgress(
-      completed:
-          (previous?.completed ?? false) || result.isCompleted || result.isPassed,
+      completed: (previous?.completed ?? false) ||
+          result.isCompleted ||
+          result.isPassed,
       bestCorrect: max(previous?.bestCorrect ?? 0, serverCorrect),
       total: total,
       xpEarned: max(previous?.xpEarned ?? 0, result.xpEarned),
@@ -153,4 +195,3 @@ class GrammarSyncService {
     return merged;
   }
 }
-
