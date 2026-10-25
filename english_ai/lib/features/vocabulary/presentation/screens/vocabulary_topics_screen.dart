@@ -23,6 +23,36 @@ class VocabularyTopicsScreen extends ConsumerWidget {
         return Icons.business_center_outlined;
       case 'flight':
         return Icons.flight_takeoff_rounded;
+      case 'restaurant':
+        return Icons.restaurant_rounded;
+      case 'fitness_center':
+        return Icons.fitness_center_rounded;
+      case 'school':
+        return Icons.school_rounded;
+      case 'shopping_bag':
+        return Icons.shopping_bag_outlined;
+      case 'home':
+        return Icons.home_outlined;
+      case 'eco':
+        return Icons.eco_outlined;
+      case 'sentiment_satisfied':
+        return Icons.sentiment_satisfied_alt_rounded;
+      case 'movie':
+        return Icons.movie_outlined;
+      case 'family_restroom':
+        return Icons.family_restroom_rounded;
+      case 'directions_bus':
+        return Icons.directions_bus_rounded;
+      case 'science':
+        return Icons.science_outlined;
+      case 'sports_soccer':
+        return Icons.sports_soccer_rounded;
+      case 'palette':
+        return Icons.palette_outlined;
+      case 'wb_sunny':
+        return Icons.wb_sunny_outlined;
+      case 'gavel':
+        return Icons.gavel_rounded;
       default:
         return Icons.menu_book_rounded;
     }
@@ -132,8 +162,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                       .read(flashcardSessionProvider.notifier)
                                       .startWordsSession(words, topic.title);
                                   if (context.mounted) {
-                                    context.pushNamed(
-                                        RouteNames.vocabularyReview);
+                                    context
+                                        .pushNamed(RouteNames.vocabularyReview);
                                   }
                                 },
                           icon: const Icon(Icons.style_rounded, size: 20),
@@ -205,7 +235,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                       const SizedBox(height: 2),
                                       Text(
                                         w.meaningVi,
-                                        style: AppTextStyles.bodyMedium.copyWith(
+                                        style:
+                                            AppTextStyles.bodyMedium.copyWith(
                                           color: AppColors.secondary,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -214,8 +245,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                                       Text(
                                         w.exampleSentence,
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color:
-                                              context.palette.textSecondary,
+                                          color: context.palette.textSecondary,
                                         ),
                                       ),
                                     ],
@@ -240,6 +270,8 @@ class VocabularyTopicsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final topicsAsync = ref.watch(vocabularyTopicsProvider);
+    final statsAsync = ref.watch(vocabularyStatsProvider);
+    final topics = topicsAsync.valueOrNull ?? buildStaticTopics();
 
     return Scaffold(
       backgroundColor: context.palette.background,
@@ -432,6 +464,24 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
+                    statsAsync.maybeWhen(
+                      data: (stats) {
+                        final summary =
+                            '${stats.totalWords} từ • ${topics.length} chủ đề';
+                        if (stats.learnedWords == 0 && stats.dueWords == 0) {
+                          return summary;
+                        }
+                        return '$summary • ${stats.dueWords} từ đến hạn ôn';
+                      },
+                      orElse: () =>
+                          '${buildStaticWords().length} từ • ${topics.length} chủ đề',
+                    ),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: context.palette.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
                     'Chạm vào chủ đề để xem danh sách từ và luyện Flashcards ngay',
                     style: AppTextStyles.bodySmall.copyWith(
                       color: context.palette.textSecondary,
@@ -440,8 +490,7 @@ class VocabularyTopicsScreen extends ConsumerWidget {
                   const SizedBox(height: 14),
 
                   // Topic cards list
-                  ...(topicsAsync.valueOrNull ?? buildStaticTopics())
-                      .map((topic) {
+                  ...topics.map((topic) {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 12),
                       decoration: BoxDecoration(

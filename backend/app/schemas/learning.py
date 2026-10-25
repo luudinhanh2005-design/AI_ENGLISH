@@ -59,9 +59,30 @@ class VocabularyWordResponse(BaseModel):
     audio_url: Optional[str] = None
     image_url: Optional[str] = None
     level: str
+    collocations: list[str] = Field(default_factory=list)
+    synonyms: list[str] = Field(default_factory=list)
+    antonyms: list[str] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
+    order_index: int = 0
 
     class Config:
         from_attributes = True
+
+
+class VocabularyWordPage(BaseModel):
+    items: list[VocabularyWordResponse]
+    total: int
+    page: int
+    limit: int
+    has_more: bool
+
+
+class VocabularyStatsResponse(BaseModel):
+    total_words: int
+    learned_words: int = 0
+    due_words: int = 0
+    mastered_words: int = 0
+    new_words: int = 0
 
 
 class VocabularyTopicResponse(BaseModel):

@@ -1,0 +1,4961 @@
+{
+  "version": 1,
+  "updated_at": "2026-10-25",
+  "description": "Canonical vocabulary catalog for EnglishAI. Backend seeds this file and the Flutter fallback deck is generated from it.",
+  "topics": [
+    {
+      "slug": "daily-communication",
+      "title": "Giao Tiếp Hàng Ngày",
+      "description": "Từ vựng thiết yếu và mẫu câu tự nhiên cho các cuộc trò chuyện tiếng Anh hằng ngày.",
+      "icon_name": "chat_bubble",
+      "level": "A1-A2",
+      "order_index": 0,
+      "words": [
+        {
+          "word": "greetings",
+          "phonetic": "/ˈɡriː.tɪŋz/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Lời chào hỏi",
+          "meaning_en": "Words or actions used to welcome someone",
+          "example_sentence": "She exchanged warm greetings with her colleagues this morning.",
+          "example_translation": "Cô ấy trao những lời chào ấm áp với đồng nghiệp sáng nay.",
+          "level": "A1",
+          "collocations": [
+            "exchange greetings",
+            "warm greetings"
+          ],
+          "synonyms": [
+            "salutations",
+            "welcomes"
+          ],
+          "antonyms": [],
+          "tags": [
+            "social",
+            "politeness"
+          ]
+        },
+        {
+          "word": "appreciate",
+          "phonetic": "/əˈpriː.ʃi.eɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Trân trọng, cảm kích",
+          "meaning_en": "To recognize the value of something",
+          "example_sentence": "I really appreciate your help with this project.",
+          "example_translation": "Tôi thực sự cảm kích sự giúp đỡ của bạn cho dự án này.",
+          "level": "A2",
+          "collocations": [
+            "deeply appreciate",
+            "appreciate the effort"
+          ],
+          "synonyms": [
+            "value",
+            "be grateful for"
+          ],
+          "antonyms": [
+            "ignore"
+          ],
+          "tags": [
+            "social",
+            "emotion"
+          ]
+        },
+        {
+          "word": "fluent",
+          "phonetic": "/ˈfluː.ənt/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Lưu loát, trôi chảy",
+          "meaning_en": "Able to speak a language easily and accurately",
+          "example_sentence": "He became fluent in English after months of daily practice.",
+          "example_translation": "Anh ấy đã nói tiếng Anh lưu loát sau nhiều tháng luyện tập hằng ngày.",
+          "level": "B1",
+          "collocations": [
+            "fluent in",
+            "fluent speaker"
+          ],
+          "synonyms": [
+            "articulate",
+            "smooth"
+          ],
+          "antonyms": [
+            "hesitant"
+          ],
+          "tags": [
+            "language",
+            "skill"
+          ]
+        },
+        {
+          "word": "apologize",
+          "phonetic": "/əˈpɒl.ə.dʒaɪz/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Xin lỗi",
+          "meaning_en": "To express regret for something you have done wrong",
+          "example_sentence": "I sincerely apologize for the delay in replying to your email.",
+          "example_translation": "Tôi chân thành xin lỗi vì sự chậm trễ khi trả lời email của bạn.",
+          "level": "A2",
+          "collocations": [
+            "apologize for",
+            "sincerely apologize"
+          ],
+          "synonyms": [
+            "say sorry"
+          ],
+          "antonyms": [
+            "offend"
+          ],
+          "tags": [
+            "social",
+            "politeness"
+          ]
+        },
+        {
+          "word": "enthusiastic",
+          "phonetic": "/ɪnˌθjuː.ziˈæs.tɪk/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Nhiệt tình, hào hứng",
+          "meaning_en": "Showing eager interest and excitement",
+          "example_sentence": "The students were enthusiastic about the speaking activity.",
+          "example_translation": "Các học viên rất hào hứng với hoạt động nói.",
+          "level": "B1",
+          "collocations": [
+            "enthusiastic about",
+            "highly enthusiastic"
+          ],
+          "synonyms": [
+            "eager",
+            "keen"
+          ],
+          "antonyms": [
+            "indifferent"
+          ],
+          "tags": [
+            "emotion",
+            "attitude"
+          ]
+        },
+        {
+          "word": "confidence",
+          "phonetic": "/ˈkɒn.fɪ.dəns/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự tự tin",
+          "meaning_en": "A feeling of trust in your own abilities",
+          "example_sentence": "Daily practice builds your speaking confidence.",
+          "example_translation": "Luyện tập hằng ngày giúp xây dựng sự tự tin khi nói.",
+          "level": "A2",
+          "collocations": [
+            "build confidence",
+            "lack confidence"
+          ],
+          "synonyms": [
+            "self-assurance"
+          ],
+          "antonyms": [
+            "doubt"
+          ],
+          "tags": [
+            "emotion",
+            "skill"
+          ]
+        },
+        {
+          "word": "convenient",
+          "phonetic": "/kənˈviː.ni.ənt/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Thuận tiện",
+          "meaning_en": "Suitable and easy to use for a particular purpose",
+          "example_sentence": "Learning on a smartphone is convenient for busy people.",
+          "example_translation": "Học trên điện thoại thông minh rất thuận tiện cho người bận rộn.",
+          "level": "A2",
+          "collocations": [
+            "convenient for",
+            "convenient location"
+          ],
+          "synonyms": [
+            "handy",
+            "practical"
+          ],
+          "antonyms": [
+            "inconvenient"
+          ],
+          "tags": [
+            "daily life",
+            "adjective"
+          ]
+        },
+        {
+          "word": "conversation",
+          "phonetic": "/ˌkɒn.vəˈseɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Cuộc trò chuyện",
+          "meaning_en": "An informal talk between people",
+          "example_sentence": "We had a long conversation about our travel plans.",
+          "example_translation": "Chúng tôi có một cuộc trò chuyện dài về kế hoạch du lịch.",
+          "level": "A1",
+          "collocations": [
+            "have a conversation",
+            "casual conversation"
+          ],
+          "synonyms": [
+            "chat",
+            "talk"
+          ],
+          "antonyms": [
+            "silence"
+          ],
+          "tags": [
+            "social",
+            "communication"
+          ]
+        },
+        {
+          "word": "introduce",
+          "phonetic": "/ˌɪn.trəˈdjuːs/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Giới thiệu",
+          "meaning_en": "To tell someone another person's name when they meet",
+          "example_sentence": "Let me introduce you to my new colleague.",
+          "example_translation": "Để tôi giới thiệu bạn với đồng nghiệp mới của tôi.",
+          "level": "A1",
+          "collocations": [
+            "introduce yourself",
+            "introduce someone to"
+          ],
+          "synonyms": [
+            "present"
+          ],
+          "antonyms": [
+            "hide"
+          ],
+          "tags": [
+            "social",
+            "communication"
+          ]
+        },
+        {
+          "word": "invitation",
+          "phonetic": "/ˌɪn.vɪˈteɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Lời mời",
+          "meaning_en": "A spoken or written request to attend an event",
+          "example_sentence": "Thank you for the invitation to your birthday party.",
+          "example_translation": "Cảm ơn bạn đã mời tôi đến bữa tiệc sinh nhật.",
+          "level": "A2",
+          "collocations": [
+            "accept an invitation",
+            "formal invitation"
+          ],
+          "synonyms": [
+            "invite"
+          ],
+          "antonyms": [
+            "rejection"
+          ],
+          "tags": [
+            "social",
+            "event"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "tech-and-ai",
+      "title": "Công Nghệ & Trí Tuệ Nhân Tạo",
+      "description": "Từ vựng kỹ thuật hiện đại về phần mềm, dữ liệu và đổi mới sáng tạo.",
+      "icon_name": "laptop",
+      "level": "B1-B2",
+      "order_index": 1,
+      "words": [
+        {
+          "word": "algorithm",
+          "phonetic": "/ˈæl.ɡə.rɪ.ðəm/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thuật toán",
+          "meaning_en": "A set of rules or steps used to solve a problem",
+          "example_sentence": "The recommendation algorithm suggests lessons based on your progress.",
+          "example_translation": "Thuật toán gợi ý đề xuất bài học dựa trên tiến độ của bạn.",
+          "level": "B1",
+          "collocations": [
+            "search algorithm",
+            "recommendation algorithm"
+          ],
+          "synonyms": [
+            "procedure",
+            "formula"
+          ],
+          "antonyms": [],
+          "tags": [
+            "technology",
+            "computing"
+          ]
+        },
+        {
+          "word": "automation",
+          "phonetic": "/ˌɔː.təˈmeɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự tự động hóa",
+          "meaning_en": "The use of machines to do work without human control",
+          "example_sentence": "Automation helps engineers focus on creative problem solving.",
+          "example_translation": "Tự động hóa giúp các kỹ sư tập trung vào việc giải quyết vấn đề sáng tạo.",
+          "level": "B2",
+          "collocations": [
+            "office automation",
+            "industrial automation"
+          ],
+          "synonyms": [
+            "mechanization"
+          ],
+          "antonyms": [
+            "manual work"
+          ],
+          "tags": [
+            "technology",
+            "industry"
+          ]
+        },
+        {
+          "word": "breakthrough",
+          "phonetic": "/ˈbreɪk.θruː/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bước đột phá",
+          "meaning_en": "An important discovery or development",
+          "example_sentence": "The new model represents a breakthrough in language technology.",
+          "example_translation": "Mô hình mới đại diện cho một bước đột phá trong công nghệ ngôn ngữ.",
+          "level": "B2",
+          "collocations": [
+            "major breakthrough",
+            "scientific breakthrough"
+          ],
+          "synonyms": [
+            "discovery",
+            "advance"
+          ],
+          "antonyms": [
+            "setback"
+          ],
+          "tags": [
+            "technology",
+            "innovation"
+          ]
+        },
+        {
+          "word": "latency",
+          "phonetic": "/ˈleɪ.tən.si/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Độ trễ",
+          "meaning_en": "The delay before data begins to move after an instruction",
+          "example_sentence": "Low latency is essential for smooth voice conversations with an AI tutor.",
+          "example_translation": "Độ trễ thấp là điều cần thiết để trò chuyện bằng giọng nói mượt mà với gia sư AI.",
+          "level": "B2",
+          "collocations": [
+            "low latency",
+            "network latency"
+          ],
+          "synonyms": [
+            "delay"
+          ],
+          "antonyms": [
+            "speed"
+          ],
+          "tags": [
+            "technology",
+            "network"
+          ]
+        },
+        {
+          "word": "optimize",
+          "phonetic": "/ˈɒp.tɪ.maɪz/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Tối ưu hóa",
+          "meaning_en": "To make something as effective or efficient as possible",
+          "example_sentence": "We optimized the database queries to reduce loading time.",
+          "example_translation": "Chúng tôi đã tối ưu hóa các truy vấn cơ sở dữ liệu để giảm thời gian tải.",
+          "level": "B2",
+          "collocations": [
+            "optimize performance",
+            "optimize a process"
+          ],
+          "synonyms": [
+            "improve",
+            "refine"
+          ],
+          "antonyms": [
+            "worsen"
+          ],
+          "tags": [
+            "technology",
+            "improvement"
+          ]
+        },
+        {
+          "word": "database",
+          "phonetic": "/ˈdeɪ.tə.beɪs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Cơ sở dữ liệu",
+          "meaning_en": "A large amount of information stored in a computer system",
+          "example_sentence": "Customer profiles are stored securely in the cloud database.",
+          "example_translation": "Hồ sơ khách hàng được lưu trữ an toàn trong cơ sở dữ liệu đám mây.",
+          "level": "B1",
+          "collocations": [
+            "cloud database",
+            "database query"
+          ],
+          "synonyms": [
+            "data store"
+          ],
+          "antonyms": [],
+          "tags": [
+            "technology",
+            "data"
+          ]
+        },
+        {
+          "word": "interface",
+          "phonetic": "/ˈɪn.tə.feɪs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Giao diện",
+          "meaning_en": "The point where a person and a computer system meet",
+          "example_sentence": "This app has a clean and intuitive user interface.",
+          "example_translation": "Ứng dụng này có giao diện người dùng sạch sẽ và trực quan.",
+          "level": "B1",
+          "collocations": [
+            "user interface",
+            "interface design"
+          ],
+          "synonyms": [
+            "display",
+            "front end"
+          ],
+          "antonyms": [],
+          "tags": [
+            "technology",
+            "design"
+          ]
+        },
+        {
+          "word": "encryption",
+          "phonetic": "/ɪnˈkrɪp.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Mã hóa dữ liệu",
+          "meaning_en": "The process of changing information into a protected code",
+          "example_sentence": "End-to-end encryption keeps private messages safe.",
+          "example_translation": "Mã hóa đầu cuối giúp tin nhắn riêng tư luôn an toàn.",
+          "level": "B2",
+          "collocations": [
+            "data encryption",
+            "end-to-end encryption"
+          ],
+          "synonyms": [
+            "encoding"
+          ],
+          "antonyms": [
+            "decryption"
+          ],
+          "tags": [
+            "technology",
+            "security"
+          ]
+        },
+        {
+          "word": "bandwidth",
+          "phonetic": "/ˈbænd.wɪdθ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Băng thông",
+          "meaning_en": "The amount of data that can be sent through a connection",
+          "example_sentence": "Streaming high-quality video requires a lot of bandwidth.",
+          "example_translation": "Phát trực tuyến video chất lượng cao cần nhiều băng thông.",
+          "level": "B2",
+          "collocations": [
+            "high bandwidth",
+            "network bandwidth"
+          ],
+          "synonyms": [
+            "capacity"
+          ],
+          "antonyms": [],
+          "tags": [
+            "technology",
+            "network"
+          ]
+        },
+        {
+          "word": "automate",
+          "phonetic": "/ˈɔː.tə.meɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Tự động hóa",
+          "meaning_en": "To make a process operate automatically",
+          "example_sentence": "We can automate repetitive tasks to save several hours each week.",
+          "example_translation": "Chúng ta có thể tự động hóa các tác vụ lặp lại để tiết kiệm vài giờ mỗi tuần.",
+          "level": "B2",
+          "collocations": [
+            "automate a process",
+            "fully automate"
+          ],
+          "synonyms": [
+            "mechanize"
+          ],
+          "antonyms": [
+            "do manually"
+          ],
+          "tags": [
+            "technology",
+            "work"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "business-and-workplace",
+      "title": "Công Việc & Kinh Doanh",
+      "description": "Thuật ngữ chuyên nghiệp cho họp hành, đàm phán và giao tiếp doanh nghiệp.",
+      "icon_name": "briefcase",
+      "level": "B1-B2",
+      "order_index": 2,
+      "words": [
+        {
+          "word": "collaborate",
+          "phonetic": "/kəˈlæb.ə.reɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Hợp tác, làm việc nhóm",
+          "meaning_en": "To work jointly on an activity or project",
+          "example_sentence": "Engineers and designers collaborate closely to improve the product.",
+          "example_translation": "Các kỹ sư và nhà thiết kế hợp tác chặt chẽ để cải thiện sản phẩm.",
+          "level": "B1",
+          "collocations": [
+            "collaborate with",
+            "collaborate closely"
+          ],
+          "synonyms": [
+            "cooperate",
+            "team up"
+          ],
+          "antonyms": [
+            "compete"
+          ],
+          "tags": [
+            "business",
+            "teamwork"
+          ]
+        },
+        {
+          "word": "deadline",
+          "phonetic": "/ˈded.laɪn/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hạn chót",
+          "meaning_en": "The latest time by which something must be completed",
+          "example_sentence": "We delivered the mobile app three days before the deadline.",
+          "example_translation": "Chúng tôi đã bàn giao ứng dụng di động trước hạn chót ba ngày.",
+          "level": "A2",
+          "collocations": [
+            "meet a deadline",
+            "miss a deadline"
+          ],
+          "synonyms": [
+            "due date"
+          ],
+          "antonyms": [],
+          "tags": [
+            "business",
+            "time"
+          ]
+        },
+        {
+          "word": "negotiate",
+          "phonetic": "/nəˈɡəʊ.ʃi.eɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Đàm phán, thương lượng",
+          "meaning_en": "To discuss something in order to reach an agreement",
+          "example_sentence": "She negotiated a higher salary thanks to her strong communication skills.",
+          "example_translation": "Cô ấy đã đàm phán được mức lương cao hơn nhờ kỹ năng giao tiếp tốt.",
+          "level": "B2",
+          "collocations": [
+            "negotiate a contract",
+            "negotiate with"
+          ],
+          "synonyms": [
+            "bargain",
+            "discuss"
+          ],
+          "antonyms": [
+            "dictate"
+          ],
+          "tags": [
+            "business",
+            "communication"
+          ]
+        },
+        {
+          "word": "revenue",
+          "phonetic": "/ˈrev.ən.juː/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Doanh thu",
+          "meaning_en": "The money a company receives from its business activities",
+          "example_sentence": "Expanding into international markets boosted annual revenue.",
+          "example_translation": "Mở rộng sang thị trường quốc tế đã thúc đẩy doanh thu hằng năm.",
+          "level": "B1",
+          "collocations": [
+            "annual revenue",
+            "generate revenue"
+          ],
+          "synonyms": [
+            "income",
+            "turnover"
+          ],
+          "antonyms": [
+            "loss"
+          ],
+          "tags": [
+            "business",
+            "finance"
+          ]
+        },
+        {
+          "word": "stakeholder",
+          "phonetic": "/ˈsteɪk.həʊl.dər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bên liên quan",
+          "meaning_en": "A person with an interest in a business or project",
+          "example_sentence": "All key stakeholders approved the new product roadmap.",
+          "example_translation": "Tất cả các bên liên quan chính đã phê duyệt lộ trình sản phẩm mới.",
+          "level": "B2",
+          "collocations": [
+            "key stakeholder",
+            "stakeholder meeting"
+          ],
+          "synonyms": [
+            "party",
+            "participant"
+          ],
+          "antonyms": [],
+          "tags": [
+            "business",
+            "management"
+          ]
+        },
+        {
+          "word": "productivity",
+          "phonetic": "/ˌprɒd.ʌkˈtɪv.ə.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Năng suất làm việc",
+          "meaning_en": "The rate at which useful work is done",
+          "example_sentence": "Flexible working hours can boost employee productivity.",
+          "example_translation": "Giờ làm việc linh hoạt có thể nâng cao năng suất của nhân viên.",
+          "level": "B2",
+          "collocations": [
+            "increase productivity",
+            "worker productivity"
+          ],
+          "synonyms": [
+            "efficiency",
+            "output"
+          ],
+          "antonyms": [
+            "inefficiency"
+          ],
+          "tags": [
+            "business",
+            "work"
+          ]
+        },
+        {
+          "word": "strategy",
+          "phonetic": "/ˈstræt.ə.dʒi/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chiến lược",
+          "meaning_en": "A detailed plan for achieving success",
+          "example_sentence": "The marketing strategy generated impressive sales results.",
+          "example_translation": "Chiến lược tiếp thị đã mang lại kết quả bán hàng ấn tượng.",
+          "level": "B1",
+          "collocations": [
+            "business strategy",
+            "develop a strategy"
+          ],
+          "synonyms": [
+            "plan",
+            "approach"
+          ],
+          "antonyms": [],
+          "tags": [
+            "business",
+            "planning"
+          ]
+        },
+        {
+          "word": "presentation",
+          "phonetic": "/ˌprez.ənˈteɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bài thuyết trình",
+          "meaning_en": "A talk that gives information about a subject",
+          "example_sentence": "She gave an outstanding presentation to the board.",
+          "example_translation": "Cô ấy đã có một bài thuyết trình xuất sắc trước hội đồng.",
+          "level": "B1",
+          "collocations": [
+            "give a presentation",
+            "slide presentation"
+          ],
+          "synonyms": [
+            "talk",
+            "speech"
+          ],
+          "antonyms": [],
+          "tags": [
+            "business",
+            "communication"
+          ]
+        },
+        {
+          "word": "budget",
+          "phonetic": "/ˈbʌdʒ.ɪt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Ngân sách",
+          "meaning_en": "A plan showing how much money will be spent",
+          "example_sentence": "The project was completed well within budget.",
+          "example_translation": "Dự án đã được hoàn thành trong phạm vi ngân sách cho phép.",
+          "level": "B1",
+          "collocations": [
+            "within budget",
+            "annual budget"
+          ],
+          "synonyms": [
+            "funds",
+            "allowance"
+          ],
+          "antonyms": [],
+          "tags": [
+            "business",
+            "finance"
+          ]
+        },
+        {
+          "word": "feedback",
+          "phonetic": "/ˈfiːd.bæk/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phản hồi, ý kiến nhận xét",
+          "meaning_en": "Information about how good or useful something is",
+          "example_sentence": "Constructive feedback helps employees grow rapidly.",
+          "example_translation": "Phản hồi mang tính xây dựng giúp nhân viên phát triển nhanh chóng.",
+          "level": "B1",
+          "collocations": [
+            "receive feedback",
+            "constructive feedback"
+          ],
+          "synonyms": [
+            "response",
+            "comment"
+          ],
+          "antonyms": [],
+          "tags": [
+            "business",
+            "communication"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "travel-and-tourism",
+      "title": "Du Lịch & Khám Phá",
+      "description": "Từ vựng hữu ích cho sân bay, khách sạn, chỉ đường và ẩm thực khi đi xa.",
+      "icon_name": "flight",
+      "level": "A2-B1",
+      "order_index": 3,
+      "words": [
+        {
+          "word": "destination",
+          "phonetic": "/ˌdes.tɪˈneɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Điểm đến",
+          "meaning_en": "The place to which someone is traveling",
+          "example_sentence": "Da Nang is a popular destination for international travelers.",
+          "example_translation": "Đà Nẵng là một điểm đến nổi tiếng với du khách quốc tế.",
+          "level": "A2",
+          "collocations": [
+            "tourist destination",
+            "final destination"
+          ],
+          "synonyms": [
+            "end point",
+            "target"
+          ],
+          "antonyms": [
+            "origin"
+          ],
+          "tags": [
+            "travel",
+            "place"
+          ]
+        },
+        {
+          "word": "itinerary",
+          "phonetic": "/aɪˈtɪn.ər.ər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Lịch trình chuyến đi",
+          "meaning_en": "A planned route or schedule for a journey",
+          "example_sentence": "Our tour guide shared a detailed itinerary for the three-day visit.",
+          "example_translation": "Hướng dẫn viên của chúng tôi đã chia sẻ lịch trình chi tiết cho chuyến tham quan ba ngày.",
+          "level": "B1",
+          "collocations": [
+            "travel itinerary",
+            "detailed itinerary"
+          ],
+          "synonyms": [
+            "schedule",
+            "route plan"
+          ],
+          "antonyms": [],
+          "tags": [
+            "travel",
+            "planning"
+          ]
+        },
+        {
+          "word": "accommodation",
+          "phonetic": "/əˌkɒm.əˈdeɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chỗ ở",
+          "meaning_en": "A place where someone can stay, such as a hotel or room",
+          "example_sentence": "We booked comfortable accommodation near the beach.",
+          "example_translation": "Chúng tôi đã đặt chỗ ở thoải mái gần bãi biển.",
+          "level": "B1",
+          "collocations": [
+            "book accommodation",
+            "affordable accommodation"
+          ],
+          "synonyms": [
+            "lodging",
+            "housing"
+          ],
+          "antonyms": [],
+          "tags": [
+            "travel",
+            "hotel"
+          ]
+        },
+        {
+          "word": "reservation",
+          "phonetic": "/ˌrez.əˈveɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự đặt chỗ trước",
+          "meaning_en": "An arrangement to keep a room or table for you",
+          "example_sentence": "I would like to make a dinner reservation for two people.",
+          "example_translation": "Tôi muốn đặt bàn ăn tối cho hai người.",
+          "level": "A2",
+          "collocations": [
+            "make a reservation",
+            "hotel reservation"
+          ],
+          "synonyms": [
+            "booking"
+          ],
+          "antonyms": [
+            "cancellation"
+          ],
+          "tags": [
+            "travel",
+            "service"
+          ]
+        },
+        {
+          "word": "departure",
+          "phonetic": "/dɪˈpɑː.tʃər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự khởi hành",
+          "meaning_en": "The act of leaving a place, especially on a journey",
+          "example_sentence": "Please check your departure gate on the screen.",
+          "example_translation": "Vui lòng kiểm tra cổng khởi hành của bạn trên màn hình.",
+          "level": "A2",
+          "collocations": [
+            "departure gate",
+            "departure time"
+          ],
+          "synonyms": [
+            "leaving",
+            "exit"
+          ],
+          "antonyms": [
+            "arrival"
+          ],
+          "tags": [
+            "travel",
+            "airport"
+          ]
+        },
+        {
+          "word": "luggage",
+          "phonetic": "/ˈlʌɡ.ɪdʒ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hành lý",
+          "meaning_en": "The bags and suitcases you take when traveling",
+          "example_sentence": "You are allowed two pieces of carry-on luggage.",
+          "example_translation": "Bạn được phép mang theo hai kiện hành lý xách tay.",
+          "level": "A2",
+          "collocations": [
+            "carry-on luggage",
+            "check in luggage"
+          ],
+          "synonyms": [
+            "baggage"
+          ],
+          "antonyms": [],
+          "tags": [
+            "travel",
+            "airport"
+          ]
+        },
+        {
+          "word": "customs",
+          "phonetic": "/ˈkʌs.təmz/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hải quan",
+          "meaning_en": "The place at an airport or border where goods are checked",
+          "example_sentence": "We spent twenty minutes passing through airport customs.",
+          "example_translation": "Chúng tôi mất hai mươi phút để qua cửa hải quan sân bay.",
+          "level": "B1",
+          "collocations": [
+            "customs officer",
+            "go through customs"
+          ],
+          "synonyms": [
+            "border control"
+          ],
+          "antonyms": [],
+          "tags": [
+            "travel",
+            "airport"
+          ]
+        },
+        {
+          "word": "scenic",
+          "phonetic": "/ˈsiː.nɪk/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Có phong cảnh đẹp",
+          "meaning_en": "Having beautiful natural views",
+          "example_sentence": "They took a scenic coastal drive along the ocean.",
+          "example_translation": "Họ đã lái xe trên cung đường ven biển tuyệt đẹp.",
+          "level": "B1",
+          "collocations": [
+            "scenic route",
+            "scenic view"
+          ],
+          "synonyms": [
+            "picturesque",
+            "beautiful"
+          ],
+          "antonyms": [
+            "ugly"
+          ],
+          "tags": [
+            "travel",
+            "nature"
+          ]
+        },
+        {
+          "word": "souvenir",
+          "phonetic": "/ˌsuː.vənˈɪər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Quà lưu niệm",
+          "meaning_en": "Something you buy to remember a place or event",
+          "example_sentence": "I bought handcrafted souvenirs for my family.",
+          "example_translation": "Tôi đã mua quà lưu niệm thủ công cho gia đình.",
+          "level": "A2",
+          "collocations": [
+            "souvenir shop",
+            "buy a souvenir"
+          ],
+          "synonyms": [
+            "keepsake",
+            "memento"
+          ],
+          "antonyms": [],
+          "tags": [
+            "travel",
+            "shopping"
+          ]
+        },
+        {
+          "word": "exchange",
+          "phonetic": "/ɪksˈtʃeɪndʒ/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Đổi tiền; trao đổi",
+          "meaning_en": "To change money into another currency",
+          "example_sentence": "Where can I exchange US dollars for Vietnamese dong?",
+          "example_translation": "Tôi có thể đổi đô la Mỹ sang tiền Việt Nam ở đâu?",
+          "level": "A2",
+          "collocations": [
+            "exchange rate",
+            "exchange money"
+          ],
+          "synonyms": [
+            "convert",
+            "swap"
+          ],
+          "antonyms": [
+            "keep"
+          ],
+          "tags": [
+            "travel",
+            "money"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "academic-and-ielts",
+      "title": "Học Thuật & IELTS",
+      "description": "Từ vựng học thuật band cao cho IELTS Writing, Reading và thuyết trình.",
+      "icon_name": "menu_book",
+      "level": "B2-C1",
+      "order_index": 4,
+      "words": [
+        {
+          "word": "significant",
+          "phonetic": "/sɪɡˈnɪf.ɪ.kənt/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Đáng kể, quan trọng",
+          "meaning_en": "Large or important enough to be noticed",
+          "example_sentence": "There has been a significant rise in online education.",
+          "example_translation": "Đã có sự gia tăng đáng kể trong giáo dục trực tuyến.",
+          "level": "B2",
+          "collocations": [
+            "significant increase",
+            "statistically significant"
+          ],
+          "synonyms": [
+            "important",
+            "considerable"
+          ],
+          "antonyms": [
+            "minor"
+          ],
+          "tags": [
+            "academic",
+            "ielts"
+          ]
+        },
+        {
+          "word": "perspective",
+          "phonetic": "/pəˈspek.tɪv/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Góc nhìn, quan điểm",
+          "meaning_en": "A particular way of thinking about something",
+          "example_sentence": "The author provides a fresh perspective on climate change.",
+          "example_translation": "Tác giả mang đến một góc nhìn mới về biến đổi khí hậu.",
+          "level": "B2",
+          "collocations": [
+            "from a perspective",
+            "broad perspective"
+          ],
+          "synonyms": [
+            "viewpoint",
+            "outlook"
+          ],
+          "antonyms": [],
+          "tags": [
+            "academic",
+            "opinion"
+          ]
+        },
+        {
+          "word": "comprehensive",
+          "phonetic": "/ˌkɒm.prɪˈhen.sɪv/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Toàn diện, bao quát",
+          "meaning_en": "Complete and including everything necessary",
+          "example_sentence": "This app provides a comprehensive learning path from beginner to advanced.",
+          "example_translation": "Ứng dụng này cung cấp một lộ trình học toàn diện từ cơ bản đến nâng cao.",
+          "level": "C1",
+          "collocations": [
+            "comprehensive review",
+            "comprehensive study"
+          ],
+          "synonyms": [
+            "complete",
+            "thorough"
+          ],
+          "antonyms": [
+            "partial"
+          ],
+          "tags": [
+            "academic",
+            "ielts"
+          ]
+        },
+        {
+          "word": "facilitate",
+          "phonetic": "/fəˈsɪl.ɪ.teɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Tạo điều kiện, làm dễ dàng hơn",
+          "meaning_en": "To make an action or process easier",
+          "example_sentence": "Interactive feedback facilitates faster mastery of grammar rules.",
+          "example_translation": "Phản hồi tương tác tạo điều kiện nắm vững các quy tắc ngữ pháp nhanh hơn.",
+          "level": "C1",
+          "collocations": [
+            "facilitate learning",
+            "facilitate discussion"
+          ],
+          "synonyms": [
+            "enable",
+            "assist"
+          ],
+          "antonyms": [
+            "hinder"
+          ],
+          "tags": [
+            "academic",
+            "education"
+          ]
+        },
+        {
+          "word": "hypothesis",
+          "phonetic": "/haɪˈpɒθ.ə.sɪs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Giả thuyết",
+          "meaning_en": "An idea that is suggested as an explanation and then tested",
+          "example_sentence": "The researchers tested their hypothesis with a large survey.",
+          "example_translation": "Các nhà nghiên cứu đã kiểm chứng giả thuyết của họ bằng một cuộc khảo sát lớn.",
+          "level": "C1",
+          "collocations": [
+            "test a hypothesis",
+            "support a hypothesis"
+          ],
+          "synonyms": [
+            "theory",
+            "assumption"
+          ],
+          "antonyms": [
+            "fact"
+          ],
+          "tags": [
+            "academic",
+            "research"
+          ]
+        },
+        {
+          "word": "analysis",
+          "phonetic": "/əˈnæl.ə.sɪs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phân tích",
+          "meaning_en": "A detailed examination of the parts of something",
+          "example_sentence": "The report includes a detailed analysis of consumer behavior.",
+          "example_translation": "Báo cáo bao gồm một phân tích chi tiết về hành vi người tiêu dùng.",
+          "level": "B2",
+          "collocations": [
+            "data analysis",
+            "detailed analysis"
+          ],
+          "synonyms": [
+            "examination",
+            "study"
+          ],
+          "antonyms": [
+            "summary"
+          ],
+          "tags": [
+            "academic",
+            "research"
+          ]
+        },
+        {
+          "word": "evaluate",
+          "phonetic": "/ɪˈvæl.ju.eɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Đánh giá",
+          "meaning_en": "To judge the value or quality of something",
+          "example_sentence": "Teachers evaluate students through both projects and exams.",
+          "example_translation": "Giáo viên đánh giá học sinh thông qua cả dự án và bài kiểm tra.",
+          "level": "B2",
+          "collocations": [
+            "evaluate performance",
+            "carefully evaluate"
+          ],
+          "synonyms": [
+            "assess",
+            "judge"
+          ],
+          "antonyms": [
+            "ignore"
+          ],
+          "tags": [
+            "academic",
+            "assessment"
+          ]
+        },
+        {
+          "word": "evidence",
+          "phonetic": "/ˈev.ɪ.dəns/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bằng chứng",
+          "meaning_en": "Facts or information that show something is true",
+          "example_sentence": "There is strong evidence that sleep improves memory.",
+          "example_translation": "Có bằng chứng mạnh mẽ rằng giấc ngủ cải thiện trí nhớ.",
+          "level": "B2",
+          "collocations": [
+            "strong evidence",
+            "provide evidence"
+          ],
+          "synonyms": [
+            "proof",
+            "data"
+          ],
+          "antonyms": [],
+          "tags": [
+            "academic",
+            "research"
+          ]
+        },
+        {
+          "word": "coherent",
+          "phonetic": "/kəʊˈhɪə.rənt/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Mạch lạc, rõ ràng",
+          "meaning_en": "Logical and well organized so that it is easy to understand",
+          "example_sentence": "A coherent essay uses clear paragraphs and linking words.",
+          "example_translation": "Một bài luận mạch lạc sử dụng các đoạn văn rõ ràng và từ nối.",
+          "level": "C1",
+          "collocations": [
+            "coherent argument",
+            "coherent structure"
+          ],
+          "synonyms": [
+            "logical",
+            "consistent"
+          ],
+          "antonyms": [
+            "confusing"
+          ],
+          "tags": [
+            "academic",
+            "writing"
+          ]
+        },
+        {
+          "word": "substantiate",
+          "phonetic": "/səbˈstæn.ʃi.eɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Chứng minh, củng cố bằng bằng chứng",
+          "meaning_en": "To provide evidence that supports a claim",
+          "example_sentence": "You need reliable sources to substantiate your argument.",
+          "example_translation": "Bạn cần các nguồn đáng tin cậy để chứng minh lập luận của mình.",
+          "level": "C1",
+          "collocations": [
+            "substantiate a claim",
+            "substantiate with evidence"
+          ],
+          "synonyms": [
+            "prove",
+            "support"
+          ],
+          "antonyms": [
+            "disprove"
+          ],
+          "tags": [
+            "academic",
+            "writing"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "food-and-dining",
+      "title": "Ẩm Thực & Nhà Hàng",
+      "description": "Từ vựng để gọi món, nấu ăn và mô tả bữa ăn.",
+      "icon_name": "restaurant",
+      "level": "A1-B1",
+      "order_index": 5,
+      "words": [
+        {
+          "word": "menu",
+          "phonetic": "/ˈmen.juː/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thực đơn",
+          "meaning_en": "A list of the food and drinks available in a restaurant",
+          "example_sentence": "The waiter handed us the menu as soon as we sat down.",
+          "example_translation": "Người phục vụ đưa thực đơn cho chúng tôi ngay khi chúng tôi ngồi xuống.",
+          "level": "A1",
+          "collocations": [
+            "lunch menu",
+            "look at the menu"
+          ],
+          "synonyms": [
+            "food list"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "restaurant"
+          ]
+        },
+        {
+          "word": "ingredient",
+          "phonetic": "/ɪnˈɡriː.di.ənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Nguyên liệu",
+          "meaning_en": "One of the foods used to make a particular dish",
+          "example_sentence": "Fresh basil is the most important ingredient in this sauce.",
+          "example_translation": "Húng quế tươi là nguyên liệu quan trọng nhất trong nước sốt này.",
+          "level": "A2",
+          "collocations": [
+            "fresh ingredients",
+            "key ingredient"
+          ],
+          "synonyms": [
+            "component"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "cooking"
+          ]
+        },
+        {
+          "word": "recipe",
+          "phonetic": "/ˈres.ɪ.pi/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Công thức nấu ăn",
+          "meaning_en": "A set of instructions for cooking a dish",
+          "example_sentence": "My grandmother gave me her recipe for Vietnamese spring rolls.",
+          "example_translation": "Bà tôi đã cho tôi công thức làm món nem Việt Nam.",
+          "level": "A2",
+          "collocations": [
+            "follow a recipe",
+            "family recipe"
+          ],
+          "synonyms": [
+            "cooking instructions"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "cooking"
+          ]
+        },
+        {
+          "word": "cuisine",
+          "phonetic": "/kwɪˈziːn/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Ẩm thực",
+          "meaning_en": "A style of cooking, especially of a particular country",
+          "example_sentence": "Vietnamese cuisine is known for its fresh herbs and light flavors.",
+          "example_translation": "Ẩm thực Việt Nam nổi tiếng với rau thơm tươi và hương vị thanh nhẹ.",
+          "level": "B1",
+          "collocations": [
+            "local cuisine",
+            "national cuisine"
+          ],
+          "synonyms": [
+            "cooking style"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "culture"
+          ]
+        },
+        {
+          "word": "appetizer",
+          "phonetic": "/ˈæp.ɪ.taɪ.zər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Món khai vị",
+          "meaning_en": "A small dish eaten before the main meal",
+          "example_sentence": "We ordered spring rolls as an appetizer.",
+          "example_translation": "Chúng tôi gọi nem cuốn làm món khai vị.",
+          "level": "A2",
+          "collocations": [
+            "light appetizer",
+            "order an appetizer"
+          ],
+          "synonyms": [
+            "starter"
+          ],
+          "antonyms": [
+            "dessert"
+          ],
+          "tags": [
+            "food",
+            "restaurant"
+          ]
+        },
+        {
+          "word": "beverage",
+          "phonetic": "/ˈbev.ər.ɪdʒ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Đồ uống",
+          "meaning_en": "A drink of any kind",
+          "example_sentence": "The restaurant offers a wide range of hot and cold beverages.",
+          "example_translation": "Nhà hàng cung cấp nhiều loại đồ uống nóng và lạnh.",
+          "level": "B1",
+          "collocations": [
+            "hot beverage",
+            "alcoholic beverage"
+          ],
+          "synonyms": [
+            "drink"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "drink"
+          ]
+        },
+        {
+          "word": "vegetarian",
+          "phonetic": "/ˌvedʒ.əˈteə.ri.ən/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Ăn chay",
+          "meaning_en": "Not containing meat or fish",
+          "example_sentence": "The menu clearly marks every vegetarian dish.",
+          "example_translation": "Thực đơn đánh dấu rõ ràng mọi món ăn chay.",
+          "level": "A2",
+          "collocations": [
+            "vegetarian dish",
+            "vegetarian diet"
+          ],
+          "synonyms": [
+            "meat-free"
+          ],
+          "antonyms": [
+            "meat-based"
+          ],
+          "tags": [
+            "food",
+            "diet"
+          ]
+        },
+        {
+          "word": "portion",
+          "phonetic": "/ˈpɔː.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Khẩu phần",
+          "meaning_en": "The amount of food served to one person",
+          "example_sentence": "The portions at this restaurant are large enough to share.",
+          "example_translation": "Khẩu phần ở nhà hàng này đủ lớn để chia sẻ.",
+          "level": "B1",
+          "collocations": [
+            "large portion",
+            "portion size"
+          ],
+          "synonyms": [
+            "serving",
+            "helping"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "restaurant"
+          ]
+        },
+        {
+          "word": "flavor",
+          "phonetic": "/ˈfleɪ.vər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hương vị",
+          "meaning_en": "The particular taste of a food or drink",
+          "example_sentence": "This soup has a rich, spicy flavor.",
+          "example_translation": "Món canh này có hương vị đậm đà và cay.",
+          "level": "A2",
+          "collocations": [
+            "rich flavor",
+            "natural flavor"
+          ],
+          "synonyms": [
+            "taste"
+          ],
+          "antonyms": [],
+          "tags": [
+            "food",
+            "taste"
+          ]
+        },
+        {
+          "word": "delicious",
+          "phonetic": "/dɪˈlɪʃ.əs/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Ngon",
+          "meaning_en": "Having a very pleasant taste or smell",
+          "example_sentence": "The grilled fish was absolutely delicious.",
+          "example_translation": "Món cá nướng thực sự rất ngon.",
+          "level": "A1",
+          "collocations": [
+            "absolutely delicious",
+            "delicious meal"
+          ],
+          "synonyms": [
+            "tasty",
+            "mouth-watering"
+          ],
+          "antonyms": [
+            "disgusting"
+          ],
+          "tags": [
+            "food",
+            "taste"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "health-and-fitness",
+      "title": "Sức Khỏe & Thể Hình",
+      "description": "Từ vựng về tập luyện, thói quen lành mạnh và chăm sóc sức khỏe.",
+      "icon_name": "fitness_center",
+      "level": "A2-B2",
+      "order_index": 6,
+      "words": [
+        {
+          "word": "exercise",
+          "phonetic": "/ˈek.sə.saɪz/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bài tập thể dục",
+          "meaning_en": "Physical activity that keeps you healthy",
+          "example_sentence": "Regular exercise improves both mood and sleep quality.",
+          "example_translation": "Tập thể dục đều đặn cải thiện cả tâm trạng và chất lượng giấc ngủ.",
+          "level": "A2",
+          "collocations": [
+            "regular exercise",
+            "do exercise"
+          ],
+          "synonyms": [
+            "workout",
+            "activity"
+          ],
+          "antonyms": [
+            "inactivity"
+          ],
+          "tags": [
+            "health",
+            "fitness"
+          ]
+        },
+        {
+          "word": "nutrition",
+          "phonetic": "/njuːˈtrɪʃ.ən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Dinh dưỡng",
+          "meaning_en": "The process of eating the right food for health",
+          "example_sentence": "Good nutrition supports growth and concentration.",
+          "example_translation": "Dinh dưỡng tốt hỗ trợ sự phát triển và khả năng tập trung.",
+          "level": "B1",
+          "collocations": [
+            "good nutrition",
+            "nutrition facts"
+          ],
+          "synonyms": [
+            "nourishment"
+          ],
+          "antonyms": [
+            "malnutrition"
+          ],
+          "tags": [
+            "health",
+            "food"
+          ]
+        },
+        {
+          "word": "stamina",
+          "phonetic": "/ˈstæm.ɪ.nə/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sức bền",
+          "meaning_en": "The physical strength to continue an activity for a long time",
+          "example_sentence": "Running every morning helped him build stamina.",
+          "example_translation": "Chạy bộ mỗi sáng giúp anh ấy xây dựng sức bền.",
+          "level": "B1",
+          "collocations": [
+            "build stamina",
+            "physical stamina"
+          ],
+          "synonyms": [
+            "endurance",
+            "staying power"
+          ],
+          "antonyms": [
+            "weakness"
+          ],
+          "tags": [
+            "health",
+            "fitness"
+          ]
+        },
+        {
+          "word": "injury",
+          "phonetic": "/ˈɪn.dʒər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chấn thương",
+          "meaning_en": "Physical damage to the body",
+          "example_sentence": "He stopped training for a month because of a knee injury.",
+          "example_translation": "Anh ấy ngừng luyện tập một tháng vì chấn thương đầu gối.",
+          "level": "B1",
+          "collocations": [
+            "sports injury",
+            "serious injury"
+          ],
+          "synonyms": [
+            "wound",
+            "hurt"
+          ],
+          "antonyms": [
+            "recovery"
+          ],
+          "tags": [
+            "health",
+            "fitness"
+          ]
+        },
+        {
+          "word": "recovery",
+          "phonetic": "/rɪˈkʌv.ər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự hồi phục",
+          "meaning_en": "The process of becoming healthy again",
+          "example_sentence": "Rest is an important part of muscle recovery.",
+          "example_translation": "Nghỉ ngơi là một phần quan trọng của quá trình hồi phục cơ.",
+          "level": "B1",
+          "collocations": [
+            "full recovery",
+            "recovery time"
+          ],
+          "synonyms": [
+            "healing",
+            "improvement"
+          ],
+          "antonyms": [
+            "decline"
+          ],
+          "tags": [
+            "health",
+            "fitness"
+          ]
+        },
+        {
+          "word": "symptom",
+          "phonetic": "/ˈsɪmp.təm/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Triệu chứng",
+          "meaning_en": "A sign that someone has an illness",
+          "example_sentence": "A high fever is a common symptom of the flu.",
+          "example_translation": "Sốt cao là một triệu chứng phổ biến của bệnh cúm.",
+          "level": "B1",
+          "collocations": [
+            "common symptom",
+            "develop symptoms"
+          ],
+          "synonyms": [
+            "sign",
+            "indication"
+          ],
+          "antonyms": [],
+          "tags": [
+            "health",
+            "medicine"
+          ]
+        },
+        {
+          "word": "therapy",
+          "phonetic": "/ˈθer.ə.pi/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Liệu pháp điều trị",
+          "meaning_en": "Treatment for a physical or mental health problem",
+          "example_sentence": "Physical therapy helped her walk without pain again.",
+          "example_translation": "Liệu pháp vật lý giúp cô ấy đi lại không còn đau nữa.",
+          "level": "B2",
+          "collocations": [
+            "physical therapy",
+            "therapy session"
+          ],
+          "synonyms": [
+            "treatment"
+          ],
+          "antonyms": [],
+          "tags": [
+            "health",
+            "medicine"
+          ]
+        },
+        {
+          "word": "hydration",
+          "phonetic": "/haɪˈdreɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự cấp nước cho cơ thể",
+          "meaning_en": "The process of supplying water to the body",
+          "example_sentence": "Proper hydration is essential during intense exercise.",
+          "example_translation": "Cấp nước đầy đủ là điều cần thiết trong khi tập luyện cường độ cao.",
+          "level": "B2",
+          "collocations": [
+            "proper hydration",
+            "stay hydrated"
+          ],
+          "synonyms": [
+            "fluid intake"
+          ],
+          "antonyms": [
+            "dehydration"
+          ],
+          "tags": [
+            "health",
+            "fitness"
+          ]
+        },
+        {
+          "word": "meditation",
+          "phonetic": "/ˌmed.ɪˈteɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thiền",
+          "meaning_en": "The practice of focusing the mind to become calm",
+          "example_sentence": "Ten minutes of meditation can reduce stress.",
+          "example_translation": "Mười phút thiền có thể làm giảm căng thẳng.",
+          "level": "B1",
+          "collocations": [
+            "daily meditation",
+            "guided meditation"
+          ],
+          "synonyms": [
+            "mindfulness"
+          ],
+          "antonyms": [
+            "distraction"
+          ],
+          "tags": [
+            "health",
+            "mindfulness"
+          ]
+        },
+        {
+          "word": "balanced",
+          "phonetic": "/ˈbæl.ənst/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Cân bằng",
+          "meaning_en": "Including the right amounts of different things",
+          "example_sentence": "A balanced diet includes vegetables, protein, and whole grains.",
+          "example_translation": "Một chế độ ăn cân bằng bao gồm rau, protein và ngũ cốc nguyên hạt.",
+          "level": "B1",
+          "collocations": [
+            "balanced diet",
+            "balanced lifestyle"
+          ],
+          "synonyms": [
+            "well-proportioned"
+          ],
+          "antonyms": [
+            "unbalanced"
+          ],
+          "tags": [
+            "health",
+            "food"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "education-and-learning",
+      "title": "Giáo Dục & Học Tập",
+      "description": "Từ vựng về trường học, ôn thi, đánh giá và học tập suốt đời.",
+      "icon_name": "school",
+      "level": "A2-B2",
+      "order_index": 7,
+      "words": [
+        {
+          "word": "curriculum",
+          "phonetic": "/kəˈrɪk.jə.ləm/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chương trình học",
+          "meaning_en": "The subjects and content taught in a school or course",
+          "example_sentence": "The new curriculum includes more speaking practice.",
+          "example_translation": "Chương trình học mới bao gồm nhiều bài luyện nói hơn.",
+          "level": "B2",
+          "collocations": [
+            "school curriculum",
+            "national curriculum"
+          ],
+          "synonyms": [
+            "syllabus",
+            "program"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "school"
+          ]
+        },
+        {
+          "word": "assignment",
+          "phonetic": "/əˈsaɪn.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bài tập được giao",
+          "meaning_en": "A piece of work given to a student",
+          "example_sentence": "The assignment is due at the end of the week.",
+          "example_translation": "Bài tập phải nộp vào cuối tuần.",
+          "level": "A2",
+          "collocations": [
+            "complete an assignment",
+            "written assignment"
+          ],
+          "synonyms": [
+            "task",
+            "homework"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "study"
+          ]
+        },
+        {
+          "word": "lecture",
+          "phonetic": "/ˈlek.tʃər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bài giảng",
+          "meaning_en": "A formal talk given to teach a group of people",
+          "example_sentence": "The lecture on climate science was surprisingly engaging.",
+          "example_translation": "Bài giảng về khoa học khí hậu hóa ra lại rất thú vị.",
+          "level": "B1",
+          "collocations": [
+            "attend a lecture",
+            "give a lecture"
+          ],
+          "synonyms": [
+            "talk",
+            "presentation"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "university"
+          ]
+        },
+        {
+          "word": "revision",
+          "phonetic": "/rɪˈvɪʒ.ən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự ôn tập",
+          "meaning_en": "The activity of studying again before an exam",
+          "example_sentence": "She made a revision plan for the final exam.",
+          "example_translation": "Cô ấy đã lập một kế hoạch ôn tập cho kỳ thi cuối kỳ.",
+          "level": "B1",
+          "collocations": [
+            "revision plan",
+            "do revision"
+          ],
+          "synonyms": [
+            "review",
+            "study"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "exam"
+          ]
+        },
+        {
+          "word": "assessment",
+          "phonetic": "/əˈses.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự đánh giá",
+          "meaning_en": "The process of testing or judging someone's ability",
+          "example_sentence": "Continuous assessment reduces pressure on a single final exam.",
+          "example_translation": "Đánh giá liên tục giảm áp lực cho một kỳ thi cuối kỳ duy nhất.",
+          "level": "B2",
+          "collocations": [
+            "continuous assessment",
+            "assessment criteria"
+          ],
+          "synonyms": [
+            "evaluation",
+            "test"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "exam"
+          ]
+        },
+        {
+          "word": "scholarship",
+          "phonetic": "/ˈskɒl.ə.ʃɪp/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Học bổng",
+          "meaning_en": "Money given to a student to help pay for education",
+          "example_sentence": "He won a scholarship to study abroad.",
+          "example_translation": "Anh ấy đã giành được học bổng để du học.",
+          "level": "B1",
+          "collocations": [
+            "win a scholarship",
+            "full scholarship"
+          ],
+          "synonyms": [
+            "grant",
+            "award"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "money"
+          ]
+        },
+        {
+          "word": "graduate",
+          "phonetic": "/ˈɡrædʒ.u.ət/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Tốt nghiệp",
+          "meaning_en": "To successfully complete a course of study",
+          "example_sentence": "She graduated from university with honors.",
+          "example_translation": "Cô ấy tốt nghiệp đại học loại xuất sắc.",
+          "level": "B1",
+          "collocations": [
+            "graduate from",
+            "recent graduate"
+          ],
+          "synonyms": [
+            "complete studies"
+          ],
+          "antonyms": [
+            "drop out"
+          ],
+          "tags": [
+            "education",
+            "university"
+          ]
+        },
+        {
+          "word": "discipline",
+          "phonetic": "/ˈdɪs.ə.plɪn/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Kỷ luật, sự tự giác",
+          "meaning_en": "The ability to control your behavior and keep working",
+          "example_sentence": "Daily discipline matters more than short bursts of motivation.",
+          "example_translation": "Kỷ luật hằng ngày quan trọng hơn những đợt động lực ngắn ngủi.",
+          "level": "B2",
+          "collocations": [
+            "self-discipline",
+            "academic discipline"
+          ],
+          "synonyms": [
+            "self-control",
+            "order"
+          ],
+          "antonyms": [
+            "indiscipline"
+          ],
+          "tags": [
+            "education",
+            "habit"
+          ]
+        },
+        {
+          "word": "motivation",
+          "phonetic": "/ˌməʊ.tɪˈveɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Động lực",
+          "meaning_en": "The reason or energy that makes someone want to do something",
+          "example_sentence": "Clear goals can increase motivation to study.",
+          "example_translation": "Mục tiêu rõ ràng có thể tăng động lực học tập.",
+          "level": "B1",
+          "collocations": [
+            "intrinsic motivation",
+            "lose motivation"
+          ],
+          "synonyms": [
+            "drive",
+            "incentive"
+          ],
+          "antonyms": [
+            "discouragement"
+          ],
+          "tags": [
+            "education",
+            "psychology"
+          ]
+        },
+        {
+          "word": "resource",
+          "phonetic": "/rɪˈzɔːs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Nguồn tài nguyên, tài liệu",
+          "meaning_en": "Something useful that helps you do an activity",
+          "example_sentence": "The library offers excellent online learning resources.",
+          "example_translation": "Thư viện cung cấp các nguồn tài liệu học trực tuyến xuất sắc.",
+          "level": "B1",
+          "collocations": [
+            "learning resource",
+            "natural resource"
+          ],
+          "synonyms": [
+            "material",
+            "asset"
+          ],
+          "antonyms": [],
+          "tags": [
+            "education",
+            "study"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "shopping-and-money",
+      "title": "Mua Sắm & Tiền Bạc",
+      "description": "Từ vựng thực tế để mua hàng, thanh toán và quản lý tiền.",
+      "icon_name": "shopping_bag",
+      "level": "A2-B2",
+      "order_index": 8,
+      "words": [
+        {
+          "word": "discount",
+          "phonetic": "/ˈdɪs.kaʊnt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự giảm giá",
+          "meaning_en": "A reduction in the usual price of something",
+          "example_sentence": "Students receive a ten percent discount on all courses.",
+          "example_translation": "Học sinh được giảm giá mười phần trăm cho tất cả các khóa học.",
+          "level": "A2",
+          "collocations": [
+            "heavy discount",
+            "student discount"
+          ],
+          "synonyms": [
+            "price cut",
+            "reduction"
+          ],
+          "antonyms": [
+            "markup"
+          ],
+          "tags": [
+            "shopping",
+            "money"
+          ]
+        },
+        {
+          "word": "purchase",
+          "phonetic": "/ˈpɜː.tʃəs/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Mua hàng",
+          "meaning_en": "To buy something",
+          "example_sentence": "You can purchase the ticket online or at the counter.",
+          "example_translation": "Bạn có thể mua vé trực tuyến hoặc tại quầy.",
+          "level": "B1",
+          "collocations": [
+            "make a purchase",
+            "purchase online"
+          ],
+          "synonyms": [
+            "buy",
+            "acquire"
+          ],
+          "antonyms": [
+            "sell"
+          ],
+          "tags": [
+            "shopping",
+            "money"
+          ]
+        },
+        {
+          "word": "refund",
+          "phonetic": "/ˈriː.fʌnd/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tiền hoàn lại",
+          "meaning_en": "Money returned to you when you are not satisfied with a product",
+          "example_sentence": "The store offered a full refund without asking any questions.",
+          "example_translation": "Cửa hàng hoàn lại toàn bộ tiền mà không hỏi bất kỳ câu nào.",
+          "level": "B1",
+          "collocations": [
+            "full refund",
+            "request a refund"
+          ],
+          "synonyms": [
+            "reimbursement"
+          ],
+          "antonyms": [
+            "charge"
+          ],
+          "tags": [
+            "shopping",
+            "money"
+          ]
+        },
+        {
+          "word": "receipt",
+          "phonetic": "/rɪˈsiːt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Biên lai, hóa đơn",
+          "meaning_en": "A piece of paper proving that you paid for something",
+          "example_sentence": "Keep the receipt in case you need to return the item.",
+          "example_translation": "Hãy giữ biên lai phòng trường hợp bạn cần trả lại món hàng.",
+          "level": "A2",
+          "collocations": [
+            "keep a receipt",
+            "ask for a receipt"
+          ],
+          "synonyms": [
+            "proof of purchase"
+          ],
+          "antonyms": [],
+          "tags": [
+            "shopping",
+            "money"
+          ]
+        },
+        {
+          "word": "afford",
+          "phonetic": "/əˈfɔːd/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Có khả năng chi trả",
+          "meaning_en": "To have enough money to pay for something",
+          "example_sentence": "We cannot afford a new car this year.",
+          "example_translation": "Chúng tôi không đủ khả năng mua một chiếc xe mới trong năm nay.",
+          "level": "A2",
+          "collocations": [
+            "can afford",
+            "afford to buy"
+          ],
+          "synonyms": [
+            "manage to pay for"
+          ],
+          "antonyms": [
+            "lack money"
+          ],
+          "tags": [
+            "shopping",
+            "money"
+          ]
+        },
+        {
+          "word": "expense",
+          "phonetic": "/ɪkˈspens/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chi phí",
+          "meaning_en": "Money that you spend on something",
+          "example_sentence": "Rent is the largest monthly expense for most families.",
+          "example_translation": "Tiền thuê nhà là khoản chi phí hằng tháng lớn nhất của hầu hết các gia đình.",
+          "level": "B1",
+          "collocations": [
+            "monthly expense",
+            "business expense"
+          ],
+          "synonyms": [
+            "cost",
+            "spending"
+          ],
+          "antonyms": [
+            "income"
+          ],
+          "tags": [
+            "money",
+            "finance"
+          ]
+        },
+        {
+          "word": "currency",
+          "phonetic": "/ˈkʌr.ən.si/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tiền tệ",
+          "meaning_en": "The money used in a particular country",
+          "example_sentence": "The local currency is the Vietnamese dong.",
+          "example_translation": "Tiền tệ địa phương là đồng Việt Nam.",
+          "level": "B1",
+          "collocations": [
+            "foreign currency",
+            "local currency"
+          ],
+          "synonyms": [
+            "money",
+            "coinage"
+          ],
+          "antonyms": [],
+          "tags": [
+            "money",
+            "travel"
+          ]
+        },
+        {
+          "word": "bargain",
+          "phonetic": "/ˈbɑː.ɡɪn/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Món hời",
+          "meaning_en": "Something bought for less than its usual price",
+          "example_sentence": "This jacket was a real bargain at half price.",
+          "example_translation": "Chiếc áo khoác này thực sự là một món hời với giá bằng nửa.",
+          "level": "B1",
+          "collocations": [
+            "real bargain",
+            "bargain price"
+          ],
+          "synonyms": [
+            "good deal",
+            "steal"
+          ],
+          "antonyms": [
+            "rip-off"
+          ],
+          "tags": [
+            "shopping",
+            "money"
+          ]
+        },
+        {
+          "word": "warranty",
+          "phonetic": "/ˈwɒr.ən.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bảo hành",
+          "meaning_en": "A written promise to repair or replace a product",
+          "example_sentence": "The laptop comes with a two-year warranty.",
+          "example_translation": "Chiếc laptop đi kèm bảo hành hai năm.",
+          "level": "B2",
+          "collocations": [
+            "under warranty",
+            "extended warranty"
+          ],
+          "synonyms": [
+            "guarantee"
+          ],
+          "antonyms": [],
+          "tags": [
+            "shopping",
+            "product"
+          ]
+        },
+        {
+          "word": "installment",
+          "phonetic": "/ɪnˈstɔːl.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Khoản trả góp",
+          "meaning_en": "One of several payments made over a period of time",
+          "example_sentence": "They bought the furniture in monthly installments.",
+          "example_translation": "Họ mua đồ nội thất bằng các khoản trả góp hằng tháng.",
+          "level": "B2",
+          "collocations": [
+            "monthly installment",
+            "pay in installments"
+          ],
+          "synonyms": [
+            "payment plan"
+          ],
+          "antonyms": [
+            "lump sum"
+          ],
+          "tags": [
+            "money",
+            "shopping"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "home-and-living",
+      "title": "Nhà Cửa & Đời Sống",
+      "description": "Từ vựng về nhà ở, nội thất và sinh hoạt hằng ngày.",
+      "icon_name": "home",
+      "level": "A2-B2",
+      "order_index": 9,
+      "words": [
+        {
+          "word": "furniture",
+          "phonetic": "/ˈfɜː.nɪ.tʃər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Đồ nội thất",
+          "meaning_en": "Objects such as tables, chairs, and beds used in a room",
+          "example_sentence": "The apartment came with basic furniture.",
+          "example_translation": "Căn hộ đã có sẵn đồ nội thất cơ bản.",
+          "level": "A2",
+          "collocations": [
+            "office furniture",
+            "piece of furniture"
+          ],
+          "synonyms": [
+            "furnishings"
+          ],
+          "antonyms": [],
+          "tags": [
+            "home",
+            "living"
+          ]
+        },
+        {
+          "word": "apartment",
+          "phonetic": "/əˈpɑːt.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Căn hộ",
+          "meaning_en": "A set of rooms for living in, usually on one floor",
+          "example_sentence": "They rented a small apartment near the city center.",
+          "example_translation": "Họ thuê một căn hộ nhỏ gần trung tâm thành phố.",
+          "level": "A2",
+          "collocations": [
+            "rent an apartment",
+            "studio apartment"
+          ],
+          "synonyms": [
+            "flat",
+            "unit"
+          ],
+          "antonyms": [],
+          "tags": [
+            "home",
+            "housing"
+          ]
+        },
+        {
+          "word": "appliance",
+          "phonetic": "/əˈplaɪ.əns/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thiết bị gia dụng",
+          "meaning_en": "A machine used in the home, such as a fridge or washing machine",
+          "example_sentence": "The kitchen is equipped with modern appliances.",
+          "example_translation": "Nhà bếp được trang bị các thiết bị gia dụng hiện đại.",
+          "level": "B1",
+          "collocations": [
+            "home appliance",
+            "kitchen appliance"
+          ],
+          "synonyms": [
+            "device",
+            "machine"
+          ],
+          "antonyms": [],
+          "tags": [
+            "home",
+            "technology"
+          ]
+        },
+        {
+          "word": "landlord",
+          "phonetic": "/ˈlænd.lɔːd/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chủ nhà",
+          "meaning_en": "A person who owns a property and rents it to others",
+          "example_sentence": "Our landlord fixed the water heater the same day.",
+          "example_translation": "Chủ nhà của chúng tôi đã sửa bình nóng lạnh ngay trong ngày.",
+          "level": "B1",
+          "collocations": [
+            "contact the landlord",
+            "private landlord"
+          ],
+          "synonyms": [
+            "property owner"
+          ],
+          "antonyms": [
+            "tenant"
+          ],
+          "tags": [
+            "home",
+            "housing"
+          ]
+        },
+        {
+          "word": "neighbor",
+          "phonetic": "/ˈneɪ.bər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hàng xóm",
+          "meaning_en": "A person who lives near you",
+          "example_sentence": "Our neighbors are friendly and always willing to help.",
+          "example_translation": "Hàng xóm của chúng tôi thân thiện và luôn sẵn lòng giúp đỡ.",
+          "level": "A2",
+          "collocations": [
+            "next-door neighbor",
+            "friendly neighbor"
+          ],
+          "synonyms": [
+            "resident nearby"
+          ],
+          "antonyms": [
+            "stranger"
+          ],
+          "tags": [
+            "home",
+            "community"
+          ]
+        },
+        {
+          "word": "spacious",
+          "phonetic": "/ˈspeɪ.ʃəs/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Rộng rãi",
+          "meaning_en": "Large and with plenty of space",
+          "example_sentence": "The living room is bright and spacious.",
+          "example_translation": "Phòng khách sáng sủa và rộng rãi.",
+          "level": "B1",
+          "collocations": [
+            "spacious room",
+            "spacious apartment"
+          ],
+          "synonyms": [
+            "roomy",
+            "large"
+          ],
+          "antonyms": [
+            "cramped"
+          ],
+          "tags": [
+            "home",
+            "description"
+          ]
+        },
+        {
+          "word": "decorate",
+          "phonetic": "/ˈdek.ə.reɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Trang trí",
+          "meaning_en": "To make a place look more attractive",
+          "example_sentence": "We decorated the bedroom with warm colors and plants.",
+          "example_translation": "Chúng tôi trang trí phòng ngủ bằng màu sắc ấm áp và cây xanh.",
+          "level": "B1",
+          "collocations": [
+            "decorate a room",
+            "beautifully decorated"
+          ],
+          "synonyms": [
+            "adorn",
+            "beautify"
+          ],
+          "antonyms": [
+            "strip"
+          ],
+          "tags": [
+            "home",
+            "design"
+          ]
+        },
+        {
+          "word": "rent",
+          "phonetic": "/rent/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tiền thuê nhà",
+          "meaning_en": "The money you pay regularly to live in a place",
+          "example_sentence": "The rent includes water and internet.",
+          "example_translation": "Tiền thuê nhà bao gồm nước và internet.",
+          "level": "A2",
+          "collocations": [
+            "pay rent",
+            "monthly rent"
+          ],
+          "synonyms": [
+            "lease payment"
+          ],
+          "antonyms": [],
+          "tags": [
+            "home",
+            "money"
+          ]
+        },
+        {
+          "word": "utility",
+          "phonetic": "/juːˈtɪl.ə.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chi phí điện nước",
+          "meaning_en": "A service such as electricity or water supplied to a home",
+          "example_sentence": "All utilities are included in the monthly fee.",
+          "example_translation": "Tất cả chi phí điện nước đã bao gồm trong phí hằng tháng.",
+          "level": "B2",
+          "collocations": [
+            "utility bill",
+            "utility costs"
+          ],
+          "synonyms": [
+            "service"
+          ],
+          "antonyms": [],
+          "tags": [
+            "home",
+            "money"
+          ]
+        },
+        {
+          "word": "renovation",
+          "phonetic": "/ˌren.əˈveɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự cải tạo",
+          "meaning_en": "The process of repairing and improving a building",
+          "example_sentence": "The kitchen renovation took nearly three months.",
+          "example_translation": "Việc cải tạo nhà bếp mất gần ba tháng.",
+          "level": "B2",
+          "collocations": [
+            "home renovation",
+            "major renovation"
+          ],
+          "synonyms": [
+            "remodeling",
+            "refurbishment"
+          ],
+          "antonyms": [
+            "demolition"
+          ],
+          "tags": [
+            "home",
+            "building"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "nature-and-environment",
+      "title": "Thiên Nhiên & Môi Trường",
+      "description": "Từ vựng về khí hậu, hệ sinh thái và bảo vệ hành tinh.",
+      "icon_name": "eco",
+      "level": "B1-C1",
+      "order_index": 10,
+      "words": [
+        {
+          "word": "pollution",
+          "phonetic": "/pəˈluː.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Ô nhiễm",
+          "meaning_en": "Damage caused to air, water, or land by harmful substances",
+          "example_sentence": "Air pollution is a serious problem in many large cities.",
+          "example_translation": "Ô nhiễm không khí là một vấn đề nghiêm trọng ở nhiều thành phố lớn.",
+          "level": "B1",
+          "collocations": [
+            "air pollution",
+            "reduce pollution"
+          ],
+          "synonyms": [
+            "contamination"
+          ],
+          "antonyms": [
+            "cleanliness"
+          ],
+          "tags": [
+            "nature",
+            "environment"
+          ]
+        },
+        {
+          "word": "renewable",
+          "phonetic": "/rɪˈnjuː.ə.bəl/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Có thể tái tạo",
+          "meaning_en": "Able to be replaced naturally and not used up",
+          "example_sentence": "Solar power is a clean and renewable source of energy.",
+          "example_translation": "Năng lượng mặt trời là một nguồn năng lượng sạch và có thể tái tạo.",
+          "level": "B1",
+          "collocations": [
+            "renewable energy",
+            "renewable resources"
+          ],
+          "synonyms": [
+            "sustainable"
+          ],
+          "antonyms": [
+            "non-renewable"
+          ],
+          "tags": [
+            "nature",
+            "energy"
+          ]
+        },
+        {
+          "word": "habitat",
+          "phonetic": "/ˈhæb.ɪ.tæt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Môi trường sống",
+          "meaning_en": "The natural home of an animal or plant",
+          "example_sentence": "Deforestation destroys the habitat of many rare species.",
+          "example_translation": "Phá rừng phá hủy môi trường sống của nhiều loài quý hiếm.",
+          "level": "B2",
+          "collocations": [
+            "natural habitat",
+            "lose habitat"
+          ],
+          "synonyms": [
+            "environment",
+            "home"
+          ],
+          "antonyms": [],
+          "tags": [
+            "nature",
+            "wildlife"
+          ]
+        },
+        {
+          "word": "climate",
+          "phonetic": "/ˈklaɪ.mət/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Khí hậu",
+          "meaning_en": "The usual weather conditions in a place over a long period",
+          "example_sentence": "Climate change is affecting rainfall patterns worldwide.",
+          "example_translation": "Biến đổi khí hậu đang ảnh hưởng đến mô hình mưa trên toàn thế giới.",
+          "level": "B1",
+          "collocations": [
+            "climate change",
+            "mild climate"
+          ],
+          "synonyms": [
+            "weather pattern"
+          ],
+          "antonyms": [],
+          "tags": [
+            "nature",
+            "environment"
+          ]
+        },
+        {
+          "word": "recycle",
+          "phonetic": "/ˌriːˈsaɪ.kəl/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Tái chế",
+          "meaning_en": "To process waste so that it can be used again",
+          "example_sentence": "We recycle plastic bottles and paper at home.",
+          "example_translation": "Chúng tôi tái chế chai nhựa và giấy tại nhà.",
+          "level": "A2",
+          "collocations": [
+            "recycle waste",
+            "recycle paper"
+          ],
+          "synonyms": [
+            "reuse"
+          ],
+          "antonyms": [
+            "waste"
+          ],
+          "tags": [
+            "nature",
+            "environment"
+          ]
+        },
+        {
+          "word": "conservation",
+          "phonetic": "/ˌkɒn.səˈveɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự bảo tồn",
+          "meaning_en": "The protection of nature and natural resources",
+          "example_sentence": "The national park runs a wildlife conservation program.",
+          "example_translation": "Vườn quốc gia điều hành một chương trình bảo tồn động vật hoang dã.",
+          "level": "B2",
+          "collocations": [
+            "wildlife conservation",
+            "energy conservation"
+          ],
+          "synonyms": [
+            "protection",
+            "preservation"
+          ],
+          "antonyms": [
+            "destruction"
+          ],
+          "tags": [
+            "nature",
+            "environment"
+          ]
+        },
+        {
+          "word": "drought",
+          "phonetic": "/draʊt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hạn hán",
+          "meaning_en": "A long period with little or no rain",
+          "example_sentence": "The drought lasted for months and damaged the crops.",
+          "example_translation": "Đợt hạn hán kéo dài nhiều tháng và làm hư hại mùa màng.",
+          "level": "B2",
+          "collocations": [
+            "severe drought",
+            "suffer from drought"
+          ],
+          "synonyms": [
+            "dry spell"
+          ],
+          "antonyms": [
+            "flood"
+          ],
+          "tags": [
+            "nature",
+            "weather"
+          ]
+        },
+        {
+          "word": "ecosystem",
+          "phonetic": "/ˈiː.kəʊˌsɪs.təm/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hệ sinh thái",
+          "meaning_en": "All the living things in an area and their environment",
+          "example_sentence": "Coral reefs support an incredibly diverse ecosystem.",
+          "example_translation": "Rạn san hô hỗ trợ một hệ sinh thái vô cùng đa dạng.",
+          "level": "B2",
+          "collocations": [
+            "marine ecosystem",
+            "healthy ecosystem"
+          ],
+          "synonyms": [
+            "ecological system"
+          ],
+          "antonyms": [],
+          "tags": [
+            "nature",
+            "biology"
+          ]
+        },
+        {
+          "word": "sustainable",
+          "phonetic": "/səˈsteɪ.nə.bəl/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Bền vững",
+          "meaning_en": "Able to continue for a long time without harming the environment",
+          "example_sentence": "The city is investing in sustainable transport.",
+          "example_translation": "Thành phố đang đầu tư vào giao thông bền vững.",
+          "level": "B2",
+          "collocations": [
+            "sustainable development",
+            "sustainable energy"
+          ],
+          "synonyms": [
+            "renewable",
+            "long-term"
+          ],
+          "antonyms": [
+            "unsustainable"
+          ],
+          "tags": [
+            "nature",
+            "environment"
+          ]
+        },
+        {
+          "word": "wildlife",
+          "phonetic": "/ˈwaɪld.laɪf/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Động vật hoang dã",
+          "meaning_en": "Animals and plants living naturally in an area",
+          "example_sentence": "The forest is home to a wide variety of wildlife.",
+          "example_translation": "Khu rừng là nơi sinh sống của nhiều loại động vật hoang dã.",
+          "level": "B1",
+          "collocations": [
+            "wildlife protection",
+            "local wildlife"
+          ],
+          "synonyms": [
+            "wild animals"
+          ],
+          "antonyms": [],
+          "tags": [
+            "nature",
+            "animals"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "emotions-and-feelings",
+      "title": "Cảm Xúc & Cảm Giác",
+      "description": "Từ vựng mô tả tâm trạng, phản ứng và trạng thái cảm xúc.",
+      "icon_name": "sentiment_satisfied",
+      "level": "A2-B1",
+      "order_index": 11,
+      "words": [
+        {
+          "word": "anxious",
+          "phonetic": "/ˈæŋk.ʃəs/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Lo lắng",
+          "meaning_en": "Feeling worried or nervous about something",
+          "example_sentence": "She felt anxious before her first job interview.",
+          "example_translation": "Cô ấy cảm thấy lo lắng trước buổi phỏng vấn xin việc đầu tiên.",
+          "level": "B1",
+          "collocations": [
+            "feel anxious",
+            "anxious about"
+          ],
+          "synonyms": [
+            "worried",
+            "nervous"
+          ],
+          "antonyms": [
+            "calm"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "grateful",
+          "phonetic": "/ˈɡreɪt.fəl/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Biết ơn",
+          "meaning_en": "Feeling thankful for something someone has done",
+          "example_sentence": "I am grateful for all the support you have given me.",
+          "example_translation": "Tôi biết ơn tất cả sự hỗ trợ mà bạn đã dành cho tôi.",
+          "level": "A2",
+          "collocations": [
+            "deeply grateful",
+            "grateful for"
+          ],
+          "synonyms": [
+            "thankful",
+            "appreciative"
+          ],
+          "antonyms": [
+            "ungrateful"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "frustrated",
+          "phonetic": "/frʌsˈtreɪ.tɪd/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Bực bội, nản lòng",
+          "meaning_en": "Annoyed because you cannot achieve what you want",
+          "example_sentence": "He felt frustrated when the internet kept disconnecting.",
+          "example_translation": "Anh ấy cảm thấy bực bội khi internet liên tục mất kết nối.",
+          "level": "B1",
+          "collocations": [
+            "feel frustrated",
+            "frustrated with"
+          ],
+          "synonyms": [
+            "annoyed",
+            "discouraged"
+          ],
+          "antonyms": [
+            "satisfied"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "excited",
+          "phonetic": "/ɪkˈsaɪ.tɪd/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Hào hứng",
+          "meaning_en": "Very happy and enthusiastic about something",
+          "example_sentence": "The children were excited about the school trip.",
+          "example_translation": "Bọn trẻ rất hào hứng về chuyến đi của trường.",
+          "level": "A1",
+          "collocations": [
+            "excited about",
+            "get excited"
+          ],
+          "synonyms": [
+            "thrilled",
+            "eager"
+          ],
+          "antonyms": [
+            "bored"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "disappointed",
+          "phonetic": "/ˌdɪs.əˈpɔɪn.tɪd/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Thất vọng",
+          "meaning_en": "Sad because something was not as good as you hoped",
+          "example_sentence": "She was disappointed with the result but did not give up.",
+          "example_translation": "Cô ấy thất vọng với kết quả nhưng không bỏ cuộc.",
+          "level": "A2",
+          "collocations": [
+            "deeply disappointed",
+            "disappointed with"
+          ],
+          "synonyms": [
+            "let down",
+            "sad"
+          ],
+          "antonyms": [
+            "pleased"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "calm",
+          "phonetic": "/kɑːm/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Bình tĩnh",
+          "meaning_en": "Not worried or excited",
+          "example_sentence": "Try to stay calm and breathe slowly.",
+          "example_translation": "Hãy cố giữ bình tĩnh và thở chậm.",
+          "level": "A2",
+          "collocations": [
+            "stay calm",
+            "calm down"
+          ],
+          "synonyms": [
+            "relaxed",
+            "peaceful"
+          ],
+          "antonyms": [
+            "anxious"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "jealous",
+          "phonetic": "/ˈdʒel.əs/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Ghen tị",
+          "meaning_en": "Unhappy because someone has something you want",
+          "example_sentence": "He felt jealous of his friend's success.",
+          "example_translation": "Anh ấy cảm thấy ghen tị với thành công của bạn mình.",
+          "level": "B1",
+          "collocations": [
+            "jealous of",
+            "feel jealous"
+          ],
+          "synonyms": [
+            "envious"
+          ],
+          "antonyms": [
+            "content"
+          ],
+          "tags": [
+            "emotion",
+            "relationship"
+          ]
+        },
+        {
+          "word": "relieved",
+          "phonetic": "/rɪˈliːvd/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Nhẹ nhõm",
+          "meaning_en": "Happy because a worry or problem has ended",
+          "example_sentence": "I was relieved to hear that everyone was safe.",
+          "example_translation": "Tôi cảm thấy nhẹ nhõm khi biết mọi người đều an toàn.",
+          "level": "B1",
+          "collocations": [
+            "feel relieved",
+            "relieved to hear"
+          ],
+          "synonyms": [
+            "reassured"
+          ],
+          "antonyms": [
+            "worried"
+          ],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        },
+        {
+          "word": "embarrassed",
+          "phonetic": "/ɪmˈbær.əst/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Xấu hổ, ngượng ngùng",
+          "meaning_en": "Feeling shy or uncomfortable in a social situation",
+          "example_sentence": "She felt embarrassed after forgetting his name.",
+          "example_translation": "Cô ấy cảm thấy ngượng ngùng sau khi quên tên anh ấy.",
+          "level": "B1",
+          "collocations": [
+            "feel embarrassed",
+            "embarrassed about"
+          ],
+          "synonyms": [
+            "ashamed",
+            "awkward"
+          ],
+          "antonyms": [
+            "proud"
+          ],
+          "tags": [
+            "emotion",
+            "social"
+          ]
+        },
+        {
+          "word": "mood",
+          "phonetic": "/muːd/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tâm trạng",
+          "meaning_en": "The way you feel at a particular time",
+          "example_sentence": "Music can quickly change your mood.",
+          "example_translation": "Âm nhạc có thể nhanh chóng thay đổi tâm trạng của bạn.",
+          "level": "A2",
+          "collocations": [
+            "good mood",
+            "in a bad mood"
+          ],
+          "synonyms": [
+            "state of mind",
+            "feeling"
+          ],
+          "antonyms": [],
+          "tags": [
+            "emotion",
+            "feeling"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "entertainment-and-media",
+      "title": "Giải Trí & Truyền Thông",
+      "description": "Từ vựng về phim ảnh, chương trình truyền hình, âm nhạc và truyền thông trực tuyến.",
+      "icon_name": "movie",
+      "level": "A2-B2",
+      "order_index": 12,
+      "words": [
+        {
+          "word": "episode",
+          "phonetic": "/ˈep.ɪ.səʊd/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tập phim",
+          "meaning_en": "One part of a television series",
+          "example_sentence": "The final episode of the series attracted millions of viewers.",
+          "example_translation": "Tập cuối của bộ phim thu hút hàng triệu người xem.",
+          "level": "A2",
+          "collocations": [
+            "final episode",
+            "watch an episode"
+          ],
+          "synonyms": [
+            "installment"
+          ],
+          "antonyms": [],
+          "tags": [
+            "media",
+            "television"
+          ]
+        },
+        {
+          "word": "audience",
+          "phonetic": "/ˈɔː.di.əns/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Khán giả",
+          "meaning_en": "The people who watch or listen to a performance",
+          "example_sentence": "The audience applauded loudly at the end of the show.",
+          "example_translation": "Khán giả vỗ tay vang dội vào cuối buổi biểu diễn.",
+          "level": "B1",
+          "collocations": [
+            "target audience",
+            "live audience"
+          ],
+          "synonyms": [
+            "viewers",
+            "spectators"
+          ],
+          "antonyms": [
+            "performers"
+          ],
+          "tags": [
+            "media",
+            "entertainment"
+          ]
+        },
+        {
+          "word": "documentary",
+          "phonetic": "/ˌdɒk.jəˈmen.tər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phim tài liệu",
+          "meaning_en": "A film that gives facts about a real subject",
+          "example_sentence": "We watched a documentary about ocean pollution.",
+          "example_translation": "Chúng tôi đã xem một bộ phim tài liệu về ô nhiễm đại dương.",
+          "level": "B1",
+          "collocations": [
+            "nature documentary",
+            "watch a documentary"
+          ],
+          "synonyms": [
+            "factual film"
+          ],
+          "antonyms": [
+            "fiction film"
+          ],
+          "tags": [
+            "media",
+            "film"
+          ]
+        },
+        {
+          "word": "celebrity",
+          "phonetic": "/səˈleb.rə.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Người nổi tiếng",
+          "meaning_en": "A famous person, especially in entertainment",
+          "example_sentence": "The charity event was supported by several celebrities.",
+          "example_translation": "Sự kiện từ thiện được nhiều người nổi tiếng ủng hộ.",
+          "level": "B1",
+          "collocations": [
+            "famous celebrity",
+            "celebrity culture"
+          ],
+          "synonyms": [
+            "star",
+            "public figure"
+          ],
+          "antonyms": [
+            "unknown"
+          ],
+          "tags": [
+            "media",
+            "fame"
+          ]
+        },
+        {
+          "word": "stream",
+          "phonetic": "/striːm/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Phát trực tuyến",
+          "meaning_en": "To play video or audio directly from the internet",
+          "example_sentence": "You can stream the concert live on your phone.",
+          "example_translation": "Bạn có thể phát trực tiếp buổi hòa nhạc trên điện thoại.",
+          "level": "B1",
+          "collocations": [
+            "stream online",
+            "live stream"
+          ],
+          "synonyms": [
+            "broadcast online"
+          ],
+          "antonyms": [
+            "download"
+          ],
+          "tags": [
+            "media",
+            "internet"
+          ]
+        },
+        {
+          "word": "broadcast",
+          "phonetic": "/ˈbrɔːd.kɑːst/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Phát sóng",
+          "meaning_en": "To send a program by radio or television",
+          "example_sentence": "The match will be broadcast live on national television.",
+          "example_translation": "Trận đấu sẽ được phát sóng trực tiếp trên truyền hình quốc gia.",
+          "level": "B1",
+          "collocations": [
+            "live broadcast",
+            "broadcast a program"
+          ],
+          "synonyms": [
+            "air",
+            "transmit"
+          ],
+          "antonyms": [],
+          "tags": [
+            "media",
+            "television"
+          ]
+        },
+        {
+          "word": "review",
+          "phonetic": "/rɪˈvjuː/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bài đánh giá",
+          "meaning_en": "An opinion piece about a film, book, or product",
+          "example_sentence": "The film received excellent reviews from critics.",
+          "example_translation": "Bộ phim nhận được những đánh giá xuất sắc từ giới phê bình.",
+          "level": "B1",
+          "collocations": [
+            "film review",
+            "positive review"
+          ],
+          "synonyms": [
+            "critique",
+            "evaluation"
+          ],
+          "antonyms": [],
+          "tags": [
+            "media",
+            "opinion"
+          ]
+        },
+        {
+          "word": "plot",
+          "phonetic": "/plɒt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Cốt truyện",
+          "meaning_en": "The main story of a book, film, or play",
+          "example_sentence": "The plot was predictable, but the acting was superb.",
+          "example_translation": "Cốt truyện dễ đoán nhưng diễn xuất rất tuyệt vời.",
+          "level": "B1",
+          "collocations": [
+            "complex plot",
+            "plot twist"
+          ],
+          "synonyms": [
+            "storyline"
+          ],
+          "antonyms": [],
+          "tags": [
+            "media",
+            "film"
+          ]
+        },
+        {
+          "word": "subtitle",
+          "phonetic": "/ˈsʌb.taɪ.təl/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phụ đề",
+          "meaning_en": "Text shown at the bottom of a screen translating dialogue",
+          "example_sentence": "I watch English films with Vietnamese subtitles.",
+          "example_translation": "Tôi xem phim tiếng Anh với phụ đề tiếng Việt.",
+          "level": "A2",
+          "collocations": [
+            "English subtitles",
+            "turn on subtitles"
+          ],
+          "synonyms": [
+            "captions"
+          ],
+          "antonyms": [],
+          "tags": [
+            "media",
+            "film"
+          ]
+        },
+        {
+          "word": "performance",
+          "phonetic": "/pəˈfɔː.məns/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Màn trình diễn",
+          "meaning_en": "An act of entertaining people by singing, acting, or dancing",
+          "example_sentence": "Her performance received a standing ovation.",
+          "example_translation": "Màn trình diễn của cô ấy nhận được sự hoan hô đứng dậy từ khán giả.",
+          "level": "B1",
+          "collocations": [
+            "live performance",
+            "outstanding performance"
+          ],
+          "synonyms": [
+            "show",
+            "act"
+          ],
+          "antonyms": [],
+          "tags": [
+            "media",
+            "entertainment"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "relationships-and-family",
+      "title": "Các Mối Quan Hệ & Gia Đình",
+      "description": "Từ vựng về gia đình, tình bạn và các kết nối xã hội.",
+      "icon_name": "family_restroom",
+      "level": "A2-B2",
+      "order_index": 13,
+      "words": [
+        {
+          "word": "relative",
+          "phonetic": "/ˈrel.ə.tɪv/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Người thân",
+          "meaning_en": "A member of your family",
+          "example_sentence": "Many relatives came to celebrate the wedding.",
+          "example_translation": "Nhiều người thân đã đến chúc mừng đám cưới.",
+          "level": "A2",
+          "collocations": [
+            "close relative",
+            "distant relative"
+          ],
+          "synonyms": [
+            "family member"
+          ],
+          "antonyms": [
+            "stranger"
+          ],
+          "tags": [
+            "family",
+            "relationship"
+          ]
+        },
+        {
+          "word": "sibling",
+          "phonetic": "/ˈsɪb.lɪŋ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Anh chị em ruột",
+          "meaning_en": "A brother or sister",
+          "example_sentence": "She has two younger siblings.",
+          "example_translation": "Cô ấy có hai người em ruột.",
+          "level": "B1",
+          "collocations": [
+            "older sibling",
+            "younger sibling"
+          ],
+          "synonyms": [
+            "brother or sister"
+          ],
+          "antonyms": [],
+          "tags": [
+            "family",
+            "relationship"
+          ]
+        },
+        {
+          "word": "spouse",
+          "phonetic": "/spaʊs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Vợ hoặc chồng",
+          "meaning_en": "A husband or wife",
+          "example_sentence": "Employees may bring their spouse to the company dinner.",
+          "example_translation": "Nhân viên có thể đưa vợ hoặc chồng đến bữa tối của công ty.",
+          "level": "B2",
+          "collocations": [
+            "spouse and children",
+            "former spouse"
+          ],
+          "synonyms": [
+            "partner",
+            "husband or wife"
+          ],
+          "antonyms": [],
+          "tags": [
+            "family",
+            "marriage"
+          ]
+        },
+        {
+          "word": "friendship",
+          "phonetic": "/ˈfrend.ʃɪp/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tình bạn",
+          "meaning_en": "A relationship between friends",
+          "example_sentence": "Their friendship has lasted for more than twenty years.",
+          "example_translation": "Tình bạn của họ đã kéo dài hơn hai mươi năm.",
+          "level": "A2",
+          "collocations": [
+            "close friendship",
+            "build a friendship"
+          ],
+          "synonyms": [
+            "companionship"
+          ],
+          "antonyms": [
+            "enmity"
+          ],
+          "tags": [
+            "relationship",
+            "social"
+          ]
+        },
+        {
+          "word": "trust",
+          "phonetic": "/trʌst/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự tin tưởng",
+          "meaning_en": "A belief that someone is honest and reliable",
+          "example_sentence": "Trust is the foundation of every healthy relationship.",
+          "example_translation": "Sự tin tưởng là nền tảng của mọi mối quan hệ lành mạnh.",
+          "level": "B1",
+          "collocations": [
+            "build trust",
+            "mutual trust"
+          ],
+          "synonyms": [
+            "confidence",
+            "faith"
+          ],
+          "antonyms": [
+            "distrust"
+          ],
+          "tags": [
+            "relationship",
+            "emotion"
+          ]
+        },
+        {
+          "word": "argument",
+          "phonetic": "/ˈɑː.ɡjə.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Cuộc tranh cãi",
+          "meaning_en": "An angry disagreement between people",
+          "example_sentence": "They had a small argument about money but quickly made up.",
+          "example_translation": "Họ có một cuộc tranh cãi nhỏ về tiền nhưng nhanh chóng làm hòa.",
+          "level": "A2",
+          "collocations": [
+            "have an argument",
+            "heated argument"
+          ],
+          "synonyms": [
+            "dispute",
+            "quarrel"
+          ],
+          "antonyms": [
+            "agreement"
+          ],
+          "tags": [
+            "relationship",
+            "conflict"
+          ]
+        },
+        {
+          "word": "support",
+          "phonetic": "/səˈpɔːt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự ủng hộ, hỗ trợ",
+          "meaning_en": "Help and encouragement given to someone",
+          "example_sentence": "Her family gave her a lot of support during the exam period.",
+          "example_translation": "Gia đình đã hỗ trợ cô ấy rất nhiều trong thời gian thi.",
+          "level": "A2",
+          "collocations": [
+            "emotional support",
+            "give support"
+          ],
+          "synonyms": [
+            "help",
+            "backing"
+          ],
+          "antonyms": [
+            "opposition"
+          ],
+          "tags": [
+            "relationship",
+            "help"
+          ]
+        },
+        {
+          "word": "generation",
+          "phonetic": "/ˌdʒen.əˈreɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thế hệ",
+          "meaning_en": "All the people born at about the same time",
+          "example_sentence": "Each generation has its own way of communicating.",
+          "example_translation": "Mỗi thế hệ có cách giao tiếp riêng.",
+          "level": "B1",
+          "collocations": [
+            "younger generation",
+            "generation gap"
+          ],
+          "synonyms": [
+            "age group"
+          ],
+          "antonyms": [],
+          "tags": [
+            "family",
+            "society"
+          ]
+        },
+        {
+          "word": "respect",
+          "phonetic": "/rɪˈspekt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự tôn trọng",
+          "meaning_en": "A feeling of admiration for someone or something",
+          "example_sentence": "Children should learn to show respect for others.",
+          "example_translation": "Trẻ em nên học cách thể hiện sự tôn trọng với người khác.",
+          "level": "B1",
+          "collocations": [
+            "show respect",
+            "mutual respect"
+          ],
+          "synonyms": [
+            "esteem",
+            "regard"
+          ],
+          "antonyms": [
+            "disrespect"
+          ],
+          "tags": [
+            "relationship",
+            "value"
+          ]
+        },
+        {
+          "word": "bond",
+          "phonetic": "/bɒnd/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự gắn kết",
+          "meaning_en": "A strong connection between people",
+          "example_sentence": "Traveling together created a strong bond between them.",
+          "example_translation": "Việc đi du lịch cùng nhau đã tạo ra sự gắn kết mạnh mẽ giữa họ.",
+          "level": "B1",
+          "collocations": [
+            "strong bond",
+            "family bond"
+          ],
+          "synonyms": [
+            "connection",
+            "tie"
+          ],
+          "antonyms": [
+            "separation"
+          ],
+          "tags": [
+            "relationship",
+            "family"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "transport-and-city",
+      "title": "Giao Thông & Thành Phố",
+      "description": "Từ vựng về đi lại, giao thông và di chuyển trong thành phố.",
+      "icon_name": "directions_bus",
+      "level": "A2-B2",
+      "order_index": 14,
+      "words": [
+        {
+          "word": "commute",
+          "phonetic": "/kəˈmjuːt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Đi làm hoặc đi học hằng ngày",
+          "meaning_en": "To travel regularly between home and work",
+          "example_sentence": "She commutes to work by subway every morning.",
+          "example_translation": "Cô ấy đi làm bằng tàu điện ngầm mỗi sáng.",
+          "level": "B1",
+          "collocations": [
+            "daily commute",
+            "commute to work"
+          ],
+          "synonyms": [
+            "travel"
+          ],
+          "antonyms": [
+            "stay home"
+          ],
+          "tags": [
+            "transport",
+            "work"
+          ]
+        },
+        {
+          "word": "traffic",
+          "phonetic": "/ˈtræf.ɪk/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Giao thông",
+          "meaning_en": "The vehicles moving along a road",
+          "example_sentence": "The traffic is usually heavy during rush hour.",
+          "example_translation": "Giao thông thường đông đúc vào giờ cao điểm.",
+          "level": "A2",
+          "collocations": [
+            "heavy traffic",
+            "traffic jam"
+          ],
+          "synonyms": [
+            "vehicles",
+            "congestion"
+          ],
+          "antonyms": [],
+          "tags": [
+            "transport",
+            "city"
+          ]
+        },
+        {
+          "word": "pedestrian",
+          "phonetic": "/pəˈdes.tri.ən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Người đi bộ",
+          "meaning_en": "A person walking rather than traveling in a vehicle",
+          "example_sentence": "Drivers must stop for pedestrians at the crossing.",
+          "example_translation": "Người lái xe phải nhường đường cho người đi bộ tại vạch qua đường.",
+          "level": "B1",
+          "collocations": [
+            "pedestrian crossing",
+            "pedestrian area"
+          ],
+          "synonyms": [
+            "walker"
+          ],
+          "antonyms": [
+            "driver"
+          ],
+          "tags": [
+            "transport",
+            "city"
+          ]
+        },
+        {
+          "word": "vehicle",
+          "phonetic": "/ˈviː.ɪ.kəl/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phương tiện giao thông",
+          "meaning_en": "A machine such as a car or bus used for transport",
+          "example_sentence": "Electric vehicles are becoming more affordable.",
+          "example_translation": "Xe điện đang trở nên có giá cả phải chăng hơn.",
+          "level": "B1",
+          "collocations": [
+            "electric vehicle",
+            "motor vehicle"
+          ],
+          "synonyms": [
+            "car",
+            "transport"
+          ],
+          "antonyms": [],
+          "tags": [
+            "transport",
+            "city"
+          ]
+        },
+        {
+          "word": "route",
+          "phonetic": "/ruːt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tuyến đường",
+          "meaning_en": "The path taken from one place to another",
+          "example_sentence": "This bus route stops at the train station.",
+          "example_translation": "Tuyến xe buýt này dừng ở ga tàu.",
+          "level": "A2",
+          "collocations": [
+            "bus route",
+            "fastest route"
+          ],
+          "synonyms": [
+            "path",
+            "way"
+          ],
+          "antonyms": [],
+          "tags": [
+            "transport",
+            "travel"
+          ]
+        },
+        {
+          "word": "fare",
+          "phonetic": "/feər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Giá vé",
+          "meaning_en": "The money you pay to travel on a bus, train, or plane",
+          "example_sentence": "The train fare increased slightly this year.",
+          "example_translation": "Giá vé tàu đã tăng nhẹ trong năm nay.",
+          "level": "A2",
+          "collocations": [
+            "bus fare",
+            "pay the fare"
+          ],
+          "synonyms": [
+            "ticket price"
+          ],
+          "antonyms": [],
+          "tags": [
+            "transport",
+            "money"
+          ]
+        },
+        {
+          "word": "intersection",
+          "phonetic": "/ˌɪn.təˈsek.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Ngã tư, giao lộ",
+          "meaning_en": "The place where two or more roads cross",
+          "example_sentence": "Turn left at the next intersection.",
+          "example_translation": "Rẽ trái ở ngã tư tiếp theo.",
+          "level": "B1",
+          "collocations": [
+            "busy intersection",
+            "at the intersection"
+          ],
+          "synonyms": [
+            "crossroads",
+            "junction"
+          ],
+          "antonyms": [],
+          "tags": [
+            "transport",
+            "city"
+          ]
+        },
+        {
+          "word": "subway",
+          "phonetic": "/ˈsʌb.weɪ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tàu điện ngầm",
+          "meaning_en": "An underground railway system in a city",
+          "example_sentence": "The subway is the fastest way to cross the city.",
+          "example_translation": "Tàu điện ngầm là cách nhanh nhất để đi khắp thành phố.",
+          "level": "A2",
+          "collocations": [
+            "subway station",
+            "take the subway"
+          ],
+          "synonyms": [
+            "metro",
+            "underground"
+          ],
+          "antonyms": [],
+          "tags": [
+            "transport",
+            "city"
+          ]
+        },
+        {
+          "word": "congestion",
+          "phonetic": "/kənˈdʒes.tʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự tắc nghẽn giao thông",
+          "meaning_en": "A situation in which roads are too crowded with vehicles",
+          "example_sentence": "The city introduced new bus lanes to reduce congestion.",
+          "example_translation": "Thành phố đã đưa vào các làn xe buýt mới để giảm tắc nghẽn.",
+          "level": "B2",
+          "collocations": [
+            "traffic congestion",
+            "reduce congestion"
+          ],
+          "synonyms": [
+            "traffic jam",
+            "overcrowding"
+          ],
+          "antonyms": [
+            "free flow"
+          ],
+          "tags": [
+            "transport",
+            "city"
+          ]
+        },
+        {
+          "word": "passenger",
+          "phonetic": "/ˈpæs.ɪn.dʒər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hành khách",
+          "meaning_en": "A person traveling in a vehicle who is not driving",
+          "example_sentence": "Passengers must wear seat belts in the taxi.",
+          "example_translation": "Hành khách phải thắt dây an toàn khi ngồi taxi.",
+          "level": "A2",
+          "collocations": [
+            "train passenger",
+            "passenger seat"
+          ],
+          "synonyms": [
+            "traveler",
+            "rider"
+          ],
+          "antonyms": [
+            "driver"
+          ],
+          "tags": [
+            "transport",
+            "travel"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "science-and-research",
+      "title": "Khoa Học & Nghiên Cứu",
+      "description": "Từ vựng về thí nghiệm, lý thuyết và phương pháp nghiên cứu.",
+      "icon_name": "science",
+      "level": "B2-C1",
+      "order_index": 15,
+      "words": [
+        {
+          "word": "experiment",
+          "phonetic": "/ɪkˈsper.ɪ.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thí nghiệm",
+          "meaning_en": "A scientific test to discover or prove something",
+          "example_sentence": "The students designed an experiment to test how plants respond to light.",
+          "example_translation": "Các học viên đã thiết kế một thí nghiệm để kiểm tra cách cây phản ứng với ánh sáng.",
+          "level": "B1",
+          "collocations": [
+            "conduct an experiment",
+            "controlled experiment"
+          ],
+          "synonyms": [
+            "test",
+            "trial"
+          ],
+          "antonyms": [],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "theory",
+          "phonetic": "/ˈθɪə.ri/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Lý thuyết",
+          "meaning_en": "A system of ideas intended to explain something",
+          "example_sentence": "Darwin's theory of evolution changed biology forever.",
+          "example_translation": "Thuyết tiến hóa của Darwin đã thay đổi sinh học mãi mãi.",
+          "level": "B1",
+          "collocations": [
+            "scientific theory",
+            "in theory"
+          ],
+          "synonyms": [
+            "hypothesis",
+            "explanation"
+          ],
+          "antonyms": [
+            "practice"
+          ],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "molecule",
+          "phonetic": "/ˈmɒl.ɪ.kjuːl/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phân tử",
+          "meaning_en": "The smallest unit of a substance that keeps its chemical properties",
+          "example_sentence": "A water molecule contains two hydrogen atoms and one oxygen atom.",
+          "example_translation": "Một phân tử nước chứa hai nguyên tử hydro và một nguyên tử oxy.",
+          "level": "B2",
+          "collocations": [
+            "water molecule",
+            "single molecule"
+          ],
+          "synonyms": [
+            "particle"
+          ],
+          "antonyms": [],
+          "tags": [
+            "science",
+            "chemistry"
+          ]
+        },
+        {
+          "word": "gravity",
+          "phonetic": "/ˈɡræv.ə.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Trọng lực",
+          "meaning_en": "The force that pulls objects toward the earth",
+          "example_sentence": "Gravity makes the apple fall to the ground.",
+          "example_translation": "Trọng lực làm quả táo rơi xuống đất.",
+          "level": "B1",
+          "collocations": [
+            "force of gravity",
+            "zero gravity"
+          ],
+          "synonyms": [
+            "attraction"
+          ],
+          "antonyms": [],
+          "tags": [
+            "science",
+            "physics"
+          ]
+        },
+        {
+          "word": "laboratory",
+          "phonetic": "/ləˈbɒr.ə.tər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phòng thí nghiệm",
+          "meaning_en": "A room used for scientific experiments",
+          "example_sentence": "Researchers measured the samples in a clean laboratory.",
+          "example_translation": "Các nhà nghiên cứu đã đo các mẫu trong một phòng thí nghiệm sạch.",
+          "level": "B1",
+          "collocations": [
+            "research laboratory",
+            "laboratory test"
+          ],
+          "synonyms": [
+            "lab"
+          ],
+          "antonyms": [],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "discovery",
+          "phonetic": "/dɪˈskʌv.ər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Sự phát hiện",
+          "meaning_en": "The act of finding something for the first time",
+          "example_sentence": "The discovery of penicillin saved millions of lives.",
+          "example_translation": "Việc phát hiện ra penicillin đã cứu sống hàng triệu người.",
+          "level": "B1",
+          "collocations": [
+            "major discovery",
+            "scientific discovery"
+          ],
+          "synonyms": [
+            "finding",
+            "breakthrough"
+          ],
+          "antonyms": [
+            "loss"
+          ],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "variable",
+          "phonetic": "/ˈveə.ri.ə.bəl/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Biến số",
+          "meaning_en": "A factor that can change in an experiment",
+          "example_sentence": "Temperature was the main variable in their study.",
+          "example_translation": "Nhiệt độ là biến số chính trong nghiên cứu của họ.",
+          "level": "B2",
+          "collocations": [
+            "independent variable",
+            "control a variable"
+          ],
+          "synonyms": [
+            "factor"
+          ],
+          "antonyms": [
+            "constant"
+          ],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "observe",
+          "phonetic": "/əbˈzɜːv/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Quan sát",
+          "meaning_en": "To watch something carefully to learn about it",
+          "example_sentence": "Scientists observe the birds during their migration.",
+          "example_translation": "Các nhà khoa học quan sát những con chim trong quá trình di cư.",
+          "level": "B1",
+          "collocations": [
+            "carefully observe",
+            "observe behavior"
+          ],
+          "synonyms": [
+            "watch",
+            "monitor"
+          ],
+          "antonyms": [
+            "ignore"
+          ],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "formulate",
+          "phonetic": "/ˈfɔː.mjə.leɪt/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Xây dựng, phát biểu",
+          "meaning_en": "To develop an idea or plan in a clear way",
+          "example_sentence": "The team formulated a new research question.",
+          "example_translation": "Nhóm đã xây dựng một câu hỏi nghiên cứu mới.",
+          "level": "C1",
+          "collocations": [
+            "formulate a question",
+            "formulate a plan"
+          ],
+          "synonyms": [
+            "develop",
+            "devise"
+          ],
+          "antonyms": [],
+          "tags": [
+            "science",
+            "research"
+          ]
+        },
+        {
+          "word": "empirical",
+          "phonetic": "/ɪmˈpɪr.ɪ.kəl/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Dựa trên thực nghiệm",
+          "meaning_en": "Based on observation or experiment rather than theory",
+          "example_sentence": "The claim is supported by empirical evidence.",
+          "example_translation": "Tuyên bố này được hỗ trợ bởi bằng chứng thực nghiệm.",
+          "level": "C1",
+          "collocations": [
+            "empirical evidence",
+            "empirical research"
+          ],
+          "synonyms": [
+            "experimental",
+            "observational"
+          ],
+          "antonyms": [
+            "theoretical"
+          ],
+          "tags": [
+            "science",
+            "research"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sports-and-leisure",
+      "title": "Thể Thao & Giải Trí",
+      "description": "Từ vựng về thi đấu, luyện tập và hoạt động thư giãn.",
+      "icon_name": "sports_soccer",
+      "level": "A2-B1",
+      "order_index": 16,
+      "words": [
+        {
+          "word": "tournament",
+          "phonetic": "/ˈtʊə.nə.mənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Giải đấu",
+          "meaning_en": "A competition with a series of games",
+          "example_sentence": "Our school won the regional football tournament.",
+          "example_translation": "Trường của chúng tôi đã thắng giải bóng đá khu vực.",
+          "level": "B1",
+          "collocations": [
+            "football tournament",
+            "enter a tournament"
+          ],
+          "synonyms": [
+            "competition",
+            "contest"
+          ],
+          "antonyms": [],
+          "tags": [
+            "sports",
+            "competition"
+          ]
+        },
+        {
+          "word": "athlete",
+          "phonetic": "/ˈæθ.liːt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Vận động viên",
+          "meaning_en": "A person who is trained in a sport",
+          "example_sentence": "The athlete trains six days a week.",
+          "example_translation": "Vận động viên này luyện tập sáu ngày mỗi tuần.",
+          "level": "A2",
+          "collocations": [
+            "professional athlete",
+            "young athlete"
+          ],
+          "synonyms": [
+            "sportsperson",
+            "player"
+          ],
+          "antonyms": [],
+          "tags": [
+            "sports",
+            "people"
+          ]
+        },
+        {
+          "word": "coach",
+          "phonetic": "/kəʊtʃ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Huấn luyện viên",
+          "meaning_en": "A person who trains a sports team or player",
+          "example_sentence": "The coach gave the team a new strategy.",
+          "example_translation": "Huấn luyện viên đã đưa cho đội một chiến lược mới.",
+          "level": "A2",
+          "collocations": [
+            "head coach",
+            "basketball coach"
+          ],
+          "synonyms": [
+            "trainer",
+            "instructor"
+          ],
+          "antonyms": [],
+          "tags": [
+            "sports",
+            "people"
+          ]
+        },
+        {
+          "word": "referee",
+          "phonetic": "/ˌref.əˈriː/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Trọng tài",
+          "meaning_en": "A person who makes sure players follow the rules",
+          "example_sentence": "The referee stopped the match after a foul.",
+          "example_translation": "Trọng tài đã dừng trận đấu sau một lỗi phạm.",
+          "level": "B1",
+          "collocations": [
+            "match referee",
+            "assistant referee"
+          ],
+          "synonyms": [
+            "official",
+            "umpire"
+          ],
+          "antonyms": [],
+          "tags": [
+            "sports",
+            "people"
+          ]
+        },
+        {
+          "word": "spectator",
+          "phonetic": "/spekˈteɪ.tər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Khán giả",
+          "meaning_en": "A person who watches a game or event",
+          "example_sentence": "Thousands of spectators filled the stadium.",
+          "example_translation": "Hàng nghìn khán giả đã lấp đầy sân vận động.",
+          "level": "B1",
+          "collocations": [
+            "stadium spectator",
+            "spectator sport"
+          ],
+          "synonyms": [
+            "viewer",
+            "onlooker"
+          ],
+          "antonyms": [
+            "player"
+          ],
+          "tags": [
+            "sports",
+            "people"
+          ]
+        },
+        {
+          "word": "championship",
+          "phonetic": "/ˈtʃæm.pi.ən.ʃɪp/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chức vô địch",
+          "meaning_en": "A competition to decide the best player or team",
+          "example_sentence": "She won the national swimming championship.",
+          "example_translation": "Cô ấy đã giành chức vô địch bơi quốc gia.",
+          "level": "B1",
+          "collocations": [
+            "win a championship",
+            "world championship"
+          ],
+          "synonyms": [
+            "title",
+            "tournament"
+          ],
+          "antonyms": [],
+          "tags": [
+            "sports",
+            "competition"
+          ]
+        },
+        {
+          "word": "training",
+          "phonetic": "/ˈtreɪ.nɪŋ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Việc luyện tập",
+          "meaning_en": "The process of preparing for a sport or job",
+          "example_sentence": "Daily training improved his speed and strength.",
+          "example_translation": "Việc luyện tập hằng ngày đã cải thiện tốc độ và sức mạnh của anh ấy.",
+          "level": "A2",
+          "collocations": [
+            "training session",
+            "intense training"
+          ],
+          "synonyms": [
+            "practice",
+            "preparation"
+          ],
+          "antonyms": [
+            "rest"
+          ],
+          "tags": [
+            "sports",
+            "fitness"
+          ]
+        },
+        {
+          "word": "opponent",
+          "phonetic": "/əˈpəʊ.nənt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Đối thủ",
+          "meaning_en": "The person or team you compete against",
+          "example_sentence": "She shook hands with her opponent after the match.",
+          "example_translation": "Cô ấy bắt tay đối thủ sau trận đấu.",
+          "level": "B1",
+          "collocations": [
+            "strong opponent",
+            "face an opponent"
+          ],
+          "synonyms": [
+            "rival",
+            "competitor"
+          ],
+          "antonyms": [
+            "teammate"
+          ],
+          "tags": [
+            "sports",
+            "competition"
+          ]
+        },
+        {
+          "word": "victory",
+          "phonetic": "/ˈvɪk.tər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Chiến thắng",
+          "meaning_en": "The act of winning a game or competition",
+          "example_sentence": "The team celebrated their victory with fans.",
+          "example_translation": "Đội đã ăn mừng chiến thắng cùng người hâm mộ.",
+          "level": "A2",
+          "collocations": [
+            "narrow victory",
+            "claim victory"
+          ],
+          "synonyms": [
+            "win",
+            "triumph"
+          ],
+          "antonyms": [
+            "defeat"
+          ],
+          "tags": [
+            "sports",
+            "competition"
+          ]
+        },
+        {
+          "word": "leisure",
+          "phonetic": "/ˈleʒ.ər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Thời gian rảnh",
+          "meaning_en": "Time when you are free to relax or do what you enjoy",
+          "example_sentence": "Reading is my favorite leisure activity.",
+          "example_translation": "Đọc sách là hoạt động thư giãn yêu thích của tôi.",
+          "level": "B1",
+          "collocations": [
+            "leisure time",
+            "leisure activity"
+          ],
+          "synonyms": [
+            "free time",
+            "relaxation"
+          ],
+          "antonyms": [
+            "work"
+          ],
+          "tags": [
+            "leisure",
+            "lifestyle"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "art-and-culture",
+      "title": "Nghệ Thuật & Văn Hóa",
+      "description": "Từ vựng về triển lãm, truyền thống và sáng tạo nghệ thuật.",
+      "icon_name": "palette",
+      "level": "B1-B2",
+      "order_index": 17,
+      "words": [
+        {
+          "word": "exhibition",
+          "phonetic": "/ˌek.sɪˈbɪʃ.ən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Triển lãm",
+          "meaning_en": "A public display of art or objects",
+          "example_sentence": "The museum is hosting an exhibition of modern paintings.",
+          "example_translation": "Bảo tàng đang tổ chức một triển lãm tranh hiện đại.",
+          "level": "B1",
+          "collocations": [
+            "art exhibition",
+            "hold an exhibition"
+          ],
+          "synonyms": [
+            "display",
+            "show"
+          ],
+          "antonyms": [],
+          "tags": [
+            "art",
+            "culture"
+          ]
+        },
+        {
+          "word": "sculpture",
+          "phonetic": "/ˈskʌlp.tʃər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tác phẩm điêu khắc",
+          "meaning_en": "A piece of art made by shaping stone, wood, or metal",
+          "example_sentence": "The marble sculpture stands in the city square.",
+          "example_translation": "Tác phẩm điêu khắc bằng đá cẩm thạch đứng ở quảng trường thành phố.",
+          "level": "B1",
+          "collocations": [
+            "marble sculpture",
+            "modern sculpture"
+          ],
+          "synonyms": [
+            "statue",
+            "carving"
+          ],
+          "antonyms": [],
+          "tags": [
+            "art",
+            "culture"
+          ]
+        },
+        {
+          "word": "masterpiece",
+          "phonetic": "/ˈmɑː.stə.piːs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Kiệt tác",
+          "meaning_en": "A work of art of the highest quality",
+          "example_sentence": "The novel is considered a masterpiece of Vietnamese literature.",
+          "example_translation": "Cuốn tiểu thuyết được coi là một kiệt tác của văn học Việt Nam.",
+          "level": "B2",
+          "collocations": [
+            "literary masterpiece",
+            "create a masterpiece"
+          ],
+          "synonyms": [
+            "classic",
+            "great work"
+          ],
+          "antonyms": [],
+          "tags": [
+            "art",
+            "culture"
+          ]
+        },
+        {
+          "word": "gallery",
+          "phonetic": "/ˈɡæl.ər.i/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phòng trưng bày",
+          "meaning_en": "A room or building where art is shown",
+          "example_sentence": "We spent the afternoon in a small photography gallery.",
+          "example_translation": "Chúng tôi dành cả buổi chiều trong một phòng trưng bày nhiếp ảnh nhỏ.",
+          "level": "B1",
+          "collocations": [
+            "art gallery",
+            "visit a gallery"
+          ],
+          "synonyms": [
+            "museum",
+            "showroom"
+          ],
+          "antonyms": [],
+          "tags": [
+            "art",
+            "culture"
+          ]
+        },
+        {
+          "word": "tradition",
+          "phonetic": "/trəˈdɪʃ.ən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Truyền thống",
+          "meaning_en": "A custom or belief passed down through generations",
+          "example_sentence": "Tet is an important tradition in Vietnam.",
+          "example_translation": "Tết là một truyền thống quan trọng ở Việt Nam.",
+          "level": "A2",
+          "collocations": [
+            "long-standing tradition",
+            "family tradition"
+          ],
+          "synonyms": [
+            "custom",
+            "heritage"
+          ],
+          "antonyms": [
+            "modernity"
+          ],
+          "tags": [
+            "culture",
+            "society"
+          ]
+        },
+        {
+          "word": "festival",
+          "phonetic": "/ˈfes.tɪ.vəl/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Lễ hội",
+          "meaning_en": "A special event with music, food, or performances",
+          "example_sentence": "The town holds a food festival every autumn.",
+          "example_translation": "Thị trấn tổ chức lễ hội ẩm thực vào mỗi mùa thu.",
+          "level": "A2",
+          "collocations": [
+            "music festival",
+            "traditional festival"
+          ],
+          "synonyms": [
+            "celebration",
+            "fair"
+          ],
+          "antonyms": [],
+          "tags": [
+            "culture",
+            "event"
+          ]
+        },
+        {
+          "word": "heritage",
+          "phonetic": "/ˈher.ɪ.tɪdʒ/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Di sản",
+          "meaning_en": "Traditions and buildings passed down from the past",
+          "example_sentence": "The old town is a protected cultural heritage site.",
+          "example_translation": "Phố cổ là một di sản văn hóa được bảo vệ.",
+          "level": "B2",
+          "collocations": [
+            "cultural heritage",
+            "world heritage"
+          ],
+          "synonyms": [
+            "legacy",
+            "inheritance"
+          ],
+          "antonyms": [],
+          "tags": [
+            "culture",
+            "history"
+          ]
+        },
+        {
+          "word": "perform",
+          "phonetic": "/pəˈfɔːm/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Biểu diễn",
+          "meaning_en": "To entertain an audience by singing, acting, or dancing",
+          "example_sentence": "The dancers performed beautifully on stage.",
+          "example_translation": "Các vũ công đã biểu diễn rất đẹp trên sân khấu.",
+          "level": "B1",
+          "collocations": [
+            "perform on stage",
+            "perform live"
+          ],
+          "synonyms": [
+            "act",
+            "present"
+          ],
+          "antonyms": [],
+          "tags": [
+            "art",
+            "entertainment"
+          ]
+        },
+        {
+          "word": "creative",
+          "phonetic": "/kriˈeɪ.tɪv/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Sáng tạo",
+          "meaning_en": "Good at producing original ideas",
+          "example_sentence": "Creative projects help students express themselves.",
+          "example_translation": "Các dự án sáng tạo giúp học viên thể hiện bản thân.",
+          "level": "B1",
+          "collocations": [
+            "creative thinking",
+            "creative work"
+          ],
+          "synonyms": [
+            "imaginative",
+            "original"
+          ],
+          "antonyms": [
+            "unimaginative"
+          ],
+          "tags": [
+            "art",
+            "skill"
+          ]
+        },
+        {
+          "word": "inspire",
+          "phonetic": "/ɪnˈspaɪər/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Truyền cảm hứng",
+          "meaning_en": "To make someone feel enthusiastic or motivated",
+          "example_sentence": "Her story inspired me to start painting.",
+          "example_translation": "Câu chuyện của cô ấy đã truyền cảm hứng để tôi bắt đầu vẽ.",
+          "level": "B1",
+          "collocations": [
+            "inspire someone to",
+            "deeply inspire"
+          ],
+          "synonyms": [
+            "motivate",
+            "encourage"
+          ],
+          "antonyms": [
+            "discourage"
+          ],
+          "tags": [
+            "art",
+            "emotion"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "weather-and-seasons",
+      "title": "Thời Tiết & Các Mùa",
+      "description": "Từ vựng về dự báo, nhiệt độ và thời tiết theo mùa.",
+      "icon_name": "wb_sunny",
+      "level": "A2-B1",
+      "order_index": 18,
+      "words": [
+        {
+          "word": "forecast",
+          "phonetic": "/ˈfɔː.kɑːst/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Dự báo thời tiết",
+          "meaning_en": "A statement about what the weather will be like",
+          "example_sentence": "The forecast says it will rain tomorrow.",
+          "example_translation": "Dự báo thời tiết nói rằng ngày mai trời sẽ mưa.",
+          "level": "B1",
+          "collocations": [
+            "weather forecast",
+            "accurate forecast"
+          ],
+          "synonyms": [
+            "prediction",
+            "outlook"
+          ],
+          "antonyms": [],
+          "tags": [
+            "weather",
+            "news"
+          ]
+        },
+        {
+          "word": "temperature",
+          "phonetic": "/ˈtem.prə.tʃər/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Nhiệt độ",
+          "meaning_en": "A measure of how hot or cold something is",
+          "example_sentence": "The temperature dropped below zero last night.",
+          "example_translation": "Nhiệt độ đã giảm xuống dưới 0 độ tối qua.",
+          "level": "A2",
+          "collocations": [
+            "high temperature",
+            "temperature drop"
+          ],
+          "synonyms": [
+            "heat",
+            "warmth"
+          ],
+          "antonyms": [
+            "cold"
+          ],
+          "tags": [
+            "weather",
+            "science"
+          ]
+        },
+        {
+          "word": "humidity",
+          "phonetic": "/hjuːˈmɪd.ə.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Độ ẩm",
+          "meaning_en": "The amount of water in the air",
+          "example_sentence": "The humidity makes the city feel much hotter.",
+          "example_translation": "Độ ẩm khiến thành phố cảm thấy nóng hơn nhiều.",
+          "level": "B2",
+          "collocations": [
+            "high humidity",
+            "humidity level"
+          ],
+          "synonyms": [
+            "dampness"
+          ],
+          "antonyms": [
+            "dryness"
+          ],
+          "tags": [
+            "weather",
+            "science"
+          ]
+        },
+        {
+          "word": "breeze",
+          "phonetic": "/briːz/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Làn gió nhẹ",
+          "meaning_en": "A light and pleasant wind",
+          "example_sentence": "A cool breeze came in from the sea.",
+          "example_translation": "Một làn gió mát từ biển thổi vào.",
+          "level": "B1",
+          "collocations": [
+            "gentle breeze",
+            "sea breeze"
+          ],
+          "synonyms": [
+            "wind",
+            "draft"
+          ],
+          "antonyms": [
+            "gale"
+          ],
+          "tags": [
+            "weather",
+            "nature"
+          ]
+        },
+        {
+          "word": "thunderstorm",
+          "phonetic": "/ˈθʌn.də.stɔːm/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Dông bão",
+          "meaning_en": "A storm with thunder, lightning, and heavy rain",
+          "example_sentence": "The thunderstorm knocked out the power for an hour.",
+          "example_translation": "Cơn dông bão đã làm mất điện trong một giờ.",
+          "level": "B1",
+          "collocations": [
+            "severe thunderstorm",
+            "thunderstorm warning"
+          ],
+          "synonyms": [
+            "storm",
+            "tempest"
+          ],
+          "antonyms": [],
+          "tags": [
+            "weather",
+            "nature"
+          ]
+        },
+        {
+          "word": "snowflake",
+          "phonetic": "/ˈsnəʊ.fleɪk/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Bông tuyết",
+          "meaning_en": "A small piece of snow that falls from the sky",
+          "example_sentence": "Each snowflake has a unique shape.",
+          "example_translation": "Mỗi bông tuyết có một hình dạng độc đáo.",
+          "level": "A2",
+          "collocations": [
+            "snowflake shape",
+            "delicate snowflake"
+          ],
+          "synonyms": [
+            "flake"
+          ],
+          "antonyms": [],
+          "tags": [
+            "weather",
+            "nature"
+          ]
+        },
+        {
+          "word": "season",
+          "phonetic": "/ˈsiː.zən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Mùa",
+          "meaning_en": "One of the four main periods of the year",
+          "example_sentence": "Autumn is my favorite season because the weather is mild.",
+          "example_translation": "Mùa thu là mùa yêu thích của tôi vì thời tiết ôn hòa.",
+          "level": "A1",
+          "collocations": [
+            "rainy season",
+            "four seasons"
+          ],
+          "synonyms": [
+            "period"
+          ],
+          "antonyms": [],
+          "tags": [
+            "weather",
+            "time"
+          ]
+        },
+        {
+          "word": "mild",
+          "phonetic": "/maɪld/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Ôn hòa",
+          "meaning_en": "Not too hot or too cold",
+          "example_sentence": "The coastal city has mild winters.",
+          "example_translation": "Thành phố ven biển có mùa đông ôn hòa.",
+          "level": "B1",
+          "collocations": [
+            "mild weather",
+            "mild climate"
+          ],
+          "synonyms": [
+            "moderate",
+            "temperate"
+          ],
+          "antonyms": [
+            "severe"
+          ],
+          "tags": [
+            "weather",
+            "description"
+          ]
+        },
+        {
+          "word": "severe",
+          "phonetic": "/sɪˈvɪər/",
+          "part_of_speech": "adjective",
+          "meaning_vi": "Khắc nghiệt, dữ dội",
+          "meaning_en": "Very bad or intense",
+          "example_sentence": "The region was hit by a severe storm.",
+          "example_translation": "Khu vực đã bị ảnh hưởng bởi một cơn bão dữ dội.",
+          "level": "B2",
+          "collocations": [
+            "severe weather",
+            "severe damage"
+          ],
+          "synonyms": [
+            "extreme",
+            "harsh"
+          ],
+          "antonyms": [
+            "mild"
+          ],
+          "tags": [
+            "weather",
+            "description"
+          ]
+        },
+        {
+          "word": "umbrella",
+          "phonetic": "/ʌmˈbrel.ə/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Cái ô",
+          "meaning_en": "A thing you hold over your head to keep off rain",
+          "example_sentence": "Take an umbrella because it may rain later.",
+          "example_translation": "Hãy mang theo ô vì có thể trời sẽ mưa sau.",
+          "level": "A1",
+          "collocations": [
+            "open an umbrella",
+            "fold an umbrella"
+          ],
+          "synonyms": [
+            "parasol"
+          ],
+          "antonyms": [],
+          "tags": [
+            "weather",
+            "daily life"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "law-and-society",
+      "title": "Pháp Luật & Xã Hội",
+      "description": "Từ vựng về công lý, quyền công dân và hệ thống pháp luật.",
+      "icon_name": "gavel",
+      "level": "B2-C1",
+      "order_index": 19,
+      "words": [
+        {
+          "word": "legislation",
+          "phonetic": "/ˌledʒ.ɪˈsleɪ.ʃən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Pháp luật, đạo luật",
+          "meaning_en": "Laws made by a government",
+          "example_sentence": "The new legislation protects personal data.",
+          "example_translation": "Đạo luật mới bảo vệ dữ liệu cá nhân.",
+          "level": "C1",
+          "collocations": [
+            "pass legislation",
+            "data protection legislation"
+          ],
+          "synonyms": [
+            "law",
+            "regulation"
+          ],
+          "antonyms": [],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "citizen",
+          "phonetic": "/ˈsɪt.ɪ.zən/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Công dân",
+          "meaning_en": "A legally recognized member of a country",
+          "example_sentence": "Every citizen has the right to vote.",
+          "example_translation": "Mỗi công dân đều có quyền bỏ phiếu.",
+          "level": "B1",
+          "collocations": [
+            "senior citizen",
+            "active citizen"
+          ],
+          "synonyms": [
+            "national",
+            "resident"
+          ],
+          "antonyms": [
+            "foreigner"
+          ],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "justice",
+          "phonetic": "/ˈdʒʌs.tɪs/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Công lý",
+          "meaning_en": "Fair treatment according to the law",
+          "example_sentence": "The family is still waiting for justice.",
+          "example_translation": "Gia đình vẫn đang chờ đợi công lý.",
+          "level": "B2",
+          "collocations": [
+            "social justice",
+            "seek justice"
+          ],
+          "synonyms": [
+            "fairness",
+            "equity"
+          ],
+          "antonyms": [
+            "injustice"
+          ],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "crime",
+          "phonetic": "/kraɪm/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tội phạm",
+          "meaning_en": "An illegal act",
+          "example_sentence": "The police are investigating a serious crime.",
+          "example_translation": "Cảnh sát đang điều tra một tội phạm nghiêm trọng.",
+          "level": "A2",
+          "collocations": [
+            "commit a crime",
+            "violent crime"
+          ],
+          "synonyms": [
+            "offense",
+            "wrongdoing"
+          ],
+          "antonyms": [],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "penalty",
+          "phonetic": "/ˈpen.əl.ti/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Hình phạt",
+          "meaning_en": "A punishment for breaking a law or rule",
+          "example_sentence": "The penalty for speeding is a heavy fine.",
+          "example_translation": "Hình phạt cho việc chạy quá tốc độ là một khoản phạt nặng.",
+          "level": "B2",
+          "collocations": [
+            "heavy penalty",
+            "pay a penalty"
+          ],
+          "synonyms": [
+            "punishment",
+            "fine"
+          ],
+          "antonyms": [
+            "reward"
+          ],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "court",
+          "phonetic": "/kɔːt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Tòa án",
+          "meaning_en": "The place where legal cases are decided",
+          "example_sentence": "The case will be heard in court next month.",
+          "example_translation": "Vụ án sẽ được xét xử tại tòa vào tháng tới.",
+          "level": "B1",
+          "collocations": [
+            "go to court",
+            "court decision"
+          ],
+          "synonyms": [
+            "tribunal"
+          ],
+          "antonyms": [],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "testimony",
+          "phonetic": "/ˈtes.tɪ.mə.ni/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Lời khai",
+          "meaning_en": "A formal statement given in court",
+          "example_sentence": "Her testimony helped the jury understand the events.",
+          "example_translation": "Lời khai của cô ấy giúp bồi thẩm đoàn hiểu rõ các sự việc.",
+          "level": "C1",
+          "collocations": [
+            "give testimony",
+            "witness testimony"
+          ],
+          "synonyms": [
+            "evidence",
+            "statement"
+          ],
+          "antonyms": [],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "verdict",
+          "phonetic": "/ˈvɜː.dɪkt/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Phán quyết",
+          "meaning_en": "A decision made by a court or jury",
+          "example_sentence": "The jury reached a unanimous verdict.",
+          "example_translation": "Bồi thẩm đoàn đã đưa ra một phán quyết nhất trí.",
+          "level": "C1",
+          "collocations": [
+            "reach a verdict",
+            "guilty verdict"
+          ],
+          "synonyms": [
+            "decision",
+            "judgment"
+          ],
+          "antonyms": [],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "rights",
+          "phonetic": "/raɪts/",
+          "part_of_speech": "noun",
+          "meaning_vi": "Quyền",
+          "meaning_en": "The legal or moral entitlements a person has",
+          "example_sentence": "Workers have the right to a safe workplace.",
+          "example_translation": "Người lao động có quyền được làm việc trong môi trường an toàn.",
+          "level": "B1",
+          "collocations": [
+            "human rights",
+            "equal rights"
+          ],
+          "synonyms": [
+            "entitlements",
+            "freedoms"
+          ],
+          "antonyms": [
+            "duties"
+          ],
+          "tags": [
+            "law",
+            "society"
+          ]
+        },
+        {
+          "word": "enforce",
+          "phonetic": "/ɪnˈfɔːs/",
+          "part_of_speech": "verb",
+          "meaning_vi": "Thực thi",
+          "meaning_en": "To make people obey a law or rule",
+          "example_sentence": "The city must enforce the new parking rules.",
+          "example_translation": "Thành phố phải thực thi các quy định đỗ xe mới.",
+          "level": "B2",
+          "collocations": [
+            "enforce a law",
+            "strictly enforce"
+          ],
+          "synonyms": [
+            "implement",
+            "apply"
+          ],
+          "antonyms": [
+            "ignore"
+          ],
+          "tags": [
+            "law",
+            "society"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -40,10 +40,10 @@ async def lifespan(app: FastAPI):
         await init_db(create_tables=settings.environment == "development")
         logger.info("Database initialized")
         if is_db_connected():
-            from app.utils.seed_learning_data import seed_vocabulary_if_empty
+            from app.utils.seed_learning_data import seed_vocabulary
 
             try:
-                await seed_vocabulary_if_empty()
+                await seed_vocabulary()
             except Exception as exc:  # pragma: no cover - best effort
                 logger.warning("Could not seed vocabulary data: %s", exc)
         logger.info("Server startup complete")

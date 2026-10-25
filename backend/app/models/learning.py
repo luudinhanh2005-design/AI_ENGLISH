@@ -186,6 +186,11 @@ class VocabularyWord(Base):
     audio_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     image_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     level: Mapped[str] = mapped_column(String(10), default="A1")
+    collocations: Mapped[list] = mapped_column(JSONB, default=list, server_default="[]")
+    synonyms: Mapped[list] = mapped_column(JSONB, default=list, server_default="[]")
+    antonyms: Mapped[list] = mapped_column(JSONB, default=list, server_default="[]")
+    tags: Mapped[list] = mapped_column(JSONB, default=list, server_default="[]")
+    order_index: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
 
     # Relationships
     topic: Mapped["VocabularyTopic"] = relationship(back_populates="words")

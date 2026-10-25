@@ -11,6 +11,11 @@ class VocabularyWordModel {
   final String? audioUrl;
   final String? imageUrl;
   final String level;
+  final List<String> collocations;
+  final List<String> synonyms;
+  final List<String> antonyms;
+  final List<String> tags;
+  final int orderIndex;
 
   const VocabularyWordModel({
     required this.id,
@@ -25,6 +30,11 @@ class VocabularyWordModel {
     this.audioUrl,
     this.imageUrl,
     required this.level,
+    this.collocations = const [],
+    this.synonyms = const [],
+    this.antonyms = const [],
+    this.tags = const [],
+    this.orderIndex = 0,
   });
 
   factory VocabularyWordModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +51,47 @@ class VocabularyWordModel {
       audioUrl: json['audio_url'] as String?,
       imageUrl: json['image_url'] as String?,
       level: json['level'] as String? ?? 'A1',
+      collocations: _stringList(json['collocations']),
+      synonyms: _stringList(json['synonyms']),
+      antonyms: _stringList(json['antonyms']),
+      tags: _stringList(json['tags']),
+      orderIndex: (json['order_index'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  static List<String> _stringList(dynamic value) {
+    if (value is! List) return const [];
+    return value
+        .whereType<Object>()
+        .map((item) => item.toString())
+        .where((item) => item.isNotEmpty)
+        .toList(growable: false);
+  }
+}
+
+class VocabularyStatsModel {
+  final int totalWords;
+  final int learnedWords;
+  final int dueWords;
+  final int masteredWords;
+  final int newWords;
+
+  const VocabularyStatsModel({
+    required this.totalWords,
+    this.learnedWords = 0,
+    this.dueWords = 0,
+    this.masteredWords = 0,
+    this.newWords = 0,
+  });
+
+  factory VocabularyStatsModel.fromJson(Map<String, dynamic> json) {
+    int read(String key) => (json[key] as num?)?.toInt() ?? 0;
+    return VocabularyStatsModel(
+      totalWords: read('total_words'),
+      learnedWords: read('learned_words'),
+      dueWords: read('due_words'),
+      masteredWords: read('mastered_words'),
+      newWords: read('new_words'),
     );
   }
 }

@@ -43,6 +43,8 @@ class ApiEndpoints {
 
   // ── Vocabulary & Spaced Repetition (SM-2) ─────
   static const String vocabularyTopics = '/vocabulary/topics';
+  static const String vocabularyWords = '/vocabulary/words';
+  static const String vocabularyStats = '/vocabulary/stats';
   static String vocabularyTopicWords(String topicId) =>
       '/vocabulary/topics/$topicId/words';
   static const String vocabularyDue = '/vocabulary/due';
@@ -97,8 +99,7 @@ class ApiEndpoints {
   static const String aiMistakes = '/ai/mistakes';
   static String aiMistakeReview(String mistakeId) =>
       '/ai/mistakes/$mistakeId/review';
-  static String aiMistakeDelete(String mistakeId) =>
-      '/ai/mistakes/$mistakeId';
+  static String aiMistakeDelete(String mistakeId) => '/ai/mistakes/$mistakeId';
 
   // 3. Shadowing Technique
   static const String shadowingDrills = '/speech/shadowing-drills';

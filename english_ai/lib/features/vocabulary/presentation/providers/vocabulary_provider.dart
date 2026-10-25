@@ -8,7 +8,6 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../data/models/vocabulary_models.dart';
 import '../../data/vocabulary_data.dart';
 import '../../data/vocabulary_progress_store.dart';
-import 'vocabulary_list_provider.dart';
 
 // ── Topics Provider (with robust fallback) ──
 final vocabularyTopicsProvider =
@@ -28,21 +27,43 @@ final vocabularyTopicsProvider =
   return buildStaticTopics();
 });
 
+// ── Vocabulary bank summary ──
+final vocabularyStatsProvider =
+    FutureProvider<VocabularyStatsModel>((ref) async {
+  try {
+    final dio = ref.watch(dioProvider);
+    final response = await dio
+        .get(ApiEndpoints.vocabularyStats)
+        .timeout(const Duration(seconds: 4));
+    return VocabularyStatsModel.fromJson(
+      response.data as Map<String, dynamic>,
+    );
+  } catch (_) {
+    final total = buildStaticWords().length;
+    return VocabularyStatsModel(totalWords: total, newWords: total);
+  }
+});
+
 // ── Words for a specific topic ──
-// Returns an empty list when the API is unavailable. The topics screen falls
-// back to its own static topic data (which is keyed by slug), so a backend UUID
-// never accidentally opens the default "daily communication" deck.
+// Falls back to the generated catalog, keyed by UUID and slug. This keeps old
+// offline decks usable while the API is unavailable.
 final topicWordsProvider =
     FutureProvider.family<List<VocabularyWordModel>, String>(
         (ref, topicId) async {
-  if (!isUuid(topicId)) return const [];
-  final dio = ref.watch(dioProvider);
-  final response = await dio
-      .get('${ApiEndpoints.vocabularyTopics}/$topicId/words')
-      .timeout(const Duration(seconds: 4));
-  return (response.data as List<dynamic>)
-      .map((e) => VocabularyWordModel.fromJson(e as Map<String, dynamic>))
-      .toList();
+  final fallback = buildTopicWords(topicId);
+  if (!isUuid(topicId)) return fallback;
+  try {
+    final dio = ref.watch(dioProvider);
+    final response = await dio
+        .get(ApiEndpoints.vocabularyTopicWords(topicId))
+        .timeout(const Duration(seconds: 4));
+    final words = (response.data as List<dynamic>)
+        .map((e) => VocabularyWordModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return words.isEmpty ? fallback : words;
+  } catch (_) {
+    return fallback;
+  }
 });
 
 // ── Due Words / Flashcard Session Provider ──

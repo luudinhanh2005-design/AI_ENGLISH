@@ -545,9 +545,81 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen>
                 ],
               ),
             ),
+            if (word.collocations.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              _buildWordDetails(
+                context,
+                label: 'Cụm từ thường gặp',
+                values: word.collocations,
+                color: AppColors.primary,
+              ),
+            ],
+            if (word.synonyms.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              _buildWordDetails(
+                context,
+                label: 'Từ đồng nghĩa',
+                values: word.synonyms,
+                color: AppColors.success,
+              ),
+            ],
+            if (word.antonyms.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              _buildWordDetails(
+                context,
+                label: 'Từ trái nghĩa',
+                values: word.antonyms,
+                color: AppColors.warning,
+              ),
+            ],
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildWordDetails(
+    BuildContext context, {
+    required String label,
+    required List<String> values,
+    required Color color,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.labelSmall.copyWith(
+            color: context.palette.textSecondary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: values
+              .map(
+                (value) => Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: color.withOpacity(0.35)),
+                  ),
+                  child: Text(
+                    value,
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: color,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+      ],
     );
   }
 

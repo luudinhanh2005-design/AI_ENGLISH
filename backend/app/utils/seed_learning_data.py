@@ -18,6 +18,12 @@ from app.models.learning import (
     VocabularyTopic,
     VocabularyWord,
 )
+from app.utils.vocabulary_catalog import (
+    catalog_topics,
+    normalize_word,
+    topic_id as vocab_topic_id,
+    word_id as vocab_word_id,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -142,303 +148,7 @@ SAMPLE_QUESTIONS = [
 # ──────────────────────────────────────────────
 # 2. Vocabulary Topics & Words
 # ──────────────────────────────────────────────
-SAMPLE_VOCABULARY = [
-    {
-        "slug": "daily-communication",
-        "title": "Daily Communication & Socializing",
-        "description": "Essential words and natural phrases for everyday English conversations.",
-        "icon_name": "chat_bubble",
-        "level": "A1-A2",
-        "words": [
-            {
-                "word": "greetings",
-                "phonetic": "/ˈɡriːtɪŋz/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Lời chào hỏi, câu chào xã giao",
-                "meaning_en": "Words or actions used to welcome someone",
-                "example_sentence": "She exchanged warm greetings with her colleagues this morning.",
-                "example_translation": "Cô ấy đã chào hỏi đồng nghiệp một cách ấm áp sáng nay.",
-                "level": "A1",
-            },
-            {
-                "word": "appreciate",
-                "phonetic": "/əˈpriːʃieɪt/",
-                "part_of_speech": "verb",
-                "meaning_vi": "Trân trọng, cảm kích, đánh giá cao",
-                "meaning_en": "To recognize the full worth or value of something",
-                "example_sentence": "I really appreciate your timely assistance with this project.",
-                "example_translation": "Tôi thực sự rất cảm kích sự giúp đỡ kịp thời của bạn trong dự án này.",
-                "level": "A2",
-            },
-            {
-                "word": "fluent",
-                "phonetic": "/ˈfluːənt/",
-                "part_of_speech": "adjective",
-                "meaning_vi": "Lưu loát, trôi chảy",
-                "meaning_en": "Able to express oneself easily and articulately",
-                "example_sentence": "He became fluent in English after six months of daily AI speaking practice.",
-                "example_translation": "Anh ấy đã nói tiếng Anh lưu loát sau 6 tháng luyện nói hàng ngày cùng AI.",
-                "level": "B1",
-            },
-            {
-                "word": "apologize",
-                "phonetic": "/əˈpɒlədʒaɪz/",
-                "part_of_speech": "verb",
-                "meaning_vi": "Xin lỗi, nhận lỗi",
-                "meaning_en": "To express regret for something done wrong",
-                "example_sentence": "I sincerely apologize for the delay in replying to your email.",
-                "example_translation": "Tôi chân thành xin lỗi vì sự chậm trễ trong việc phản hồi thư của bạn.",
-                "level": "A2",
-            },
-            {
-                "word": "enthusiastic",
-                "phonetic": "/ɪnˌθjuːziˈæstɪk/",
-                "part_of_speech": "adjective",
-                "meaning_vi": "Nhiệt tình, hào hứng",
-                "meaning_en": "Having or showing intense and eager enjoyment or interest",
-                "example_sentence": "The students were enthusiastic about practicing spoken English with the AI tutor.",
-                "example_translation": "Các học viên rất hào hứng luyện nói tiếng Anh cùng gia sư AI.",
-                "level": "B1",
-            },
-            {
-                "word": "confidence",
-                "phonetic": "/ˈkɒnfɪdəns/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Sự tự tin",
-                "meaning_en": "The feeling or belief that one can have faith in or rely on someone or something",
-                "example_sentence": "Daily practice builds your speaking confidence rapidly.",
-                "example_translation": "Việc luyện tập mỗi ngày giúp bạn xây dựng sự tự tin khi nói rất nhanh chóng.",
-                "level": "A2",
-            },
-            {
-                "word": "convenient",
-                "phonetic": "/kənˈviːniənt/",
-                "part_of_speech": "adjective",
-                "meaning_vi": "Thuận tiện, tiện lợi",
-                "meaning_en": "Fitting in well with a person's needs, activities, and plans",
-                "example_sentence": "Learning English on your smartphone is extremely convenient.",
-                "example_translation": "Học tiếng Anh ngay trên điện thoại thông minh cực kỳ thuận tiện.",
-                "level": "A2",
-            },
-        ],
-    },
-    {
-        "slug": "tech-and-ai",
-        "title": "Technology & Artificial Intelligence",
-        "description": "Modern technical vocabulary for software, data, and modern innovation.",
-        "icon_name": "laptop",
-        "level": "B1-B2",
-        "words": [
-            {
-                "word": "algorithm",
-                "phonetic": "/ˈælɡərɪðəm/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Thuật toán, quy trình xử lý từng bước",
-                "meaning_en": "A step-by-step process or set of rules to be followed in calculations",
-                "example_sentence": "The recommendation algorithm tailors daily lessons to your weak spots.",
-                "example_translation": "Thuật toán gợi ý tùy biến bài học mỗi ngày dựa trên các điểm yếu của bạn.",
-                "level": "B1",
-            },
-            {
-                "word": "automation",
-                "phonetic": "/ˌɔːtəˈmeɪʃn/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Sự tự động hóa",
-                "meaning_en": "The use of largely automatic equipment in an operation",
-                "example_sentence": "Automation empowers engineers to focus on creative problem solving.",
-                "example_translation": "Tự động hóa giúp các kỹ sư tập trung vào việc giải quyết vấn đề mang tính sáng tạo.",
-                "level": "B2",
-            },
-            {
-                "word": "breakthrough",
-                "phonetic": "/ˈbreɪkθruː/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Bước đột phá, thành tựu quan trọng",
-                "meaning_en": "A sudden, dramatic, and important discovery or development",
-                "example_sentence": "Large Language Models represent a monumental breakthrough in NLP.",
-                "example_translation": "Các mô hình ngôn ngữ lớn đại diện cho một bước đột phá vĩ đại trong xử lý ngôn ngữ tự nhiên.",
-                "level": "B2",
-            },
-            {
-                "word": "latency",
-                "phonetic": "/ˈleɪtənsi/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Độ trễ phản hồi hệ thống",
-                "meaning_en": "The delay before a transfer of data begins following an instruction",
-                "example_sentence": "Low latency is essential for seamless voice interactions with the AI tutor.",
-                "example_translation": "Độ trễ thấp là điều cốt lõi để tương tác bằng giọng nói mượt mà với gia sư AI.",
-                "level": "B2",
-            },
-            {
-                "word": "optimize",
-                "phonetic": "/ˈɒptɪmaɪz/",
-                "part_of_speech": "verb",
-                "meaning_vi": "Tối ưu hóa, tinh chỉnh cho hiệu quả nhất",
-                "meaning_en": "Make the best or most effective use of a situation or resource",
-                "example_sentence": "We optimized the database queries to reduce loading time by ninety percent.",
-                "example_translation": "Chúng tôi đã tối ưu hóa các truy vấn cơ sở dữ liệu để giảm 90% thời gian tải.",
-                "level": "B2",
-            },
-        ],
-    },
-    {
-        "slug": "business-and-workplace",
-        "title": "Business & Career Advancement",
-        "description": "Professional terminology for meetings, negotiation, and corporate communications.",
-        "icon_name": "briefcase",
-        "level": "B1-B2",
-        "words": [
-            {
-                "word": "collaborate",
-                "phonetic": "/kəˈlæbəreɪt/",
-                "part_of_speech": "verb",
-                "meaning_vi": "Hợp tác, làm việc nhóm",
-                "meaning_en": "Work jointly on an activity or project",
-                "example_sentence": "Engineers and designers collaborate closely to refine the user experience.",
-                "example_translation": "Các kỹ sư và nhà thiết kế hợp tác chặt chẽ để hoàn thiện trải nghiệm người dùng.",
-                "level": "B1",
-            },
-            {
-                "word": "deadline",
-                "phonetic": "/ˈdedlaɪn/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Hạn chót, thời hạn hoàn thành",
-                "meaning_en": "The latest time or date by which something should be completed",
-                "example_sentence": "We successfully delivered the mobile app three days ahead of the deadline.",
-                "example_translation": "Chúng tôi đã bàn giao ứng dụng di động thành công trước thời hạn 3 ngày.",
-                "level": "A2",
-            },
-            {
-                "word": "negotiate",
-                "phonetic": "/nɪˈɡəʊʃieɪt/",
-                "part_of_speech": "verb",
-                "meaning_vi": "Đàm phán, thương lượng",
-                "meaning_en": "Try to reach an agreement or compromise by discussion with others",
-                "example_sentence": "She was able to negotiate a higher salary thanks to her fluent English.",
-                "example_translation": "Cô ấy đã có thể đàm phán mức lương cao hơn nhờ khả năng tiếng Anh lưu loát.",
-                "level": "B2",
-            },
-            {
-                "word": "revenue",
-                "phonetic": "/ˈrevənjuː/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Doanh thu, thu nhập của doanh nghiệp",
-                "meaning_en": "Income, especially when of a company or organization and of a substantial nature",
-                "example_sentence": "Expanding into international markets boosted annual revenue by forty percent.",
-                "example_translation": "Mở rộng sang thị trường quốc tế đã thúc đẩy doanh thu hàng năm tăng 40%.",
-                "level": "B1",
-            },
-            {
-                "word": "stakeholder",
-                "phonetic": "/ˈsteɪkhəʊldə/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Các bên liên quan, đối tác đầu tư",
-                "meaning_en": "A person with an interest or concern in something, especially a business",
-                "example_sentence": "All key stakeholders approved the new product roadmap during the meeting.",
-                "example_translation": "Tất cả các bên liên quan chủ chốt đã thông qua lộ trình sản phẩm mới trong cuộc họp.",
-                "level": "B2",
-            },
-        ],
-    },
-    {
-        "slug": "travel-and-tourism",
-        "title": "Travel, Hospitality & Culture",
-        "description": "Indispensable phrases for airports, hotels, directions, and dining abroad.",
-        "icon_name": "flight",
-        "level": "A2-B1",
-        "words": [
-            {
-                "word": "destination",
-                "phonetic": "/ˌdestɪˈneɪʃn/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Điểm đến, đích đến",
-                "meaning_en": "The place to which someone or something is going or being sent",
-                "example_sentence": "Da Nang is a famous destination for international travelers visiting Vietnam.",
-                "example_translation": "Đà Nẵng là một điểm đến nổi tiếng đối với khách du lịch quốc tế khi đến Việt Nam.",
-                "level": "A2",
-            },
-            {
-                "word": "itinerary",
-                "phonetic": "/aɪˈtɪnərəri/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Lịch trình chuyến đi, hành trình chi tiết",
-                "meaning_en": "A planned route or journey",
-                "example_sentence": "Our tour guide shared a detailed itinerary for our three-day visit to Tokyo.",
-                "example_translation": "Hướng dẫn viên đã chia sẻ lịch trình chi tiết cho chuyến tham quan Tokyo 3 ngày của chúng tôi.",
-                "level": "B1",
-            },
-            {
-                "word": "accommodation",
-                "phonetic": "/əˌkɒməˈdeɪʃn/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Chỗ ở, phòng nghỉ lưu trú",
-                "meaning_en": "A room, group of rooms, or building in which someone may live or stay",
-                "example_sentence": "We booked a cozy accommodation near the beach with ocean view.",
-                "example_translation": "Chúng tôi đã đặt một chỗ ở ấm cúng gần bãi biển với tầm nhìn hướng ra đại dương.",
-                "level": "B1",
-            },
-            {
-                "word": "reservation",
-                "phonetic": "/ˌrezəˈveɪʃn/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Sự đặt chỗ trước (bàn ăn, phòng khách sạn)",
-                "meaning_en": "An arrangement whereby something is booked or reserved for a particular person",
-                "example_sentence": "I would like to make a dinner reservation for two people at seven tonight.",
-                "example_translation": "Tôi muốn đặt bàn ăn tối cho 2 người lúc 7 giờ tối nay.",
-                "level": "A2",
-            },
-        ],
-    },
-    {
-        "slug": "academic-and-ielts",
-        "title": "Academic & IELTS Essential",
-        "description": "High-band academic vocabulary for IELTS Writing, Reading, and formal presentations.",
-        "icon_name": "menu_book",
-        "level": "B2-C1",
-        "words": [
-            {
-                "word": "significant",
-                "phonetic": "/sɪɡˈnɪfɪkənt/",
-                "part_of_speech": "adjective",
-                "meaning_vi": "Đáng kể, có ý nghĩa quan trọng",
-                "meaning_en": "Sufficiently great or important to be worthy of attention",
-                "example_sentence": "There has been a significant rise in digital education over the past decade.",
-                "example_translation": "Đã có một sự gia tăng đáng kể trong giáo dục kỹ thuật số trong suốt thập kỷ qua.",
-                "level": "B2",
-            },
-            {
-                "word": "perspective",
-                "phonetic": "/pəˈspektɪv/",
-                "part_of_speech": "noun",
-                "meaning_vi": "Góc nhìn, quan điểm",
-                "meaning_en": "A particular attitude towards or way of regarding something; a point of view",
-                "example_sentence": "The author provides a unique perspective on climate change solutions.",
-                "example_translation": "Tác giả mang lại một góc nhìn độc đáo về các giải pháp ứng phó với biến đổi khí hậu.",
-                "level": "B2",
-            },
-            {
-                "word": "comprehensive",
-                "phonetic": "/ˌkɒmprɪˈhensɪv/",
-                "part_of_speech": "adjective",
-                "meaning_vi": "Toàn diện, bao quát mọi khía cạnh",
-                "meaning_en": "Complete and including everything that is necessary",
-                "example_sentence": "This app provides a comprehensive learning path from beginner to advanced.",
-                "example_translation": "Ứng dụng này cung cấp một lộ trình học tập toàn diện từ sơ cấp đến nâng cao.",
-                "level": "C1",
-            },
-            {
-                "word": "facilitate",
-                "phonetic": "/fəˈsɪlɪteɪt/",
-                "part_of_speech": "verb",
-                "meaning_vi": "Tạo điều kiện thuận lợi, làm cho dễ dàng hơn",
-                "meaning_en": "Make an action or process easy or easier",
-                "example_sentence": "Interactive feedback facilitates faster mastery of complex grammar rules.",
-                "example_translation": "Phản hồi tương tác tạo điều kiện giúp làm chủ các quy tắc ngữ pháp phức tạp nhanh hơn.",
-                "level": "C1",
-            },
-        ],
-    },
-]
+SAMPLE_VOCABULARY = catalog_topics()
 
 
 
@@ -535,24 +245,14 @@ async def seed_data():
             await db.commit()
             logger.info("✅ Placement Questions seeded.")
 
-        # 2. Seed Vocabulary Topics & Words
-        topic_count = await db.execute(select(VocabularyTopic))
-        if not topic_count.scalars().first():
-            logger.info("Seeding Vocabulary Topics and Words...")
-            for t_data in SAMPLE_VOCABULARY:
-                words_data = t_data.get("words", [])
-                topic = VocabularyTopic(
-                    **{k: v for k, v in t_data.items() if k != "words"},
-                    total_words=len(words_data),
-                )
-                db.add(topic)
-                await db.flush()
-
-                for w_data in words_data:
-                    word = VocabularyWord(topic_id=topic.id, **w_data)
-                    db.add(word)
-            await db.commit()
-            logger.info("✅ Vocabulary Topics and Words seeded.")
+        # 2. Seed / update Vocabulary Topics & Words
+        inserted, updated = await _upsert_vocabulary(db)
+        await db.commit()
+        logger.info(
+            "✅ Vocabulary catalog synced: %d inserted, %d updated.",
+            inserted,
+            updated,
+        )
 
         # 3. Seed Grammar Lessons
         g_count = await db.execute(select(GrammarLesson))
@@ -566,59 +266,137 @@ async def seed_data():
     logger.info("🎉 All learning data seeded successfully!")
 
 
-def _vocab_topic_id(slug: str) -> uuid.UUID:
-    """Stable id shared by the DB seed and the offline fallback data."""
-    return uuid.uuid5(uuid.NAMESPACE_DNS, f"vocab-topic-{slug}")
+_WORD_CONTENT_FIELDS = (
+    "word",
+    "phonetic",
+    "part_of_speech",
+    "meaning_vi",
+    "meaning_en",
+    "example_sentence",
+    "example_translation",
+    "audio_url",
+    "image_url",
+    "level",
+    "collocations",
+    "synonyms",
+    "antonyms",
+    "tags",
+    "order_index",
+)
 
 
-def _vocab_word_id(word: str) -> uuid.UUID:
-    return uuid.uuid5(uuid.NAMESPACE_DNS, f"vocab-word-{word}")
+def _word_payload(data: dict) -> dict:
+    return {field: data.get(field) for field in _WORD_CONTENT_FIELDS}
 
 
-async def seed_vocabulary_if_empty() -> int:
-    """Idempotently seed vocabulary so SM-2 progress always has a valid FK.
+async def _upsert_vocabulary(db) -> tuple[int, int]:
+    """Create or update every catalog topic/word without deleting progress.
 
-    Returns the number of words inserted (0 when the table already has data).
+    Existing rows are matched by stable UUID first and then by normalized
+    headword.  This makes the operation safe for databases seeded by an older
+    version of the app.
+    """
+    inserted = 0
+    updated = 0
+
+    for t_data in catalog_topics():
+        slug = str(t_data["slug"])
+        tid = vocab_topic_id(slug)
+
+        topic = await db.get(VocabularyTopic, tid)
+        if topic is None:
+            by_slug = await db.execute(
+                select(VocabularyTopic).where(VocabularyTopic.slug == slug)
+            )
+            topic = by_slug.scalar_one_or_none()
+
+        if topic is None:
+            topic = VocabularyTopic(
+                id=tid,
+                slug=slug,
+                title=str(t_data["title"]),
+                description=t_data.get("description"),
+                icon_name=str(t_data.get("icon_name", "book")),
+                level=str(t_data.get("level", "A1")),
+                total_words=len(t_data.get("words", [])),
+                order_index=int(t_data.get("order_index", 0)),
+                is_active=True,
+            )
+            db.add(topic)
+            await db.flush()
+        else:
+            topic.slug = slug
+            topic.title = str(t_data["title"])
+            topic.description = t_data.get("description")
+            topic.icon_name = str(t_data.get("icon_name", "book"))
+            topic.level = str(t_data.get("level", "A1"))
+            topic.order_index = int(t_data.get("order_index", 0))
+            topic.is_active = True
+
+        existing = await db.execute(
+            select(VocabularyWord).where(VocabularyWord.topic_id == topic.id)
+        )
+        existing_by_word = {
+            normalize_word(word.word): word for word in existing.scalars().all()
+        }
+
+        for w_data in t_data.get("words", []):
+            wid = (
+                uuid.UUID(str(w_data["id"]))
+                if w_data.get("id")
+                else vocab_word_id(str(w_data["word"]))
+            )
+            word = existing_by_word.get(normalize_word(str(w_data["word"])))
+            if word is None:
+                word = await db.get(VocabularyWord, wid)
+
+            if word is None:
+                db.add(
+                    VocabularyWord(
+                        id=wid,
+                        topic_id=topic.id,
+                        **_word_payload(w_data),
+                    )
+                )
+                inserted += 1
+            else:
+                word.topic_id = topic.id
+                for field, value in _word_payload(w_data).items():
+                    setattr(word, field, value)
+                updated += 1
+
+        topic.total_words = len(t_data.get("words", []))
+        await db.flush()
+
+    return inserted, updated
+
+
+async def seed_vocabulary() -> int:
+    """Idempotently sync the vocabulary catalog.
+
+    Returns the number of newly inserted words.  Existing words and user
+    progress are preserved.
     """
     if not is_db_connected():
         return 0
 
     async with async_session_factory() as db:
-        existing = await db.execute(select(VocabularyTopic.id).limit(1))
-        if existing.scalar_one_or_none() is not None:
-            return 0
-
-        inserted = 0
-        for t_data in SAMPLE_VOCABULARY:
-            slug = str(t_data["slug"])
-            words_data = t_data.get("words", [])
-            topic_id = _vocab_topic_id(slug)
-            db.add(
-                VocabularyTopic(
-                    id=topic_id,
-                    slug=slug,
-                    title=str(t_data["title"]),
-                    description=t_data.get("description"),
-                    icon_name=str(t_data.get("icon_name", "book")),
-                    level=str(t_data.get("level", "A1")),
-                    total_words=len(words_data),
-                    order_index=int(t_data.get("order_index", inserted)),
-                    is_active=True,
-                )
-            )
-            for w_data in words_data:
-                db.add(
-                    VocabularyWord(
-                        id=_vocab_word_id(str(w_data["word"])),
-                        topic_id=topic_id,
-                        **w_data,
-                    )
-                )
-                inserted += 1
-
+        inserted, updated = await _upsert_vocabulary(db)
         await db.commit()
-        logger.info("✅ Seeded %d vocabulary words for SM-2", inserted)
-        return inserted
+
+    logger.info(
+        "✅ Vocabulary catalog synced: %d inserted, %d updated", inserted, updated
+    )
+    return inserted
+
+
+async def seed_vocabulary_if_empty() -> int:
+    """Backward-compatible alias for the old startup hook.
+
+    The name is kept because some deployments still import it, but the
+    implementation now performs an idempotent upsert on every startup.
+    """
+    return await seed_vocabulary()
 
 
 if __name__ == "__main__":

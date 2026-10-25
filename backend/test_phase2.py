@@ -31,22 +31,25 @@ with TestClient(app, raise_server_exceptions=False) as client:
 
     # 2. Placement Test
     print("\n[2/4] Kiểm tra Placement Test (Đánh giá năng lực đầu vào)...")
-    q_res = client.get("/api/v1/placement/questions", headers=headers)
-    assert q_res.status_code == 200, f"Get questions failed: {q_res.text}"
-    questions = q_res.json()
-    print(f"  • Số lượng câu hỏi tải về: {len(questions)} câu ✅")
-    
-    # Submit answers
-    answers = []
-    for q in questions:
-        answers.append({"question_id": q["id"], "selected_option": 1})
-    
-    sub_res = client.post("/api/v1/placement/submit", json={"answers": answers}, headers=headers)
-    assert sub_res.status_code == 200, f"Submit placement failed: {sub_res.text}"
-    result = sub_res.json()
-    print(f"  • Điểm đánh giá: {result['score_percentage']}% ({result['correct_count']}/{result['total_questions']})")
-    print(f"  • Xếp loại trình độ CEFR: {result['assessed_level']} ✅")
-    print(f"  • Phân tích kỹ năng: {result['skill_breakdown']}")
+    config_res = client.get("/api/v1/placement/config", headers=headers)
+    assert config_res.status_code == 200, f"Get placement config failed: {config_res.text}"
+    config = config_res.json()
+    assert "quick" in config["modes"]
+    print(f"  • Cấu hình placement: {len(config['modes'])} chế độ ✅")
+
+    create_res = client.post(
+        "/api/v1/placement/sessions",
+        headers=headers,
+        json={"mode": "quick", "target_exam": "ielts"},
+    )
+    assert create_res.status_code == 200, f"Create placement session failed: {create_res.text}"
+    session = create_res.json()
+    assert session["mode"] == "quick"
+    print(f"  • Phiên kiểm tra đã tạo: {session['session_id']} ✅")
+
+    latest_res = client.get("/api/v1/placement/results/latest", headers=headers)
+    assert latest_res.status_code == 404, f"Unexpected latest result: {latest_res.text}"
+    print("  • Chưa có kết quả trước đó ✅")
 
     # 3. Vocabulary & SM-2
     print("\n[3/4] Kiểm tra Từ vựng & Thuật toán SM-2 Spaced Repetition...")
@@ -54,12 +57,12 @@ with TestClient(app, raise_server_exceptions=False) as client:
     assert topics_res.status_code == 200
     topics = topics_res.json()
     print(f"  • Danh sách chủ đề từ vựng: {len(topics)} chủ đề ✅")
-    
+
     due_res = client.get("/api/v1/vocabulary/due", headers=headers)
     assert due_res.status_code == 200
     due_items = due_res.json()
     print(f"  • Thẻ từ vựng cần học hôm nay: {len(due_items)} thẻ ✅")
-    
+
     if due_items:
         test_word_id = due_items[0]["word"]["id"]
         # Review with rating 4 (Good)
@@ -85,7 +88,7 @@ with TestClient(app, raise_server_exceptions=False) as client:
         assert detail_res.status_code == 200
         lesson_detail = detail_res.json()
         print(f"  • Nội dung bài học '{lesson_detail['title']}': Đã tải Markdown & ví dụ ✅")
-        
+
         # Submit quiz answers
         submit_quiz_res = client.post(
             f"/api/v1/grammar/lessons/{lesson_id}/submit",
