@@ -74,6 +74,14 @@ Web:      flutter build web --release --no-wasm-dry-run
 
 Alembic:  alembic upgrade head --sql
           Bao gồm 0006_vocabulary_content
+
+Clean clone (Git LFS):
+          cloned the release branch, LFS model 114.25 MiB downloaded
+          backend tests: 69 passed, 3 skipped
+          flutter tests: 48 passed, 1 skipped
+          flutter build web: success
+          backend /health: 200
+          demo login: success
 ```
 
 ## Cách chạy nhanh cho đồng nghiệp
