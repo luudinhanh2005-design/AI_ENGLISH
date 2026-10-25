@@ -85,7 +85,7 @@ class StorageService {
   }
 
   static String getThemeMode() {
-    return _prefs.getString(AppConstants.themeKey) ?? 'dark';
+    return _prefs.getString(AppConstants.themeKey) ?? 'light';
   }
 
   // ---------------------------------------------// Clear All

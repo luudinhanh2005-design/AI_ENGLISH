@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/network/api_client.dart';
+import '../../../../core/theme/theme_provider.dart';
 import '../../data/datasources/auth_remote_datasource.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/entities/user.dart';
@@ -17,13 +18,14 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
 /// AsyncValue<User?> — null means not authenticated.
 final authStateProvider =
     StateNotifierProvider<AuthStateNotifier, AsyncValue<User?>>((ref) {
-  return AuthStateNotifier(ref.watch(authRepositoryProvider));
+  return AuthStateNotifier(ref, ref.watch(authRepositoryProvider));
 });
 
 class AuthStateNotifier extends StateNotifier<AsyncValue<User?>> {
+  final Ref _ref;
   final AuthRepository _repository;
 
-  AuthStateNotifier(this._repository)
+  AuthStateNotifier(this._ref, this._repository)
       : super(const AsyncValue.loading()) {
     _init();
   }
@@ -31,9 +33,23 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<User?>> {
   Future<void> _init() async {
     try {
       final user = await _repository.getCurrentUser();
+      if (user == null) {
+        await _resetThemeToDefault();
+      }
       state = AsyncValue.data(user);
     } catch (e) {
+      await _resetThemeToDefault();
       state = const AsyncValue.data(null);
+    }
+  }
+
+  /// Keeps signed-out users on the light theme, which is also the default for
+  /// new accounts. Theme failures must not block authentication.
+  Future<void> _resetThemeToDefault() async {
+    try {
+      await _ref.read(themeModeProvider.notifier).resetToDefault();
+    } catch (_) {
+      // Storage may not be available in tests; authentication still proceeds.
     }
   }
 
@@ -66,6 +82,7 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<User?>> {
         email: email,
         password: password,
       );
+      await _resetThemeToDefault();
       state = AsyncValue.data(user);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
@@ -85,6 +102,7 @@ class AuthStateNotifier extends StateNotifier<AsyncValue<User?>> {
   }
 
   Future<void> logout() async {
+    await _resetThemeToDefault();
     try {
       await _repository.logout();
     } finally {

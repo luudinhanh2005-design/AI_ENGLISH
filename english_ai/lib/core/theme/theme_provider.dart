@@ -7,18 +7,25 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   @override
   ThemeMode build() {
     switch (StorageService.getThemeMode()) {
-      case 'light':
-        return ThemeMode.light;
+      case 'dark':
+        return ThemeMode.dark;
       case 'system':
         return ThemeMode.system;
+      case 'light':
       default:
-        return ThemeMode.dark;
+        return ThemeMode.light;
     }
   }
 
   Future<void> setMode(ThemeMode mode) async {
     state = mode;
     await StorageService.saveThemeMode(_toStorageValue(mode));
+  }
+
+  /// Restores the default theme used by new / signed-out users.
+  Future<void> resetToDefault() async {
+    state = ThemeMode.light;
+    await StorageService.saveThemeMode('light');
   }
 
   static String _toStorageValue(ThemeMode mode) {
