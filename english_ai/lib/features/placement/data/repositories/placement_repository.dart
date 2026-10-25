@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http_parser/http_parser.dart';
 
 import '../../../../core/constants/api_endpoints.dart';
+import '../../../../core/errors/exceptions.dart';
 import '../models/placement_models.dart';
 
 /// Thin Dio wrapper around the placement API (v2).
@@ -106,8 +107,8 @@ class PlacementRepository {
     required String taskId,
     required Uint8List audioBytes,
   }) async {
-    final extension = kIsWeb ? 'webm' : 'wav';
-    final contentType = kIsWeb ? 'webm' : 'wav';
+    const extension = kIsWeb ? 'webm' : 'wav';
+    const contentType = kIsWeb ? 'webm' : 'wav';
     final formData = FormData.fromMap({
       'task_id': taskId,
       'audio': MultipartFile.fromBytes(
@@ -144,8 +145,11 @@ class PlacementRepository {
       return PlacementResultModel.fromJson(
         response.data as Map<String, dynamic>,
       );
-    } on DioException catch (error) {
-      if (error.response?.statusCode == 404) return null;
+    } on ServerException catch (error) {
+      // The error interceptor converts 404 responses into ServerException
+      // instead of DioException. A 404 simply means the user has no previous
+      // placement result yet, which is normal for first-time users.
+      if (error.statusCode == 404) return null;
       rethrow;
     }
   }

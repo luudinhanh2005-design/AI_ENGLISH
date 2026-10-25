@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/errors/exceptions.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../data/models/placement_models.dart';
@@ -95,22 +96,10 @@ class PlacementNotifier extends StateNotifier<PlacementState> {
     if (state.initialized && !force) return;
     _initializing = true;
     state = state.copyWith(isLoading: true, clearError: true);
+
+    PlacementConfigModel config;
     try {
-      final results = await Future.wait<Object?>([
-        _repository.getConfig(),
-        _repository.getLatestResult(),
-        _repository.getHistory(limit: 8),
-      ]);
-      if (!mounted) return;
-      state = state.copyWith(
-        initialized: true,
-        isLoading: false,
-        config: results[0] as PlacementConfigModel,
-        latestResult: results[1] as PlacementResultModel?,
-        history: results[2] as List<PlacementHistoryEntryModel>,
-        clearError: true,
-      );
-      await _restoreSession();
+      config = await _repository.getConfig();
     } catch (error) {
       if (!mounted) return;
       state = state.copyWith(
@@ -121,9 +110,37 @@ class PlacementNotifier extends StateNotifier<PlacementState> {
           fallback: 'Không thể tải bài kiểm tra trình độ. Vui lòng thử lại.',
         ),
       );
-    } finally {
       _initializing = false;
+      return;
     }
+
+    // Latest result and history are supplementary. A failure here (for
+    // example the normal 404 when a user has never taken the test) must not
+    // prevent the intro screen from opening.
+    PlacementResultModel? latestResult;
+    List<PlacementHistoryEntryModel> history = const [];
+    try {
+      latestResult = await _repository.getLatestResult();
+    } catch (_) {
+      latestResult = null;
+    }
+    try {
+      history = await _repository.getHistory(limit: 8);
+    } catch (_) {
+      history = const [];
+    }
+
+    if (!mounted) return;
+    state = state.copyWith(
+      initialized: true,
+      isLoading: false,
+      config: config,
+      latestResult: latestResult,
+      history: history,
+      clearError: true,
+    );
+    await _restoreSession();
+    _initializing = false;
   }
 
   Future<void> _restoreSession() async {
@@ -465,6 +482,21 @@ class PlacementNotifier extends StateNotifier<PlacementState> {
   }
 
   String _errorMessage(Object error, {required String fallback}) {
+    if (error is ServerException) {
+      if (error.statusCode == 401) {
+        return 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
+      }
+      return error.message.isNotEmpty ? error.message : fallback;
+    }
+    if (error is AuthException) {
+      return error.message.isNotEmpty ? error.message : fallback;
+    }
+    if (error is NetworkException) {
+      return 'Không kết nối được máy chủ. Kiểm tra mạng và thử lại.';
+    }
+    if (error is ValidationException) {
+      return error.message.isNotEmpty ? error.message : fallback;
+    }
     if (error is DioException) {
       final data = error.response?.data;
       if (data is Map && data['detail'] != null) {

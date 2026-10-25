@@ -68,8 +68,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           );
 
       if (mounted) {
-        // Navigate to placement test (Phase 2) or home
-        context.go('/');
+        // Navigate to placement test after onboarding
+        context.go('/placement');
       }
     } catch (e) {
       if (mounted) {

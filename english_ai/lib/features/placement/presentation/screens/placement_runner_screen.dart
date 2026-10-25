@@ -436,7 +436,6 @@ class _ReceptiveSectionState extends ConsumerState<_ReceptiveSection> {
     final item = _item;
     final selected = _answers[item.id] ?? const <String>[];
     final isLast = _index == _current.items.length - 1;
-    final notifier = ref.read(placementProvider.notifier);
     final isSaving = ref.watch(placementProvider).isSaving;
 
     return Column(
