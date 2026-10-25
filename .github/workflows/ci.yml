@@ -29,6 +29,12 @@ jobs:
       - name: Import application
         run: python -c "import main; print('app routes:', len(main.app.routes))"
 
+      - name: Install test runner
+        run: pip install pytest
+
+      - name: Run backend tests
+        run: pytest tests -q
+
       - name: Validate Alembic migrations (offline SQL)
         run: alembic upgrade head --sql > /dev/null
 
@@ -49,8 +55,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Run Flutter tests
+        run: flutter test --reporter compact
+
       - name: Analyze
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Build web
-        run: flutter build web --release
+        run: flutter build web --release --no-wasm-dry-run

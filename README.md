@@ -2,6 +2,8 @@
 
 > An AI-powered personalized English learning platform that evaluates the learner, adapts learning content, enables real-time AI conversation, analyzes speaking and writing, automatically generates exercises, and continuously improves the learning path based on user performance.
 
+> **Tính năng mới:** xem [docs/FEATURES.md](docs/FEATURES.md) để biết Practice Arena, Grammar C-Full, Vocabulary Catalog, Placement Test, IELTS Mock (BETA) và các giới hạn hiện tại. Tổng kết đợt phát hành nằm trong [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md).
+
 ## 🏗️ Architecture
 
 - **Frontend**: Flutter + Dart (Riverpod, GoRouter, Dio)
@@ -124,6 +126,10 @@ flutter run -d chrome     # or: flutter run -d edge
 ```
 
 The backend URL defaults to `http://localhost:8000` on web.
+
+> Development demo login: **test@gmail.com** / **Password123**.
+> Demo accounts are enabled by default only outside production. Set
+> `ENABLE_DEMO_ACCOUNTS=false` and a real `JWT_SECRET_KEY` before deploying.
 
 #### Option 2 — Android emulator
 
@@ -286,6 +292,10 @@ development a random one is generated (tokens are invalidated on restart).
    `--dart-define=GOOGLE_CLIENT_ID=<web-client-id>.apps.googleusercontent.com`.
 3. For Android, register the debug SHA-1 of **your** machine in Google Cloud
    Console, otherwise you get `ApiException: 12500`.
+4. For web, add every origin you open the app from to **Authorized JavaScript
+   origins** in the same OAuth client. At minimum:
+   `http://localhost:5173` and `http://localhost:8080`. Missing origins cause
+   `403: The given origin is not allowed for the given client ID`.
 
 Email/password login works without any of this. The emulator image used here
 (`default`) has no Google Play Services, so Google Sign-In cannot work on it.
@@ -295,6 +305,21 @@ Email/password login works without any of this. The emulator image used here
 - `backend/.env`, database credentials, Supabase keys
 - Python virtualenv, Flutter build output, Gradle caches
 - AVDs and Android system images (they live outside the repo, on each machine)
+
+### Kiểm tra trước khi push
+
+```bash
+# Backend
+cd backend
+pip install pytest
+python -m pytest tests -q
+
+# Flutter
+cd ../english_ai
+flutter test
+flutter analyze --no-fatal-infos --no-fatal-warnings
+flutter build web --release --no-wasm-dry-run
+```
 
 ---
 
