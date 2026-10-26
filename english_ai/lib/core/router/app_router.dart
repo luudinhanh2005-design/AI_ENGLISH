@@ -35,6 +35,13 @@ import '../../features/mock_test/presentation/screens/mock_test_history_screen.d
 import '../../features/practice/presentation/screens/mistake_notebook_screen.dart';
 import '../../features/pronunciation/presentation/screens/shadowing_screen.dart';
 import '../../features/profile/presentation/screens/leaderboard_screen.dart';
+import '../../features/video_learning/data/models/video_lesson.dart';
+import '../../features/video_learning/data/video_learning_data.dart';
+import '../../features/video_learning/presentation/screens/video_list_screen.dart';
+import '../../features/video_learning/presentation/screens/video_learning_screen.dart';
+import '../../features/video_learning/presentation/screens/reflex_practice_screen.dart';
+import '../../features/video_learning/presentation/screens/voice_translator_screen.dart';
+import '../../features/reflex_coach/presentation/screens/reflex_coach_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import 'route_names.dart';
 
@@ -246,6 +253,47 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         redirect: (context, state) => '/',
+      ),
+
+      // ── Video Learning, Reflex Practice & Voice Translator ──
+      GoRoute(
+        path: '/video-learning',
+        name: RouteNames.videoLearning,
+        builder: (context, state) => const VideoListScreen(),
+      ),
+      GoRoute(
+        path: '/video-learning/watch',
+        name: RouteNames.videoWatch,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final lesson = extra?['lesson'] as VideoLesson? ??
+              VideoLearningData.sampleLessons.first;
+          return VideoLearningScreen(lesson: lesson);
+        },
+      ),
+      GoRoute(
+        path: '/video-learning/reflex',
+        name: RouteNames.reflexPractice,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final lesson = extra?['lesson'] as VideoLesson? ??
+              VideoLearningData.sampleLessons.first;
+          final initialSubtitleId = extra?['initialSubtitleId'] as String?;
+          return ReflexPracticeScreen(
+            lesson: lesson,
+            initialSubtitleId: initialSubtitleId,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/voice-translator',
+        name: RouteNames.voiceTranslator,
+        builder: (context, state) => const VoiceTranslatorScreen(),
+      ),
+      GoRoute(
+        path: '/reflex-coach',
+        name: RouteNames.reflexCoach,
+        builder: (context, state) => const ReflexCoachScreen(),
       ),
 
       StatefulShellRoute(

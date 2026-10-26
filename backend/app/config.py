@@ -51,8 +51,8 @@ class Settings(BaseSettings):
     ai_provider: str = "gemini"  # "local", "gemini", "openai", or "hybrid"
     ai_model_name: str = "gemini-2.5-flash"
     ai_cloud_fallback: bool = True
-    local_llm_enabled: bool = True
-    local_llm_preload: bool = True
+    local_llm_enabled: bool = False
+    local_llm_preload: bool = False
     local_llm_load_timeout_seconds: float = 120.0
     local_llm_timeout_seconds: float = 60.0
 

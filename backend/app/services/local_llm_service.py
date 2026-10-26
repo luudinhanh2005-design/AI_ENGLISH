@@ -63,7 +63,13 @@ class LocalLLMService:
                     from transformers import BitsAndBytesConfig
                 except Exception:
                     from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-                from peft import PeftModel
+
+                try:
+                    from peft import PeftModel
+                except ImportError:
+                    logger.warning("Thư viện 'peft' chưa được cài đặt. Bỏ qua nạp Local LLM.")
+                    self.load_error = "Thư viện 'peft' chưa được cài đặt."
+                    return False
 
                 if not os.path.exists(self.model_dir):
                     raise FileNotFoundError(f"Khong tim thay model tai: {self.model_dir}")

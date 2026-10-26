@@ -47,4 +47,11 @@ class RouteNames {
   // Placement
   static const String placementTest = 'placement-test';
   static const String placementResult = 'placement-result';
+
+  // Video Learning & Reflex & Voice Translator
+  static const String videoLearning = 'video-learning';
+  static const String videoWatch = 'video-watch';
+  static const String reflexPractice = 'reflex-practice';
+  static const String reflexCoach = 'reflex-coach';
+  static const String voiceTranslator = 'voice-translator';
 }

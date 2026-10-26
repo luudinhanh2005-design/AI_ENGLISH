@@ -52,6 +52,9 @@ dependencies:
   http: ^1.6.0
   http_parser: ^4.1.2
   path_provider: ^2.1.6
+  video_player: ^2.14.1
+  speech_to_text: ^7.5.0
+  flutter_tts: ^4.2.5
 
 dev_dependencies:
   flutter_test:
